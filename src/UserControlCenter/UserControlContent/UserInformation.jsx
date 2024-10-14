@@ -1,15 +1,16 @@
 import React from 'react'
-import UserSideBar from '../UserSideBar/UserSideBar'
 import './UserControlContent.css'
+
+import UserSideBar from '../UserSideBar/UserSideBar';
 
 export default function UserInformation() {
     return (
-        <div className='user-information'>
-            <div className='user-information-container'>
+        <div className='user-control-center'>
+            <div className='user-control-center-container'>
 
-                <UserSideBar className='user-information-left-container' />
+                <UserSideBar className='user-side-bar-container' />
 
-                <div className='user-information-right-container'>
+                <div className='user-content-right-container'>
                     <h1>Xin chào, [name]</h1>
                     <h3>Bạn là thành viên [VIP] của InnoSpace!</h3>
                     <p>ID:</p>

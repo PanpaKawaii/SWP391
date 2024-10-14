@@ -10,16 +10,20 @@ import Footer from './HeaderFooter/Footer'
 
 import HomeContent from './Home/HomeContent'
 import ContactContent from './Contact/ContactContent'
-import SolutionContent from './Solution/SolutionContent'
+
+import BookingStoreContent from './Booking/BookingStoreContent'
+import BookingStoreDetailContent from './Booking/BookingStoreDetailContent'
+import BookingPodContent from './Booking/BookingPodContent'
+import BookingPodDetailContent from './Booking/BookingPodDetailContent'
+import PaymentContent from './Payment/PaymentContent'
+
 import AboutContent from './About/AboutContent'
 
-import SolutionContentDetail from './Solution/SolutionContentDetail'
-
-import SignInSignUp from './SignInSignUp/SignInSignUp'
 import UserInformation from './UserControlCenter/UserControlContent/UserInformation'
 import UserAccount from './UserControlCenter/UserControlContent/UserAccount'
+import UserHistoryBooking from './UserControlCenter/UserControlContent/UserHistoryBooking'
 
-
+import SignInSignUp from './SignInSignUp/SignInSignUp'
 
 function App() {
   return (
@@ -28,14 +32,22 @@ function App() {
       <Routes>
         <Route path='/' element={<HomeContent />} />
         <Route path='/about' element={<AboutContent />} />
-        <Route path='/solution' element={<SolutionContent />} />
+
+        <Route path='/booking/store' element={<BookingStoreContent />} />
+        <Route path='/booking/store/:Id' element={<BookingStoreDetailContent />} />
+        <Route path='/booking/store/:Id/pod' element={<BookingPodContent />} />
+        <Route path='/booking/store/:Id/pod/:Id' element={<BookingPodDetailContent />} />
+        <Route path='/booking/store/:Id/pod/:Id/payment' element={<PaymentContent />} />
+
         <Route path='/contact' element={<ContactContent />} />
-        
-        <Route path='/solution/:id' element={<SolutionContentDetail />} />
 
 
         <Route path='/user/information' element={<UserInformation />} />
         <Route path='/user/account' element={<UserAccount />} />
+        <Route path='/user/bookinghistory' element={<UserHistoryBooking />} />
+
+        <Route path='/signinsignup' element={<SignInSignUp />} />
+        {/* <Route path='/GetDataAPI' element={<GetDataAPI />} /> */}
       </Routes>
       <Footer />
     </>
