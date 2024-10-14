@@ -5,10 +5,6 @@ import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import './BookingPodContent.css';
 
-import M from 'materialize-css';
-import 'materialize-css/dist/css/materialize.min.css';
-import { Icon } from 'react-materialize';
-
 export default function BookingPodContent() {
 
     const [PODs, setPODs] = useState(null);
@@ -124,11 +120,11 @@ export default function BookingPodContent() {
                                     <div className='capacity'>
                                         {getCapacity(pod.typeId) === 10 ?
                                             (
-                                                <span className='capacity-icon' style={{ paddingRight: '5px' }}><Icon>person</Icon><b> x 10</b></span>
+                                                <span className='capacity-icon' style={{ padding: '5px' }}><i class='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
                                             ) :
                                             (
                                                 [...Array(getCapacity(pod.typeId))].map((_, i) => (
-                                                    <span key={i} className='capacity-icon'><Icon>person</Icon></span>
+                                                    <span key={i} className='capacity-icon' style={{ padding: '5px' }}><i class='fa-solid fa-user'></i></span>
                                                 ))
                                             )
                                         }

@@ -7,10 +7,6 @@ import './BookingStoreDetailContent.css';
 
 import single1 from '../assets/PODs/single1.jpg'
 
-import M from 'materialize-css';
-import 'materialize-css/dist/css/materialize.min.css';
-import { Icon } from 'react-materialize';
-
 export default function BookingStoreDetailContent() {
 
     const [STOREs, setSTOREs] = useState(null);

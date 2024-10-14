@@ -5,10 +5,6 @@ import { Button, Row, Col } from 'react-bootstrap';
 import { BOOKINGs } from '../../List/ListOfPods';
 import './UserControlContent.css'
 
-import M from 'materialize-css';
-import 'materialize-css/dist/css/materialize.min.css';
-import { Icon } from 'react-materialize';
-
 import UserSideBar from '../UserSideBar/UserSideBar';
 
 export default function UserHistoryBooking() {
@@ -59,7 +55,7 @@ export default function UserHistoryBooking() {
         fetchData();
     }, []);
 
-    const filteredResults = BOOKINGs ? BOOKINGs.filter(booking => 
+    const filteredResults = BOOKINGs ? BOOKINGs.filter(booking =>
         booking.userId == 3 // 3 => ThisUser.id
     ) : [];
 
@@ -131,11 +127,11 @@ export default function UserHistoryBooking() {
                                                 <div className='capacity'>
                                                     {getPodCapacity(booking.podId) === 10 ?
                                                         (
-                                                            <span className='capacity-icon' style={{ paddingRight: '5px' }}><Icon>person</Icon><b> x 10</b></span>
+                                                            <span className='capacity-icon' style={{ padding: '5px' }}><i class='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
                                                         ) :
                                                         (
                                                             [...Array(getPodCapacity(booking.podId))].map((_, i) => (
-                                                                <span key={i} className='capacity-icon'><Icon>person</Icon></span>
+                                                                <span key={i} className='capacity-icon' style={{ padding: '5px' }}><i class='fa-solid fa-user'></i></span>
                                                             ))
                                                         )
                                                     }

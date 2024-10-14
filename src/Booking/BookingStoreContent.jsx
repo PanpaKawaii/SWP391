@@ -4,10 +4,6 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Card, Form, Button } from 'react-bootstrap';
 import './BookingStoreContent.css';
 
-import M from 'materialize-css';
-import 'materialize-css/dist/css/materialize.min.css';
-import { Icon } from 'react-materialize';
-
 export default function BookingStoreContent() {
 
     const [STOREs, setSTOREs] = useState(null);

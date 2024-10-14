@@ -5,10 +5,6 @@ import { Link } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import './BookingPodDetailContent.css';
 
-import M from 'materialize-css';
-import 'materialize-css/dist/css/materialize.min.css';
-import { Icon } from 'react-materialize';
-
 import single1 from '../assets/PODs/single1.jpg'
 import double1 from '../assets/PODs/double1.jpg'
 import group1 from '../assets/PODs/group1.jpg'

@@ -1,8 +1,7 @@
 import React from 'react'
+import { Form, Button } from 'react-bootstrap';
 import './ContactContent.css'
 
-import { Form, Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import service from '../BackgroundImage/service.jpg'
 
 export default function ContactContent() {

@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap';
 import './SignInSignUp.css';
 
-import M from 'materialize-css';
-import 'materialize-css/dist/css/materialize.min.css';
-import { Icon } from 'react-materialize';
-
 export default class SignInSignUp extends Component {
 
     moveImage = () => {
@@ -57,16 +53,16 @@ export default class SignInSignUp extends Component {
             <div className='POD-signin-signup'>
                 <div className='signin-signup-container'>
                     <div className='card-box'>
-                        
+
                         <div className='card-body card-appear' id='card-signin'>
                             <h1 className='title'>Sign In</h1>
                             <div className='form-box form-box1'>
                                 <div className='form-input'>
-                                    <span className='icon'><Icon>person</Icon></span>
+                                    <span className='icon'><i class='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
                                     <input type='text' placeholder='UserID' required />
                                 </div>
                                 <div className='form-input'>
-                                    <span className='icon'><Icon>key</Icon></span>
+                                    <span className='icon'><i class='fa-solid fa-key' style={{ fontSize: '25px' }}></i></span>
                                     <input type='password' placeholder='Password' required />
                                 </div>
                                 <a href='#' className='forget-link'>Forget Password?</a>
@@ -83,23 +79,23 @@ export default class SignInSignUp extends Component {
                             <h1 className='title'>Sign Up</h1>
                             <div className='form-box form-box2'>
                                 <div className='form-input'>
-                                    <span className='icon'><Icon>person</Icon></span>
+                                    <span className='icon'><i class='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
                                     <input type='text' placeholder='UserID' required />
                                 </div>
                                 <div className='form-input'>
-                                    <span className='icon'><Icon>person</Icon></span>
+                                    <span className='icon'><i class='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
                                     <input type='text' placeholder='Full Name' required />
                                 </div>
                                 <div className='form-input'>
-                                    <span className='icon'><Icon>person</Icon></span>
+                                    <span className='icon'><i class='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
                                     <input type='text' placeholder='Role' value='User' readOnly />
                                 </div>
                                 <div className='form-input'>
-                                    <span className='icon'><Icon>key</Icon></span>
+                                    <span className='icon'><i class='fa-solid fa-key' style={{ fontSize: '25px' }}></i></span>
                                     <input type='password' placeholder='Password' required />
                                 </div>
                                 <div className='form-input'>
-                                    <span className='icon'><Icon>key</Icon></span>
+                                    <span className='icon'><i class='fa-solid fa-key' style={{ fontSize: '25px' }}></i></span>
                                     <input type='password' placeholder='Confirm' required />
                                 </div>
                                 <div className='btn-box'>
