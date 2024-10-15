@@ -59,11 +59,11 @@ export default class SignInSignUp extends Component {
                             <div className='form-box form-box1'>
                                 <div className='form-input'>
                                     <span className='icon'><i class='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
-                                    <input type='text' placeholder='UserID' required />
+                                    <input id='email' type='text' placeholder='UserID' required />
                                 </div>
                                 <div className='form-input'>
                                     <span className='icon'><i class='fa-solid fa-key' style={{ fontSize: '25px' }}></i></span>
-                                    <input type='password' placeholder='Password' required />
+                                    <input id='password' type='password' placeholder='Password' required />
                                 </div>
                                 <a href='#' className='forget-link'>Forget Password?</a>
                                 <div className='btn-box'>
