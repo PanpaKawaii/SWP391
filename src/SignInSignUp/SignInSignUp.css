@@ -52,7 +52,7 @@ body {
     }
 
     .form-input {
-        margin-left: 40px;
+        margin: 10px 0 10px 40px;
     }
 
     input {
@@ -71,19 +71,19 @@ body {
     .forget-link {
         display: block;
         text-align: right;
-        color: #83999f;
+        color: #ffbc40;
         margin-bottom: 15px;
-        /* text-decoration: none; */
+        text-decoration: none;
     }
 
     .forget-link:hover {
-        color: #53737e;
+        color: #ffa500;
     }
-     
+
     .movingImage {
         width: 50%;
         height: 100%;
-        background: url('YellowBanana.jpg') center;
+        background: url('../assets/PODs/meeting5.jpg') center;
         position: absolute;
         right: 0;
         transition: all 0.5s ease;
@@ -101,11 +101,17 @@ body {
     } */
 
     .btn {
-        color: #000000;
         width: 100%;
+        color: #000000;
+        background-color: #bbbbbb;
         margin: 10px 0;
+        border: none;
         border-radius: 5px;
         font-weight: bold;
+    }
+
+    .btn:focus {
+        background-color: #777777;
     }
 
     .form-box {
@@ -118,12 +124,13 @@ body {
 
         button[type="submit"] {
             width: 65%;
+            background-color: #999999;
         }
 
         button[type="reset"] {
             width: 30%;
+            background-color: #dddddd;
         }
-
     }
 
     @media screen and (max-width: 768px) {
@@ -135,7 +142,5 @@ body {
         .card-disappear {
             display: none;
         }
-
     }
-
 }

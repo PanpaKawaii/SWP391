@@ -1,8 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import './UserControlContent.css'
-
-import UserSideBar from '../UserSideBar/UserSideBar';
+import './UserControlContent.css';
 
 export default function UserInformation() {
 
@@ -39,8 +37,6 @@ export default function UserInformation() {
     return (
         <div className='user-control-center'>
             <div className='user-control-center-container'>
-
-                <UserSideBar className='user-side-bar-container' />
 
                 <div className='user-information'>
                     <h1><b>Xin chào, {USER ? USER.name : '...'}</b></h1>

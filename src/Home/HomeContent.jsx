@@ -48,7 +48,7 @@ export default function HomeContent() {
             <img src={home} alt='home' />
 
             <div className='shortcut-booking-pod'>
-                <h1><b>BEST SOLUTIONS</b></h1>
+                <h1><b>CƠ SỞ MỚI SẮP RA MẮT!</b></h1>
                 <Row className='image-row'>
                     {(PODs ? PODs.slice(0, 4) : []).map((pod, index) => ( // Check if PODs is not null
                         <Col key={pod.id} xs={12} sm={12} md={6} lg={6} xl={6} xxl={3} className='image-col'>

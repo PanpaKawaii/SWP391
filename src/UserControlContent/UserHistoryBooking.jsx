@@ -2,11 +2,9 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Row, Col } from 'react-bootstrap';
-import './UserControlContent.css'
+import './UserControlContent.css';
 
-import UserSideBar from '../UserSideBar/UserSideBar';
-
-import avatar from '../UserSideBar/YellowBanana.jpg'
+import YellowBanana from '../BackgroundImage/YellowBanana.jpg';
 
 export default function UserHistoryBooking() {
 
@@ -128,8 +126,6 @@ export default function UserHistoryBooking() {
         <div className='user-control-center'>
             <div className='user-control-center-container'>
 
-                <UserSideBar className='user-side-bar-container' />
-
                 <div className='user-booking'>
                     <Row className='booking-row'>
                         {filteredBOOKINGs ? (
@@ -137,7 +133,7 @@ export default function UserHistoryBooking() {
                                 <Col key={index} xxl={12} className='booking-col'>
                                     <div className='booking-card'>
                                         <div className='card-information'>
-                                            <img src={avatar} alt={getPodName(booking.podId)} />
+                                            <img src={YellowBanana} alt={getPodName(booking.podId)} />
                                             {/* <img src={getPodImage(booking.podId)} alt={getPodName(booking.podId)} /> */}
 
                                             <div className='card-info'>

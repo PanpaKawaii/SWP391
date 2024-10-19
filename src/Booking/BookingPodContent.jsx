@@ -151,7 +151,7 @@ export default function BookingPodContent() {
             <div className='booking-pod-container'>
                 <Row className='image-row'>
                     {filteredResults.length > 0 ? (
-                        filteredResults.map((pod, index) => (
+                        filteredResults.map((pod) => (
                             <Col key={pod.id} xs={12} sm={12} md={6} lg={6} xl={4} xxl={3} className='image-col'>
                                 <Card className='image-card'>
                                     <img src={pod.image} alt={pod.name} />
@@ -164,11 +164,11 @@ export default function BookingPodContent() {
                                     <div className='capacity'>
                                         {getCapacity(pod.typeId) === 10 ?
                                             (
-                                                <span className='capacity-icon' style={{ padding: '5px' }}><i class='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
+                                                <span className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
                                             ) :
                                             (
                                                 [...Array(getCapacity(pod.typeId))].map((_, i) => (
-                                                    <span key={i} className='capacity-icon' style={{ padding: '5px' }}><i class='fa-solid fa-user'></i></span>
+                                                    <span key={i} className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user'></i></span>
                                                 ))
                                             )
                                         }

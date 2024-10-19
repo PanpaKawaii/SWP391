@@ -1,9 +1,7 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Sidebar from './SideBar/UserSideBar'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'materialize-css/dist/css/materialize.min.css';
+// import 'materialize-css/dist/css/materialize.min.css';
 import { Route, Routes } from 'react-router-dom'
 
 import Header from './HeaderFooter/Header'
@@ -20,16 +18,45 @@ import PaymentContent from './Payment/PaymentContent'
 
 import AboutContent from './About/AboutContent'
 
-import UserInformation from './UserControlCenter/UserControlContent/UserInformation'
-import UserAccount from './UserControlCenter/UserControlContent/UserAccount'
-import UserHistoryBooking from './UserControlCenter/UserControlContent/UserHistoryBooking'
+import UserInformation from './UserControlContent/UserInformation'
+import UserAccount from './UserControlContent/UserAccount'
+import UserHistoryBooking from './UserControlContent/UserHistoryBooking'
 
 import SignInSignUp from './SignInSignUp/SignInSignUp'
 
 function App() {
   return (
     <>
-      <Header />
+      <div className='user-container' >
+        <Sidebar className='sidebar' />
+        <div className='user-content' >
+          <Header />
+          <div className='user-content-body'>
+            <Routes>
+              <Route path='/' element={<HomeContent />} />
+              <Route path='/about' element={<AboutContent />} />
+
+              <Route path='/booking/store' element={<BookingStoreContent />} />
+              <Route path='/booking/store/:Id' element={<BookingStoreDetailContent />} />
+              <Route path='/booking/store/:Id/pod' element={<BookingPodContent />} />
+              <Route path='/booking/store/:Id/pod/:Id' element={<BookingPodDetailContent />} />
+              <Route path='/booking/store/:Id/pod/:Id/payment' element={<PaymentContent />} />
+
+              <Route path='/contact' element={<ContactContent />} />
+
+
+              <Route path='/user/information' element={<UserInformation />} />
+              <Route path='/user/account' element={<UserAccount />} />
+              <Route path='/user/bookinghistory' element={<UserHistoryBooking />} />
+
+              <Route path='/signinsignup' element={<SignInSignUp />} />
+            </Routes>
+            <Footer />
+          </div>
+        </div>
+      </div>
+
+      {/* <Header />
       <Routes>
         <Route path='/' element={<HomeContent />} />
         <Route path='/about' element={<AboutContent />} />
@@ -48,9 +75,8 @@ function App() {
         <Route path='/user/bookinghistory' element={<UserHistoryBooking />} />
 
         <Route path='/signinsignup' element={<SignInSignUp />} />
-        {/* <Route path='/GetDataAPI' element={<GetDataAPI />} /> */}
       </Routes>
-      <Footer />
+      <Footer /> */}
     </>
   )
 }

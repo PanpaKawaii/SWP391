@@ -37,27 +37,27 @@ export default function AboutContent() {
                     <div className='introduction-convenient'>
                         <div className='convenient-item'>
 
-                            <h4><i class='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Hot Desking</b></h4>
+                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Hot Desking</b></h4>
                             <h6>Simplify desk booking for flexible and collaborative workspaces.</h6>
                         </div>
                         <div>
-                            <h4><i class='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Room Reservations</b></h4>
+                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Room Reservations</b></h4>
                             <h6>View and reserve available rooms when scheduling team meetings.</h6>
                         </div>
                         <div>
-                            <h4><i class='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Office Insights</b></h4>
+                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Office Insights</b></h4>
                             <h6>Get real-time data on workspace utilization, occupancy and more.</h6>
                         </div>
                         <div>
-                            <h4><i class='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Visitor Management</b></h4>
+                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Visitor Management</b></h4>
                             <h6>Streamline the check-in process for visitors with a digital platform.</h6>
                         </div>
                         <div>
-                            <h4><i class='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Policy Management</b></h4>
+                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Policy Management</b></h4>
                             <h6>Define, customize and implement hybrid work policies effortlessly.</h6>
                         </div>
                         <div>
-                            <h4><i class='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Leave Management</b></h4>
+                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Leave Management</b></h4>
                             <h6>Manage employee time off requests and approvals with ease.</h6>
                         </div>
                     </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Form, Button, Card } from 'react-bootstrap';
@@ -108,7 +108,7 @@ export default function BookingPodDetailContent() {
 
     // Những Booking có cùng Date và cùng Slot được chọn
     const aaaaaaa = selectedSlots ? selectedSlots.filter(slot => (slot.bookings).some(booking => bookingsHaveTheSameDate.includes(booking.id))) : [];
-    
+
     useEffect(() => {
         setBookingsHaveTheSameDateAndSlot(aaaaaaa)
         console.log('SameDateSlot: ', aaaaaaa)

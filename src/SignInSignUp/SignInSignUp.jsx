@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import './SignInSignUp.css';
 
-import Yellow from './YellowBanana.jpg'
-import Blue from './BlueBanana.jpg'
+import SignInImage from '../assets/PODs/meeting5.jpg'
+import SignUpImage from '../assets/PODs/single6.jpg'
 
 export default function SignInSignUp() {
 
     const moveImage = () => {
         const img = document.getElementById('movingImage');
         img.style.marginRight = '50%';
-        img.style.background = `url(${Blue}) center`;
+        img.style.background = `url(${SignUpImage}) center`;
 
         const signin = document.getElementById('card-signin');
         signin.classList.remove('card-appear');
@@ -24,7 +24,7 @@ export default function SignInSignUp() {
     const moveImageBack = () => {
         const img = document.getElementById('movingImage');
         img.style.marginRight = '0%';
-        img.style.background = `url(${Yellow}) center`;
+        img.style.background = `url(${SignInImage}) center`;
 
         const signin = document.getElementById('card-signin');
         signin.classList.remove('card-disappear');
@@ -233,8 +233,8 @@ export default function SignInSignUp() {
                             </Form.Group>
                             <a href='#' className='forget-link'><b>Forget Password?</b></a>
                             <div className='btn-box'>
-                                <Button type='reset' className='btn' onClick={resetInputsBox1}>CLEAR</Button>
                                 <Button type='submit' className='btn' >LOGIN</Button>
+                                <Button type='reset' className='btn' onClick={resetInputsBox1}>CLEAR</Button>
                             </div>
                             <hr />
                             <Button id='signup' className='btn btn-signup' onClick={moveImage}>SIGN UP</Button>
@@ -265,8 +265,8 @@ export default function SignInSignUp() {
                                 <Form.Control className='input' type='password' placeholder='Confirm' required />
                             </Form.Group>
                             <div className='btn-box'>
-                                <Button type='reset' className='btn' onClick={resetInputsBox2}>CLEAR</Button>
                                 <Button type='submit' className='btn'>CREATE</Button>
+                                <Button type='reset' className='btn' onClick={resetInputsBox2}>CLEAR</Button>
                             </div>
                             <hr />
                             <Button id='login' className='btn btn-already' onClick={moveImageBack}>I ALREADY HAVE AN ACCOUNT</Button>
