@@ -32,7 +32,7 @@ export default function BookingStoreContent() {
     const [storeName, setStoreName] = useState('');
 
     const filteredResults = STOREs ? STOREs.filter(store =>
-        store.name.includes(selectedStore) &&
+        (store.name === selectedStore || !selectedStore) &&
         store.name.toLowerCase().includes(storeName.toLowerCase())
     ) : [];
 
@@ -50,8 +50,9 @@ export default function BookingStoreContent() {
                     <Form.Group controlId='formStore' className='form-group'>
                         <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
                             <option value=''>[Store]</option>
-                            <option value='Cơ Sở 1'>Cơ Sở 1</option>
-                            <option value='Cơ Sở 2'>Cơ Sở 2</option>
+                            {STOREs && STOREs.map(store => (
+                                <option key={store.id} value={store.name}>{store.name}</option>
+                            ))}
                         </Form.Control>
                     </Form.Group>
 
@@ -59,7 +60,6 @@ export default function BookingStoreContent() {
                         <Form.Control className='input' type='text' placeholder='Store Name' value={storeName} onChange={(e) => setStoreName(e.target.value)} />
                     </Form.Group>
 
-                    {/* <Button className='submit' type='submit'>SEARCH</Button> */}
                 </Form>
 
                 <hr style={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }} />
@@ -73,42 +73,19 @@ export default function BookingStoreContent() {
                             <Col key={store.id} xs={12} sm={12} md={12} lg={6} xl={6} xxl={6} className='image-col'>
                                 <Card className='image-card'>
                                     <Link to={`${store.id}`}><img src={store.image} alt={store.name} /></Link>
-                                    {/* <div className='rating'>
-                                        {[...Array(store.rating)].map((_, i) => (
-                                            <span key={i} style={{ color: 'gold', fontSize: '1.5em' }}>★</span>
-                                        ))}
-                                    </div>
-
-                                    <div className='capacity'>
-                                        {store.capacity === 10 ?
-                                            (
-                                                <span className='capacity-icon' style={{ fontWeight: 'bold', paddingRight: '5px' }}><Icon>person</Icon> x 10</span>
-                                            ) :
-                                            (
-                                                [...Array(store.capacity)].map((_, i) => (
-                                                    <span key={i} className='capacity-icon'><Icon>person</Icon></span>
-                                                ))
-                                            )
-                                        }
-                                    </div> */}
-
                                     <Card.Body className='card-body'>
-                                        <Card.Title className='card-tittle'>
-                                            <h4>{store.name}</h4>
-                                        </Card.Title>
-                                        <Card.Text className='card-info'>
-                                            <div className='full-detail'>
-                                                <div className='short-detail'>
-                                                    <p>Address: {store.address}</p>
-                                                    <p>Contact: {store.contact}</p>
-                                                </div>
-                                                <div className='active-button'>
-                                                    <Link to={`${store.id}`}>
-                                                        <Button className='btn' style={{ backgroundColor: '#28a745' }}>GO!</Button>
-                                                    </Link>
-                                                </div>
+                                        <h4><b>{store.name}</b></h4>
+                                        <div className='full-detail'>
+                                            <div className='short-detail'>
+                                                <p>Address: {store.address}</p>
+                                                <p>Contact: {store.contact}</p>
                                             </div>
-                                        </Card.Text>
+                                            <div className='active-button'>
+                                                <Link to={`${store.id}`}>
+                                                    <Button className='btn' style={{ backgroundColor: '#28a745' }}>GO!</Button>
+                                                </Link>
+                                            </div>
+                                        </div>
                                     </Card.Body>
                                 </Card>
                             </Col>

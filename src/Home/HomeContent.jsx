@@ -63,11 +63,11 @@ export default function HomeContent() {
                                 <div className='capacity'>
                                     {getCapacity(pod.typeId) === 10 ?
                                         (
-                                            <span className='capacity-icon' style={{ padding: '5px' }}><i class='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
+                                            <span className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
                                         ) :
                                         (
                                             [...Array(getCapacity(pod.typeId))].map((_, i) => (
-                                                <span key={i} className='capacity-icon' style={{ padding: '5px' }}><i class='fa-solid fa-user'></i></span>
+                                                <span key={i} className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user'></i></span>
                                             ))
                                         )
                                     }
@@ -103,8 +103,8 @@ export default function HomeContent() {
                     <img src={space} alt='space' />
                     <Form className='card-form'>
                         <h1>CONTACT US</h1>
-                        <Form.Text><p>InnoSpace always appreciate all the opinions from you!</p></Form.Text>
-                        <Form.Text><p>We will reply in the nearest 24 hours!</p></Form.Text>
+                        <Form.Text><p>InnoSpace luôn sẵn sàng lắng nghe câu hỏi và ý kiến đóng góp từ bạn!</p></Form.Text>
+                        <Form.Text><p>Chúng tôi sẽ phản hồi ngay trong 24h tiếp theo!</p></Form.Text>
 
                         <Form.Group controlId='formName'>
                             <Form.Control className='input' type='text' placeholder='Name' />
@@ -121,7 +121,7 @@ export default function HomeContent() {
                         <Form.Group controlId='formYourProblem'>
                             <Form.Control className='input' type='text' placeholder='Your Problem' />
                         </Form.Group>
-                        <Button className='submit'>SUBMIT</Button>
+                        <Button className='btn'>SUBMIT</Button>
                     </Form>
                 </div>
             </div>

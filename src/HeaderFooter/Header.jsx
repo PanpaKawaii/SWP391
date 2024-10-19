@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
@@ -11,6 +12,14 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 export default function Header() {
+
+    const [id, setId] = useState(null);
+    const UserId = localStorage.getItem('UserId');
+    useEffect(() => {
+        const UserIdInt = parseInt(UserId, 10);
+        setId(UserIdInt);
+    }, [UserId]);
+
     return (
         <div className='user-header'>
             {/* <Navbar className='menu'
@@ -49,12 +58,15 @@ export default function Header() {
                     <Typography variant='h4' component='div' sx={{ flexGrow: 1 }}>
                         <Link to='/' className='brandlogo'>InnoSpace</Link>
                     </Typography>
-                    <Button><Link to='/'><i className='fa-solid fa-house'></i> Home</Link></Button>
-                    <Button><Link to='/about'><i className='fa-solid fa-circle-info'></i> About</Link></Button>
-                    <Button><Link to='/booking/store'><i className='fa-solid fa-list'></i> Booking</Link></Button>
-                    <Button><Link to='/contact'><i className='fa-regular fa-address-card'></i> Contact</Link></Button>
-                    <Button><Link to='/user/information'><i className='fa-solid fa-circle-user' style={{ fontSize: '50px' }}></i></Link></Button>
-                    <Button><Link to='/signinsignup'><i className='fa-solid fa-circle-user' style={{ fontSize: '30px' }}></i></Link></Button>
+                    <Link to='/'><><i className='fa-solid fa-house'></i> Home</></Link>
+                    <Link to='/about'><><i className='fa-solid fa-circle-info'></i> About</></Link>
+                    <Link to='/booking/store'><><i className='fa-solid fa-list'></i> Booking</></Link>
+                    <Link to='/contact'><><i className='fa-regular fa-address-card'></i> Contact</></Link>
+
+                    {isNaN(id) ?
+                        (<Link to='/signinsignup'><><i className='fa-solid fa-circle-user' style={{ fontSize: '50px' }}></i></></Link>)
+                        : (<Link to='/user/information'><><i className='fa-solid fa-circle-user' style={{ fontSize: '50px' }}></i></></Link>)
+                    }
                 </Toolbar>
             </AppBar>
 

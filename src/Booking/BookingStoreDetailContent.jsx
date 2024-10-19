@@ -41,7 +41,7 @@ export default function BookingStoreDetailContent() {
             <div className='booking-store-detail-container'>
                 {Store ? (
                     <>
-                        <h1>{Store.name}</h1>
+                        <h1><b>{Store.name}</b></h1>
                         <div className='short-detail'>
                             <p>{Store.name} / {Store.contact} / {Store.address}</p>
                             <p style={{ color: 'gold', fontSize: '1.5em' }}>★ {Store.rating}</p>
