@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import './HomeContent.css'
 
+import { imageSTOREs } from '../assets/listSTOREs';
+
 import home from '../BackgroundImage/home.jpg'
 import space from '../BackgroundImage/space.jpg'
 
 export default function HomeContent() {
 
-    const [PODs, setPODs] = useState(null);
+    const [STOREs, setSTOREs] = useState(null);
     const [TYPEs, setTYPEs] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -17,10 +19,10 @@ export default function HomeContent() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const podResponse = await fetch('https://localhost:7166/api/Pod');
-                if (!podResponse.ok) throw new Error('Network response was not ok');
-                const podData = await podResponse.json();
-                setPODs(podData);
+                const storeResponse = await fetch('https://localhost:7166/api/Store');
+                if (!storeResponse.ok) throw new Error('Network response was not ok');
+                const storeData = await storeResponse.json();
+                setSTOREs(storeData);
 
                 const typeResponse = await fetch('https://localhost:7166/api/Type');
                 if (!typeResponse.ok) throw new Error('Network response was not ok');
@@ -50,46 +52,24 @@ export default function HomeContent() {
             <div className='shortcut-booking-pod'>
                 <h1><b>CƠ SỞ MỚI SẮP RA MẮT!</b></h1>
                 <Row className='image-row'>
-                    {(PODs ? PODs.slice(0, 4) : []).map((pod, index) => ( // Check if PODs is not null
-                        <Col key={pod.id} xs={12} sm={12} md={6} lg={6} xl={6} xxl={3} className='image-col'>
+                    {(STOREs ? STOREs.slice(0, 4) : []).map((store) => ( // Check if STOREs is not null
+                        <Col key={store.id} xs={12} sm={12} md={6} lg={6} xl={6} xxl={3} className='image-col'>
                             <Card className='image-card'>
-                                <img src={pod.image} alt={pod.name} />
-                                <div className='rating'>
-                                    {[...Array(pod.rating)].map((_, i) => (
-                                        <span key={i} style={{ color: 'gold', fontSize: '1.5em' }}>★</span>
-                                    ))}
-                                </div>
-
-                                <div className='capacity'>
-                                    {getCapacity(pod.typeId) === 10 ?
-                                        (
-                                            <span className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
-                                        ) :
-                                        (
-                                            [...Array(getCapacity(pod.typeId))].map((_, i) => (
-                                                <span key={i} className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user'></i></span>
-                                            ))
-                                        )
-                                    }
-                                </div>
-
+                                <img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} />
                                 <Card.Body className='card-body'>
-                                    <Card.Title className='card-tittle'>
-                                        <h4><b>{pod.name}</b></h4>
-                                    </Card.Title>
-                                    <Card.Text className='card-info'>
-                                        <div className='full-detail'>
-                                            <div className='short-detail'>
-                                                <p>TypeId: {pod.typeId}</p>
-                                                <p>StoreId: {pod.storeId}</p>
-                                            </div>
-                                            <div className='active-button'>
-                                                <Link to={`booking/store/${pod.storeId}/pod/${pod.id}`}>
-                                                    <Button className='btn' style={{ backgroundColor: '#28a745' }}>Select</Button>
-                                                </Link>
-                                            </div>
+                                    <h3><b>{store.name}</b></h3>
+                                    <div className='full-detail'>
+                                        <div className='short-detail'>
+                                            <h1></h1>
+                                            <p>TypeId: {store.typeId}</p>
+                                            <p>StoreId: {store.storeId}</p>
                                         </div>
-                                    </Card.Text>
+                                        <div className='active-button'>
+                                            <Link to={`booking/store/${store.storeId}/pod/${store.id}`}>
+                                                <Button className='btn' style={{ backgroundColor: '#28a745' }}>Select</Button>
+                                            </Link>
+                                        </div>
+                                    </div>
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -98,27 +78,27 @@ export default function HomeContent() {
             </div>
 
             <div className='shortcut-contact'>
-                <h1><b>GOT ANY PROBLEM?</b></h1>
+                <h1><b>Bạn gặp vấn đề gì sao?</b></h1>
                 <div className='card-contact'>
                     <img src={space} alt='space' />
                     <Form className='card-form'>
-                        <h1>CONTACT US</h1>
+                        <h1><b>CONTACT US</b></h1>
                         <Form.Text><p>InnoSpace luôn sẵn sàng lắng nghe câu hỏi và ý kiến đóng góp từ bạn!</p></Form.Text>
                         <Form.Text><p>Chúng tôi sẽ phản hồi ngay trong 24h tiếp theo!</p></Form.Text>
 
-                        <Form.Group controlId='formName'>
+                        <Form.Group controlId='formName' className='form-group form-input'>
                             <Form.Control className='input' type='text' placeholder='Name' />
                         </Form.Group>
 
-                        <Form.Group controlId='formEmail'>
+                        <Form.Group controlId='formEmail' className='form-group form-input'>
                             <Form.Control className='input' type='text' placeholder='Email' />
                         </Form.Group>
 
-                        <Form.Group controlId='formPhoneNumber'>
+                        <Form.Group controlId='formPhoneNumber' className='form-group form-input'>
                             <Form.Control className='input' type='text' placeholder='Phone Number' />
                         </Form.Group>
 
-                        <Form.Group controlId='formYourProblem'>
+                        <Form.Group controlId='formYourProblem' className='form-group form-input'>
                             <Form.Control className='input' type='text' placeholder='Your Problem' />
                         </Form.Group>
                         <Button className='btn'>SUBMIT</Button>

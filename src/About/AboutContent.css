@@ -7,7 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Quicksand', 'Arial', sans-serif;
     position: relative;
 }
 
@@ -55,17 +55,17 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
 
-    .introduction-solution h5 {
-        width: 90%;
-        text-align: center;
-    }
+        h5 {
+            width: 90%;
+            text-align: center;
+        }
 
-    .introduction-solution img {
-        width: 100%;
-        margin: 20px;
-        border-radius: 20px;
+        img {
+            width: 100%;
+            margin: 20px;
+            border-radius: 20px;
+        }
     }
 
     .introduction-convenient {
@@ -145,4 +145,17 @@ body {
         justify-content: center;
     }
 
+    .btn,
+    .btn:focus {
+        color: #ffffff;
+        background-color: #28a745;
+        font-weight: bold;
+        border: none;
+        border-radius: 7px;
+    }
+
+    .btn:hover {
+        color: #ffffff;
+        background-color: #22913c;
+    }
 }

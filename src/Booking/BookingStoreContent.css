@@ -5,7 +5,7 @@ body {
 .POD-booking-store {
     width: 100%;
     background-color: #ffffff;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Quicksand', 'Arial', sans-serif;
 }
 
 .POD-booking-store {
@@ -16,7 +16,6 @@ body {
 
     .search {
         display: flex;
-        justify-content: end;
         align-items: center;
         padding: 10px 10px 0;
     }
@@ -107,10 +106,6 @@ body {
     .card-body {
         width: 100%;
 
-        h4 {
-            margin: 0 0 10px;
-        }
-
         p {
             margin: 0;
         }
@@ -130,17 +125,18 @@ body {
             text-align: end;
         }
 
-        .btn {
+        .btn,
+        .btn:focus {
             color: #ffffff;
+            background-color: #28a745;
             font-weight: bold;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 7px;
         }
-
-        .btn:active {
-            background-color: #ffffff;
-            color: #000000;
+    
+        .btn:hover {
+            color: #ffffff;
+            background-color: #22913c;
         }
     }
 

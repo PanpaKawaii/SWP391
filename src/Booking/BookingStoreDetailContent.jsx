@@ -51,8 +51,8 @@ export default function BookingStoreDetailContent() {
                             <img src={single1} alt={Store.name}></img>
                         </div>
                         <p>{Store.description}</p>
-                        <Link to={`pod`}>
-                            <Button>VIEW PODS</Button>
+                        <Link to={`../booking/pod`}>
+                            <Button className='btn'>VIEW PODS</Button>
                         </Link>
                     </>
                 ) : (

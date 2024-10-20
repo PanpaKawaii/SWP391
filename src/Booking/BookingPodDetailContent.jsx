@@ -243,12 +243,12 @@ export default function BookingPodDetailContent() {
 
                         <div className='detail-container'>
                             <div className='short-detail'>
-                                <h5><b>{thisSTORE ? `${thisSTORE.name}: ${thisSTORE.address} / Hotline: ${thisSTORE.contact}` : 'Store not found'}</b></h5>
+                                <h3><b>{thisSTORE ? `${thisSTORE.name}: ${thisSTORE.address} / Hotline: ${thisSTORE.contact}` : 'Store not found'}</b></h3>
                                 <p>{thisTYPE ? `${thisTYPE.name} / Sức chứa: ${thisTYPE.capacity} người` : 'Type not found'}</p>
 
                                 <div className='favorite'>
                                     <div className='favorite-title'>
-                                        <h5><b><i className="fa-solid fa-heart"></i> Yêu thích <i className="fa-solid fa-heart"></i></b></h5>
+                                        <h3><b><i className='fa-solid fa-heart'></i> Yêu thích <i className='fa-solid fa-heart'></i></b></h3>
                                     </div>
                                     <div className='favorite-text'>
                                         <p><b>Khách đánh giá đây là một trong những căn phòng được yêu thích nhất trên InnoSpace</b></p>
@@ -256,17 +256,17 @@ export default function BookingPodDetailContent() {
                                     <div className='favorite-rating'>
                                         <h4>{Pod.rating}</h4>
                                         {Array.from({ length: Pod.rating }, (_, index) => (
-                                            <span key={index} style={{ color: 'gold', fontSize: '2em' }}>★</span>
+                                            <span key={index} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
                                         ))}
                                     </div>
                                     <p></p>
                                 </div>
 
-                                <h5><b>Tiện nghi có sẵn:</b></h5>
+                                <h4><b>Tiện nghi có sẵn:</b></h4>
                                 {AvailableUTILITIes.map((utility) => (
                                     <li key={utility.id}>{utility.name}: {utility.description}</li>
                                 ))}
-                                <h5><b>Mô tả về POD:</b></h5>
+                                <h4><b>Mô tả về POD:</b></h4>
                                 <p>{Pod.description}</p>
                             </div>
 
@@ -308,7 +308,7 @@ export default function BookingPodDetailContent() {
                                                             backgroundColor: slot.selected ? '#d3f9d8' : '#fff',
                                                             padding: '10px',
                                                             margin: '5px 0',
-                                                            border: '1px solid #ccc',
+                                                            border: slot.selected ? '1px solid #d3f9d8' : '1px solid #ccc',
                                                             borderRadius: '5px'
                                                         }}
                                                     >
@@ -325,13 +325,13 @@ export default function BookingPodDetailContent() {
 
                                                     if (selectedDate < currentDate) {
                                                         return (
-                                                            <Form.Text className="text-danger">
+                                                            <Form.Text className='text-danger'>
                                                                 Please select a date from today onwards.
                                                             </Form.Text>
                                                         );
                                                     } else if (selectedDate > new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000)) {
                                                         return (
-                                                            <Form.Text className="text-warning">
+                                                            <Form.Text className='text-warning'>
                                                                 Bookings are only available for the next 30 days.
                                                             </Form.Text>
                                                         );
@@ -352,9 +352,9 @@ export default function BookingPodDetailContent() {
                         <hr />
 
                         <div className='big-rating'>
-                            <h1><b>{Pod.rating} <span style={{ color: 'gold' }}>★</span></b></h1>
+                            <h1><b>{Pod.rating}<span style={{ color: 'gold' }}><i className='fa-solid fa-star'></i></span></b></h1>
                             <h4>Được khách hàng yêu thích</h4>
-                            <h5>Một trong căn phòng nhà được yêu thích nhất trên InnoSpace dựa trên điểm xếp hạng, đánh giá và độ tin cậy</h5>
+                            <p>Một trong căn phòng nhà được yêu thích nhất trên InnoSpace dựa trên điểm xếp hạng, đánh giá và độ tin cậy</p>
                         </div>
 
                         <div>
@@ -409,7 +409,7 @@ export default function BookingPodDetailContent() {
                                 ))}
 
                                 <div className='button-confirm-amount'>
-                                    <h3><b>Amount: {Amount / 1000}.000đ</b></h3>
+                                    <h2><b>Amount: {Amount / 1000}.000đ</b></h2>
                                     <Button type='submit' className='btn' onClick={handleConfirm}>CONFIRM</Button>
                                 </div>
 

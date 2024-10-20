@@ -27,7 +27,7 @@ import SignInSignUp from './SignInSignUp/SignInSignUp'
 function App() {
   return (
     <>
-      <div className='user-container' >
+      <div className='user-container'>
         <Sidebar className='sidebar' />
         <div className='user-content' >
           <Header />
@@ -38,9 +38,9 @@ function App() {
 
               <Route path='/booking/store' element={<BookingStoreContent />} />
               <Route path='/booking/store/:Id' element={<BookingStoreDetailContent />} />
-              <Route path='/booking/store/:Id/pod' element={<BookingPodContent />} />
-              <Route path='/booking/store/:Id/pod/:Id' element={<BookingPodDetailContent />} />
-              <Route path='/booking/store/:Id/pod/:Id/payment' element={<PaymentContent />} />
+              <Route path='/booking/pod' element={<BookingPodContent />} />
+              <Route path='/booking/pod/:Id' element={<BookingPodDetailContent />} />
+              <Route path='/booking/pod/:Id/payment' element={<PaymentContent />} />
 
               <Route path='/contact' element={<ContactContent />} />
 

@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Card, Form, Button } from 'react-bootstrap';
 import './BookingStoreContent.css';
 
+import { imageSTOREs } from '../assets/listSTOREs';
+
 export default function BookingStoreContent() {
 
     const [STOREs, setSTOREs] = useState(null);
@@ -49,7 +51,7 @@ export default function BookingStoreContent() {
 
                     <Form.Group controlId='formStore' className='form-group'>
                         <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
-                            <option value=''>[Store]</option>
+                            <option value=''>[ Store ]</option>
                             {STOREs && STOREs.map(store => (
                                 <option key={store.id} value={store.name}>{store.name}</option>
                             ))}
@@ -62,19 +64,17 @@ export default function BookingStoreContent() {
 
                 </Form>
 
-                <hr style={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }} />
-
             </div>
 
             <div className='booking-store-container'>
                 <Row className='image-row'>
                     {filteredResults.length > 0 ? (
-                        filteredResults.map((store, index) => (
+                        filteredResults.map((store) => (
                             <Col key={store.id} xs={12} sm={12} md={12} lg={6} xl={6} xxl={6} className='image-col'>
                                 <Card className='image-card'>
-                                    <Link to={`${store.id}`}><img src={store.image} alt={store.name} /></Link>
+                                    <Link to={`${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link>
                                     <Card.Body className='card-body'>
-                                        <h4><b>{store.name}</b></h4>
+                                        <h3><b>{store.name}</b></h3>
                                         <div className='full-detail'>
                                             <div className='short-detail'>
                                                 <p>Address: {store.address}</p>
@@ -82,7 +82,7 @@ export default function BookingStoreContent() {
                                             </div>
                                             <div className='active-button'>
                                                 <Link to={`${store.id}`}>
-                                                    <Button className='btn' style={{ backgroundColor: '#28a745' }}>GO!</Button>
+                                                    <Button className='btn' style={{ backgroundColor: '#28a745' }}>Detail</Button>
                                                 </Link>
                                             </div>
                                         </div>

@@ -245,7 +245,7 @@ export default function SignInSignUp() {
                         <h1 className='title'>Sign Up</h1>
                         <Form className='form-box form-box2' onSubmit={handleSubmitSignUp}>
                             <Form.Group controlId='SignUpEmail' className='form-group form-input'>
-                                <span className='icon'><i className='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
+                                <span className='icon'><i className='fa-solid fa-envelope' style={{ fontSize: '25px' }}></i></span>
                                 <Form.Control className='input' type='email' placeholder='Email' />
                             </Form.Group>
                             <Form.Group controlId='SignUpFullName' className='form-group form-input'>
@@ -253,14 +253,15 @@ export default function SignInSignUp() {
                                 <Form.Control className='input' type='text' placeholder='Full Name' />
                             </Form.Group>
                             <Form.Group controlId='SignUpPhoneNumber' className='form-group form-input'>
-                                <span className='icon'><i className='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
+                                <span className='icon'><i className='fa-solid fa-phone' style={{ fontSize: '25px' }}></i></span>
                                 <Form.Control className='input' type='text' placeholder='Phone Number' />
                             </Form.Group>
                             <Form.Group controlId='SignUpPassword' className='form-group form-input'>
-                                <span className='icon'><i className='fa-solid fa-key' style={{ fontSize: '25px' }}></i></span>
+                                <span className='icon'><i className='fa-solid fa-key' style={{ fontSize: '25px', color: '#cccccc' }}></i></span>
                                 <Form.Control className='input' type='password' placeholder='Password' />
                             </Form.Group>
                             <Form.Group controlId='SignUpConfirm' className='form-group form-input'>
+                                <span className='dobble-icon'><i className='fa-solid fa-key' style={{ fontSize: '25px', color: '#cccccc' }}></i></span>
                                 <span className='icon'><i className='fa-solid fa-key' style={{ fontSize: '25px' }}></i></span>
                                 <Form.Control className='input' type='password' placeholder='Confirm' required />
                             </Form.Group>

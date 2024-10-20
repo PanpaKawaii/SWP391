@@ -106,7 +106,7 @@ export default function AboutContent() {
                 </div>
                 <div className='booking-button'>
                     <Link to={`../booking/store`}>
-                        <Button className='btn' style={{ backgroundColor: '#28a745' }}>Try It For Yourself</Button>
+                        <Button className='btn'>Try It For Yourself</Button>
                     </Link>
                 </div>
             </div>

@@ -9,6 +9,7 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    font-family: 'Quicksand', 'Arial', sans-serif;
 
     .search-bar {
         flex-grow: 1;

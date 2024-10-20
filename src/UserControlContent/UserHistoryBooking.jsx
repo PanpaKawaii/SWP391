@@ -142,7 +142,7 @@ export default function UserHistoryBooking() {
                                                 <div className='card-rating-capacity'>
                                                     <div className='rating'>
                                                         {[...Array(getPodRating(booking.podId))].map((_, i) => (
-                                                            <span key={i} style={{ color: 'gold', fontSize: '1.5em' }}>★</span>
+                                                            <span key={i} style={{ color: 'gold', fontSize: '1.1em' }}><i className='fa-solid fa-star'></i></span>
                                                         ))}
                                                     </div>
 
@@ -164,29 +164,29 @@ export default function UserHistoryBooking() {
                                                 <p>Trạng thái: {booking.status}</p>
                                                 <p>Feedback: {booking.feedback}</p>
                                             </div>
+                                        </div>
 
-                                            <div className='card-date'>
-                                                <p><b>Ngày nhận phòng:</b> {booking.date}</p>
-                                                <div className='slot-name'>
-                                                    {getSlots(booking.id).slice(0, 3).map((slot, index) => (
-                                                        <span key={index}>
-                                                            <p>{slot.name}</p>
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                                <div className='slot-name'>
-                                                    {getSlots(booking.id).slice(3, 6).map((slot, index) => (
-                                                        <span key={index}>
-                                                            <p>{slot.name}</p>
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                                <h4>Amount: 999 ngàn đồng</h4>
+                                        <div className='card-date'>
+                                            <p><b>Ngày nhận phòng:</b> {booking.date}</p>
+                                            <div className='slot-name'>
+                                                {getSlots(booking.id).slice(0, 3).map((slot, index) => (
+                                                    <span key={index}>
+                                                        <p>{slot.name}</p>
+                                                    </span>
+                                                ))}
                                             </div>
+                                            <div className='slot-name'>
+                                                {getSlots(booking.id).slice(3, 6).map((slot, index) => (
+                                                    <span key={index}>
+                                                        <p>{slot.name}</p>
+                                                    </span>
+                                                ))}
+                                            </div>
+                                            <h4>Amount: 999 ngàn đồng</h4>
                                         </div>
 
                                         <div className='rebook-button'>
-                                            <Link to={`../booking/store/${getStoreId(booking.podId)}/pod/${booking.podId}`}><Button className='btn'>REBOOK</Button></Link>
+                                            <Link to={`../booking/pod/${booking.podId}`}><Button className='btn'>REBOOK</Button></Link>
                                         </div>
                                     </div>
                                 </Col>

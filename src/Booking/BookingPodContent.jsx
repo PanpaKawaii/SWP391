@@ -5,8 +5,11 @@ import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import './BookingPodContent.css';
 
+import { imagePODs } from '../assets/listPODs';
+
 export default function BookingPodContent() {
 
+    const [STOREs, setSTOREs] = useState(null);
     const [PODs, setPODs] = useState(null);
     const [TYPEs, setTYPEs] = useState(null);
     const [UTILITIes, setUTILITIes] = useState(null);
@@ -16,6 +19,11 @@ export default function BookingPodContent() {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const storeResponse = await fetch('https://localhost:7166/api/Store');
+                if (!storeResponse.ok) throw new Error('Network response was not ok');
+                const storeData = await storeResponse.json();
+                setSTOREs(storeData);
+
                 const podResponse = await fetch('https://localhost:7166/api/Pod');
                 if (!podResponse.ok) throw new Error('Network response was not ok');
                 const podData = await podResponse.json();
@@ -42,6 +50,7 @@ export default function BookingPodContent() {
     }, []);
 
     // Những lựa chọn trên thanh tìm kiếm
+    const [selectedStore, setSelectedStore] = useState('');
     const [selectedPod, setSelectedPod] = useState('');
     const [selectedType, setSelectedType] = useState('');
     const [selectedUtility, setSelectedUtility] = useState('');
@@ -73,18 +82,48 @@ export default function BookingPodContent() {
     }, [PODs]);
 
     //Lấy Pods trùng khớp với những lựa chọn trên thanh tìm kiếm
-    const StoreId = useParams();
     const filteredResults = Pods ? Pods.filter(pod =>
-        pod.storeId == StoreId.Id &&
-
+        (pod.storeId == selectedStore || !selectedStore) &&
         (pod.name === selectedPod || !selectedPod) &&
-        (pod.typeId.toString() === selectedType.toString() || !selectedType.toString()) && // Cần chỉnh sửa vì id 15 cũng có chứa id 1 hoặc 5
+        (pod.typeId.toString() === selectedType.toString() || !selectedType.toString()) &&
         pod.name.toLowerCase().includes(podName.toLowerCase())
     ) : [];
 
     const getCapacity = (typeId) => {
         const type = TYPEs ? TYPEs.find(type => type.id === typeId) : null;
         return type ? type.capacity : 0;
+    };
+
+    const getTypeName = (podId) => {
+        const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
+        const type = TYPEs ? TYPEs.find(type => type.id === pod.typeId) : null;
+        return type ? type.name : null;
+    };
+
+    const getUtility = (podId) => {
+        const utility = UTILITIes ? UTILITIes.filter(utility =>
+            utility.pods && utility.pods.some(pod => pod.id === podId)
+        ) : [];
+        return utility;
+    };
+
+    const getSlots = (bookingId) => {
+        const slots = SLOTs ? SLOTs.filter(slot =>
+            slot.bookings && slot.bookings.some(booking => booking.id === bookingId)
+        ) : [];
+        return slots;
+    };
+
+    const getStoreName = (podId) => {
+        const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
+        const store = STOREs ? STOREs.find(store => store.id === pod.storeId) : null;
+        return store ? store.name : null;
+    };
+
+    const getStoreAddress = (podId) => {
+        const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
+        const store = STOREs ? STOREs.find(store => store.id === pod.storeId) : null;
+        return store ? store.address : null;
     };
 
     const handleSubmit = (e) => {
@@ -99,42 +138,39 @@ export default function BookingPodContent() {
 
                 <Form className='search' onSubmit={handleSubmit}>
 
+                    <Form.Group controlId='formStore' className='form-group'>
+                        <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
+                            <option value=''>[ Store]</option>
+                            {STOREs && STOREs.map(store => (
+                                <option key={store.id} value={store.id}>{store.name}</option>
+                            ))}
+                        </Form.Control>
+                    </Form.Group>
+
                     <Form.Group controlId='formPod' className='form-group'>
                         <Form.Control as='select' value={selectedPod} onChange={(e) => setSelectedPod(e.target.value)}>
-                            <option value=''>[POD]</option>
+                            <option value=''>[ POD ]</option>
                             {uniquePodName && uniquePodName.map(pod => (
                                 <option key={pod.id} value={pod.name}>{pod.name}</option>
                             ))}
-                            {/* <option value='Pod Cao Cấp'>Cao Cấp</option>
-                            <option value='Pod Tiêu Chuẩn'>Tiêu Chuẩn</option>
-                            <option value='Pod Sáng Tạo'>Sáng Tạo</option> */}
                         </Form.Control>
                     </Form.Group>
 
                     <Form.Group controlId='formType' className='form-group'>
                         <Form.Control as='select' value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
-                            <option value=''>[Type]</option>
+                            <option value=''>[ Type ]</option>
                             {TYPEs && TYPEs.map(type => (
                                 <option key={type.id} value={type.id}>{type.name}</option>
                             ))}
-                            {/* <option value='1'>Phòng Đơn</option>
-                            <option value='2'>Phòng Đôi</option>
-                            <option value='3'>Phòng Nhóm</option>
-                            <option value='4'>Phòng Họp</option> */}
                         </Form.Control>
                     </Form.Group>
 
                     <Form.Group controlId='formUtility' className='form-group'>
                         <Form.Control as='select' value={selectedUtility} onChange={(e) => setSelectedUtility(e.target.value)}>
-                            <option value=''>[Utility]</option>
+                            <option value=''>[ Utility ]</option>
                             {UTILITIes && UTILITIes.map(utility => (
                                 <option key={utility.id} value={utility.id}>{utility.name}</option>
                             ))}
-                            {/* <option value='1'>Ổ cắm điện</option>
-                            <option value='2'>Máy chiếu</option>
-                            <option value='3'>Máy pha cà phê</option>
-                            <option value='4'>Hệ thống âm thanh</option>
-                            <option value='5'>Bảng trắng thông minh</option> */}
                         </Form.Control>
                     </Form.Group>
 
@@ -144,12 +180,74 @@ export default function BookingPodContent() {
 
                 </Form>
 
-                <hr style={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }} />
-
             </div>
 
             <div className='booking-pod-container'>
-                <Row className='image-row'>
+
+                <table className='no-wrap align-middle table border-bottom'>
+                    <thead className='list-header'>
+                        <tr>
+                            <th className='list-id' style={{ backgroundColor: '#f5f5f5' }}>ID</th>
+                            <th style={{ backgroundColor: '#f5f5f5' }}>Image</th>
+                            <th style={{ backgroundColor: '#f5f5f5' }}>Name</th>
+                            <th style={{ backgroundColor: '#f5f5f5' }}>Type</th>
+                            <th style={{ backgroundColor: '#f5f5f5' }}>Store</th>
+                            <th style={{ backgroundColor: '#f5f5f5' }}>Utility</th>
+                            <th style={{ backgroundColor: '#f5f5f5' }}>Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody className='list-body'>
+                        {filteredResults.length > 0 ? (
+                            filteredResults.map((pod) => (
+                                <tr key={pod.id} className='border-bottom list-item'>
+                                    <td className='list-id'>{pod.id}</td>
+                                    <td>
+                                        <img src={imagePODs.find(image => image.id === pod.id)?.image} alt='image' />
+                                    </td>
+                                    <td>
+                                        <h3><b>{pod.name}</b></h3>
+                                        {[...Array(pod.rating)].map((_, i) => (
+                                            <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
+                                        ))}
+                                    </td>
+                                    <td>
+                                        {getTypeName(pod.id)}
+                                        <br />
+                                        {getCapacity(pod.typeId) === 10 ?
+                                            (
+                                                <span style={{ padding: '5px' }}><i className='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
+                                            ) :
+                                            (
+                                                [...Array(getCapacity(pod.typeId))].map((_, i) => (
+                                                    <span key={i} style={{ padding: '5px' }}><i className='fa-solid fa-user'></i></span>
+                                                ))
+                                            )
+                                        }
+                                    </td>
+                                    <td>
+                                        {getStoreName(pod.id)}
+                                        <br />
+                                        {getStoreAddress(pod.id)}
+                                    </td>
+                                    <td>
+                                        {getUtility(pod.id).map((util, index) => (
+                                            <li key={index}>{util.name}</li>
+                                        ))}
+                                    </td>
+                                    <td>
+                                        <Link to={`${pod.id}`}>
+                                            <Button className='btn' >Detail</Button>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr><td colSpan="6">No PODs available.</td></tr>
+                        )}
+                    </tbody>
+                </table>
+
+                {/* <Row className='image-row'>
                     {filteredResults.length > 0 ? (
                         filteredResults.map((pod) => (
                             <Col key={pod.id} xs={12} sm={12} md={6} lg={6} xl={4} xxl={3} className='image-col'>
@@ -194,7 +292,7 @@ export default function BookingPodContent() {
                     ) : (
                         <p>No PODs available for this store.</p>
                     )}
-                </Row>
+                </Row> */}
             </div>
         </div>
     )

@@ -5,7 +5,7 @@ body {
 .user-control-center {
     background-color: #e7e7e7;
     padding: 20px 20px 10px;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Quicksand', 'Arial', sans-serif;
 }
 
 .user-control-center {
@@ -45,6 +45,14 @@ body {
                     overflow: hidden;
                     transition: all 0.3s ease;
 
+                    h4 {
+                        margin: 20px 0 0;
+                    }
+
+                    p {
+                        margin: 0;
+                    }
+
                     .card-information {
                         width: 60%;
                         width: auto;
@@ -64,10 +72,6 @@ body {
                             padding: 0 20px;
                             display: block;
                             text-align: start;
-
-                            h4 {
-                                margin: 20px 0 0;
-                            }
 
                             .card-rating-capacity {
                                 display: flex;
@@ -97,17 +101,18 @@ body {
                         align-items: center;
                         padding: 0 20px;
 
-                        .btn {
+                        .btn,
+                        .btn:focus {
                             color: #ffffff;
+                            background-color: #28a745;
                             font-weight: bold;
                             border: none;
-                            border-radius: 5px;
-                            cursor: pointer;
+                            border-radius: 7px;
                         }
-
-                        .btn:active {
-                            background-color: #ffffff;
-                            color: #000000;
+                
+                        .btn:hover {
+                            color: #ffffff;
+                            background-color: #22913c;
                         }
                     }
                 }

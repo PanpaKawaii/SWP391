@@ -40,25 +40,27 @@ export default function SideBar() {
             <div id='mySidenav' className={`sidenav ${isOpen ? 'open' : ''}`}>
 
                 <div className='sidebar-header'>
-                    <Link to='/'><h2>InnoSpace</h2></Link>
+                    <Link to='/'><h1><b>InnoSpace</b></h1></Link>
                 </div>
 
                 <Link to='/'><i className='fa-solid fa-house'></i> Home</Link>
                 <Link to='/about'><i className='fa-solid fa-circle-info'></i> About</Link>
-                <Link to='/booking/store'><i className='fa-solid fa-list'></i> Booking</Link>
+                <Link to='/booking/store'><i className='fa-solid fa-house-flag'></i> Store</Link>
+                <Link to='/booking/pod'><i className='fa-solid fa-list'></i> Booking</Link>
                 <Link to='/contact'><i className='fa-regular fa-address-card'></i> Contact</Link>
 
-                <div>.</div>
-
-                <Link to='/user/information'><i className='fa-solid fa-user'></i> Information</Link>
-                <Link to='/user/account'><i className='fa-solid fa-key'></i> Change Password</Link>
-                <Link to='/user/bookinghistory'><i className='fas fa-chart-bar'></i> History Bookings</Link>
-
-                <div>.</div>
-
                 {isNaN(id) ?
-                    (<Link to='/signinsignup'><i className='fas fa-sign-in-alt'></i> Đăng nhập</Link>)
-                    : (<Link onClick={handleLogout}><i className='fas fa-sign-out-alt'></i> Đăng xuất</Link>)
+                    (<></>)
+                    : (<>
+                        <Link to='/user/account'><i className='fa-solid fa-key'></i> Change Password</Link>
+                        <Link to='/user/bookinghistory'><i className='fas fa-chart-bar'></i> History Bookings</Link>
+                    </>)
+                }
+
+                {
+                    isNaN(id) ?
+                        (<Link to='/signinsignup'><i className='fas fa-sign-in-alt'></i> Đăng nhập</Link>)
+                        : (<Link onClick={handleLogout}><i className='fas fa-sign-out-alt'></i> Đăng xuất</Link>)
                 }
 
                 {/* <button className={`dropdown-btn ${isDropdownOpen ? 'open' : ''}`} onClick={toggleDropdown}>
@@ -70,13 +72,13 @@ export default function SideBar() {
                     <Link to='/staff'>Nhân viên</Link>
                 </div> */}
 
-            </div>
+            </div >
 
             <div id='main' className={isOpen ? 'shifted' : ''}>
                 <span style={{ fontSize: '30px', cursor: 'pointer' }} onClick={toggleNav}>
                     &#9776;
                 </span>
             </div>
-        </div>
+        </div >
     )
 }
