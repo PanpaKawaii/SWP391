@@ -25,7 +25,7 @@ body {
             border-radius: 15px;
             display: flex;
 
-            .image-detail-1 {
+            .image-detail-pod {
                 width: 70%;
                 height: 100%;
                 padding: 0 10px 10px 0;
@@ -44,9 +44,25 @@ body {
                 width: 30%;
                 height: 100%;
 
-                .image-detail-2-item {
+                .image-detail-2-item-store {
                     width: 100%;
                     height: 50%;
+                    padding: 0 10px 10px 0;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 10px;
+                        object-fit: cover;
+                        object-position: center;
+                        display: block;
+                    }
+                }
+
+                .image-detail-2-item-utility {
+                    display: inline-flex;
+                    width: calc(100% / (var(--available-utilities-slice)));
+                    height: calc(50% / ((var(--available-utilities-length))));
                     padding: 0 10px 10px 0;
 
                     img {
@@ -102,12 +118,7 @@ body {
 
                 .favorite-rating {
                     width: 25%;
-
-                    h4 {
-                        margin: 0;
-                    }
                 }
-
             }
 
             .payment-card {
@@ -124,6 +135,7 @@ body {
 
                     .card-body {
                         width: 100%;
+                        padding: 30px 20px;
                         display: flex;
                         flex-direction: column;
                         align-items: center;
@@ -142,7 +154,7 @@ body {
                             border: none;
                             border-radius: 7px;
                         }
-                    
+
                         .btn:hover {
                             color: #ffffff;
                             background-color: #22913c;
@@ -229,7 +241,7 @@ body {
                     border: none;
                     border-radius: 10px;
                 }
-            
+
                 .btn:hover {
                     color: #ffffff;
                     background-color: #22913c;

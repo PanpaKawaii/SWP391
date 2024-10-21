@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 import { Form, Button, Card } from 'react-bootstrap';
 import './BookingPodDetailContent.css';
 
-import single1 from '../assets/PODs/single1.jpg'
-import double1 from '../assets/PODs/double1.jpg'
-import group1 from '../assets/PODs/group1.jpg'
+import { imagePODs } from '../assets/listPODs';
+import { imageSTOREs } from '../assets/listSTOREs';
+import { imageUTILITIEs } from '../assets/listUTILITIes';
+
 import QRcode from '../BackgroundImage/QRcode.jpg'
 
 export default function BookingPodDetailContent() {
@@ -228,16 +229,26 @@ export default function BookingPodDetailContent() {
                     <>
                         <h1><b>{Pod.name}</b></h1>
                         <div className='image-detail'>
-                            <div className='image-detail-1'>
-                                <img src={single1} alt={Pod.name}></img>
+                            <div className='image-detail-pod'>
+                                <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
                             </div>
                             <div className='image-detail-2'>
-                                <div className='image-detail-2-item'>
-                                    <img src={double1} alt={Pod.name}></img>
+                                <div className='image-detail-2-item-store'>
+                                    <img src={imageSTOREs.find(image => image.id === Pod.storeId)?.image} alt={Pod.name}></img>
                                 </div>
-                                <div className='image-detail-2-item'>
-                                    <img src={group1} alt={Pod.name}></img>
-                                </div>
+                                {AvailableUTILITIes && AvailableUTILITIes.slice(0, 3).map((utility) => (
+                                    <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length/4)), "--available-utilities-slice": AvailableUTILITIes.slice(0, 3).length }}>
+                                        <img src={imageUTILITIEs.find(image => image.id === utility.id)?.image} alt={utility.name}></img>
+                                    </div>
+                                ))}
+                                {AvailableUTILITIes && AvailableUTILITIes.slice(3, 6).map((utility) => (
+                                    <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length/4)), "--available-utilities-slice": AvailableUTILITIes.slice(3, 6).length }}>
+                                        <img src={imageUTILITIEs.find(image => image.id === utility.id)?.image} alt={utility.name}></img>
+                                    </div>
+                                ))}
+                                {/* <div className='image-detail-2-item'>
+                                    <img src={imageUTILITIEs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
+                                </div> */}
                             </div>
                         </div>
 
@@ -254,7 +265,7 @@ export default function BookingPodDetailContent() {
                                         <p><b>Khách đánh giá đây là một trong những căn phòng được yêu thích nhất trên InnoSpace</b></p>
                                     </div>
                                     <div className='favorite-rating'>
-                                        <h4>{Pod.rating}</h4>
+                                        <h3>{Pod.rating}</h3>
                                         {Array.from({ length: Pod.rating }, (_, index) => (
                                             <span key={index} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
                                         ))}
@@ -264,8 +275,22 @@ export default function BookingPodDetailContent() {
 
                                 <h4><b>Tiện nghi có sẵn:</b></h4>
                                 {AvailableUTILITIes.map((utility) => (
-                                    <li key={utility.id}>{utility.name}: {utility.description}</li>
+                                    <li key={utility.id}><i className='fa-solid fa-wifi'></i> {utility.name}: {utility.description}</li>
                                 ))}
+                                <i class="fa-regular fa-lightbulb"></i>
+
+
+                                
+                                <i class="fa-solid fa-plug"></i>
+                                <i class="fa-solid fa-microphone-lines"></i>
+                                <i class="fa-solid fa-tv"></i>
+
+                                <i class="fas fa-coffee-maker"></i>
+                                <i class="fas fa-coffee"></i>
+                                <i class="fa-solid fa-mug-saucer"></i>
+
+                                <i class="fa-regular fa-snowflake"></i>
+
                                 <h4><b>Mô tả về POD:</b></h4>
                                 <p>{Pod.description}</p>
                             </div>
@@ -396,7 +421,7 @@ export default function BookingPodDetailContent() {
                             <div className='confirm-information'>
 
                                 <h2><b>{Pod.name}</b></h2>
-                                <img src={single1} alt={Pod.name}></img>
+                                <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
                                 {/* <img src={Pod.image} alt={Pod.name}></img> */}
 
                                 <h5><b>{thisSTORE ? `${thisSTORE.name}: ${thisSTORE.address}` : 'Store not found'}</b></h5>

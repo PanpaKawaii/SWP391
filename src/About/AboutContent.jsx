@@ -12,24 +12,27 @@ export default function AboutContent() {
     return (
         <div className='POD-about'>
 
+            {/* <div className='video-container'>
+                <video className='fit' autoPlay muted loop>
+                    <source src={videoSrc} type='video/mp4' />
+                    Your browser does not support the video tag.
+                </video>
+            </div> */}
+
             <div className='video-container'>
+                <h1><b>Nơi làm việc lý tưởng cho sự sáng tạo và hiệu quả</b></h1>
+                <p><i>Tự hào mang đến cho bạn giải pháp tối ưu để làm việc tại bất kỳ đâu, với không gian linh hoạt và dịch vụ chất lượng cao.</i></p>
                 <video className='fit' autoPlay muted loop>
                     <source src={videoSrc} type='video/mp4' />
                     Your browser does not support the video tag.
                 </video>
             </div>
 
-            <div className='slogan-container'>
-                <h3><b>Nơi làm việc lý tưởng cho sự sáng tạo và hiệu quả</b></h3>
-                <h6><i>Tự hào mang đến cho bạn giải pháp tối ưu để làm việc tại bất kỳ đâu, với không gian linh hoạt và dịch vụ chất lượng cao.</i></h6>
-            </div>
-
             <div className='about-container'>
 
-                {/* <div> */}
                 <div className='introduction-container'>
                     <div className='introduction-solution'>
-                        <h3><b>Your All-In-One Solution</b></h3>
+                        <h1><b>Your All-In-One Solution</b></h1>
                         <h5>With InnoSpace, you’ll have everything you need to manage your hybrid workplace in one place.</h5>
                         <img src={adminhome} alt='adminhome' />
                     </div>
@@ -37,37 +40,35 @@ export default function AboutContent() {
                     <div className='introduction-convenient'>
                         <div className='convenient-item'>
 
-                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Hot Desking</b></h4>
-                            <h6>Simplify desk booking for flexible and collaborative workspaces.</h6>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Hot Desking</b></h3>
+                            <p>Simplify desk booking for flexible and collaborative workspaces.</p>
                         </div>
                         <div>
-                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Room Reservations</b></h4>
-                            <h6>View and reserve available rooms when scheduling team meetings.</h6>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Room Reservations</b></h3>
+                            <p>View and reserve available rooms when scheduling team meetings.</p>
                         </div>
                         <div>
-                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Office Insights</b></h4>
-                            <h6>Get real-time data on workspace utilization, occupancy and more.</h6>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Office Insights</b></h3>
+                            <p>Get real-time data on workspace utilization, occupancy and more.</p>
                         </div>
                         <div>
-                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Visitor Management</b></h4>
-                            <h6>Streamline the check-in process for visitors with a digital platform.</h6>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Visitor Management</b></h3>
+                            <p>Streamline the check-in process for visitors with a digital platform.</p>
                         </div>
                         <div>
-                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Policy Management</b></h4>
-                            <h6>Define, customize and implement hybrid work policies effortlessly.</h6>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Policy Management</b></h3>
+                            <p>Define, customize and implement hybrid work policies effortlessly.</p>
                         </div>
                         <div>
-                            <h4><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Leave Management</b></h4>
-                            <h6>Manage employee time off requests and approvals with ease.</h6>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Leave Management</b></h3>
+                            <p>Manage employee time off requests and approvals with ease.</p>
                         </div>
                     </div>
 
                 </div>
-                {/* </div> */}
 
                 <div>
-                    <h3><b>Vì sao chọn InnoSpace</b></h3>
-
+                    <h1><b>Vì sao chọn InnoSpace</b></h1>
                     <div className='reason-container'>
                         <img src={location} alt='location' />
                         <div>
@@ -89,7 +90,7 @@ export default function AboutContent() {
 
                 <div className='community-container'>
                     <div className='community-text'>
-                        <h3><b>Cộng đồng và kết nối</b></h3>
+                        <h1><b>Cộng đồng và kết nối</b></h1>
                         <p>InnoSpace không chỉ đơn thuần là một nền tảng đặt chỗ làm việc, mà còn là một cộng đồng sáng tạo, năng động và đầy cảm hứng. Với mục tiêu kết nối những cá nhân và doanh nghiệp có chung niềm đam mê phát triển, chúng tôi không chỉ cung cấp một không gian hiện đại với đầy đủ tiện nghi, mà còn tạo ra một môi trường thân thiện, nơi mọi người có thể dễ dàng giao lưu, chia sẻ kiến thức và kinh nghiệm.</p>
                         <p>Chúng tôi hiểu rằng việc làm việc một mình đôi khi có thể hạn chế sự sáng tạo và hiệu quả, vì thế InnoSpace không chỉ là nơi để bạn đến làm việc, mà còn là nơi bạn có thể gặp gỡ những con người cùng chung chí hướng, cùng nhau phát triển và khám phá những cơ hội mới. Những thành viên của cộng đồng chúng tôi không chỉ là những người làm việc độc lập, mà còn là các startup, doanh nghiệp nhỏ và những nhóm dự án đang cố gắng biến ý tưởng của mình thành hiện thực.</p>
                         <p>Bên cạnh việc cung cấp các dịch vụ đặt chỗ linh hoạt, chúng tôi còn tổ chức các sự kiện thường xuyên, từ hội thảo, hội nghị cho đến những buổi gặp gỡ không chính thức, nhằm tạo cơ hội cho các thành viên kết nối và học hỏi từ nhau. Đây là nơi mà sự sáng tạo không bị giới hạn bởi không gian hay thời gian, mà thay vào đó là một cộng đồng luôn sẵn lòng hỗ trợ lẫn nhau trong hành trình phát triển.</p>
@@ -105,7 +106,7 @@ export default function AboutContent() {
                     <h5>Embrace the future of work with InnoSpace and unlock the full potential of your organization.</h5>
                 </div>
                 <div className='booking-button'>
-                    <Link to={`../booking/store`}>
+                    <Link to={`../booking/pod`}>
                         <Button className='btn'>Try It For Yourself</Button>
                     </Link>
                 </div>

@@ -24,9 +24,12 @@ import UserHistoryBooking from './UserControlContent/UserHistoryBooking'
 
 import SignInSignUp from './SignInSignUp/SignInSignUp'
 
+import ScrollToTop from './ScrollToTopComponent/ScrollToTop';
+
 function App() {
   return (
     <>
+      <ScrollToTop />
       <div className='user-container'>
         <Sidebar className='sidebar' />
         <div className='user-content' >

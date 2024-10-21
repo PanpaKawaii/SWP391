@@ -128,7 +128,7 @@ export default function BookingPodContent() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({ selectedPod, selectedType, selectedUtility, podName });
+        console.log({ selectedStore, selectedPod, selectedType, selectedUtility, podName });
     };
 
     return (

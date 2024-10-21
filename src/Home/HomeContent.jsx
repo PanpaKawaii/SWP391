@@ -6,13 +6,15 @@ import './HomeContent.css'
 
 import { imageSTOREs } from '../assets/listSTOREs';
 
-import home from '../BackgroundImage/home.jpg'
+import home from '../BackgroundImage/home3.jpg'
 import space from '../BackgroundImage/space.jpg'
 
 export default function HomeContent() {
 
     const [STOREs, setSTOREs] = useState(null);
+    const [PODs, setPODs] = useState(null);
     const [TYPEs, setTYPEs] = useState(null);
+    const [UTILITIes, setUTILITIes] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -24,10 +26,20 @@ export default function HomeContent() {
                 const storeData = await storeResponse.json();
                 setSTOREs(storeData);
 
+                const podResponse = await fetch('https://localhost:7166/api/Pod');
+                if (!podResponse.ok) throw new Error('Network response was not ok');
+                const podData = await podResponse.json();
+                setPODs(podData);
+
                 const typeResponse = await fetch('https://localhost:7166/api/Type');
                 if (!typeResponse.ok) throw new Error('Network response was not ok');
                 const typeData = await typeResponse.json();
                 setTYPEs(typeData);
+
+                const utilityResponse = await fetch('https://localhost:7166/api/Utility');
+                if (!utilityResponse.ok) throw new Error('Network response was not ok');
+                const utilityData = await utilityResponse.json();
+                setUTILITIes(utilityData);
 
                 setLoading(false);
             } catch (error) {
@@ -39,15 +51,119 @@ export default function HomeContent() {
         fetchData();
     }, []);
 
+    // Những lựa chọn trên thanh tìm kiếm
+    const [selectedStore, setSelectedStore] = useState('');
+    const [selectedPod, setSelectedPod] = useState('');
+    const [selectedType, setSelectedType] = useState('');
+    const [selectedUtility, setSelectedUtility] = useState('');
+
+    // Lấy Utility được chọn
+    const filteredUtilities = UTILITIes ? UTILITIes.filter(utility =>
+        utility.id.toString() === selectedUtility.toString() || !selectedUtility.toString()
+    ) : [];
+
+    // Lấy Pods của Utility được chọn
+    const Pods = (filteredUtilities && filteredUtilities.length > 0) ? filteredUtilities[0].pods : [];
+
+    // Create a new array uniquePodName with unique pod names
+    const [uniquePodName, setUniquePodName] = useState([]);
+
+    useEffect(() => {
+        if (PODs) {
+            const uniquePods = PODs.reduce((acc, current) => {
+                const x = acc.find(item => item.name === current.name);
+                if (!x) {
+                    return acc.concat([current]);
+                } else {
+                    return acc;
+                }
+            }, []);
+            setUniquePodName(uniquePods);
+        }
+    }, [PODs]);
+
+    //Lấy Pods trùng khớp với những lựa chọn trên thanh tìm kiếm
+    const filteredResults = Pods ? Pods.filter(pod =>
+        (pod.storeId == selectedStore || !selectedStore) &&
+        (pod.name === selectedPod || !selectedPod) &&
+        (pod.typeId.toString() === selectedType.toString() || !selectedType.toString())
+    ) : [];
+
     const getCapacity = (typeId) => {
         const type = TYPEs ? TYPEs.find(type => type.id === typeId) : null;
         return type ? type.capacity : 0;
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log({ selectedStore, selectedPod, selectedType, selectedUtility });
+        console.log('filteredResults', filteredResults);
+    };
+
     return (
         <div className='POD-home'>
 
-            <img src={home} alt='home' />
+            {/* <img src={home} alt='home' /> */}
+
+            <div className='booking-now'>
+                <div className='booking-now-text'>
+                    <h1><b>ĐẶT CHỖ NGAY</b></h1>
+                    <h1><b>TẠI NƠI CỦA BẠN</b></h1>
+                </div>
+
+                <Form className='search' onSubmit={handleSubmit}>
+
+                    <Form.Group controlId='formStore' className='form-group'>
+                        <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
+                            <option value=''>[ Store]</option>
+                            {STOREs && STOREs.map(store => (
+                                <option key={store.id} value={store.id}>{store.name}</option>
+                            ))}
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group controlId='formPod' className='form-group'>
+                        <Form.Control as='select' value={selectedPod} onChange={(e) => setSelectedPod(e.target.value)}>
+                            <option value=''>[ POD ]</option>
+                            {uniquePodName && uniquePodName.map(pod => (
+                                <option key={pod.id} value={pod.name}>{pod.name}</option>
+                            ))}
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group controlId='formType' className='form-group'>
+                        <Form.Control as='select' value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+                            <option value=''>[ Type ]</option>
+                            {TYPEs && TYPEs.map(type => (
+                                <option key={type.id} value={type.id}>{type.name}</option>
+                            ))}
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group controlId='formUtility' className='form-group'>
+                        <Form.Control as='select' value={selectedUtility} onChange={(e) => setSelectedUtility(e.target.value)}>
+                            <option value=''>[ Utility ]</option>
+                            {UTILITIes && UTILITIes.map(utility => (
+                                <option key={utility.id} value={utility.id}>{utility.name}</option>
+                            ))}
+                        </Form.Control>
+                    </Form.Group>
+
+                    {filteredResults && filteredResults.length == 1 ?
+                        <Link to={`booking/pod/${filteredResults[0].id}`}><Button type='submit' className='btn'>ĐẶT CHỖ NGAY</Button></Link>
+                        : <Button type='submit' className='btn'>ĐẶT CHỖ NGAY</Button>}
+
+                </Form>
+
+                {filteredResults && filteredResults.length == 1 &&
+                    <b><p style={{ color: '#28a745', textShadow: '0.4px 0.4px 0 #ffffff' }}>Đi đến POD đó thôi!</p></b>}
+                {filteredResults && filteredResults.length == 0 &&
+                    <b><p style={{ color: '#dc3545', textShadow: '0.4px 0.4px 0 #ffffff' }}>Không tìm thấy kết quả nào</p></b>}
+                {filteredResults && PODs && filteredResults.length > 1 && filteredResults.length !== PODs.length &&
+                    <b><p style={{ color: '#ffc107', textShadow: '0.4px 0.4px 0 #ffffff' }}>Có rất nhiều kết quả, vui lòng chọn thêm các tiêu chí khác</p></b>}
+                {filteredResults && PODs && filteredResults.length == PODs.length &&
+                    <p>Có rất nhiều kết quả cho bạn lựa chọn</p>}
+            </div>
 
             <div className='shortcut-booking-pod'>
                 <h1><b>CƠ SỞ MỚI SẮP RA MẮT!</b></h1>
