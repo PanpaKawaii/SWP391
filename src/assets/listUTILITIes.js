@@ -1,10 +1,10 @@
-import id1 from './imageUTILITIEs/1.jpg';
-import id2 from './imageUTILITIEs/2.jpg';
-import id3 from './imageUTILITIEs/3.jpg';
-import id4 from './imageUTILITIEs/4.jpg';
-import id5 from './imageUTILITIEs/5.jpg';
+import id1 from './imageUTILITIs/1.jpg';
+import id2 from './imageUTILITIs/2.jpg';
+import id3 from './imageUTILITIs/3.jpg';
+import id4 from './imageUTILITIs/4.jpg';
+import id5 from './imageUTILITIs/5.jpg';
 
-export const imageUTILITIEs = [
+export const imageUTILITIs = [
     { id: 1, image: id1 },
     { id: 2, image: id2 },
     { id: 3, image: id3 },
