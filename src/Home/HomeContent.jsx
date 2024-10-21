@@ -125,7 +125,7 @@ export default function HomeContent() {
 
                     <Form.Group controlId='formStore' className='form-group'>
                         <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
-                            <option value=''>[ Store]</option>
+                            <option value=''>[Cửa hàng]</option>
                             {STOREs && STOREs.map(store => (
                                 <option key={store.id} value={store.id}>{store.name}</option>
                             ))}
@@ -134,7 +134,7 @@ export default function HomeContent() {
 
                     <Form.Group controlId='formPod' className='form-group'>
                         <Form.Control as='select' value={selectedPod} onChange={(e) => setSelectedPod(e.target.value)}>
-                            <option value=''>[ POD ]</option>
+                            <option value=''>[Tên POD]</option>
                             {uniquePodName && uniquePodName.map(pod => (
                                 <option key={pod.id} value={pod.name}>{pod.name}</option>
                             ))}
@@ -143,7 +143,7 @@ export default function HomeContent() {
 
                     <Form.Group controlId='formType' className='form-group'>
                         <Form.Control as='select' value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
-                            <option value=''>[ Type ]</option>
+                            <option value=''>[Loại POD]</option>
                             {TYPEs && TYPEs.map(type => (
                                 <option key={type.id} value={type.id}>{type.name}</option>
                             ))}
@@ -152,7 +152,7 @@ export default function HomeContent() {
 
                     <Form.Group controlId='formUtility' className='form-group'>
                         <Form.Control as='select' value={selectedUtility} onChange={(e) => setSelectedUtility(e.target.value)}>
-                            <option value=''>[ Utility ]</option>
+                            <option value=''>[Nội thất]</option>
                             {UTILITIes && UTILITIes.map(utility => (
                                 <option key={utility.id} value={utility.id}>{utility.name}</option>
                             ))}
@@ -181,18 +181,17 @@ export default function HomeContent() {
                     {(STOREs ? STOREs.slice(0, 4) : []).map((store) => ( // Check if STOREs is not null
                         <Col key={store.id} xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} className='image-col'>
                             <Card className='image-card'>
-                                <Link to={`${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link>
+                                <Link to={`booking/store/${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link>
                                 <Card.Body className='card-body'>
                                     <h3><b>{store.name}</b></h3>
                                     <div className='full-detail'>
                                         <div className='short-detail'>
-                                            <h1></h1>
                                             <p>Địa chỉ: {store.address}</p>
                                             <p>Liên hệ: {store.contact}</p>
                                         </div>
                                         <div className='active-button'>
-                                            <Link to={`booking/store/${store.storeId}/pod/${store.id}`}>
-                                                <Button className='btn' style={{ backgroundColor: '#28a745' }}>Select</Button>
+                                            <Link to={`booking/store/${store.id}`}>
+                                                <Button className='btn' style={{ backgroundColor: '#28a745' }}>CHỌN</Button>
                                             </Link>
                                         </div>
                                     </div>
@@ -208,12 +207,12 @@ export default function HomeContent() {
                 <div className='card-contact'>
                     <img src={space} alt='space' />
                     <Form className='card-form'>
-                        <h1><b>CONTACT US</b></h1>
+                        <h1><b>LIÊN HỆ CHÚNG TÔI</b></h1>
                         <Form.Text><p>InnoSpace luôn sẵn sàng lắng nghe câu hỏi và ý kiến đóng góp từ bạn!</p></Form.Text>
                         <Form.Text><p>Chúng tôi sẽ phản hồi ngay trong 24h tiếp theo!</p></Form.Text>
 
                         <Form.Group controlId='formName' className='form-group form-input'>
-                            <Form.Control className='input' type='text' placeholder='Name' />
+                            <Form.Control className='input' type='text' placeholder='Họ tên' />
                         </Form.Group>
 
                         <Form.Group controlId='formEmail' className='form-group form-input'>
@@ -221,11 +220,11 @@ export default function HomeContent() {
                         </Form.Group>
 
                         <Form.Group controlId='formPhoneNumber' className='form-group form-input'>
-                            <Form.Control className='input' type='text' placeholder='Phone Number' />
+                            <Form.Control className='input' type='text' placeholder='Số điện thoại' />
                         </Form.Group>
 
                         <Form.Group controlId='formYourProblem' className='form-group form-input'>
-                            <Form.Control className='input' type='text' placeholder='Your Problem' />
+                            <Form.Control className='input' type='text' placeholder='Vấn đề của bạn' />
                         </Form.Group>
                         <Button className='btn'>SUBMIT</Button>
                     </Form>

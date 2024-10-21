@@ -1,12 +1,14 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Col, Spinner } from 'react-bootstrap';
 import './UserControlContent.css';
 
 import YellowBanana from '../BackgroundImage/YellowBanana.jpg';
 
-export default function UserHistoryBooking() {
+export default function UserHistoryBookingDetail() {
+
+    const BookingId = useParams();
 
     const [id, setId] = useState(null);
     const UserId = localStorage.getItem('UserId');
@@ -14,6 +16,15 @@ export default function UserHistoryBooking() {
         const UserIdInt = parseInt(UserId, 10);
         setId(UserIdInt);
     }, [UserId]);
+    
+    const [currentDateTime, setCurrentDateTime] = useState(new Date());
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentDateTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
 
     const [BOOKINGs, setBOOKINGs] = useState(null);
     const [PODs, setPODs] = useState(null);
@@ -74,17 +85,8 @@ export default function UserHistoryBooking() {
     // const [thisSTORE, setThisSTORE] = useState(null);
 
     // Lấy những Booking của User này
-    const [filteredBOOKINGs, setFilteredBOOKINGs] = useState([]);
-    const getFilteredBOOKINGs = id && BOOKINGs ? BOOKINGs.filter(booking => booking.userId == id)
-        .sort((a, b) => b.id - a.id) : [];
-    useEffect(() => {
-        setFilteredBOOKINGs(getFilteredBOOKINGs);
-    }, [BOOKINGs]);
-
-    const sortBOOKINGsDate = () => {
-        const sortedBOOKINGs = filteredBOOKINGs.sort((a, b) => new Date(b.date) - new Date(a.date));
-        setFilteredBOOKINGs(sortedBOOKINGs);
-    }
+    const filteredBOOKINGs = id && BOOKINGs ? BOOKINGs.filter(booking => booking.userId == id) : [];
+    const filteredPAYMENTs = id && PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId == BookingId.Id) : [];
 
     const getPodName = (podId) => {
         const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
@@ -160,16 +162,28 @@ export default function UserHistoryBooking() {
 
                 <div className='user-booking'>
                     <Row className='booking-row'>
-                        {filteredBOOKINGs ? (
-                            filteredBOOKINGs.map((booking, index) => (
+                        {filteredPAYMENTs ? (
+                            filteredPAYMENTs.map((booking, index) => (
                                 <Col key={index} xxl={12} className='booking-col'>
                                     <div className='booking-card'>
-                                        <img src={YellowBanana} alt={getPodName(booking.podId)} />
+                                        <img src={YellowBanana} alt='YellowBanana' />
                                         <div className='card-detail-all'>
+
+                                            <div>
+                                                <h3><b>Amount: {booking.amount}</b></h3>
+                                                <h1>{new Date().toLocaleDateString()}</h1>
+                                                <h1>{currentDateTime.toLocaleString()}</h1>
+                                            </div>
+
+
+
+
+
+
                                             <div className='card-information'>
                                                 {/* <img src={getPodImage(booking.podId)} alt={getPodName(booking.podId)} /> */}
 
-                                                <div className='card-info'>
+                                                {/* <div className='card-info'>
                                                     <p className='booking-id'>Booking ID: {booking.id}</p>
                                                     <h3><b>{getPodName(booking.podId)}</b></h3>
 
@@ -196,10 +210,10 @@ export default function UserHistoryBooking() {
                                                     <p>{getStoreName(booking.podId)}: {getStoreAddress(booking.podId)}</p>
                                                     <p>{getTypeName(booking.podId)}</p>
                                                     <p>Đánh giá: {booking.feedback}</p>
-                                                </div>
+                                                </div> */}
                                             </div>
 
-                                            <div className='card-datetime-amount'>
+                                            {/* <div className='card-datetime-amount'>
                                                 <div>
                                                     <b>Ngày nhận phòng:</b> {booking.date}
                                                 </div>
@@ -235,7 +249,7 @@ export default function UserHistoryBooking() {
                                                         }
                                                     })()}</p>
                                                 </div>
-                                            </div>
+                                            </div> */}
 
                                             <div className='rebook-button'>
                                                 <Link to={`../user/historybooking/${booking.id}`}><Button className='btn btn-detail'>Chi tiết</Button></Link>

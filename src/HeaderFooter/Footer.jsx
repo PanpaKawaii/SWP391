@@ -10,14 +10,13 @@ export default function Footer() {
                     <p>InnoSpace là hệ thống quản lý và đặt chỗ làm việc cá nhân, giúp người dùng dễ dàng tìm kiếm và đặt chỗ theo nhu cầu.</p>
                 </div>
                 <div className='footer-location'>
-                    <h3>Location</h3>
+                    <h3>Địa chỉ</h3>
                     <p>+84 333 680 099</p>
                     <p>info@innospace.com.vn</p>
                     <p>39 Nguyen Duy Hieu, Thao Dien Ward, Thu Duc, HCMC</p>
                 </div>
                 <div className='footer-solution'>
-                    <h3>Solution</h3>
-                    <p>Cabin</p>
+                    <h3>Giải pháp</h3>
                     <p>Phòng 1 người</p>
                     <p>Phòng 2 người</p>
                     <p>Phòng nhóm</p>

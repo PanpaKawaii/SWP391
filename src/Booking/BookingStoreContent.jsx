@@ -61,7 +61,7 @@ export default function BookingStoreContent() {
 
                     <Form.Group controlId='formStore' className='form-group'>
                         <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
-                            <option value=''>[ Store ]</option>
+                            <option value=''>[Cửa hàng]</option>
                             {STOREs && STOREs.map(store => (
                                 <option key={store.id} value={store.name}>{store.name}</option>
                             ))}
@@ -69,7 +69,7 @@ export default function BookingStoreContent() {
                     </Form.Group>
 
                     <Form.Group controlId='formName' className='form-group form-input'>
-                        <Form.Control className='input' type='text' placeholder='Store Name' value={storeName} onChange={(e) => setStoreName(e.target.value)} />
+                        <Form.Control className='input' type='text' placeholder='Tên cửa hàng' value={storeName} onChange={(e) => setStoreName(e.target.value)} />
                     </Form.Group>
 
                 </Form>
@@ -94,7 +94,7 @@ export default function BookingStoreContent() {
                                             </div>
                                             <div className='active-button'>
                                                 <Link to={`${store.id}`}>
-                                                    <Button className='btn' style={{ backgroundColor: '#28a745' }}>Detail</Button>
+                                                    <Button className='btn' style={{ backgroundColor: '#28a745' }}>Chi tiết</Button>
                                                 </Link>
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@ export default function BookingStoreContent() {
                             </Col>
                         ))
                     ) : (
-                        <p>No stores available.</p>
+                        <p>Không tìm thấy cửa hàng nào.</p>
                     )}
                 </Row>
             </div>

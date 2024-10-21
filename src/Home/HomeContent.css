@@ -102,7 +102,7 @@ body {
         }
 
         .image-card:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
             box-shadow: 0 6px 12px #6666664d;
         }
 
@@ -151,49 +151,48 @@ body {
             .full-detail {
                 display: flex;
                 justify-content: space-between;
-            }
 
-            .short-detail {
-                display: block;
-                text-align: start;
-            }
+                .short-detail {
+                    display: flex;
+                    flex-direction: column;
+                    text-align: start;
+                }
 
-            .active-button {
-                display: block;
-                text-align: end;
-            }
+                .active-button {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: end;
+                }
 
-            .btn,
-            .btn:focus {
-                color: #ffffff;
-                background-color: #28a745;
-                font-weight: bold;
-                border: none;
-                border-radius: 7px;
-            }
+                .btn,
+                .btn:focus {
+                    color: #ffffff;
+                    background-color: #28a745;
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 7px;
+                }
 
-            .btn:hover {
-                color: #ffffff;
-                background-color: #22913c;
+                .btn:hover {
+                    color: #ffffff;
+                    background-color: #22913c;
+                }
             }
         }
     }
 
     .shortcut-contact {
         width: 100%;
+        margin: 50px 0;
         background-color: #ffffff;
         display: flex;
         flex-direction: column;
         align-items: center;
 
-        h1 {
-            margin: 50px 0 0;
-        }
-
         .card-contact {
-            margin: 50px 0;
+            margin: 40px 0;
             height: 550px;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: center;
@@ -219,7 +218,7 @@ body {
 
         .card-form p {
             color: #666666;
-            margin: 0 0 5px;
+            margin: 0;
         }
 
         .form-input {

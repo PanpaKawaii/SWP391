@@ -165,10 +165,10 @@ export default function BookingPodContent() {
                 <Form className='search' onSubmit={handleSubmit}>
 
                     {StoreId.Id ?
-                        (<></>) : (
+                        (<div><h1>POD có sẵn</h1></div>) : (
                             <Form.Group controlId='formStore' className='form-group'>
                                 <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
-                                    <option value=''>[ Store]</option>
+                                    <option value=''>[Cửa hàng]</option>
                                     {STOREs && STOREs.map(store => (
                                         <option key={store.id} value={store.id}>{store.name}</option>
                                     ))}
@@ -179,7 +179,7 @@ export default function BookingPodContent() {
 
                     <Form.Group controlId='formPod' className='form-group'>
                         <Form.Control as='select' value={selectedPod} onChange={(e) => setSelectedPod(e.target.value)}>
-                            <option value=''>[ POD ]</option>
+                            <option value=''>[Tên POD]</option>
                             {uniquePodName && uniquePodName.map(pod => (
                                 <option key={pod.id} value={pod.name}>{pod.name}</option>
                             ))}
@@ -188,7 +188,7 @@ export default function BookingPodContent() {
 
                     <Form.Group controlId='formType' className='form-group'>
                         <Form.Control as='select' value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
-                            <option value=''>[ Type ]</option>
+                            <option value=''>[Loại POD]</option>
                             {TYPEs && TYPEs.map(type => (
                                 <option key={type.id} value={type.id}>{type.name}</option>
                             ))}
@@ -197,7 +197,7 @@ export default function BookingPodContent() {
 
                     <Form.Group controlId='formUtility' className='form-group'>
                         <Form.Control as='select' value={selectedUtility} onChange={(e) => setSelectedUtility(e.target.value)}>
-                            <option value=''>[ Utility ]</option>
+                            <option value=''>[Nội thất]</option>
                             {UTILITIes && UTILITIes.map(utility => (
                                 <option key={utility.id} value={utility.id}>{utility.name}</option>
                             ))}
@@ -205,7 +205,7 @@ export default function BookingPodContent() {
                     </Form.Group>
 
                     <Form.Group controlId='formName' className='form-group form-input'>
-                        <Form.Control className='input' type='text' placeholder='POD Name' value={podName} onChange={(e) => setPodName(e.target.value)} />
+                        <Form.Control className='input' type='text' placeholder='Tên POD' value={podName} onChange={(e) => setPodName(e.target.value)} />
                     </Form.Group>
 
                 </Form>
@@ -217,13 +217,13 @@ export default function BookingPodContent() {
                 <table className='no-wrap align-middle table border-bottom'>
                     <thead className='list-header'>
                         <tr>
-                            <th className='list-index'>ID</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Store</th>
-                            <th>Utility</th>
-                            <th>Detail</th>
+                            <th className='list-index'>STT</th>
+                            <th>Ảnh</th>
+                            <th>Tên</th>
+                            <th>Loại</th>
+                            <th>Cửa hàng</th>
+                            <th>Nội thất</th>
+                            <th>Chi tiết</th>
                         </tr>
                     </thead>
                     <tbody className='list-body'>
@@ -268,13 +268,13 @@ export default function BookingPodContent() {
                                     </td>
                                     <td>
                                         <Link to={`../../../booking/pod/${pod.id}`}>
-                                            <Button className='btn' >Detail</Button>
+                                            <Button className='btn' >Chi tiết</Button>
                                         </Link>
                                     </td>
                                 </tr>
                             ))
                         ) : (
-                            <tr><td colSpan="6">No PODs available.</td></tr>
+                            <tr><td colSpan='7'>Không tìm thấy POD nào.</td></tr>
                         )}
                     </tbody>
                 </table>

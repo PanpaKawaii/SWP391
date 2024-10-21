@@ -26,6 +26,11 @@ body {
     a:hover {
         color: #cdcaca;
     }
+
+    .icon {
+        width: 20px;
+        margin: 0 10px;
+    }
 }
 
 .nav {

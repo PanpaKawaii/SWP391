@@ -43,26 +43,26 @@ export default function SideBar() {
                     <Link to='/'><h1><b>InnoSpace</b></h1></Link>
                 </div>
 
-                <Link to='/'><i className='fa-solid fa-house'></i> Home</Link>
-                <Link to='/about'><i className='fa-solid fa-circle-info'></i> About</Link>
-                <Link to='/booking/store'><i className='fa-solid fa-house-flag'></i> Store</Link>
-                <Link to='/booking/pod'><i className='fa-solid fa-list'></i> Booking</Link>
-                <Link to='/contact'><i className='fa-regular fa-address-card'></i> Contact</Link>
+                <Link to='/'><i className='fa-solid fa-house icon'></i> Trang chủ</Link>
+                <Link to='/about'><i className='fa-solid fa-circle-info icon'></i> Giới thiệu</Link>
+                <Link to='/booking/store'><i className='fa-solid fa-house-flag icon'></i> Cửa hàng</Link>
+                <Link to='/booking/pod'><i className='fa-solid fa-list icon'></i> Đặt chỗ</Link>
+                <Link to='/contact'><i className='fa-regular fa-address-card icon'></i> Liên hệ</Link>
 
                 {isNaN(id) ?
                     (<></>)
                     : (<>
-                        <Link to='/user/information'><i className='fa-solid fa-user'></i> Information</Link>
-                        <Link to='/user/account'><i className='fa-solid fa-key'></i> Change Password</Link>
-                        <Link to='/user/bookinghistory'><i className='fas fa-chart-bar'></i> History Bookings</Link>
+                        <Link to='/user/information'><i className='fa-solid fa-user icon'></i> Thông tin cá nhân</Link>
+                        <Link to='/user/account'><i className='fa-solid fa-key icon'></i> Đổi mật khẩu</Link>
+                        <Link to='/user/historybooking'><i className='fas fa-chart-bar icon'></i> Lịch sử đặt chỗ</Link>
                     </>)
                 }
 
                 <div>.</div>
 
                 {isNaN(id) ?
-                    (<Link to='/signinsignup'><i className='fas fa-sign-in-alt'></i> Đăng nhập</Link>)
-                    : (<Link onClick={handleLogout}><i className='fas fa-sign-out-alt'></i> Đăng xuất</Link>)
+                    (<Link to='/signinsignup'><i className='fas fa-sign-in-alt icon'></i> Đăng nhập</Link>)
+                    : (<Link onClick={handleLogout}><i className='fas fa-sign-out-alt icon'></i> Đăng xuất</Link>)
                 }
 
                 {/* <button className={`dropdown-btn ${isDropdownOpen ? 'open' : ''}`} onClick={toggleDropdown}>

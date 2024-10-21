@@ -32,36 +32,35 @@ export default function AboutContent() {
 
                 <div className='introduction-container'>
                     <div className='introduction-solution'>
-                        <h1><b>Your All-In-One Solution</b></h1>
-                        <h5>With InnoSpace, you’ll have everything you need to manage your hybrid workplace in one place.</h5>
+                        <h1><b>Giải pháp tất cả trong một</b></h1>
+                        <h5>Với InnoSpace, bạn sẽ có tất cả những gì bạn cần để quản lý nơi làm việc hỗn hợp của mình tại một nơi.</h5>
                         <img src={adminhome} alt='adminhome' />
                     </div>
 
                     <div className='introduction-convenient'>
                         <div className='convenient-item'>
-
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Hot Desking</b></h3>
-                            <p>Simplify desk booking for flexible and collaborative workspaces.</p>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Bàn làm việc linh hoạt</b></h3>
+                            <p>Đơn giản hóa việc đặt bàn cho không gian làm việc linh hoạt và hợp tác.</p>
                         </div>
                         <div>
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Room Reservations</b></h3>
-                            <p>View and reserve available rooms when scheduling team meetings.</p>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Đặt phòng họp</b></h3>
+                            <p>Xem và đặt phòng có sẵn khi lên lịch họp nhóm.</p>
                         </div>
                         <div>
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Office Insights</b></h3>
-                            <p>Get real-time data on workspace utilization, occupancy and more.</p>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Thông tin văn phòng</b></h3>
+                            <p>Nhận dữ liệu thời gian thực về việc sử dụng không gian làm việc, tình trạng sử dụng và nhiều hơn nữa.</p>
                         </div>
                         <div>
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Visitor Management</b></h3>
-                            <p>Streamline the check-in process for visitors with a digital platform.</p>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Quản lý khách</b></h3>
+                            <p>Tối ưu hóa quy trình đăng ký cho khách với nền tảng kỹ thuật số.</p>
                         </div>
                         <div>
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Policy Management</b></h3>
-                            <p>Define, customize and implement hybrid work policies effortlessly.</p>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Quản lý chính sách</b></h3>
+                            <p>Xác định, tùy chỉnh và triển khai chính sách làm việc kết hợp một cách dễ dàng.</p>
                         </div>
                         <div>
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Leave Management</b></h3>
-                            <p>Manage employee time off requests and approvals with ease.</p>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Quản lý nghỉ phép</b></h3>
+                            <p>Quản lý yêu cầu nghỉ phép và phê duyệt của nhân viên một cách dễ dàng.</p>
                         </div>
                     </div>
 
@@ -102,12 +101,12 @@ export default function AboutContent() {
 
             <div className='ready-container'>
                 <div className='ready-text'>
-                    <h3><b>Ready to revolutionize your hybrid workplace with InnoSpace?</b></h3>
-                    <h5>Embrace the future of work with InnoSpace and unlock the full potential of your organization.</h5>
+                    <h3><b>Bạn đã sẵn sàng để cách mạng hóa nơi làm việc của mình với InnoSpace chưa?</b></h3>
+                    <h5>Hãy đón nhận tương lai làm việc cùng InnoSpace và khai phá toàn bộ tiềm năng của bạn.</h5>
                 </div>
                 <div className='booking-button'>
                     <Link to={`../booking/pod`}>
-                        <Button className='btn'>Try It For Yourself</Button>
+                        <Button className='btn'>HÃY TRẢI NGHIỆM NÀO!</Button>
                     </Link>
                 </div>
             </div>

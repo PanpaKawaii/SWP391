@@ -7,7 +7,7 @@ import './BookingPodDetailContent.css';
 
 import { imagePODs } from '../assets/listPODs';
 import { imageSTOREs } from '../assets/listSTOREs';
-import { imageUTILITIEs } from '../assets/listUTILITIes';
+import { imageUTILITIes } from '../assets/listUTILITIes';
 
 import QRcode from '../BackgroundImage/QRcode.jpg'
 
@@ -270,16 +270,16 @@ export default function BookingPodDetailContent() {
                                 </div>
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(0, 3).map((utility) => (
                                     <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length / 4)), "--available-utilities-slice": AvailableUTILITIes.slice(0, 3).length }}>
-                                        <img src={imageUTILITIEs.find(image => image.id === utility.id)?.image} alt={utility.name}></img>
+                                        <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img>
                                     </div>
                                 ))}
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(3, 6).map((utility) => (
                                     <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length / 4)), "--available-utilities-slice": AvailableUTILITIes.slice(3, 6).length }}>
-                                        <img src={imageUTILITIEs.find(image => image.id === utility.id)?.image} alt={utility.name}></img>
+                                        <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img>
                                     </div>
                                 ))}
                                 {/* <div className='image-detail-2-item'>
-                                    <img src={imageUTILITIEs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
+                                    <img src={imageUTILITIes.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
                                 </div> */}
                             </div>
                         </div>
@@ -305,7 +305,7 @@ export default function BookingPodDetailContent() {
                                     <p></p>
                                 </div>
 
-                                    <h4><b>Tiện nghi có sẵn:</b></h4>
+                                <h4><b>Tiện nghi có sẵn:</b></h4>
                                 <div className='utility-container'>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className='fa-solid fa-wifi icon'></i> Wifi miễn phí</p></Col>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-regular fa-snowflake icon"></i> Máy điều hòa</p></Col>
@@ -329,7 +329,10 @@ export default function BookingPodDetailContent() {
 
                             <div className='payment-card'>
                                 <Card>
-                                    <h2><b>Tổng: {Amount > 1000000 ? (Amount / 1000000) + ' triệu đồng' : Amount > 1000 ? (Amount / 1000) + ' ngàn đồng' : Amount + ' đồng'}</b></h2>
+                                    <h2><b>Tổng: {Amount > 1000000 ? (Amount / 1000000) + ' triệu đồng' :
+                                        Amount > 1000 ? (Amount / 1000) + ' ngàn đồng' :
+                                            Amount + ' đồng'}
+                                    </b></h2>
 
                                     <Form className='form-card' onSubmit={handleBooking}>
                                         <Form.Group controlId='BookingDate' className='form-group'>
@@ -431,7 +434,7 @@ export default function BookingPodDetailContent() {
 
                     </>
                 ) : (
-                    <p>Pod not found.</p>
+                    <p>Không tìm thấy POD.</p>
                 )}
 
 
@@ -463,14 +466,14 @@ export default function BookingPodDetailContent() {
                                 ))}
 
                                 <div className='button-confirm-amount'>
-                                    <h2><b>Amount: {Amount / 1000}.000đ</b></h2>
+                                    <h2><b>Tổng: {Amount / 1000}.000đ</b></h2>
                                     {!Confirm ? <Button type='submit' className='btn' onClick={handleConfirm}>CONFIRM</Button> : <Button className='btn' style={{ backgroundColor: '#d3f9d8' }}>CONFIRMED</Button>}
                                 </div>
 
                                 <a className='close' href='#' onClick={() => { setIsPopupOpen(false); setIsQROpen(false); setConfirm(false); }}>&times;</a>
                             </div>
                             <div className='payment-qrcode'>
-                                <h1><b>Payment</b></h1>
+                                <h1><b>Thanh toán</b></h1>
                                 {IsQROpen && (
                                     <img src={QRcode} alt='QRcode'></img>
                                 )}

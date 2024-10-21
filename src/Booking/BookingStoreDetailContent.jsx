@@ -72,7 +72,7 @@ export default function BookingStoreDetailContent() {
                     <BookingPodContent />
                 </div>
             ) : (
-                <p>Store not found.</p>
+                <p>Không tìm thấy cửa hàng.</p>
             )}
         </div>
     )

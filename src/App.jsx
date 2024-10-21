@@ -21,7 +21,7 @@ import AboutContent from './About/AboutContent'
 import UserInformation from './UserControlContent/UserInformation'
 import UserAccount from './UserControlContent/UserAccount'
 import UserHistoryBooking from './UserControlContent/UserHistoryBooking'
-
+import UserHistoryBookingDetail from './UserControlContent/UserHistoryBookingDetail'
 import SignInSignUp from './SignInSignUp/SignInSignUp'
 
 import ScrollToTop from './ScrollToTopComponent/ScrollToTop';
@@ -50,7 +50,8 @@ function App() {
 
               <Route path='/user/information' element={<UserInformation />} />
               <Route path='/user/account' element={<UserAccount />} />
-              <Route path='/user/bookinghistory' element={<UserHistoryBooking />} />
+              <Route path='/user/historybooking' element={<UserHistoryBooking />} />
+              <Route path='/user/historybooking/:Id' element={<UserHistoryBookingDetail />} />
 
               <Route path='/signinsignup' element={<SignInSignUp />} />
             </Routes>
