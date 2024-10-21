@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, Row, Col, Spinner } from 'react-bootstrap';
 import './UserControlContent.css';
 
 import YellowBanana from '../BackgroundImage/YellowBanana.jpg';
@@ -122,6 +122,16 @@ export default function UserHistoryBooking() {
         return store ? store.address : null;
     };
 
+
+    if (loading) return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Spinner animation="border" role="status" style={{ width: '200px', height: '200px', fontSize: '50px' }}>
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        </div>
+    );
+    if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
+
     return (
         <div className='user-control-center'>
             <div className='user-control-center-container'>
@@ -132,61 +142,80 @@ export default function UserHistoryBooking() {
                             filteredBOOKINGs.map((booking, index) => (
                                 <Col key={index} xxl={12} className='booking-col'>
                                     <div className='booking-card'>
-                                        <div className='card-information'>
-                                            <img src={YellowBanana} alt={getPodName(booking.podId)} />
-                                            {/* <img src={getPodImage(booking.podId)} alt={getPodName(booking.podId)} /> */}
+                                        <img src={YellowBanana} alt={getPodName(booking.podId)} />
+                                        <div className='card-detail-all'>
+                                            <div className='card-information'>
+                                                {/* <img src={getPodImage(booking.podId)} alt={getPodName(booking.podId)} /> */}
 
-                                            <div className='card-info'>
-                                                <h4><b>{getPodName(booking.podId)}</b></h4>
+                                                <div className='card-info'>
+                                                    <p className='booking-id'>Booking ID: {booking.id}</p>
+                                                    <h3><b>{getPodName(booking.podId)}</b></h3>
 
-                                                <div className='card-rating-capacity'>
-                                                    <div className='rating'>
-                                                        {[...Array(getPodRating(booking.podId))].map((_, i) => (
-                                                            <span key={i} style={{ color: 'gold', fontSize: '1.1em' }}><i className='fa-solid fa-star'></i></span>
-                                                        ))}
+                                                    <div className='card-rating-capacity'>
+                                                        <div className='rating'>
+                                                            {[...Array(getPodRating(booking.podId))].map((_, i) => (
+                                                                <span key={i} style={{ color: 'gold', fontSize: '1.1em' }}><i className='fa-solid fa-star'></i></span>
+                                                            ))}
+                                                        </div>
+
+                                                        <div className='capacity'>
+                                                            {getPodCapacity(booking.podId) === 10 ?
+                                                                (
+                                                                    <span className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
+                                                                ) :
+                                                                (
+                                                                    [...Array(getPodCapacity(booking.podId))].map((_, i) => (
+                                                                        <span key={i} className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user'></i></span>
+                                                                    ))
+                                                                )
+                                                            }
+                                                        </div>
                                                     </div>
-
-                                                    <div className='capacity'>
-                                                        {getPodCapacity(booking.podId) === 10 ?
-                                                            (
-                                                                <span className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
-                                                            ) :
-                                                            (
-                                                                [...Array(getPodCapacity(booking.podId))].map((_, i) => (
-                                                                    <span key={i} className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user'></i></span>
-                                                                ))
-                                                            )
-                                                        }
-                                                    </div>
+                                                    <p>{getStoreName(booking.podId)}: {getStoreAddress(booking.podId)}</p>
+                                                    <p>{getTypeName(booking.podId)}</p>
+                                                    <p>Feedback: {booking.feedback}</p>
                                                 </div>
-                                                <p>{getStoreName(booking.podId)}: {getStoreAddress(booking.podId)}</p>
-                                                <p>{getTypeName(booking.podId)}</p>
-                                                <p>Trạng thái: {booking.status}</p>
-                                                <p>Feedback: {booking.feedback}</p>
                                             </div>
-                                        </div>
 
-                                        <div className='card-date'>
-                                            <p><b>Ngày nhận phòng:</b> {booking.date}</p>
-                                            <div className='slot-name'>
-                                                {getSlots(booking.id).slice(0, 3).map((slot, index) => (
-                                                    <span key={index}>
-                                                        <p>{slot.name}</p>
-                                                    </span>
-                                                ))}
+                                            <div className='card-datetime-amount'>
+                                                <div>
+                                                    <b>Ngày nhận phòng:</b> {booking.date}
+                                                </div>
+                                                <div className='slot-name'>
+                                                    {getSlots(booking.id).slice(0, 3).map((slot, index) => (
+                                                        <span key={index}>
+                                                            {slot.name}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                                <div className='slot-name'>
+                                                    {getSlots(booking.id).slice(3, 6).map((slot, index) => (
+                                                        <span key={index}>
+                                                            {slot.name}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                                <div className='card-amount'>
+                                                    <h4>Amount: 999 ngàn đồng</h4>
+                                                    <p>Trạng thái: {(() => {
+                                                        switch (booking.status) {
+                                                            case 'Đã xác nhận':
+                                                                return <span style={{ backgroundColor: '#28a745', color: 'white' }}>{booking.status}</span>;
+                                                            case 'Chờ xác nhận':
+                                                                return <span style={{ backgroundColor: '#ffc107', color: 'white' }}>{booking.status}</span>;
+                                                            case 'Đã hủy':
+                                                                return <span style={{ backgroundColor: '#dc3545', color: 'white' }}>{booking.status}</span>;
+                                                            default:
+                                                                return booking.status;
+                                                        }
+                                                    })()}</p>
+                                                </div>
                                             </div>
-                                            <div className='slot-name'>
-                                                {getSlots(booking.id).slice(3, 6).map((slot, index) => (
-                                                    <span key={index}>
-                                                        <p>{slot.name}</p>
-                                                    </span>
-                                                ))}
-                                            </div>
-                                            <h4>Amount: 999 ngàn đồng</h4>
-                                        </div>
 
-                                        <div className='rebook-button'>
-                                            <Link to={`../booking/pod/${booking.podId}`}><Button className='btn'>REBOOK</Button></Link>
+                                            <div className='rebook-button'>
+                                                <Link to={`../user/bookinghistory/${booking.podId}`}><Button className='btn btn-detail'>Detail</Button></Link>
+                                                <Link to={`../booking/pod/${booking.podId}`}><Button className='btn btn-rebook'>Rebook</Button></Link>
+                                            </div>
                                         </div>
                                     </div>
                                 </Col>

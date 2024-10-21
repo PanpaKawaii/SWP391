@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Button, Row, Col, Card } from 'react-bootstrap';
+import { Form, Button, Row, Col, Card, Spinner } from 'react-bootstrap';
 import './HomeContent.css'
 
 import { imageSTOREs } from '../assets/listSTOREs';
@@ -100,6 +100,16 @@ export default function HomeContent() {
         console.log('filteredResults', filteredResults);
     };
 
+
+    if (loading) return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Spinner animation="border" role="status" style={{ width: '200px', height: '200px', fontSize: '50px' }}>
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        </div>
+    );
+    if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
+
     return (
         <div className='POD-home'>
 
@@ -169,16 +179,16 @@ export default function HomeContent() {
                 <h1><b>CƠ SỞ MỚI SẮP RA MẮT!</b></h1>
                 <Row className='image-row'>
                     {(STOREs ? STOREs.slice(0, 4) : []).map((store) => ( // Check if STOREs is not null
-                        <Col key={store.id} xs={12} sm={12} md={6} lg={6} xl={6} xxl={3} className='image-col'>
+                        <Col key={store.id} xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} className='image-col'>
                             <Card className='image-card'>
-                                <img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} />
+                                <Link to={`${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link>
                                 <Card.Body className='card-body'>
                                     <h3><b>{store.name}</b></h3>
                                     <div className='full-detail'>
                                         <div className='short-detail'>
                                             <h1></h1>
-                                            <p>TypeId: {store.typeId}</p>
-                                            <p>StoreId: {store.storeId}</p>
+                                            <p>Địa chỉ: {store.address}</p>
+                                            <p>Liên hệ: {store.contact}</p>
                                         </div>
                                         <div className='active-button'>
                                             <Link to={`booking/store/${store.storeId}/pod/${store.id}`}>

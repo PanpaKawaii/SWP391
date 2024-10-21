@@ -38,6 +38,8 @@ export default function UserInformation() {
         <div className='user-control-center'>
             <div className='user-control-center-container'>
 
+                <img src={USER ? USER.avatar : ''} alt='Avatar' />
+
                 <div className='user-information'>
                     <h1><b>Xin chào, {USER ? USER.name : '...'}</b></h1>
                     <h3>Bạn là thành viên {USER ? (USER.type == 'VIP' ? USER.type : '') : '...'} của InnoSpace!</h3>

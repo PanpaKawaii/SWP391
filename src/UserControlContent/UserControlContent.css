@@ -3,8 +3,8 @@ body {
 }
 
 .user-control-center {
-    background-color: #e7e7e7;
-    padding: 20px 20px 10px;
+    background-color: #ffffff;
+    padding: 20px;
     font-family: 'Quicksand', 'Arial', sans-serif;
 }
 
@@ -26,7 +26,7 @@ body {
 
     .user-booking {
         width: 100%;
-        padding: 0 0 0 20px;
+        padding: 0 20px 0;
 
         .booking-row {
             margin: 0;
@@ -40,79 +40,113 @@ body {
                     height: 250px;
                     border-radius: 8px;
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                    display: flex;
-                    justify-content: space-between;
-                    overflow: hidden;
                     transition: all 0.3s ease;
-
-                    h4 {
-                        margin: 20px 0 0;
-                    }
+                    display: flex;
+                    overflow: hidden;
 
                     p {
                         margin: 0;
                     }
 
-                    .card-information {
-                        width: 60%;
-                        width: auto;
+                    img {
+                        width: 25%;
+                        height: 240px;
+                        margin: 5px;
+                        border-radius: 5px;
+                        object-fit: cover;
+                        object-position: center;
+                        display: block;
+                    }
+
+                    .card-detail-all {
+                        width: 75%;
+                        padding: 20px;
                         display: flex;
+                        justify-content: space-between;
+                        overflow: hidden;
 
-                        img {
-                            width: 320px;
-                            height: 240px;
-                            margin: 5px;
-                            border-radius: 5px;
-                            object-fit: cover;
-                            object-position: center;
-                            display: block;
-                        }
+                        .card-information {
+                            width: 60%;
+                            width: auto;
+                            display: flex;
 
-                        .card-info {
-                            padding: 0 20px;
-                            display: block;
-                            text-align: start;
+                            .card-info {
+                                display: block;
+                                text-align: start;
 
-                            .card-rating-capacity {
-                                display: flex;
-                                align-items: end;
+                                .booking-id {
+                                    margin: 0 0 5px;
+                                }
+
+                                .card-rating-capacity {
+                                    display: flex;
+                                    align-items: end;
+                                }
                             }
                         }
 
-                        .card-date {
+                        .card-datetime-amount {
                             display: flex;
                             flex-direction: column;
-                            justify-content: center;
                             align-items: center;
+                            text-align: center;
+
+                            span {
+                                padding: 0 5px;
+                                margin: 0 5px;
+                                border: 1px solid #eeeeee;
+                                border-radius: 5px;
+                                text-align: center;
+                            }
 
                             .slot-name {
                                 display: flex;
                                 justify-content: center;
                             }
 
-                            span {
-                                margin: 0 5px;
+                            .card-amount {
+                                margin: 20px 0;
                             }
                         }
-                    }
 
-                    .rebook-button {
-                        display: flex;
-                        align-items: center;
-                        padding: 0 20px;
+                        .rebook-button {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
 
-                        .btn,
-                        .btn:focus {
-                            color: #ffffff;
-                            background-color: #28a745;
-                            font-weight: bold;
-                            border: none;
-                            border-radius: 7px;
-                        }
-                
-                        .btn:hover {
-                            color: #ffffff;
-                            background-color: #22913c;
+                            .btn {
+                                width: 100px;
+                            }
+
+                            .btn-detail,
+                            .btn-detail:focus {
+                                color: #ffffff;
+                                background-color: #ffc107;
+                                margin: 0 0 10px;
+                                font-weight: bold;
+                                border: none;
+                                border-radius: 7px;
+                            }
+
+                            .btn-detail:hover {
+                                color: #ffffff;
+                                background-color: #dba506;
+                            }
+
+                            .btn-rebook,
+                            .btn-rebook:focus {
+                                color: #ffffff;
+                                background-color: #28a745;
+                                margin: 0 0 10px;
+                                font-weight: bold;
+                                border: none;
+                                border-radius: 7px;
+                            }
+
+                            .btn-rebook:hover {
+                                color: #ffffff;
+                                background-color: #22913c;
+                            }
                         }
                     }
                 }

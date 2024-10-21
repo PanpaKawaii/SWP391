@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { Row, Col, Card, Form, Button, Spinner } from 'react-bootstrap';
 import './BookingStoreContent.css';
 
 import { imageSTOREs } from '../assets/listSTOREs';
@@ -43,6 +43,16 @@ export default function BookingStoreContent() {
         console.log({ selectedStore, storeName });
     };
 
+
+    if (loading) return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Spinner animation="border" role="status" style={{ width: '200px', height: '200px', fontSize: '50px' }}>
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        </div>
+    );
+    if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
+
     return (
         <div className='POD-booking-store'>
 
@@ -66,6 +76,8 @@ export default function BookingStoreContent() {
 
             </div>
 
+            <hr />
+
             <div className='booking-store-container'>
                 <Row className='image-row'>
                     {filteredResults.length > 0 ? (
@@ -77,8 +89,8 @@ export default function BookingStoreContent() {
                                         <h3><b>{store.name}</b></h3>
                                         <div className='full-detail'>
                                             <div className='short-detail'>
-                                                <p>Address: {store.address}</p>
-                                                <p>Contact: {store.contact}</p>
+                                                <p>Địa chỉ: {store.address}</p>
+                                                <p>Liên hệ: {store.contact}</p>
                                             </div>
                                             <div className='active-button'>
                                                 <Link to={`${store.id}`}>

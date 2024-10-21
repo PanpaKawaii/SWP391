@@ -4,7 +4,7 @@ body {
 
 .POD-home {
     width: 100%;
-    background-color: #eeefe9;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,16 +66,22 @@ body {
 
     .shortcut-booking-pod {
         width: 100%;
-        background-color: #bdd4dd;
+        background-color: #eeeeee;
         display: flex;
         flex-direction: column;
         align-items: center;
 
+        h1 {
+            margin: 50px 0 0;
+        }
+
         .image-row {
-            margin: 0 0 50px;
-            width: 100%;
+            width: 90%;
+            margin: 50px 0;
             max-width: 1500px;
             height: auto;
+            display: flex;
+            justify-content: center;
         }
 
         .image-col {
@@ -84,9 +90,7 @@ body {
         }
 
         .image-card {
-            width: 320px;
-            height: 300px;
-            margin-bottom: 20px;
+            width: 540px;
             background-color: #ffffff;
             border: none;
             border-radius: 10px;
@@ -98,13 +102,13 @@ body {
         }
 
         .image-card:hover {
-            transform: translateY(-10px);
+            transform: scale(1.1);
             box-shadow: 0 6px 12px #6666664d;
         }
 
         .image-card img {
-            width: 320px;
-            height: 180px;
+            width: 540px;
+            height: 260px;
             object-fit: cover;
             object-position: center;
             display: block;
@@ -139,58 +143,55 @@ body {
 
         .card-body {
             width: 100%;
-        }
 
-        .card-tittle h4 {
-            color: #000000;
-            margin: 0;
-            font-size: 0.9em;
-        }
+            p {
+                margin: 0;
+            }
 
-        .card-info p {
-            color: #000000;
-            margin: 0;
-        }
+            .full-detail {
+                display: flex;
+                justify-content: space-between;
+            }
 
-        .full-detail {
-            display: flex;
-            justify-content: space-between;
-        }
+            .short-detail {
+                display: block;
+                text-align: start;
+            }
 
-        .short-detail {
-            display: block;
-            text-align: start;
-        }
+            .active-button {
+                display: block;
+                text-align: end;
+            }
 
-        .active-button {
-            display: block;
-            text-align: end;
-        }
+            .btn,
+            .btn:focus {
+                color: #ffffff;
+                background-color: #28a745;
+                font-weight: bold;
+                border: none;
+                border-radius: 7px;
+            }
 
-        .btn,
-        .btn:focus {
-            color: #ffffff;
-            background-color: #28a745;
-            font-weight: bold;
-            border: none;
-            border-radius: 7px;
-        }
-
-        .btn:hover {
-            color: #ffffff;
-            background-color: #22913c;
+            .btn:hover {
+                color: #ffffff;
+                background-color: #22913c;
+            }
         }
     }
 
     .shortcut-contact {
         width: 100%;
-        background-color: #deeff7;
+        background-color: #ffffff;
         display: flex;
         flex-direction: column;
         align-items: center;
 
+        h1 {
+            margin: 50px 0 0;
+        }
+
         .card-contact {
-            margin: 0 0 100px;
+            margin: 50px 0;
             height: 550px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

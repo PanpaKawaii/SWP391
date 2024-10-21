@@ -47,9 +47,13 @@ body {
         background-color: #ffffff;
         position: sticky;
         top: 78px;
+
+        th {
+            background-color: #f5f5f5;
+        }
     }
 
-    .list-id {
+    .list-index {
         text-align: center;
         width: 5%;
     }

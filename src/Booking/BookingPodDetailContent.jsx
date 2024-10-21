@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Form, Button, Card } from 'react-bootstrap';
+import { Form, Button, Card, Row, Col, Spinner } from 'react-bootstrap';
 import './BookingPodDetailContent.css';
 
 import { imagePODs } from '../assets/listPODs';
@@ -99,7 +99,7 @@ export default function BookingPodDetailContent() {
 
     // Những Slot được chọn từ AvailableSLOTs
     const selectedSlots = AvailableSLOTs ? AvailableSLOTs.filter(slot => SlotId.includes(slot.id)) : [];
-    console.log('SlotId: ', SlotId)
+    console.log('selectedSlots: ', selectedSlots)
 
     // Những Booking có cùng Date được chọn
     const bookingsHaveTheSameDate = BOOKINGs ? BOOKINGs.filter(booking =>
@@ -119,9 +119,6 @@ export default function BookingPodDetailContent() {
 
 
 
-
-    // Lấy những Slot được chọn
-    const thisSLOT = AvailableSLOTs ? AvailableSLOTs.filter(slot => String(SlotId).includes(String(slot.id))) : null;
 
     const Booking = async () => {
         if (!MaxID) {
@@ -147,10 +144,21 @@ export default function BookingPodDetailContent() {
             status: 'Chờ xác nhận',
             feedback: '',
             podId: Pod.id,
-            slotIds: SlotId.map(id => parseInt(id, 10)),
             userId: id,
+            slotIds: SlotId.map(id => parseInt(id, 10)),
         };
         console.log('Booking data:', bookingData);
+
+        const paymentData = {
+            id: MaxID + 10,
+            method: 'Thanh toán qua VNPay',
+            amount: Amount,
+            date: date,
+            status: 'Chưa thanh toán',
+            bookingId: MaxID + 1,
+        };
+        console.log('Payment data:', paymentData);
+
         console.log('Confirm status:', Confirm);
 
         const token = localStorage.getItem('token');
@@ -168,8 +176,24 @@ export default function BookingPodDetailContent() {
 
             if (!response.ok) throw new Error('Network response was not ok');
             const result = await response.json();
-            setConfirm(false);
             console.log('Booking successful:', result);
+        } catch (error) {
+            console.error('Error during booking:', error);
+        }
+
+        try {
+            const response = await fetch('https://localhost:7166/api/Payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(paymentData),
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+            const result = await response.json();
+            console.log('Creating Payment successful:', result);
         } catch (error) {
             console.error('Error during booking:', error);
         }
@@ -187,8 +211,6 @@ export default function BookingPodDetailContent() {
 
     const handleBooking = async (e) => {
         e.preventDefault();
-        // const date = e.target.BookingDate.value;
-        // setDate(date);
         setIsPopupOpen(true);
 
         const fetchMaxBookingId = async () => {
@@ -214,6 +236,15 @@ export default function BookingPodDetailContent() {
     };
 
 
+    if (loading) return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Spinner animation="border" role="status" style={{ width: '200px', height: '200px', fontSize: '50px' }}>
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        </div>
+    );
+    if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
+
     return (
 
         //[Store] (Id, Name, Address, Contact, Status)
@@ -231,18 +262,19 @@ export default function BookingPodDetailContent() {
                         <div className='image-detail'>
                             <div className='image-detail-pod'>
                                 <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
+                                {/* <img src={Pod.image} alt={Pod.name}></img> */}
                             </div>
                             <div className='image-detail-2'>
                                 <div className='image-detail-2-item-store'>
                                     <img src={imageSTOREs.find(image => image.id === Pod.storeId)?.image} alt={Pod.name}></img>
                                 </div>
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(0, 3).map((utility) => (
-                                    <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length/4)), "--available-utilities-slice": AvailableUTILITIes.slice(0, 3).length }}>
+                                    <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length / 4)), "--available-utilities-slice": AvailableUTILITIes.slice(0, 3).length }}>
                                         <img src={imageUTILITIEs.find(image => image.id === utility.id)?.image} alt={utility.name}></img>
                                     </div>
                                 ))}
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(3, 6).map((utility) => (
-                                    <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length/4)), "--available-utilities-slice": AvailableUTILITIes.slice(3, 6).length }}>
+                                    <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length / 4)), "--available-utilities-slice": AvailableUTILITIes.slice(3, 6).length }}>
                                         <img src={imageUTILITIEs.find(image => image.id === utility.id)?.image} alt={utility.name}></img>
                                     </div>
                                 ))}
@@ -273,23 +305,23 @@ export default function BookingPodDetailContent() {
                                     <p></p>
                                 </div>
 
-                                <h4><b>Tiện nghi có sẵn:</b></h4>
-                                {AvailableUTILITIes.map((utility) => (
-                                    <li key={utility.id}><i className='fa-solid fa-wifi'></i> {utility.name}: {utility.description}</li>
-                                ))}
-                                <i class="fa-regular fa-lightbulb"></i>
+                                    <h4><b>Tiện nghi có sẵn:</b></h4>
+                                <div className='utility-container'>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className='fa-solid fa-wifi icon'></i> Wifi miễn phí</p></Col>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-regular fa-snowflake icon"></i> Máy điều hòa</p></Col>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-regular fa-lightbulb icon"></i> Đèn dự phòng</p></Col>
+                                    {AvailableUTILITIes.map((utility) => (
+                                        <React.Fragment key={utility.id}>
+                                            {utility.name === 'Ổ cắm điện' && <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-solid fa-plug icon"></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Máy chiếu' && <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-solid fa-chalkboard icon"></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Máy pha cà phê' && <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-solid fa-mug-saucer icon"></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Hệ thống âm thanh' && <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-solid fa-microphone-lines icon"></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Bảng trắng thông minh' && <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-solid fa-tv icon"></i> {utility.name}</p></Col>}
+                                        </React.Fragment>
+                                    ))}
+                                </div>
 
 
-                                
-                                <i class="fa-solid fa-plug"></i>
-                                <i class="fa-solid fa-microphone-lines"></i>
-                                <i class="fa-solid fa-tv"></i>
-
-                                <i class="fas fa-coffee-maker"></i>
-                                <i class="fas fa-coffee"></i>
-                                <i class="fa-solid fa-mug-saucer"></i>
-
-                                <i class="fa-regular fa-snowflake"></i>
 
                                 <h4><b>Mô tả về POD:</b></h4>
                                 <p>{Pod.description}</p>
@@ -297,79 +329,76 @@ export default function BookingPodDetailContent() {
 
                             <div className='payment-card'>
                                 <Card>
-                                    <Card.Body>
+                                    <h2><b>Tổng: {Amount > 1000000 ? (Amount / 1000000) + ' triệu đồng' : Amount > 1000 ? (Amount / 1000) + ' ngàn đồng' : Amount + ' đồng'}</b></h2>
 
-                                        <h4><b>Amount: {Amount > 1000000 ? (Amount / 1000000) + ' triệu đồng' : Amount > 1000 ? (Amount / 1000) + ' ngàn đồng' : Amount + ' đồng'}</b></h4>
+                                    <Form className='form-card' onSubmit={handleBooking}>
+                                        <Form.Group controlId='BookingDate' className='form-group'>
+                                            <Form.Control className='input' type='date' onChange={(e) => {
+                                                const selectedDate = e.target.value;
+                                                setDate(selectedDate);
+                                                console.log(selectedDate);
+                                            }} required />
+                                        </Form.Group>
 
-                                        <Form className='form-card' onSubmit={handleBooking}>
-                                            <Form.Group controlId='BookingDate' className='form-group'>
-                                                <Form.Control className='input' type='date' onChange={(e) => {
-                                                    const selectedDate = e.target.value;
-                                                    setDate(selectedDate);
-                                                    console.log(selectedDate);
-                                                }} required />
-                                            </Form.Group>
+                                        <Form.Group controlId='BookingSlot' className='form-group'>
+                                            {AvailableSLOTs.map((slot, index) => (
+                                                <div
+                                                    key={index}
+                                                    onClick={() => {
+                                                        const selectedSlot = AvailableSLOTs.find(s => s.id === slot.id);
+                                                        setAmount(prevAmount => prevAmount + (selectedSlot.price * (selectedSlot.selected ? 1 : -1)));
+                                                        selectedSlot.selected = !selectedSlot.selected; // Toggle selection
+                                                        console.log(selectedSlot.selected ? `Selected: ${slot.id}` : `Deselected: ${slot.id}`);
+                                                        setSlotId(prevSlotId => {
+                                                            const isSelected = prevSlotId.includes(slot.id);
+                                                            if (isSelected) {
+                                                                return prevSlotId.filter(id => id !== slot.id); // Remove if already selected
+                                                            } else {
+                                                                return [...prevSlotId, slot.id]; // Add if not selected
+                                                            }
+                                                        });
+                                                    }}
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                        backgroundColor: slot.selected ? '#d3f9d8' : '#fff',
+                                                        padding: '10px',
+                                                        margin: '5px 0',
+                                                        border: slot.selected ? '1px solid #28a745' : '1px solid #ccc',
+                                                        borderRadius: '5px'
+                                                    }}
+                                                >
+                                                    {`[${slot.name}] ${slot.startTime}:00 - ${slot.endTime}:00 (${slot.price / 1000}.000đ)`}
+                                                </div>
+                                            ))}
+                                        </Form.Group>
 
-                                            <Form.Group controlId='BookingSlot' className='form-group'>
-                                                {AvailableSLOTs.map((slot, index) => (
-                                                    <div
-                                                        key={index}
-                                                        onClick={() => {
-                                                            const selectedSlot = AvailableSLOTs.find(s => s.id === slot.id);
-                                                            setAmount(prevAmount => prevAmount + (selectedSlot.price * (selectedSlot.selected ? 1 : -1)));
-                                                            selectedSlot.selected = !selectedSlot.selected; // Toggle selection
-                                                            console.log(selectedSlot.selected ? `Selected: ${slot.id}` : `Deselected: ${slot.id}`);
-                                                            setSlotId(prevSlotId => {
-                                                                const isSelected = prevSlotId.includes(slot.id);
-                                                                if (isSelected) {
-                                                                    return prevSlotId.filter(id => id !== slot.id); // Remove if already selected
-                                                                } else {
-                                                                    return [...prevSlotId, slot.id]; // Add if not selected
-                                                                }
-                                                            });
-                                                        }}
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                            backgroundColor: slot.selected ? '#d3f9d8' : '#fff',
-                                                            padding: '10px',
-                                                            margin: '5px 0',
-                                                            border: slot.selected ? '1px solid #d3f9d8' : '1px solid #ccc',
-                                                            borderRadius: '5px'
-                                                        }}
-                                                    >
-                                                        {`[${slot.name}] ${slot.startTime}:00 - ${slot.endTime}:00 (${slot.price / 1000}.000đ)`}
-                                                    </div>
-                                                ))}
-                                            </Form.Group>
+                                        <Form.Group controlId='DateValidation' className='form-group'>
+                                            {(() => {
+                                                const selectedDate = new Date(date);
+                                                const currentDate = new Date();
+                                                currentDate.setHours(0, 0, 0, 0); // Reset time to start of day for fair comparison
 
-                                            <Form.Group controlId='DateValidation' className='form-group'>
-                                                {(() => {
-                                                    const selectedDate = new Date(date);
-                                                    const currentDate = new Date();
-                                                    currentDate.setHours(0, 0, 0, 0); // Reset time to start of day for fair comparison
+                                                if (selectedDate < currentDate) {
+                                                    return (
+                                                        <Form.Text className='text-danger'>
+                                                            Please select a date from today onwards.
+                                                        </Form.Text>
+                                                    );
+                                                } else if (selectedDate > new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000)) {
+                                                    return (
+                                                        <Form.Text className='text-warning'>
+                                                            Bookings are only available for the next 30 days.
+                                                        </Form.Text>
+                                                    );
+                                                }
+                                                return null;
+                                            })()}
+                                        </Form.Group>
 
-                                                    if (selectedDate < currentDate) {
-                                                        return (
-                                                            <Form.Text className='text-danger'>
-                                                                Please select a date from today onwards.
-                                                            </Form.Text>
-                                                        );
-                                                    } else if (selectedDate > new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000)) {
-                                                        return (
-                                                            <Form.Text className='text-warning'>
-                                                                Bookings are only available for the next 30 days.
-                                                            </Form.Text>
-                                                        );
-                                                    }
-                                                    return null;
-                                                })()}
-                                            </Form.Group>
+                                        {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length !== 0 && <p>Slot không khả dụng</p>}
+                                        {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length === 0 && SlotId.length > 0 && new Date(date) > new Date().setHours(0, 0, 0, 0) && <Button type='submit' className='btn'>SELECT</Button>}
 
-                                            {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length !== 0 && <p>Slot không khả dụng</p>}
-                                            {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length === 0 && SlotId.length > 0 && new Date(date) > new Date().setHours(0, 0, 0, 0) && <Button type='submit' className='btn'>SELECT</Button>}
-
-                                        </Form>
-                                    </Card.Body>
+                                    </Form>
                                 </Card>
                             </div>
                         </div>
@@ -420,25 +449,25 @@ export default function BookingPodDetailContent() {
                         <div className='popup'>
                             <div className='confirm-information'>
 
-                                <h2><b>{Pod.name}</b></h2>
+                                <h1><b>{Pod.name}</b></h1>
                                 <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
                                 {/* <img src={Pod.image} alt={Pod.name}></img> */}
 
-                                <h5><b>{thisSTORE ? `${thisSTORE.name}: ${thisSTORE.address}` : 'Store not found'}</b></h5>
+                                <h3><b>{thisSTORE ? `${thisSTORE.name}: ${thisSTORE.address}` : 'Store not found'}</b></h3>
                                 <p>{thisTYPE ? `${thisTYPE.name} / Sức chứa: ${thisTYPE.capacity} người` : 'Type not found'}</p>
 
-                                <h5><b>Ngày nhận phòng: {date}</b></h5>
+                                <h3><b>Ngày nhận phòng: {date}</b></h3>
                                 <p>Giờ nhận phòng: </p>
-                                {thisSLOT && thisSLOT.map(slot => (
+                                {selectedSlots && selectedSlots.map(slot => (
                                     <p key={slot.id}>{`[${slot.name}] ${slot.startTime}:00 - ${slot.endTime}:00 (${slot.price / 1000}.000đ)`}</p>
                                 ))}
 
                                 <div className='button-confirm-amount'>
                                     <h2><b>Amount: {Amount / 1000}.000đ</b></h2>
-                                    <Button type='submit' className='btn' onClick={handleConfirm}>CONFIRM</Button>
+                                    {!Confirm ? <Button type='submit' className='btn' onClick={handleConfirm}>CONFIRM</Button> : <Button className='btn' style={{ backgroundColor: '#d3f9d8' }}>CONFIRMED</Button>}
                                 </div>
 
-                                <a className='close' href='#' onClick={() => { setIsPopupOpen(false); setIsQROpen(false); }}>&times;</a>
+                                <a className='close' href='#' onClick={() => { setIsPopupOpen(false); setIsQROpen(false); setConfirm(false); }}>&times;</a>
                             </div>
                             <div className='payment-qrcode'>
                                 <h1><b>Payment</b></h1>

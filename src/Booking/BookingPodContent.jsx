@@ -1,18 +1,30 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { Form, Button, Row, Col, Card } from 'react-bootstrap';
+import { Link, useParams, useLocation } from 'react-router-dom';
+import { Form, Button, Row, Col, Card, Spinner } from 'react-bootstrap';
 import './BookingPodContent.css';
 
 import { imagePODs } from '../assets/listPODs';
 
 export default function BookingPodContent() {
 
+    const [StoreId, setStoreId] = useState(null);
+    const { pathname } = useLocation();
+    console.log(pathname);
+    console.log('StoreId: ', StoreId);
+    const getStoreId = useParams();
+
+    useEffect(() => {
+        setStoreId(null);
+        setStoreId(getStoreId);
+        console.log('StoreId: ', StoreId);
+    }, [pathname]);
+
     const [STOREs, setSTOREs] = useState(null);
     const [PODs, setPODs] = useState(null);
     const [TYPEs, setTYPEs] = useState(null);
     const [UTILITIes, setUTILITIes] = useState(null);
+    const [SLOTs, setSLOTs] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -38,6 +50,11 @@ export default function BookingPodContent() {
                 if (!utilityResponse.ok) throw new Error('Network response was not ok');
                 const utilityData = await utilityResponse.json();
                 setUTILITIes(utilityData);
+
+                const slotResponse = await fetch('https://localhost:7166/api/Slot');
+                if (!slotResponse.ok) throw new Error('Network response was not ok');
+                const slotData = await slotResponse.json();
+                setSLOTs(slotData);
 
                 setLoading(false);
             } catch (error) {
@@ -83,6 +100,7 @@ export default function BookingPodContent() {
 
     //Lấy Pods trùng khớp với những lựa chọn trên thanh tìm kiếm
     const filteredResults = Pods ? Pods.filter(pod =>
+        (pod.storeId == StoreId.Id || !StoreId.Id) &&
         (pod.storeId == selectedStore || !selectedStore) &&
         (pod.name === selectedPod || !selectedPod) &&
         (pod.typeId.toString() === selectedType.toString() || !selectedType.toString()) &&
@@ -107,11 +125,9 @@ export default function BookingPodContent() {
         return utility;
     };
 
-    const getSlots = (bookingId) => {
-        const slots = SLOTs ? SLOTs.filter(slot =>
-            slot.bookings && slot.bookings.some(booking => booking.id === bookingId)
-        ) : [];
-        return slots;
+    const getSlotPrice = (podId) => {
+        const slot = SLOTs ? SLOTs.find(slot => slot.podId === podId) : null;
+        return slot ? slot.price : null;
     };
 
     const getStoreName = (podId) => {
@@ -131,6 +147,16 @@ export default function BookingPodContent() {
         console.log({ selectedStore, selectedPod, selectedType, selectedUtility, podName });
     };
 
+
+    if (loading) return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Spinner animation="border" role="status" style={{ width: '200px', height: '200px', fontSize: '50px' }}>
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        </div>
+    );
+    if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
+
     return (
         <div className='POD-booking-pod'>
 
@@ -138,14 +164,18 @@ export default function BookingPodContent() {
 
                 <Form className='search' onSubmit={handleSubmit}>
 
-                    <Form.Group controlId='formStore' className='form-group'>
-                        <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
-                            <option value=''>[ Store]</option>
-                            {STOREs && STOREs.map(store => (
-                                <option key={store.id} value={store.id}>{store.name}</option>
-                            ))}
-                        </Form.Control>
-                    </Form.Group>
+                    {StoreId.Id ?
+                        (<></>) : (
+                            <Form.Group controlId='formStore' className='form-group'>
+                                <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
+                                    <option value=''>[ Store]</option>
+                                    {STOREs && STOREs.map(store => (
+                                        <option key={store.id} value={store.id}>{store.name}</option>
+                                    ))}
+                                </Form.Control>
+                            </Form.Group>
+                        )
+                    }
 
                     <Form.Group controlId='formPod' className='form-group'>
                         <Form.Control as='select' value={selectedPod} onChange={(e) => setSelectedPod(e.target.value)}>
@@ -187,28 +217,30 @@ export default function BookingPodContent() {
                 <table className='no-wrap align-middle table border-bottom'>
                     <thead className='list-header'>
                         <tr>
-                            <th className='list-id' style={{ backgroundColor: '#f5f5f5' }}>ID</th>
-                            <th style={{ backgroundColor: '#f5f5f5' }}>Image</th>
-                            <th style={{ backgroundColor: '#f5f5f5' }}>Name</th>
-                            <th style={{ backgroundColor: '#f5f5f5' }}>Type</th>
-                            <th style={{ backgroundColor: '#f5f5f5' }}>Store</th>
-                            <th style={{ backgroundColor: '#f5f5f5' }}>Utility</th>
-                            <th style={{ backgroundColor: '#f5f5f5' }}>Detail</th>
+                            <th className='list-index'>ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Store</th>
+                            <th>Utility</th>
+                            <th>Detail</th>
                         </tr>
                     </thead>
                     <tbody className='list-body'>
                         {filteredResults.length > 0 ? (
-                            filteredResults.map((pod) => (
-                                <tr key={pod.id} className='border-bottom list-item'>
-                                    <td className='list-id'>{pod.id}</td>
+                            filteredResults.map((pod, index) => (
+                                <tr key={index} className='border-bottom list-item'>
+                                    <td className='list-index'>{index + 1}</td>
                                     <td>
                                         <img src={imagePODs.find(image => image.id === pod.id)?.image} alt='image' />
                                     </td>
                                     <td>
+                                        <p>ID: {pod.id}</p>
                                         <h3><b>{pod.name}</b></h3>
                                         {[...Array(pod.rating)].map((_, i) => (
                                             <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
                                         ))}
+                                        <p>{getSlotPrice(pod.id) / 1000}.000 đồng / slot</p>
                                     </td>
                                     <td>
                                         {getTypeName(pod.id)}
@@ -235,7 +267,7 @@ export default function BookingPodContent() {
                                         ))}
                                     </td>
                                     <td>
-                                        <Link to={`${pod.id}`}>
+                                        <Link to={`../../../booking/pod/${pod.id}`}>
                                             <Button className='btn' >Detail</Button>
                                         </Link>
                                     </td>
