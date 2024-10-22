@@ -52,7 +52,7 @@ body {
     }
 
     .form-input {
-        margin: 10px 0 10px 40px;
+        margin: 2px 0 2px 40px;
     }
 
     input {
@@ -77,13 +77,12 @@ body {
     .forget-link {
         display: block;
         text-align: right;
-        color: #ffbc40;
-        margin-bottom: 15px;
+        color: #ffc107;
         text-decoration: none;
     }
 
     .forget-link:hover {
-        color: #ffa500;
+        color: #dba506;
     }
 
     .movingImage {

@@ -165,7 +165,7 @@ export default function BookingPodContent() {
                 <Form className='search' onSubmit={handleSubmit}>
 
                     {StoreId.Id ?
-                        (<div><h1>POD có sẵn</h1></div>) : (
+                        (<div className='search-title'><h1>POD có sẵn</h1></div>) : (
                             <Form.Group controlId='formStore' className='form-group'>
                                 <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
                                     <option value=''>[Cửa hàng]</option>

@@ -39,32 +39,63 @@ export default function SignInSignUp() {
         inputs.forEach(function (input) {
             input.value = '';
         });
+        setErrorSignIn(null);
+        setSignInEmailError(null);
+        setSignInPasswordError(null);
     }
 
     const resetInputsBox2 = () => {
         var inputs = document.querySelectorAll('.form-box2 input');
         inputs.forEach(function (input) {
-            if (!input.readOnly) {
-                input.value = '';
-            }
+            input.value = '';
         });
+        setErrorSignUp(null);
+        setSignUpEmailError(null);
+        setSignUpFullNameError(null);
+        setSignUpPhoneNumberError(null);
+        setSignUpPasswordError(null);
+        setSignUpConfirmError(null);
     }
 
 
-    const [SignInEmail, setSignInEmail] = useState('');
-    const [SignInPassword, setSignInPassword] = useState('');
+    const [SignInEmail, setSignInEmail] = useState(null);
+    const [SignInPassword, setSignInPassword] = useState(null);
 
-    const [SignUpEmail, setSignUpEmail] = useState('');
-    const [SignUpFullName, setSignUpFullName] = useState('');
-    const [SignUpPhoneNumber, setSignUpPhoneNumber] = useState('');
-    const [SignUpPassword, setSignUpPassword] = useState('');
-    const [SignUpConfirm, setSignUpConfirm] = useState('');
+    const [SignInEmailError, setSignInEmailError] = useState(null);
+    const [SignInPasswordError, setSignInPasswordError] = useState(null);
+
+
+    const [SignUpEmail, setSignUpEmail] = useState(null);
+    const [SignUpFullName, setSignUpFullName] = useState(null);
+    const [SignUpPhoneNumber, setSignUpPhoneNumber] = useState(null);
+    const [SignUpPassword, setSignUpPassword] = useState(null);
+    const [SignUpConfirm, setSignUpConfirm] = useState(null);
+
+    const [SignUpEmailError, setSignUpEmailError] = useState(null);
+    const [SignUpFullNameError, setSignUpFullNameError] = useState(null);
+    const [SignUpPhoneNumberError, setSignUpPhoneNumberError] = useState(null);
+    const [SignUpPasswordError, setSignUpPasswordError] = useState(null);
+    const [SignUpConfirmError, setSignUpConfirmError] = useState(null);
+
 
     const [token, setToken] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [errorSignIn, setErrorSignIn] = useState(null);
+    const [errorSignUp, setErrorSignUp] = useState(null);
 
     const Login = async (SignInEmail, SignInPassword) => {
+
+        if (!SignInEmail) {
+            console.error('Invalid value');
+            setSignInEmailError('Email không hợp lệ');
+            return;
+        }
+        if (!SignInPassword) {
+            console.error('Invalid value');
+            setSignInPasswordError('Mật khẩu không hợp lệ');
+            return;
+        }
+
         try {
             const response = await fetch('https://localhost:7166/api/Login/authenticate', {
                 method: 'POST',
@@ -88,31 +119,66 @@ export default function SignInSignUp() {
                 window.location.href = 'http://localhost:5173/user/information';
             }
         } catch (error) {
-            setError(error);
+            setErrorSignIn(error);
             setLoading(false);
         }
     };
 
     const SignUp = async (SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm) => {
 
-        if (!SignUpEmail || !SignUpFullName || !SignUpPhoneNumber || !SignUpPassword || !SignUpConfirm) {
-            console.error('Invalid value');
+        // if (!SignUpEmail || !SignUpFullName || !SignUpPhoneNumber || !SignUpPassword || !SignUpConfirm) {
+        //     console.error('Invalid value');
+        //     setSignUpEmailError('Email không hợp lệ');
+        //     setSignUpFullNameError('Họ tên không hợp lệ');
+        //     setSignUpPhoneNumberError('Số điện thoại không hợp lệ');
+        //     setSignUpPasswordError('Mật khẩu không hợp lệ');
+        //     setSignUpConfirmError('Mật khẩu không hợp lệ');
+        //     return;
+        // }
+        if (!SignUpEmail) {
+            console.error('Invalid email');
+            setSignUpEmailError('Email không hợp lệ');
             return;
         }
+        if (!SignUpFullName) {
+            console.error('Invalid full name');
+            setSignUpFullNameError('Họ tên không hợp lệ');
+            return;
+        }
+        if (!SignUpPhoneNumber) {
+            console.error('Invalid phone number');
+            setSignUpPhoneNumberError('Số điện thoại không hợp lệ');
+            return;
+        }
+        if (!SignUpPassword) {
+            console.error('Invalid password');
+            setSignUpPasswordError('Mật khẩu không hợp lệ');
+            return;
+        }
+        if (!SignUpConfirm) {
+            console.error('Invalid password confirmation');
+            setSignUpConfirmError('Xác nhận mật khẩu không hợp lệ');
+            return;
+        }
+
         if (!/^\d+$/.test(SignUpPhoneNumber)) {
             console.error('Phone number must contain only digits');
+            setSignUpPhoneNumberError('Số điện thoại không hợp lệ');
             return;
         }
         if (SignUpPhoneNumber.length !== 10) {
             console.error('Phone number must contain exactly 10 digits');
+            setSignUpPhoneNumberError('Số điện thoại phải có 10 chữ số');
             return;
         }
         if (SignUpPassword.length < 6) {
             console.error('Password must be at least 6 characters long');
+            setSignUpPasswordError('Mật khẩu phải ít nhất 6 kí tự');
             return;
         }
         if (SignUpPassword != SignUpConfirm) {
             console.error('Wrong confirm password');
+            setSignUpConfirmError('Mật khẩu không khớp');
             return;
         }
 
@@ -147,7 +213,7 @@ export default function SignInSignUp() {
                 window.location.href = 'http://localhost:5173/signinsignup';
             }
         } catch (error) {
-            setError(error);
+            setErrorSignUp(error);
             setLoading(false);
         }
     };
@@ -167,21 +233,35 @@ export default function SignInSignUp() {
 
     const handleSubmitSignIn = (e) => {
         e.preventDefault();
+        setErrorSignIn(null);
+        setSignInEmailError(null);
+        setSignInPasswordError(null);
         const SignInEmail = e.target.SignInEmail.value;
         const SignInPassword = e.target.SignInPassword.value;
         setSignInEmail(SignInEmail);
         setSignInPassword(SignInPassword);
-        Login(SignInEmail, SignInPassword);
         console.log({ SignInEmail, SignInPassword });
+        Login(SignInEmail, SignInPassword);
     };
 
     const handleSubmitSignUp = (e) => {
         e.preventDefault();
+        setErrorSignUp(null);
+        setSignUpEmailError(null);
+        setSignUpFullNameError(null);
+        setSignUpPhoneNumberError(null);
+        setSignUpPasswordError(null);
+        setSignUpConfirmError(null);
         const SignUpEmail = e.target.SignUpEmail.value;
         const SignUpFullName = e.target.SignUpFullName.value;
         const SignUpPhoneNumber = e.target.SignUpPhoneNumber.value;
         const SignUpPassword = e.target.SignUpPassword.value;
         const SignUpConfirm = e.target.SignUpConfirm.value;
+        setSignUpEmail(SignUpEmail);
+        setSignUpFullName(SignUpFullName);
+        setSignUpPhoneNumber(SignUpPhoneNumber);
+        setSignUpPassword(SignUpPassword);
+        setSignUpConfirm(SignUpConfirm);
         console.log({ SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm });
         SignUp(SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm);
     };
@@ -223,54 +303,63 @@ export default function SignInSignUp() {
                     <div className='card-body card-appear' id='card-signin'>
                         <h1 className='title'>Sign In</h1>
                         <Form className='form-box form-box1' onSubmit={handleSubmitSignIn}>
+                            {SignInEmailError && <span className='error-message' style={{ color: '#dc3545' }}>{SignInEmailError}</span>}
                             <Form.Group controlId='SignInEmail' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
-                                <Form.Control className='input' type='email' placeholder='Email' required />
+                                <Form.Control className='input' type='email' placeholder='Email' />
                             </Form.Group>
+                            {SignInPasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{SignInPasswordError}</span>}
                             <Form.Group controlId='SignInPassword' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-key' style={{ fontSize: '25px' }}></i></span>
-                                <Form.Control className='input' type='password' placeholder='Password' required />
+                                <Form.Control className='input' type='password' placeholder='Mật khẩu' />
                             </Form.Group>
-                            <a href='#' className='forget-link'><b>Forget Password?</b></a>
+                            <a href='#' className='forget-link'><b>Quên mật khẩu?</b></a>
+                            {errorSignIn && <span className='error-message' style={{ color: '#dc3545' }}>Đăng nhập thất bại</span>}
                             <div className='btn-box'>
-                                <Button type='submit' className='btn' >LOGIN</Button>
-                                <Button type='reset' className='btn' onClick={resetInputsBox1}>CLEAR</Button>
+                                <Button type='submit' className='btn' >ĐĂNG NHẬP</Button>
+                                <Button type='reset' className='btn' onClick={resetInputsBox1}>XÓA</Button>
                             </div>
                             <hr />
-                            <Button id='signup' className='btn btn-signup' onClick={moveImage}>SIGN UP</Button>
+                            <Button id='signup' className='btn btn-signup' onClick={moveImage}>ĐĂNG KÍ</Button>
                         </Form>
                     </div>
 
                     <div className='card-body card-disappear' id='card-signup'>
                         <h1 className='title'>Sign Up</h1>
                         <Form className='form-box form-box2' onSubmit={handleSubmitSignUp}>
+                            {SignUpEmailError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpEmailError}</span>}
                             <Form.Group controlId='SignUpEmail' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-envelope' style={{ fontSize: '25px' }}></i></span>
                                 <Form.Control className='input' type='email' placeholder='Email' />
                             </Form.Group>
+                            {SignUpFullNameError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpFullNameError}</span>}
                             <Form.Group controlId='SignUpFullName' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
-                                <Form.Control className='input' type='text' placeholder='Full Name' />
+                                <Form.Control className='input' type='text' placeholder='Họ và tên' />
                             </Form.Group>
+                            {SignUpPhoneNumberError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpPhoneNumberError}</span>}
                             <Form.Group controlId='SignUpPhoneNumber' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-phone' style={{ fontSize: '25px' }}></i></span>
-                                <Form.Control className='input' type='text' placeholder='Phone Number' />
+                                <Form.Control className='input' type='text' placeholder='Số điện thoại' />
                             </Form.Group>
+                            {SignUpPasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpPasswordError}</span>}
                             <Form.Group controlId='SignUpPassword' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-key' style={{ fontSize: '25px', color: '#cccccc' }}></i></span>
-                                <Form.Control className='input' type='password' placeholder='Password' />
+                                <Form.Control className='input' type='password' placeholder='Mật khẩu' />
                             </Form.Group>
+                            {SignUpConfirmError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpConfirmError}</span>}
                             <Form.Group controlId='SignUpConfirm' className='form-group form-input'>
                                 <span className='dobble-icon'><i className='fa-solid fa-key' style={{ fontSize: '25px', color: '#cccccc' }}></i></span>
                                 <span className='icon'><i className='fa-solid fa-key' style={{ fontSize: '25px' }}></i></span>
-                                <Form.Control className='input' type='password' placeholder='Confirm' required />
+                                <Form.Control className='input' type='password' placeholder='Xác thực mật khẩu' />
                             </Form.Group>
+                            {errorSignUp && <span className='error-message' style={{ color: '#dc3545' }}>Đăng kí thất bại</span>}
                             <div className='btn-box'>
-                                <Button type='submit' className='btn'>CREATE</Button>
-                                <Button type='reset' className='btn' onClick={resetInputsBox2}>CLEAR</Button>
+                                <Button type='submit' className='btn'>TẠO TÀI KHOẢN</Button>
+                                <Button type='reset' className='btn' onClick={resetInputsBox2}>XÓA</Button>
                             </div>
                             <hr />
-                            <Button id='login' className='btn btn-already' onClick={moveImageBack}>I ALREADY HAVE AN ACCOUNT</Button>
+                            <Button id='login' className='btn btn-already' onClick={moveImageBack}>ĐÃ CÓ TÀI KHOẢN</Button>
                         </Form>
                     </div>
 
