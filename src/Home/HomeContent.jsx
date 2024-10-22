@@ -4,21 +4,17 @@ import { Row, Col, Card } from 'react-bootstrap';
 import './HomeContent.css'
 import home from '../BackgroundImage/home.jpg'
 import Carousel from 'react-bootstrap/Carousel';
+import why2 from '../BackgroundImage/why2.jpg'
+import why3 from '../BackgroundImage/why3.jpg'
+import why4 from '../BackgroundImage/why4.jpg'
 
 export default function HomeContent() {
 
     const [PODs, setPODs] = useState(null);
     const [TYPEs, setTYPEs] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    
     const [stores, setStores] = useState(null); // Thêm state để lưu trữ thông tin cửa hàng
-    const contentStyle = {
-        height: '160px',
-        color: '#fff',
-        lineHeight: '160px',
-        textAlign: 'center',
-        background: '#364d79',
-    };
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -141,7 +137,7 @@ export default function HomeContent() {
                 <Carousel.Item>
                     <img
                         className="d-block w-100"
-                        src={home}
+                        src={why2}
                         alt="First slide"
                     />
                     <Carousel.Caption className='carousel-text'>
@@ -151,7 +147,7 @@ export default function HomeContent() {
                 <Carousel.Item>
                     <img
                         className="d-block w-100"
-                        src={home}
+                        src={why3}
 
                         alt="Second slide"
                     />
@@ -163,7 +159,7 @@ export default function HomeContent() {
                 <Carousel.Item>
                     <img
                         className="d-block w-100"
-                        src={home}
+                        src={why4}
 
                         alt="Third slide"
                     />
