@@ -64,7 +64,7 @@ body {
         }
     }
 
-    .shortcut-booking-pod {
+    /* .shortcut-booking-pod {
         width: 100%;
         background-color: #eeeeee;
         display: flex;
@@ -179,6 +179,61 @@ body {
                 }
             }
         }
+    } */
+
+    div.shortcut-booking-pod {
+        display: flex;
+        justify-content: center;
+
+    }
+
+
+    .section-title {
+        text-align: center;
+        padding: 20px;
+        font-family: 'Times New Roman', Times, serif;
+        color: #484848;
+        font-size: 2rem;
+    }
+
+    div.image-row.row {
+        justify-content: center;
+        width: 89%;
+
+    }
+
+    .card-title {
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+    }
+
+    .card-info {
+        font-family: 'Times New Roman', Times, serif;
+        color: #666666;
+        line-height: 1.5;
+        /* Khoảng cách giữa các dòng */
+    }
+
+    .yellow-star {
+        color: gold;
+    }
+
+    .price {
+        color: #ef5939;
+        font-weight: bold;
+        /* Đậm chữ */
+        display: inline-block;
+        /* Để nó chỉ chiếm không gian cần thiết */
+        position: relative;
+        /* Để có thể sử dụng pseudo-element */
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
+
+    .image-col {
+        margin-bottom: 20px;
+        border-radius: 8px;
+        position: relative;
+
     }
 
     .shortcut-contact {
@@ -242,6 +297,116 @@ body {
         .btn:hover {
             color: #ffffff;
             background-color: #2874a7;
+        }
+    }
+
+    .shortcut-why {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            /* Đảm bảo carousel chiếm toàn bộ chiều rộng */
+            overflow: hidden;
+            /* Ẩn các phần hình ảnh tràn ra ngoài */
+        }
+
+        .carousel img {
+            width: 100%;
+            /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng của carousel */
+            height: 60vh;
+            /* Giữ tỷ lệ khung hình của hình ảnh */
+            object-fit: cover;
+            /* Đảm bảo hình ảnh không bị biến dạng */
+            filter: brightness(40%);
+        }
+
+        .carousel-item {
+            transition: transform 0.5s ease;
+            /* Thêm hiệu ứng chuyển động mượt mà */
+        }
+
+
+
+        .carousel-caption {
+
+            padding: 10px;
+            /* Khoảng cách bên trong */
+            border-radius: 5px;
+            /* Bo góc */
+            position: absolute;
+
+            width: 60%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            h5 {
+                color: white;
+                font-size: 1.5rem;
+                font-family: 'Courier New', Courier, monospace;
+
+            }
+
+            p {
+                color: white;
+                font-family: 'Times New Roman', Times, serif;
+
+            }
+
+        }
+
+        .carousel-text {
+            padding: 10px;
+            /* Khoảng cách bên trong */
+            border-radius: 5px;
+            /* Bo góc */
+            text-align: center;
+            /* Căn giữa chữ */
+            display: flex;
+            /* Sử dụng flexbox */
+            flex-direction: column;
+            /* Sắp xếp theo chiều dọc */
+            justify-content: center;
+            /* Căn giữa chiều dọc */
+            align-items: center;
+        }
+
+        span.carousel-control-prev,
+        span.carousel-control-next {
+            border-radius: 50%;
+            color: white;
+            background-color: rgb(255, 255, 255);
+        }
+
+        .carousel-control-prev {
+            left: 10px;
+            /* Đặt nút Previous ở bên trái */
+
+        }
+
+        .carousel-control-next {
+            right: 10px;
+            /* Đặt nút Next ở bên phải */
+        }
+
+
+
+
+
+
+        .carousel-item {
+            padding: 20px;
+            /* Thêm khoảng cách giữa các item */
+        }
+
+        .image-col {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 }

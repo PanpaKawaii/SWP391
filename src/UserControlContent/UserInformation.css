@@ -1,0 +1,93 @@
+body {
+    margin: 0;
+}
+
+.user-information {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+
+    .user-information-content {
+        width: 90%;
+        max-width: 1000px;
+
+        .row-under {
+            border-bottom: 1px solid #a3a3a380;
+        }
+
+        .information-title {
+            font-weight: 450;
+            font-size: 1.5em;
+        }
+
+        .basic-information {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #a7a4a4c5;
+            border-radius: 5px;
+            padding: 10px 10px 10px 40px;
+            margin-bottom: 25px;
+            margin-top: 25px;
+            line-height: 2.5;
+
+            .avatar {
+                width: 20vh;
+                height: 20vh;
+                border-radius: 5px;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+
+        .contact-information {
+            width: 100%;
+            border: 1px solid #a7a4a4c5;
+            border-radius: 5px;
+            padding: 10px 40px;
+            margin-bottom: 25px;
+            line-height: 2.5;
+        }
+
+        .password-change {
+            width: 100%;
+            border: 1px solid #a7a4a4c5;
+            border-radius: 5px;
+            padding: 10px 40px;
+            margin-bottom: 25px;
+            line-height: 2.5;
+
+            .form-input {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .underline-input {
+                border: none;
+                border-bottom: 1px solid #a7a4a486;
+                outline: none;
+                padding: 5px;
+                width: 100%;
+            }
+
+            .password-change-button {
+                display: flex;
+                justify-content: center;
+                margin-top: 25px;
+                cursor: pointer;
+
+                .btn {
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 5px;
+                    background-color: orange;
+                }
+            }
+        }
+    }
+}

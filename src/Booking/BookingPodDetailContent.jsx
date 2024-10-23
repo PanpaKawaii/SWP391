@@ -93,6 +93,7 @@ export default function BookingPodDetailContent() {
     const [MaxID, setMaxID] = useState(null);
     const [date, setDate] = useState('');
     const [SlotId, setSlotId] = useState('');
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Thanh toán qua VNPay');
     const [Confirm, setConfirm] = useState(false);
 
     const [bookingsHaveTheSameDateAndSlot, setBookingsHaveTheSameDateAndSlot] = useState(null);
@@ -151,7 +152,7 @@ export default function BookingPodDetailContent() {
 
         const paymentData = {
             id: MaxID + 10,
-            method: 'Thanh toán qua VNPay',
+            method: selectedPaymentMethod,
             amount: Amount,
             date: date,
             status: 'Chưa thanh toán',
@@ -226,7 +227,7 @@ export default function BookingPodDetailContent() {
             }
         };
         await fetchMaxBookingId();
-        console.log({ date, SlotId, IsPopupOpen, Confirm });
+        console.log({ date, SlotId, IsPopupOpen, Confirm, selectedPaymentMethod });
         window.location.href = '#popupConfirm';
     };
 
@@ -307,16 +308,16 @@ export default function BookingPodDetailContent() {
 
                                 <h4><b>Tiện nghi có sẵn:</b></h4>
                                 <div className='utility-container'>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className='fa-solid fa-wifi icon'></i> Wifi miễn phí</p></Col>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-regular fa-snowflake icon"></i> Máy điều hòa</p></Col>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-regular fa-lightbulb icon"></i> Đèn dự phòng</p></Col>
+                                    <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className='fa-solid fa-wifi icon'></i> Wifi miễn phí</p></Col>
+                                    <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-regular fa-snowflake icon"></i> Máy điều hòa</p></Col>
+                                    <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-regular fa-lightbulb icon"></i> Đèn dự phòng</p></Col>
                                     {AvailableUTILITIes.map((utility) => (
                                         <React.Fragment key={utility.id}>
-                                            {utility.name === 'Ổ cắm điện' && <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-solid fa-plug icon"></i> {utility.name}</p></Col>}
-                                            {utility.name === 'Máy chiếu' && <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-solid fa-chalkboard icon"></i> {utility.name}</p></Col>}
-                                            {utility.name === 'Máy pha cà phê' && <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-solid fa-mug-saucer icon"></i> {utility.name}</p></Col>}
-                                            {utility.name === 'Hệ thống âm thanh' && <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-solid fa-microphone-lines icon"></i> {utility.name}</p></Col>}
-                                            {utility.name === 'Bảng trắng thông minh' && <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}><p><i className="fa-solid fa-tv icon"></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Ổ cắm điện' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-solid fa-plug icon"></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Máy chiếu' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-solid fa-chalkboard icon"></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Máy pha cà phê' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-solid fa-mug-saucer icon"></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Hệ thống âm thanh' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-solid fa-microphone-lines icon"></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Bảng trắng thông minh' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-solid fa-tv icon"></i> {utility.name}</p></Col>}
                                         </React.Fragment>
                                     ))}
                                 </div>
@@ -329,51 +330,59 @@ export default function BookingPodDetailContent() {
 
                             <div className='payment-card'>
                                 <Card>
-                                    <h2><b>Tổng: {Amount > 1000000 ? (Amount / 1000000) + ' triệu đồng' :
-                                        Amount > 1000 ? (Amount / 1000) + ' ngàn đồng' :
-                                            Amount + ' đồng'}
-                                    </b></h2>
-
+                                    <div className='payment-card-title'>
+                                        <h1><b>{AvailableSLOTs[0].price.toLocaleString('vi-VN')}đ/slot</b></h1>
+                                    </div>
                                     <Form className='form-card' onSubmit={handleBooking}>
-                                        <Form.Group controlId='BookingDate' className='form-group'>
-                                            <Form.Control className='input' type='date' onChange={(e) => {
-                                                const selectedDate = e.target.value;
-                                                setDate(selectedDate);
-                                                console.log(selectedDate);
-                                            }} required />
-                                        </Form.Group>
+                                        {SlotId.length === 0 ? (
+                                            <Form.Group controlId='BookingDate' className='form-group'>
+                                                {/* <Form.Label>Ngày nhận phòng</Form.Label> */}
+                                                <Form.Control className='input' type='date' value={date} onChange={(e) => {
+                                                    const selectedDate = e.target.value;
+                                                    setDate(selectedDate);
+                                                    console.log(selectedDate);
+                                                }} required />
+                                            </Form.Group>
+                                        ) : (
+                                            <div style={{ padding: '3.5px' }}><h3>Date: {date}</h3></div>
+                                        )}
 
-                                        <Form.Group controlId='BookingSlot' className='form-group'>
-                                            {AvailableSLOTs.map((slot, index) => (
-                                                <div
-                                                    key={index}
-                                                    onClick={() => {
-                                                        const selectedSlot = AvailableSLOTs.find(s => s.id === slot.id);
-                                                        setAmount(prevAmount => prevAmount + (selectedSlot.price * (selectedSlot.selected ? 1 : -1)));
-                                                        selectedSlot.selected = !selectedSlot.selected; // Toggle selection
-                                                        console.log(selectedSlot.selected ? `Selected: ${slot.id}` : `Deselected: ${slot.id}`);
-                                                        setSlotId(prevSlotId => {
-                                                            const isSelected = prevSlotId.includes(slot.id);
-                                                            if (isSelected) {
-                                                                return prevSlotId.filter(id => id !== slot.id); // Remove if already selected
-                                                            } else {
-                                                                return [...prevSlotId, slot.id]; // Add if not selected
-                                                            }
-                                                        });
-                                                    }}
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                        backgroundColor: slot.selected ? '#d3f9d8' : '#fff',
-                                                        padding: '10px',
-                                                        margin: '5px 0',
-                                                        border: slot.selected ? '1px solid #28a745' : '1px solid #ccc',
-                                                        borderRadius: '5px'
-                                                    }}
-                                                >
-                                                    {`[${slot.name}] ${slot.startTime}:00 - ${slot.endTime}:00 (${slot.price / 1000}.000đ)`}
-                                                </div>
-                                            ))}
-                                        </Form.Group>
+                                        {date &&
+                                            <Form.Group controlId='BookingSlot' className='form-group'>
+                                                <Row className='row'>
+                                                    {AvailableSLOTs.map((slot, index) => (
+                                                        <Col key={index} xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className='col'>
+                                                            <div
+                                                                onClick={() => {
+                                                                    const selectedSlot = AvailableSLOTs.find(s => s.id === slot.id);
+                                                                    setAmount(prevAmount => prevAmount + (selectedSlot.price * (selectedSlot.selected ? 1 : -1)));
+                                                                    selectedSlot.selected = !selectedSlot.selected; // Toggle selection
+                                                                    console.log(selectedSlot.selected ? `Selected: ${slot.id}` : `Deselected: ${slot.id}`);
+                                                                    setSlotId(prevSlotId => {
+                                                                        const isSelected = prevSlotId.includes(slot.id);
+                                                                        if (isSelected) {
+                                                                            return prevSlotId.filter(id => id !== slot.id); // Remove if already selected
+                                                                        } else {
+                                                                            return [...prevSlotId, slot.id]; // Add if not selected
+                                                                        }
+                                                                    });
+                                                                }}
+                                                                style={{
+                                                                    cursor: 'pointer',
+                                                                    backgroundColor: slot.selected ? '#d3f9d8' : '#fff',
+                                                                    padding: '5px',
+                                                                    margin: '5px',
+                                                                    border: slot.selected ? '1px solid #28a745' : '1px solid #ccc',
+                                                                    borderRadius: '5px'
+                                                                }}
+                                                            >
+                                                                {`[${slot.name}] ${slot.startTime}:00 - ${slot.endTime}:00`}
+                                                            </div>
+                                                        </Col>
+                                                    ))}
+                                                </Row>
+                                            </Form.Group>
+                                        }
 
                                         <Form.Group controlId='DateValidation' className='form-group'>
                                             {(() => {
@@ -384,13 +393,13 @@ export default function BookingPodDetailContent() {
                                                 if (selectedDate < currentDate) {
                                                     return (
                                                         <Form.Text className='text-danger'>
-                                                            Please select a date from today onwards.
+                                                            Vui lòng chọn ngày từ ngày hôm nay trở đi.
                                                         </Form.Text>
                                                     );
                                                 } else if (selectedDate > new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000)) {
                                                     return (
                                                         <Form.Text className='text-warning'>
-                                                            Bookings are only available for the next 30 days.
+                                                            Đặt phòng chỉ có thể đặt trong vòng 30 ngày tới.
                                                         </Form.Text>
                                                     );
                                                 }
@@ -398,8 +407,18 @@ export default function BookingPodDetailContent() {
                                             })()}
                                         </Form.Group>
 
+                                        <Form.Group controlId='PaymentMethod' className='form-group'>
+                                            <Form.Label>Hình thức thanh toán</Form.Label>
+                                            <Form.Control as='select' value={selectedPaymentMethod} onChange={(e) => setSelectedPaymentMethod(e.target.value)}>
+                                                <option value='Thanh toán qua VNPay'>Thanh toán qua VNPay</option>
+                                                {/* <option value='Thanh toán bằng tiền mặt'>Thanh toán bằng tiền mặt</option> */}
+                                            </Form.Control>
+                                        </Form.Group>
+
+                                        <h2><b>Tổng: {Amount.toLocaleString('vi-VN')}đ</b></h2>
+
                                         {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length !== 0 && <p>Slot không khả dụng</p>}
-                                        {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length === 0 && SlotId.length > 0 && new Date(date) > new Date().setHours(0, 0, 0, 0) && <Button type='submit' className='btn'>SELECT</Button>}
+                                        {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length === 0 && SlotId.length > 0 && new Date(date) > new Date().setHours(0, 0, 0, 0) && <Button type='submit' className='btn'>CHỌN</Button>}
 
                                     </Form>
                                 </Card>
@@ -415,10 +434,10 @@ export default function BookingPodDetailContent() {
                         </div>
 
                         <div>
-                            <h3>Bookings for this Pod:</h3>
+                            <h3>Đánh giá của khách hàng:</h3>
                             {BOOKINGs && BOOKINGs.filter(booking => booking.podId === Pod.id).map((booking, index) => (
                                 <div key={index} style={{
-                                    border: '1px solid #ccc',
+                                    border: '1px solid #cccccc',
                                     borderRadius: '5px',
                                     padding: '10px',
                                     margin: '10px 0'
@@ -434,7 +453,7 @@ export default function BookingPodDetailContent() {
 
                     </>
                 ) : (
-                    <p>Không tìm thấy POD.</p>
+                    <span>Không tìm thấy POD nào.</span>
                 )}
 
 
@@ -453,31 +472,40 @@ export default function BookingPodDetailContent() {
                             <div className='confirm-information'>
 
                                 <h1><b>{Pod.name}</b></h1>
-                                <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
                                 {/* <img src={Pod.image} alt={Pod.name}></img> */}
 
-                                <h3><b>{thisSTORE ? `${thisSTORE.name}: ${thisSTORE.address}` : 'Store not found'}</b></h3>
-                                <p>{thisTYPE ? `${thisTYPE.name} / Sức chứa: ${thisTYPE.capacity} người` : 'Type not found'}</p>
+                                {thisSTORE ? <h4><b>{thisSTORE.name}:</b> {thisSTORE.address}</h4> : 'Store not found'}
+                                {thisTYPE ? <h4><b>{thisTYPE.name}:</b> Sức chứa {thisTYPE.capacity} người</h4> : 'Type not found'}
 
-                                <h3><b>Ngày nhận phòng: {date}</b></h3>
-                                <p>Giờ nhận phòng: </p>
-                                {selectedSlots && selectedSlots.map(slot => (
-                                    <p key={slot.id}>{`[${slot.name}] ${slot.startTime}:00 - ${slot.endTime}:00 (${slot.price / 1000}.000đ)`}</p>
-                                ))}
+                                <h4><b>Ngày nhận phòng:</b> {date}</h4>
+
+                                <h4><b>Phương thức thanh toán:</b> {selectedPaymentMethod}</h4>
+
+                                <h4><b>Giờ nhận phòng: </b></h4>
+                                <Row className='row-slot'>
+                                    {selectedSlots && selectedSlots.map(slot => (
+                                        <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5} key={slot.id}>
+                                            {`[${slot.name}] ${slot.startTime}:00 - ${slot.endTime}:00 (${slot.price.toLocaleString('vi-VN')}đ)`}
+                                        </Col>
+                                    ))}
+                                </Row>
 
                                 <div className='button-confirm-amount'>
-                                    <h2><b>Tổng: {Amount / 1000}.000đ</b></h2>
-                                    {!Confirm ? <Button type='submit' className='btn' onClick={handleConfirm}>CONFIRM</Button> : <Button className='btn' style={{ backgroundColor: '#d3f9d8' }}>CONFIRMED</Button>}
+                                    <h2><b>Tổng: {Amount.toLocaleString('vi-VN')}đ</b></h2>
+                                    {!Confirm ? <Button type='submit' className='btn' onClick={handleConfirm}>XÁC NHẬN</Button> : <Button className='btn' style={{ backgroundColor: '#d3f9d8' }}>ĐÃ XÁC NHẬN</Button>}
+                                </div>
+                                <div className='payment-qrcode'>
+                                    {IsQROpen && (
+                                        <>
+                                            <img src={QRcode} alt='QRcode'></img>
+                                        </>
+                                    )}
                                 </div>
 
-                                <a className='close' href='#' onClick={() => { setIsPopupOpen(false); setIsQROpen(false); setConfirm(false); }}>&times;</a>
+                                {Confirm === false ? <a className='close' href='#' onClick={() => { setIsPopupOpen(false); setIsQROpen(false); setConfirm(false); }}>&times;</a>
+                                    : <a className='close' href='../../user/historybooking'>&times;</a>}
                             </div>
-                            <div className='payment-qrcode'>
-                                <h1><b>Thanh toán</b></h1>
-                                {IsQROpen && (
-                                    <img src={QRcode} alt='QRcode'></img>
-                                )}
-                            </div>
+                            <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
                         </div>
                     </div>
                 )}

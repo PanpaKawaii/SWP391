@@ -19,7 +19,6 @@ import PaymentContent from './Payment/PaymentContent'
 import AboutContent from './About/AboutContent'
 
 import UserInformation from './UserControlContent/UserInformation'
-import UserAccount from './UserControlContent/UserAccount'
 import UserHistoryBooking from './UserControlContent/UserHistoryBooking'
 import UserHistoryBookingDetail from './UserControlContent/UserHistoryBookingDetail'
 import SignInSignUp from './SignInSignUp/SignInSignUp'
@@ -49,7 +48,6 @@ function App() {
 
 
               <Route path='/user/information' element={<UserInformation />} />
-              <Route path='/user/account' element={<UserAccount />} />
               <Route path='/user/historybooking' element={<UserHistoryBooking />} />
               <Route path='/user/historybooking/:Id' element={<UserHistoryBookingDetail />} />
 

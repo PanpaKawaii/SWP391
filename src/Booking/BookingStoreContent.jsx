@@ -94,7 +94,7 @@ export default function BookingStoreContent() {
                                             </div>
                                             <div className='active-button'>
                                                 <Link to={`${store.id}`}>
-                                                    <Button className='btn' style={{ backgroundColor: '#28a745' }}>Chi tiết</Button>
+                                                    <Button className='btn' style={{ backgroundColor: '#28a745' }}>CHI TIẾT</Button>
                                                 </Link>
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@ export default function BookingStoreContent() {
                             </Col>
                         ))
                     ) : (
-                        <p>Không tìm thấy cửa hàng nào.</p>
+                        <span>Không tìm thấy cửa hàng nào.</span>
                     )}
                 </Row>
             </div>

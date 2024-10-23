@@ -183,7 +183,7 @@ export default function SignInSignUp() {
         }
 
         const signupData = {
-            id: 17,
+            id: 14,
             email: SignUpEmail,
             password: SignUpConfirm,
             name: SignUpFullName,
@@ -296,24 +296,24 @@ export default function SignInSignUp() {
     // });
 
     return (
-        <div className='POD-signin-signup'>
+        <div className='user-signin-signup'>
             <div className='signin-signup-container'>
                 <div className='card-box'>
 
                     <div className='card-body card-appear' id='card-signin'>
                         <h1 className='title'>Sign In</h1>
                         <Form className='form-box form-box1' onSubmit={handleSubmitSignIn}>
-                            {SignInEmailError && <span className='error-message' style={{ color: '#dc3545' }}>{SignInEmailError}</span>}
                             <Form.Group controlId='SignInEmail' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
-                                <Form.Control className='input' type='email' placeholder='Email' />
+                                <Form.Control className='input' type='email' placeholder='Email' style={{ border: (SignInEmailError || errorSignIn) && '1px solid #dc3545', }} />
                             </Form.Group>
-                            {SignInPasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{SignInPasswordError}</span>}
                             <Form.Group controlId='SignInPassword' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-key' style={{ fontSize: '25px' }}></i></span>
-                                <Form.Control className='input' type='password' placeholder='Mật khẩu' />
+                                <Form.Control className='input' type='password' placeholder='Mật khẩu' style={{ border: (SignInPasswordError || errorSignIn) && '1px solid #dc3545', }} />
                             </Form.Group>
                             <a href='#' className='forget-link'><b>Quên mật khẩu?</b></a>
+                            {SignInEmailError && <span className='error-message' style={{ color: '#dc3545' }}>{SignInEmailError}</span>}
+                            {SignInPasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{SignInPasswordError}</span>}
                             {errorSignIn && <span className='error-message' style={{ color: '#dc3545' }}>Đăng nhập thất bại</span>}
                             <div className='btn-box'>
                                 <Button type='submit' className='btn' >ĐĂNG NHẬP</Button>
@@ -327,32 +327,32 @@ export default function SignInSignUp() {
                     <div className='card-body card-disappear' id='card-signup'>
                         <h1 className='title'>Sign Up</h1>
                         <Form className='form-box form-box2' onSubmit={handleSubmitSignUp}>
-                            {SignUpEmailError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpEmailError}</span>}
                             <Form.Group controlId='SignUpEmail' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-envelope' style={{ fontSize: '25px' }}></i></span>
-                                <Form.Control className='input' type='email' placeholder='Email' />
+                                <Form.Control className='input' type='email' placeholder='Email' style={{ border: (SignUpEmailError || errorSignUp) && '1px solid #dc3545', }} />
                             </Form.Group>
-                            {SignUpFullNameError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpFullNameError}</span>}
                             <Form.Group controlId='SignUpFullName' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
-                                <Form.Control className='input' type='text' placeholder='Họ và tên' />
+                                <Form.Control className='input' type='text' placeholder='Họ và tên' style={{ border: (SignUpFullNameError || errorSignUp) && '1px solid #dc3545', }} />
                             </Form.Group>
-                            {SignUpPhoneNumberError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpPhoneNumberError}</span>}
                             <Form.Group controlId='SignUpPhoneNumber' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-phone' style={{ fontSize: '25px' }}></i></span>
-                                <Form.Control className='input' type='text' placeholder='Số điện thoại' />
+                                <Form.Control className='input' type='text' placeholder='Số điện thoại' style={{ border: (SignUpPhoneNumberError || errorSignUp) && '1px solid #dc3545', }} />
                             </Form.Group>
-                            {SignUpPasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpPasswordError}</span>}
                             <Form.Group controlId='SignUpPassword' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-key' style={{ fontSize: '25px', color: '#cccccc' }}></i></span>
-                                <Form.Control className='input' type='password' placeholder='Mật khẩu' />
+                                <Form.Control className='input' type='password' placeholder='Mật khẩu' style={{ border: (SignUpPasswordError || errorSignUp) && '1px solid #dc3545', }} />
                             </Form.Group>
-                            {SignUpConfirmError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpConfirmError}</span>}
                             <Form.Group controlId='SignUpConfirm' className='form-group form-input'>
                                 <span className='dobble-icon'><i className='fa-solid fa-key' style={{ fontSize: '25px', color: '#cccccc' }}></i></span>
                                 <span className='icon'><i className='fa-solid fa-key' style={{ fontSize: '25px' }}></i></span>
-                                <Form.Control className='input' type='password' placeholder='Xác thực mật khẩu' />
+                                <Form.Control className='input' type='password' placeholder='Xác thực mật khẩu' style={{ border: (SignUpConfirmError || errorSignUp) && '1px solid #dc3545', }} />
                             </Form.Group>
+                            {SignUpEmailError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpEmailError}</span>}
+                            {SignUpFullNameError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpFullNameError}</span>}
+                            {SignUpPhoneNumberError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpPhoneNumberError}</span>}
+                            {SignUpPasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpPasswordError}</span>}
+                            {SignUpConfirmError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpConfirmError}</span>}
                             {errorSignUp && <span className='error-message' style={{ color: '#dc3545' }}>Đăng kí thất bại</span>}
                             <div className='btn-box'>
                                 <Button type='submit' className='btn'>TẠO TÀI KHOẢN</Button>

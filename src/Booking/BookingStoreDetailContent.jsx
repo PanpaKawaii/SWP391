@@ -7,6 +7,7 @@ import './BookingStoreDetailContent.css';
 
 import BookingPodContent from './BookingPodContent';
 
+import { imageSTOREs } from '../assets/listSTOREs';
 import single1 from '../assets/PODs/single1.jpg'
 
 export default function BookingStoreDetailContent() {
@@ -53,7 +54,7 @@ export default function BookingStoreDetailContent() {
             {Store ? (
                 <div>
                     <div className='store-detail-container'>
-                        <img src={single1} alt={Store.name}></img>
+                        <img src={imageSTOREs.find(image => image.id === Store.id)?.image} alt={Store.name} />
                         <div className='store-detail'>
                             <h1><b>{Store.name}</b></h1>
                             <div className='rating'>
@@ -72,7 +73,7 @@ export default function BookingStoreDetailContent() {
                     <BookingPodContent />
                 </div>
             ) : (
-                <p>Không tìm thấy cửa hàng.</p>
+                <span>Không tìm thấy cửa hàng nào.</span>
             )}
         </div>
     )

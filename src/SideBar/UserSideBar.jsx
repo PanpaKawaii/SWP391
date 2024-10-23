@@ -53,7 +53,6 @@ export default function SideBar() {
                     (<></>)
                     : (<>
                         <Link to='/user/information'><i className='fa-solid fa-user icon'></i> Thông tin cá nhân</Link>
-                        <Link to='/user/account'><i className='fa-solid fa-key icon'></i> Đổi mật khẩu</Link>
                         <Link to='/user/historybooking'><i className='fas fa-chart-bar icon'></i> Lịch sử đặt chỗ</Link>
                     </>)
                 }

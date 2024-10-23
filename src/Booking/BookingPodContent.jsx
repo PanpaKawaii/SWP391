@@ -215,7 +215,7 @@ export default function BookingPodContent() {
             <div className='booking-pod-container'>
 
                 <table className='no-wrap align-middle table border-bottom'>
-                    <thead className='list-header'>
+                    {/* <thead className='list-header'>
                         <tr>
                             <th className='list-index'>STT</th>
                             <th>Ảnh</th>
@@ -225,7 +225,7 @@ export default function BookingPodContent() {
                             <th>Nội thất</th>
                             <th>Chi tiết</th>
                         </tr>
-                    </thead>
+                    </thead> */}
                     <tbody className='list-body'>
                         {filteredResults.length > 0 ? (
                             filteredResults.map((pod, index) => (
@@ -235,12 +235,12 @@ export default function BookingPodContent() {
                                         <img src={imagePODs.find(image => image.id === pod.id)?.image} alt='image' />
                                     </td>
                                     <td>
-                                        <p>ID: {pod.id}</p>
+                                        {/* <p>ID: {pod.id}</p> */}
                                         <h3><b>{pod.name}</b></h3>
                                         {[...Array(pod.rating)].map((_, i) => (
                                             <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
                                         ))}
-                                        <p>{getSlotPrice(pod.id) / 1000}.000 đồng / slot</p>
+                                        <p>{getSlotPrice(pod.id).toLocaleString('vi-VN')}đ/slot</p>
                                     </td>
                                     <td>
                                         {getTypeName(pod.id)}
@@ -268,7 +268,7 @@ export default function BookingPodContent() {
                                     </td>
                                     <td>
                                         <Link to={`../../../booking/pod/${pod.id}`}>
-                                            <Button className='btn' >Chi tiết</Button>
+                                            <Button className='btn' >CHI TIẾT</Button>
                                         </Link>
                                     </td>
                                 </tr>
@@ -313,7 +313,7 @@ export default function BookingPodContent() {
                                             </div>
                                             <div className='active-button'>
                                                 <Link to={`${pod.id}`}>
-                                                    <Button className='btn' style={{ backgroundColor: '#dc3545' }}>Select</Button>
+                                                    <Button className='btn' style={{ backgroundColor: '#dc3545' }}>SELECT</Button>
                                                 </Link>
                                             </div>
                                         </div>
@@ -322,7 +322,7 @@ export default function BookingPodContent() {
                             </Col>
                         ))
                     ) : (
-                        <p>No PODs available for this store.</p>
+                        <span>Không tìm thấy POD nào.</span>
                     )}
                 </Row> */}
             </div>

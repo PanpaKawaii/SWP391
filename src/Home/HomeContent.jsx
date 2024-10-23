@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Button, Row, Col, Card, Spinner } from 'react-bootstrap';
+import { Form, Button, Row, Col, Card, Spinner, Carousel } from 'react-bootstrap';
 import './HomeContent.css'
 
 import { imageSTOREs } from '../assets/listSTOREs';
@@ -175,9 +175,9 @@ export default function HomeContent() {
                     <p>Có rất nhiều kết quả cho bạn lựa chọn</p>}
             </div>
 
+            <h1><b>CƠ SỞ MỚI SẮP RA MẮT!</b></h1>
             <div className='shortcut-booking-pod'>
-                <h1><b>CƠ SỞ MỚI SẮP RA MẮT!</b></h1>
-                <Row className='image-row'>
+                {/* <Row className='image-row'>
                     {(STOREs ? STOREs.slice(0, 4) : []).map((store) => ( // Check if STOREs is not null
                         <Col key={store.id} xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} className='image-col'>
                             <Card className='image-card'>
@@ -199,8 +199,91 @@ export default function HomeContent() {
                             </Card>
                         </Col>
                     ))}
+                </Row> */}
+                {/* <Row className='image-row'>
+                    {(STOREs ? STOREs.slice(0, 1) : []).map((store) => ( // Check if STOREs is not null
+                        <Col key={store.id} xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className='image-col'>
+                            <Card className='image-card'>
+                                <Link to={`booking/store/3`}><img src={imageSTOREs[2].image} alt='Cơ Sở 3' /></Link>
+                                <Card.Body className='card-body'>
+                                    <h3><b>Cơ Sở 3</b></h3>
+                                    <div className='full-detail'>
+                                        <div className='short-detail'>
+                                            <p>Địa chỉ: {store.address}</p>
+                                            <p>Liên hệ: {store.contact}</p>
+                                        </div>
+                                        <div className='active-button'>
+                                            <Link to={`booking/store/3`}>
+                                                <Button className='btn' style={{ backgroundColor: '#28a745' }}>CHỌN</Button>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row> */}
+                <Row xs={1} sm={2} md={4} lg={4} className='image-row'>
+                    {STOREs && STOREs.map(store => {
+                        return (
+
+                            <Col key={store.id} className='image-col'>
+                                <Card className='image-card'>
+                                    <Card.Img src={home} alt={store.name} className='pod-image' />
+
+                                    <Card.Body className='card-body'>
+                                        <Card.Title className='card-title'>
+                                            <h4><b>{store.name}</b></h4>
+                                        </Card.Title>
+                                        <Card.Text className='card-info'>
+                                            <div className='full-detail'>
+                                                <div className='short-detail'>
+                                                    <p key={store.id}>Địa chỉ: {store.address}</p>
+                                                </div>
+                                                <span className='short-detail'>
+                                                    Đa dạng loại hình:
+                                                    <span className='type-list'>
+                                                        {TYPEs && TYPEs.map((type, index) => (
+                                                            <span key={type.id}>
+                                                                {type.name}{index < TYPEs.length - 1 ? ', ' : ''}
+                                                            </span>
+                                                        ))}
+                                                    </span>
+                                                </span>
+                                                <div className='short-detail'>
+                                                    {TYPEs && TYPEs.length > 0 ? (
+                                                        <span>{/* Lấy số bé nhất và lớn nhất trong capacity */}
+                                                            {Math.min(...TYPEs.map(type => type.capacity))} - {Math.max(...TYPEs.map(type => type.capacity))}
+                                                            {/* Hiển thị một icon user */}
+                                                            <span className='capacity-icon'> <i className='fa-solid fa-user'></i></span>
+                                                        </span>
+                                                    ) : null}
+                                                </div>
+                                                <div>
+                                                    {/* {slots && slots.length > 0 ? (
+                                                        <span>
+                                                            {Math.min(...slots.map(slot => slot.price))} - {Math.max(...slots.map(slot => slot.price))}
+                                                            <span className='capacity-icon'> vnđ</span>
+                                                        </span>
+                                                    ) : null} */}
+                                                </div>
+                                            </div>
+                                            <div className='star-rating' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> {/* Added flexbox styles */}
+                                                <div> {/* Wrap stars in a div for alignment */}
+                                                    <span key={store.id} className='yellow-star'>{store.rating}★</span>
+                                                </div>
+                                            </div>
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+
+                        );
+                    })}
                 </Row>
             </div>
+
+            <hr />
 
             <div className='shortcut-contact'>
                 <h1><b>Bạn gặp vấn đề gì sao?</b></h1>
@@ -231,6 +314,50 @@ export default function HomeContent() {
                 </div>
             </div>
 
+            <hr />
+
+            <div className='shortcut-why'>
+                <h1 className='section-title'><b>TẠI SAO CHỌN INNOSPACE?</b></h1>
+
+                <Carousel data-bs-theme="light">
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src={home}
+                            alt="First slide"
+                        />
+                        <Carousel.Caption className='carousel-text'>
+                            <h5>KHÔNG GIAN LÀM VIỆC ĐA DẠNG</h5>
+                            <p>Đáp ứng nhu cầu đa dạng từ các sinh viên, freelancer đến doanh nghiệp nhỏ, với lựa chọn đa dạng từ phòng làm việc cá nhân đến không gian làm việc nhóm.</p>                    </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src={home}
+
+                            alt="Second slide"
+                        />
+                        <Carousel.Caption className='carousel-text'>
+                            <h5>QUẢN LÝ ĐẶT CHỖ THÔNG MINH</h5>
+                            <p>Giao diện thân thiện, cho phép bạn dễ dàng tìm kiếm và đặt chỗ theo nhu cầu, thời gian và ngân sách.</p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src={home}
+
+                            alt="Third slide"
+                        />
+                        <Carousel.Caption className='carousel-text'>
+                            <h5>DỊCH VỤ TOÀN DIỆN</h5>
+                            <p>
+                                Hỗ trợ quản lý lịch làm việc, thanh toán trực tuyến và cung cấp các gói dịch vụ linh hoạt kèm các tiện ích.                        </p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                </Carousel>
+
+            </div >
         </div >
     )
 }

@@ -2,16 +2,13 @@ body {
     margin: 0;
 }
 
-.POD-signin-signup {
+.user-signin-signup {
     background-color: #eeefe9;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Quicksand', 'Arial', sans-serif;
     transition: all 0.3s ease;
-}
-
-.POD-signin-signup {
 
     .signin-signup-container {
         height: 600px;
@@ -23,118 +20,107 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-    }
 
-    .card-box {
-        width: 800px;
-        height: 600px;
-        display: flex;
-        position: relative;
-    }
-
-    .card-body {
-        flex: 1;
-        width: 50%;
-        height: 600px;
-        padding: 40px;
-        margin: 0;
-    }
-
-    .title {
-        font-weight: bold;
-        margin: 0 0 30px;
-        display: flex;
-        justify-content: center;
-    }
-
-    .form-box {
-        position: relative;
-    }
-
-    .form-input {
-        margin: 2px 0 2px 40px;
-    }
-
-    input {
-        width: 100%;
-        margin: 0;
-        box-sizing: border-box;
-        outline: none;
-    }
-
-    .icon {
-        margin: 10px 0;
-        left: 0;
-        position: absolute;
-    }
-
-    .dobble-icon {
-        margin: 10px 0;
-        left: -8px;
-        position: absolute;
-    }
-
-    .forget-link {
-        display: block;
-        text-align: right;
-        color: #ffc107;
-        text-decoration: none;
-    }
-
-    .forget-link:hover {
-        color: #dba506;
-    }
-
-    .movingImage {
-        width: 50%;
-        height: 100%;
-        background: url('../assets/PODs/meeting5.jpg') center;
-        position: absolute;
-        right: 0;
-        transition: all 0.5s ease;
-    }
-
-    /* .movingImage{
-        width: 50%;
-        height: 100%;
-        right: 0;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-        transition: all 0.5s ease;
-        position: absolute;
-    } */
-
-    .btn {
-        width: 100%;
-        color: #000000;
-        background-color: #bbbbbb;
-        margin: 10px 0;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-    }
-
-    .btn:focus {
-        background-color: #777777;
-    }
-
-    .form-box {
-
-        .btn-box {
+        .card-box {
+            width: 800px;
+            height: 600px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+            position: relative;
 
-        button[type="submit"] {
-            width: 65%;
-            background-color: #999999;
-        }
+            .card-body {
+                flex: 1;
+                width: 50%;
+                height: 600px;
+                padding: 40px;
+                margin: 0;
 
-        button[type="reset"] {
-            width: 30%;
-            background-color: #dddddd;
+                .title {
+                    font-weight: bold;
+                    margin: 0 0 30px;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .form-box {
+                    position: relative;
+
+                    .form-input {
+                        margin: 2px 0 2px 40px;
+
+                        .icon {
+                            margin: 10px 0;
+                            left: 0;
+                            position: absolute;
+                        }
+
+                        .dobble-icon {
+                            margin: 10px 0;
+                            left: -8px;
+                            position: absolute;
+                        }
+
+                        input {
+                            width: 100%;
+                            margin: 0;
+                            box-sizing: border-box;
+                            outline: none;
+                        }
+                    }
+
+                    .forget-link {
+                        display: block;
+                        text-align: right;
+                        color: #ffc107;
+                        text-decoration: none;
+                    }
+
+                    .forget-link:hover {
+                        color: #dba506;
+                    }
+                }
+            }
+
+            .movingImage {
+                width: 50%;
+                height: 100%;
+                background: url('../assets/PODs/meeting5.jpg') center;
+                position: absolute;
+                right: 0;
+                transition: all 0.5s ease;
+            }
+
+            .btn {
+                width: 100%;
+                color: #000000;
+                background-color: #bbbbbb;
+                margin: 10px 0;
+                border: none;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+
+            .btn:focus {
+                background-color: #777777;
+            }
+
+            .form-box {
+
+                .btn-box {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                button[type="submit"] {
+                    width: 65%;
+                    background-color: #999999;
+                }
+
+                button[type="reset"] {
+                    width: 30%;
+                    background-color: #dddddd;
+                }
+            }
         }
     }
 

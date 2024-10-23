@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Row, Col, Spinner } from 'react-bootstrap';
-import './UserControlContent.css';
+import { Row, Col, Spinner, Button } from 'react-bootstrap';
+import './UserHistoryBookingDetail.css';
 
 import YellowBanana from '../BackgroundImage/YellowBanana.jpg';
 
@@ -16,15 +16,6 @@ export default function UserHistoryBookingDetail() {
         const UserIdInt = parseInt(UserId, 10);
         setId(UserIdInt);
     }, [UserId]);
-    
-    const [currentDateTime, setCurrentDateTime] = useState(new Date());
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentDateTime(new Date());
-        }, 1000);
-
-        return () => clearInterval(timer);
-    }, []);
 
     const [BOOKINGs, setBOOKINGs] = useState(null);
     const [PODs, setPODs] = useState(null);
@@ -32,6 +23,9 @@ export default function UserHistoryBookingDetail() {
     const [SLOTs, setSLOTs] = useState([]);
     const [STOREs, setSTOREs] = useState(null);
     const [PAYMENTs, setPAYMENTs] = useState(null);
+    const [BOOKINGORDERs, setBOOKINGORDERs] = useState(null);
+    const [PRODUCTs, setPRODUCTs] = useState(null);
+    const [CATEGORYs, setCATEGORYs] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -68,6 +62,21 @@ export default function UserHistoryBookingDetail() {
                 const paymentData = await paymentResponse.json();
                 setPAYMENTs(paymentData);
 
+                const bookingOrderResponse = await fetch('https://localhost:7166/api/BookingOrder');
+                if (!bookingOrderResponse.ok) throw new Error('Network response was not ok');
+                const bookingOrderData = await bookingOrderResponse.json();
+                setBOOKINGORDERs(bookingOrderData);
+
+                const productResponse = await fetch('https://localhost:7166/api/Product');
+                if (!productResponse.ok) throw new Error('Network response was not ok');
+                const productData = await productResponse.json();
+                setPRODUCTs(productData);
+
+                const categoryResponse = await fetch('https://localhost:7166/api/Category');
+                if (!categoryResponse.ok) throw new Error('Network response was not ok');
+                const categoryData = await categoryResponse.json();
+                setCATEGORYs(categoryData);
+
                 setLoading(false);
             } catch (error) {
                 setError(error);
@@ -78,25 +87,65 @@ export default function UserHistoryBookingDetail() {
         fetchData();
     }, []);
 
-    // const [thisBOOKING, setThisBOOKING] = useState(null);
-    // const [thisPOD, setThisPOD] = useState(null);
-    // const [thisTYPE, setThisTYPE] = useState(null);
-    // const [thisSLOT, setThisSLOT] = useState([]);
-    // const [thisSTORE, setThisSTORE] = useState(null);
+    // Lấy Booking này
+    const thisBOOKING = BOOKINGs ? BOOKINGs.find(booking => booking.id == BookingId.Id) : null;
+    // Lấy những BookingOrder của Booking này
+    const filteredBOOKINGORDERs = BOOKINGORDERs ? BOOKINGORDERs.filter(bookingOrder => bookingOrder.bookingId == BookingId.Id) : null;
 
-    // Lấy những Booking của User này
-    const filteredBOOKINGs = id && BOOKINGs ? BOOKINGs.filter(booking => booking.userId == id) : [];
-    const filteredPAYMENTs = id && PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId == BookingId.Id) : [];
+    const getBookingOrderAmount = (bookingOrderId) => {
+        const bookingOrder = filteredBOOKINGORDERs ? filteredBOOKINGORDERs.find(bookingOrder => bookingOrder.id === bookingOrderId) : null;
+        return bookingOrder ? bookingOrder.amount : null;
+    };
+
+    const getProductName = (productId) => {
+        const product = PRODUCTs ? PRODUCTs.find(product => product.id == productId) : null;
+        return product ? product.name : null;
+    };
+
+    const getCategoryName = (productId) => {
+        const product = PRODUCTs ? PRODUCTs.find(product => product.id == productId) : null;
+        const category = CATEGORYs ? CATEGORYs.find(category => category.id == product.categoryId) : null;
+        return category ? category.name : null;
+    };
+
+    const getProductDescription = (productId) => {
+        const product = PRODUCTs ? PRODUCTs.find(product => product.id == productId) : null;
+        return product ? product.description : null;
+    };
+
+    const getProductPrice = (productId) => {
+        const product = PRODUCTs ? PRODUCTs.find(product => product.id == productId) : null;
+        return product ? product.price : null;
+    };
+
+    const getBookingOrderQuantity = (bookingOrderId) => {
+        const bookingOrder = filteredBOOKINGORDERs ? filteredBOOKINGORDERs.find(bookingOrder => bookingOrder.id == bookingOrderId) : null;
+        return bookingOrder ? bookingOrder.quantity : null;
+    };
+
+    const getBookingOrderStatus = (bookingOrderId) => {
+        const bookingOrder = filteredBOOKINGORDERs ? filteredBOOKINGORDERs.find(bookingOrder => bookingOrder.id == bookingOrderId) : null;
+        return bookingOrder ? bookingOrder.status : null;
+    };
+
+    const getBookingOrderDate = (bookingOrderId) => {
+        const bookingOrder = filteredBOOKINGORDERs ? filteredBOOKINGORDERs.find(bookingOrder => bookingOrder.id == bookingOrderId) : null;
+        return bookingOrder ? bookingOrder.date : null;
+    };
+
+
+
+
 
     const getPodName = (podId) => {
         const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
         return pod ? pod.name : null;
     };
 
-    const getPodImage = (podId) => {
-        const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
-        return pod ? pod.image : null;
-    };
+    // const getPodImage = (podId) => {
+    //     const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
+    //     return pod ? pod.image : null;
+    // };
 
     const getPodRating = (podId) => {
         const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
@@ -122,12 +171,6 @@ export default function UserHistoryBookingDetail() {
         return slots;
     };
 
-    const getStoreId = (podId) => {
-        const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
-        const store = STOREs ? STOREs.find(store => store.id === pod.storeId) : null;
-        return store ? store.id : null;
-    };
-
     const getStoreName = (podId) => {
         const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
         const store = STOREs ? STOREs.find(store => store.id === pod.storeId) : null;
@@ -140,10 +183,29 @@ export default function UserHistoryBookingDetail() {
         return store ? store.address : null;
     };
 
-    const getSumPayment = (bookingId) => {
+    const getBookingAmount = (bookingId) => {
         const payments = PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId === bookingId) : [];
-        const sum = payments.map(payment => payment.amount).reduce((sum, amount) => sum + amount, 0);
-        return sum;
+        return payments[0].amount;
+    };
+
+    const getBookingPaymentStatus = (bookingId) => {
+        const payments = PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId === bookingId) : [];
+        return payments[0].status;
+    };
+
+    const getSumBookingAmount = (bookingId) => {
+        const payments = PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId === bookingId) : [];
+        return payments.reduce((sum, payment) => sum + payment.amount, 0);
+    };
+
+    const getBookingPaymentDate = (bookingId) => {
+        const payments = PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId === bookingId) : [];
+        return payments[0].date;
+    };
+
+    const getBookingOrderPaymentMethod = (BookingId) => {
+        const payments = PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId === BookingId) : [];
+        return payments[0].method;
     };
 
 
@@ -157,113 +219,138 @@ export default function UserHistoryBookingDetail() {
     if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
 
     return (
-        <div className='user-control-center'>
-            <div className='user-control-center-container'>
+        <div className='user-booking-detail'>
+            <div className='booking-card'>
+                <div className='booking-card-header'>
+                    <h4>Ngày đặt: {thisBOOKING.date.substring(0, 10)}
+                        {getSlots(thisBOOKING.id).map((slot, index) => (
+                            <span key={index}> | {slot.startTime}:00 - {slot.endTime}:00 </span>
+                        ))}
+                    </h4>
+                </div>
+                <Row className='booking-row'>
+                    <Col xxl={12} className='booking-col'>
+                        <div className='booking-card-body'>
+                            <img src={YellowBanana} alt='BookingImage' />
+                            {/* <img src={getPodImage(booking.podId)} alt={getPodName(booking.podId)} /> */}
+                            <div className='card-detail'>
+                                <div className='card-information'>
+                                    <p className='booking-id'>Booking ID: {thisBOOKING.id}</p>
+                                    <h1><b>{getPodName(thisBOOKING.podId)}</b></h1>
 
-                <div className='user-booking'>
-                    <Row className='booking-row'>
-                        {filteredPAYMENTs ? (
-                            filteredPAYMENTs.map((booking, index) => (
-                                <Col key={index} xxl={12} className='booking-col'>
-                                    <div className='booking-card'>
-                                        <img src={YellowBanana} alt='YellowBanana' />
-                                        <div className='card-detail-all'>
+                                    <div className='card-rating-capacity'>
+                                        <div className='rating'>
+                                            {[...Array(getPodRating(thisBOOKING.podId))].map((_, i) => (
+                                                <span key={i} style={{ color: 'gold', fontSize: '1.1em' }}><i className='fa-solid fa-star'></i></span>
+                                            ))}
+                                        </div>
 
+                                        <div className='capacity'>
+                                            {getPodCapacity(thisBOOKING.podId) === 10 ?
+                                                (
+                                                    <span className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
+                                                ) :
+                                                (
+                                                    [...Array(getPodCapacity(thisBOOKING.podId))].map((_, i) => (
+                                                        <span key={i} className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user'></i></span>
+                                                    ))
+                                                )
+                                            }
+                                        </div>
+                                    </div>
+                                    <p>Loại: {getTypeName(thisBOOKING.podId)}</p>
+                                    <p>Địa chỉ: {getStoreName(thisBOOKING.podId)}, {getStoreAddress(thisBOOKING.podId)}</p>
+                                </div>
+
+                                <div className='card-datetime-amount'>
+                                    <div className='card-amount'>
+                                        <p>Thành tiền: {getBookingAmount(thisBOOKING.id).toLocaleString('vi-VN')}đ</p>
+                                    </div>
+                                    <div>
+                                        <p>{getBookingOrderPaymentMethod(thisBOOKING.id)}</p>
+                                    </div>
+                                    <div className='card-payment'>
+                                        <h4>{(() => {
+                                            switch (getBookingPaymentStatus(thisBOOKING.id)) {
+                                                case 'Đã thanh toán':
+                                                    return <div className='card-datetime'>
+                                                        <p><b>Ngày thanh toán:</b> {getBookingPaymentDate(thisBOOKING.id).substring(0, 10)}</p>
+                                                        <h4><p style={{ color: '#28a745' }}>{getBookingPaymentStatus(thisBOOKING.id)}</p></h4>
+                                                    </div>;
+                                                case 'Chưa thanh toán':
+                                                    return <span style={{ color: '#ffc107' }}>{getBookingPaymentStatus(thisBOOKING.id)}</span>;
+                                                default:
+                                                    return getBookingPaymentStatus(thisBOOKING.id);
+                                            }
+                                        })()}
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+                <Row className='booking-row'>
+                    {filteredBOOKINGORDERs ? (
+                        filteredBOOKINGORDERs.map((bookingOrder, index) => (
+                            <Col key={index} xxl={12} className='booking-col'>
+                                <div className='booking-card-body'>
+                                    <img src={YellowBanana} alt='BookingImage' />
+                                    {/* <img src={getPodImage(booking.podId)} alt={getPodName(booking.podId)} /> */}
+                                    <div className='card-detail'>
+                                        <div className='card-information'>
+                                            <h1><b>{getProductName(bookingOrder.productId)}</b></h1>
+                                            <p>Loại dịch vụ: {getCategoryName(bookingOrder.productId)}</p>
+                                            <p>Mô tả: {getProductDescription(bookingOrder.productId)}</p>
+                                            <p>Giá: {getProductPrice(bookingOrder.productId).toLocaleString('vi-VN')}đ</p>
+                                            <p>Số lượng: {getBookingOrderQuantity(bookingOrder.id)}</p>
+                                        </div>
+
+                                        <div className='card-datetime-amount'>
+                                            <div className='card-amount'>
+                                                <p>Thành tiền: {getBookingOrderAmount(bookingOrder.id).toLocaleString('vi-VN')}đ</p>
+                                            </div>
                                             <div>
-                                                <h3><b>Amount: {booking.amount}</b></h3>
-                                                <h1>{new Date().toLocaleDateString()}</h1>
-                                                <h1>{currentDateTime.toLocaleString()}</h1>
+                                                <p>Thanh toán bằng tiền mặt</p>
                                             </div>
-
-
-
-
-
-
-                                            <div className='card-information'>
-                                                {/* <img src={getPodImage(booking.podId)} alt={getPodName(booking.podId)} /> */}
-
-                                                {/* <div className='card-info'>
-                                                    <p className='booking-id'>Booking ID: {booking.id}</p>
-                                                    <h3><b>{getPodName(booking.podId)}</b></h3>
-
-                                                    <div className='card-rating-capacity'>
-                                                        <div className='rating'>
-                                                            {[...Array(getPodRating(booking.podId))].map((_, i) => (
-                                                                <span key={i} style={{ color: 'gold', fontSize: '1.1em' }}><i className='fa-solid fa-star'></i></span>
-                                                            ))}
-                                                        </div>
-
-                                                        <div className='capacity'>
-                                                            {getPodCapacity(booking.podId) === 10 ?
-                                                                (
-                                                                    <span className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user' style={{ paddingRight: '5px' }}></i><b> x 10</b></span>
-                                                                ) :
-                                                                (
-                                                                    [...Array(getPodCapacity(booking.podId))].map((_, i) => (
-                                                                        <span key={i} className='capacity-icon' style={{ padding: '5px' }}><i className='fa-solid fa-user'></i></span>
-                                                                    ))
-                                                                )
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    <p>{getStoreName(booking.podId)}: {getStoreAddress(booking.podId)}</p>
-                                                    <p>{getTypeName(booking.podId)}</p>
-                                                    <p>Đánh giá: {booking.feedback}</p>
-                                                </div> */}
-                                            </div>
-
-                                            {/* <div className='card-datetime-amount'>
-                                                <div>
-                                                    <b>Ngày nhận phòng:</b> {booking.date}
-                                                </div>
-                                                <div className='slot-name'>
-                                                    {getSlots(booking.id).slice(0, 3).map((slot, index) => (
-                                                        <span key={index}>
-                                                            {slot.name}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                                <div className='slot-name'>
-                                                    {getSlots(booking.id).slice(3, 6).map((slot, index) => (
-                                                        <span key={index}>
-                                                            {slot.name}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                                <div className='card-amount'>
-                                                    <h4>Tổng: {getSumPayment(booking.id) > 1000000 ? (getSumPayment(booking.id) / 1000000) + ' triệu đồng' :
-                                                        getSumPayment(booking.id) > 1000 ? (getSumPayment(booking.id) / 1000) + ' ngàn đồng' :
-                                                            getSumPayment(booking.id) + ' đồng'}
-                                                    </h4>
-                                                    <p>Trạng thái: {(() => {
-                                                        switch (booking.status) {
-                                                            case 'Đã xác nhận':
-                                                                return <span style={{ backgroundColor: '#28a745', color: 'white' }}>{booking.status}</span>;
-                                                            case 'Chờ xác nhận':
-                                                                return <span style={{ backgroundColor: '#ffc107', color: 'white' }}>{booking.status}</span>;
-                                                            case 'Đã hủy':
-                                                                return <span style={{ backgroundColor: '#dc3545', color: 'white' }}>{booking.status}</span>;
-                                                            default:
-                                                                return booking.status;
-                                                        }
-                                                    })()}</p>
-                                                </div>
-                                            </div> */}
-
-                                            <div className='rebook-button'>
-                                                <Link to={`../user/historybooking/${booking.id}`}><Button className='btn btn-detail'>Chi tiết</Button></Link>
-                                                <Link to={`../booking/pod/${booking.podId}`}><Button className='btn btn-rebook'>Đặt lại</Button></Link>
+                                            <div className='card-payment'>
+                                                {(() => {
+                                                    switch (getBookingOrderStatus(bookingOrder.id)) {
+                                                        case 'Đã thanh toán':
+                                                            return <div className='card-datetime'>
+                                                                <p><b>Ngày thanh toán:</b> {getBookingOrderDate(bookingOrder.id).substring(0, 10)}</p>
+                                                                <h4><p style={{ color: '#28a745' }}>{getBookingOrderStatus(bookingOrder.id)}</p></h4>
+                                                            </div>;
+                                                        case 'Chưa thanh toán':
+                                                            return <h4 style={{ color: '#ffc107' }}>{getBookingOrderStatus(bookingOrder.id)}</h4>;
+                                                        default:
+                                                            return getBookingOrderStatus(bookingOrder.id);
+                                                    }
+                                                })()}
                                             </div>
                                         </div>
                                     </div>
-                                </Col>
-                            ))
-                        ) : (
-                            <p>No bookings available.</p>
-                        )}
-                    </Row>
-                </div>
+                                </div>
+                            </Col>
+                        ))
+                    ) : (
+                        <span>Không có lịch sử đặt phòng nào.</span>
+                    )}
+                </Row>
+                <Row className='button-row'>
+                    <Col xxl={12} className='button-col'>
+                        <div className='card-amount'>
+                            <h4><b>Tổng tiền: <span style={{ color: '#fb8159' }}>{getSumBookingAmount(thisBOOKING.id).toLocaleString('vi-VN')}đ</span></b></h4>
+                        </div>
+                        <div className='button-card-footer'>
+                            <Button>Thêm dịch vụ</Button>
+                            <div className='link-button'>
+                                <Link to={`/booking/pod/${thisBOOKING.id}`} className='link-item'><h5>Đánh giá</h5></Link>
+                                <Link to={`/booking/pod/${thisBOOKING.id}`} className='link-item'><Button>Đặt lại</Button></Link>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
             </div>
         </div>
     )

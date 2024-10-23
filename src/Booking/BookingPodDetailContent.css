@@ -27,7 +27,7 @@ body {
             display: flex;
 
             .image-detail-pod {
-                width: 70%;
+                width: 60%;
                 height: 100%;
                 padding: 0 10px 10px 0;
 
@@ -42,7 +42,7 @@ body {
             }
 
             .image-detail-2 {
-                width: 30%;
+                width: 40%;
                 height: 100%;
 
                 .image-detail-2-item-store {
@@ -94,7 +94,6 @@ body {
                     background-color: #ffffff;
                     border-radius: 10px;
                     border: 1px solid #cccccc;
-                    box-shadow: 0 4px 6px #6666664d;
                     text-align: center;
                     display: flex;
                     justify-content: center;
@@ -146,7 +145,7 @@ body {
 
                 .card {
                     width: 90%;
-                    height: 540px;
+                    height: auto;
                     padding: 30px 20px;
                     background-color: #ffffff;
                     box-shadow: 0 4px 6px #6666664d;
@@ -156,8 +155,34 @@ body {
                     flex-direction: column;
                     align-items: center;
 
+                    .payment-card-title {
+                        width: 100%;
+                        padding: 5px;
+                        color: #ffffff;
+                        background-color: #fb8159;
+                        border-radius: 5px;
+
+                        h1 {
+                            margin: 0;
+                            text-align: center;
+                        }
+                    }
+
                     .form-card {
                         width: 80%;
+                        margin: 20px 0 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+
+                        .form-group {
+                            width: 100%;
+                            margin: 0 0 10px;
+
+                            .col {
+                                padding: 0;
+                            }
+                        }
                     }
 
                     .btn,
@@ -217,7 +242,7 @@ body {
             width: 90%;
             height: 80vh;
             margin: 100px auto;
-            padding: 20px 0;
+            padding: 20px 20px;
             background: #ffffff;
             border-radius: 15px;
             position: relative;
@@ -225,11 +250,28 @@ body {
             display: flex;
             justify-content: center;
 
-            .confirm-information {
-                width: 40%;
+            img {
+                width: 50%;
+                height: 100%;
+                border-radius: 10px;
+                object-fit: cover;
+                object-position: center;
+                display: block;
+            }
 
-                h3 {
-                    margin: 20px 0 0;
+            .confirm-information {
+                width: 50%;
+                padding: 0 20px 0 0;
+                text-align: center;
+
+                .row-slot {
+                    margin: 0;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                h4 {
+                    margin: 10px 0 0;
                 }
 
                 p {
@@ -237,16 +279,8 @@ body {
                 }
 
                 h2 {
-                    margin: 20px 0 0;
-                }
-
-                img {
-                    width: 90%;
-                    height: 240px;
-                    border-radius: 10px;
-                    object-fit: cover;
-                    object-position: center;
-                    display: block;
+                    margin: 10px 0 10px;
+                        color: #fb8159;
                 }
 
                 .button-confirm-amount {
@@ -287,18 +321,19 @@ body {
             }
 
             .payment-qrcode {
-                width: 40%;
+                width: 100%;
+                margin: 10px 0 0;
                 display: flex;
-                flex-direction: column;
                 align-items: center;
+                justify-content: center;
+                text-align: center;
 
                 img {
-                    width: 30vw;
-                    height: 30vw;
+                    width: 20vw;
+                    height: 20vw;
                     border-radius: 10px;
                     object-fit: cover;
                     object-position: center;
-                    display: block;
                 }
             }
         }
