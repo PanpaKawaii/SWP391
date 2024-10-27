@@ -36,19 +36,4 @@ body {
             }
         }
     }
-
-    .btn,
-    .btn:focus {
-        color: #ffffff;
-        background-color: #28a745;
-        font-weight: bold;
-        border: none;
-        border-radius: 7px;
-    }
-
-    .btn:hover {
-        color: #ffffff;
-        background-color: #22913c;
-    }
-
 }

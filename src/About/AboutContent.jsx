@@ -106,7 +106,7 @@ export default function AboutContent() {
                 </div>
                 <div className='booking-button'>
                     <Link to={`../booking/pod`}>
-                        <Button className='btn'>HÃY TRẢI NGHIỆM NÀO!</Button>
+                        <Button className='btn'>CÙNG TRẢI NGHIỆM NÀO!</Button>
                     </Link>
                 </div>
             </div>

@@ -38,7 +38,7 @@ body {
     .contact-us {
         width: 100%;
         max-width: 600px;
-        height: 450px;
+        height: auto;
         background-color: #ffffff;
         padding: 40px;
         border-radius: 8px;
@@ -63,8 +63,9 @@ body {
 
     .btn,
     .btn:focus {
+        width: 100px;
         color: #ffffff;
-        background-color: #3c89bd;
+        background-color: #fb8b24;
         font-weight: bold;
         border: none;
         border-radius: 7px;
@@ -72,6 +73,6 @@ body {
 
     .btn:hover {
         color: #ffffff;
-        background-color: #2874a7;
+        background-color: #d97720;
     }
 }

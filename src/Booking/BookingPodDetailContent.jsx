@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Form, Button, Card, Row, Col, Spinner } from 'react-bootstrap';
 import './BookingPodDetailContent.css';
 
@@ -89,9 +88,9 @@ export default function BookingPodDetailContent() {
     const thisSTORE = STOREs ? STOREs.find(store => store.id === Pod?.storeId) : null;
 
 
-
+    const currentDate = new Date();
     const [MaxID, setMaxID] = useState(null);
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(new Date(currentDate.getTime()).toISOString().substring(0, 10));
     const [SlotId, setSlotId] = useState('');
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Thanh toán qua VNPay');
     const [Confirm, setConfirm] = useState(false);
@@ -120,7 +119,7 @@ export default function BookingPodDetailContent() {
 
 
 
-
+    // Tạo Booking và Payment ////////////////////////////////////////////////////////////////////////////////////////////////////
     const Booking = async () => {
         if (!MaxID) {
             console.error('Please wait for the system');
@@ -160,6 +159,15 @@ export default function BookingPodDetailContent() {
         };
         console.log('Payment data:', paymentData);
 
+        const paymentMethodData = {
+            orderId: MaxID + 10,
+            fullname: 'NGUYEN VAN A',
+            description: 'Thanh toán qua VNPay',
+            amount: Amount,
+            createdDate: date,
+        };
+        console.log('PaymentMethod data:', paymentMethodData);
+
         console.log('Confirm status:', Confirm);
 
         const token = localStorage.getItem('token');
@@ -195,6 +203,24 @@ export default function BookingPodDetailContent() {
             if (!response.ok) throw new Error('Network response was not ok');
             const result = await response.json();
             console.log('Creating Payment successful:', result);
+        } catch (error) {
+            console.error('Error during booking:', error);
+        }
+
+        try {
+            const response = await fetch('https://localhost:7166/api/Payment/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(paymentMethodData),
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+            const result = await response.json();
+            window.location.href = result.paymentUrl;
+            console.log('Creating PaymentMethod successful:', result);
         } catch (error) {
             console.error('Error during booking:', error);
         }
@@ -344,7 +370,7 @@ export default function BookingPodDetailContent() {
                                                 }} required />
                                             </Form.Group>
                                         ) : (
-                                            <div style={{ padding: '3.5px' }}><h3>Date: {date}</h3></div>
+                                            <div style={{ padding: '3px' }}><h3>Ngày: {date}</h3></div>
                                         )}
 
                                         {date &&
@@ -469,6 +495,7 @@ export default function BookingPodDetailContent() {
                 {IsPopupOpen && date && SlotId && (
                     <div id='popupConfirm' className='overlay'>
                         <div className='popup'>
+                            <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
                             <div className='confirm-information'>
 
                                 <h1><b>{Pod.name}</b></h1>
@@ -484,7 +511,7 @@ export default function BookingPodDetailContent() {
                                 <h4><b>Giờ nhận phòng: </b></h4>
                                 <Row className='row-slot'>
                                     {selectedSlots && selectedSlots.map(slot => (
-                                        <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5} key={slot.id}>
+                                        <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5} key={slot.id} className='col'>
                                             {`[${slot.name}] ${slot.startTime}:00 - ${slot.endTime}:00 (${slot.price.toLocaleString('vi-VN')}đ)`}
                                         </Col>
                                     ))}
@@ -492,20 +519,22 @@ export default function BookingPodDetailContent() {
 
                                 <div className='button-confirm-amount'>
                                     <h2><b>Tổng: {Amount.toLocaleString('vi-VN')}đ</b></h2>
-                                    {!Confirm ? <Button type='submit' className='btn' onClick={handleConfirm}>XÁC NHẬN</Button> : <Button className='btn' style={{ backgroundColor: '#d3f9d8' }}>ĐÃ XÁC NHẬN</Button>}
+                                    {!Confirm ?
+                                        <Button type='submit' className='btn' onClick={handleConfirm}>XÁC NHẬN</Button>
+                                        :
+                                        <Button className='btn' style={{ backgroundColor: '#feecd9' }}>ĐÃ XÁC NHẬN</Button>}
                                 </div>
-                                <div className='payment-qrcode'>
+                                {/* <div className='payment-qrcode'>
                                     {IsQROpen && (
                                         <>
                                             <img src={QRcode} alt='QRcode'></img>
                                         </>
                                     )}
-                                </div>
+                                </div> */}
 
                                 {Confirm === false ? <a className='close' href='#' onClick={() => { setIsPopupOpen(false); setIsQROpen(false); setConfirm(false); }}>&times;</a>
-                                    : <a className='close' href='../../user/historybooking'>&times;</a>}
+                                    : <Link className='close' to='../../user/booking'>&times;</Link>}
                             </div>
-                            <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
                         </div>
                     </div>
                 )}

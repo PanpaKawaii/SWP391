@@ -43,6 +43,11 @@ export default function BookingStoreContent() {
         console.log({ selectedStore, storeName });
     };
 
+    const handleReset = () => {
+        setSelectedStore('');
+        setStoreName('');
+    };
+
 
     if (loading) return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -72,17 +77,17 @@ export default function BookingStoreContent() {
                         <Form.Control className='input' type='text' placeholder='Tên cửa hàng' value={storeName} onChange={(e) => setStoreName(e.target.value)} />
                     </Form.Group>
 
+                    <Button type='reset' className='btn' onClick={handleReset}>ĐẶT LẠI</Button>
+
                 </Form>
 
             </div>
-
-            <hr />
 
             <div className='booking-store-container'>
                 <Row className='image-row'>
                     {filteredResults.length > 0 ? (
                         filteredResults.map((store) => (
-                            <Col key={store.id} xs={12} sm={12} md={12} lg={6} xl={6} xxl={6} className='image-col'>
+                            <Col key={store.id} xs={12} sm={12} md={12} lg={12} xl={6} xxl={6} className='image-col'>
                                 <Card className='image-card'>
                                     <Link to={`${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link>
                                     <Card.Body className='card-body'>
@@ -94,7 +99,7 @@ export default function BookingStoreContent() {
                                             </div>
                                             <div className='active-button'>
                                                 <Link to={`${store.id}`}>
-                                                    <Button className='btn' style={{ backgroundColor: '#28a745' }}>CHI TIẾT</Button>
+                                                    <Button className='btn'>CHI TIẾT</Button>
                                                 </Link>
                                             </div>
                                         </div>

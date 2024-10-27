@@ -17,24 +17,38 @@ body {
         background-color: #fafafa;
         position: sticky;
         top: 0;
-    }
 
-    .search {
-        display: flex;
-        align-items: center;
-        padding: 20px 10px;
+        .search {
+            display: flex;
+            align-items: center;
+            padding: 20px 10px;
 
-        .search-title {
-            margin-right: 10px;
+            .search-title {
+                margin-right: 10px;
+            }
+
+            .form-group {
+                padding: 0 10px 0 0;
+
+                .form-input {
+                    width: 250px;
+                }
+            }
+
+            .btn,
+            .btn:focus {
+                color: #ffffff;
+                background-color: #fdbc7f;
+                font-weight: bold;
+                border: none;
+                border-radius: 7px;
+            }
+        
+            .btn:hover {
+                color: #ffffff;
+                background-color: #d97720;
+            }
         }
-    }
-
-    .form-group {
-        padding: 0 10px 0 0;
-    }
-
-    .form-input {
-        width: 250px;
     }
 
     /* .booking-pod-container {
@@ -81,7 +95,7 @@ body {
     .btn,
     .btn:focus {
         color: #ffffff;
-        background-color: #28a745;
+        background-color: #fb8b24;
         font-weight: bold;
         border: none;
         border-radius: 7px;
@@ -89,7 +103,7 @@ body {
 
     .btn:hover {
         color: #ffffff;
-        background-color: #22913c;
+        background-color: #d97720;
     }
 
     /* .image-row {

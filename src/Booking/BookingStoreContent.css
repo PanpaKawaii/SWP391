@@ -12,20 +12,37 @@ body {
 
     .search-container {
         width: 100%;
-    }
+        background-color: #fafafa;
+        position: sticky;
+        top: 0;
 
-    .search {
-        display: flex;
-        align-items: center;
-        padding: 10px 10px 0;
-    }
+        .search {
+            display: flex;
+            align-items: center;
+            padding: 20px 10px;
 
-    .form-group {
-        padding: 0 10px 0 0;
-    }
+            .form-group {
+                padding: 0 10px 0 0;
 
-    .form-input {
-        width: 250px;
+                .form-input {
+                    width: 250px;
+                }
+            }
+
+            .btn,
+            .btn:focus {
+                color: #ffffff;
+                background-color: #fdbc7f;
+                font-weight: bold;
+                border: none;
+                border-radius: 7px;
+            }
+
+            .btn:hover {
+                color: #ffffff;
+                background-color: #d97720;
+            }
+        }
     }
 
     .booking-store-container {
@@ -33,122 +50,82 @@ body {
         min-height: 100vh;
         display: flex;
         justify-content: center;
-    }
-
-    .image-row {
-        width: 90%;
-        margin: 50px 0;
-        max-width: 1500px;
-        height: 350px;
-        display: flex;
-        justify-content: center;
-    }
-
-    .image-col {
-        display: flex;
-        justify-content: center;
-    }
-
-    .image-card {
-        width: 540px;
-        margin-bottom: 20px;
-        background-color: #ffffff;
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px #6666664d;
-        overflow: hidden;
-        align-items: center;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-
-    .image-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 12px #6666664d;
-    }
-
-    .image-card img {
-        width: 540px;
-        height: 260px;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-    }
-
-    .rating {
-        padding: 0 5px;
-        background-color: #00000060;
-        border-radius: 0 4px 0 0;
-        position: absolute;
-        left: 0;
-        top: 147px;
-    }
-
-    .capacity {
-        color: #ffffff;
-        background-color: #00000060;
-        border-radius: 4px 0 0 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        right: 0;
-        top: 156px;
-    }
-
-    .capacity-icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .card-body {
-        width: 100%;
 
         p {
             margin: 0;
         }
 
-        .full-detail {
+        .image-row {
+            width: 100%;
+            margin: 50px 0;
+            max-width: 1500px;
+            height: 350px;
             display: flex;
-            justify-content: space-between;
-        }
+            justify-content: center;
 
-        .short-detail {
-            display: block;
-            text-align: start;
-        }
+            .image-col {
+                display: flex;
+                justify-content: center;
 
-        .active-button {
-            display: block;
-            text-align: end;
-        }
+                .image-card {
+                    width: 540px;
+                    margin-bottom: 20px;
+                    background-color: #ffffff;
+                    border: none;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 6px #6666664d;
+                    overflow: hidden;
+                    align-items: center;
+                    text-align: center;
+                    transition: all 0.3s ease;
 
-        .btn,
-        .btn:focus {
-            color: #ffffff;
-            background-color: #28a745;
-            font-weight: bold;
-            border: none;
-            border-radius: 7px;
-        }
-    
-        .btn:hover {
-            color: #ffffff;
-            background-color: #22913c;
+                    img {
+                        width: 540px;
+                        height: 260px;
+                        object-fit: cover;
+                        object-position: center;
+                        display: block;
+                    }
+                }
+
+                .card-body {
+                    width: 100%;
+
+                    .full-detail {
+                        display: flex;
+                        justify-content: space-between;
+
+                        .short-detail {
+                            display: block;
+                            text-align: start;
+                        }
+
+                        .active-button {
+                            display: block;
+                            text-align: end;
+                        }
+
+                        .btn,
+                        .btn:focus {
+                            color: #ffffff;
+                            background-color: #fb8b24;
+                            font-weight: bold;
+                            border: none;
+                            border-radius: 7px;
+                        }
+
+                        .btn:hover {
+                            color: #ffffff;
+                            background-color: #d97720;
+                        }
+                    }
+                }
+
+                .image-card:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 6px 12px #6666664d;
+                }
+            }
         }
     }
-
-    @media screen and (max-width: 1200px) {
-
-        .image-card {
-            width: 450px;
-        }
-
-        .image-card img {
-            width: 450px;
-            height: 200px;
-        }
-    }
-
 }

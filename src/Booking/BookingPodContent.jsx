@@ -147,6 +147,14 @@ export default function BookingPodContent() {
         console.log({ selectedStore, selectedPod, selectedType, selectedUtility, podName });
     };
 
+    const handleReset = () => {
+        setSelectedStore('');
+        setSelectedPod('');
+        setSelectedType('');
+        setSelectedUtility('');
+        setPodName('');
+    };
+
 
     if (loading) return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -207,6 +215,8 @@ export default function BookingPodContent() {
                     <Form.Group controlId='formName' className='form-group form-input'>
                         <Form.Control className='input' type='text' placeholder='Tên POD' value={podName} onChange={(e) => setPodName(e.target.value)} />
                     </Form.Group>
+
+                    <Button type='reset' className='btn' onClick={handleReset}>ĐẶT LẠI</Button>
 
                 </Form>
 

@@ -182,7 +182,7 @@ body {
     .btn,
     .btn:focus {
         color: #ffffff;
-        background-color: #28a745;
+        background-color: #fb8b24;
         font-weight: bold;
         border: none;
         border-radius: 7px;
@@ -190,6 +190,6 @@ body {
 
     .btn:hover {
         color: #ffffff;
-        background-color: #22913c;
+        background-color: #d97720;
     }
 }

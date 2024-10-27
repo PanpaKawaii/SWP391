@@ -5,6 +5,7 @@ body {
 .footer {
     color: #000000;
     background-color: #e9e9e9;
+    background-color: #feecd9;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,7 +48,8 @@ body {
     }
 
     .footer-end {
-        background-color: #c4c4c4;
+        /* background-color: #c4c4c4; */
+        background-color: #fdbc7f;
         display: flex;
         justify-content: center;
         width: 100%;

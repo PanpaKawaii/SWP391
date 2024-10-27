@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { CDBInput } from 'cdbreact';
 import './Header.css';
@@ -19,11 +19,43 @@ export default function Header() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('UserId')
+        localStorage.removeItem('UserRole')
+        console.log('Loged out')
+        window.location.href = 'http://localhost:5173/signinsignup';
+    }
+
+
+
     useEffect(() => {
         if (id) {
             const fetchData = async () => {
                 try {
-                    const userResponse = await fetch(`https://localhost:7166/api/User/${id}`);
+                    const userResponse = await fetch(`https://localhost:7166/api/User/GetUser/${id}?id=${id}`);
                     if (!userResponse.ok) throw new Error('Network response was not ok');
                     const userData = await userResponse.json();
                     setUSER(userData);
@@ -45,21 +77,47 @@ export default function Header() {
             </div>
             {isNaN(id) ?
                 (<Link to='/signinsignup'><i className='fas fa-sign-in-alt'></i> Đăng nhập</Link>)
-                : (
-                    <div className='d-flex align-items-center'>
-                        <div className='user-avatar'>
-                            <img src={YellowBanana} alt='Avatar' />
-                        </div>
-                        {USER &&
-                            <div className='user-info'>
-                                <div className='username'>{USER.name}</div>
-                                <div className='role'>{USER.role}</div>
+                :
+                (
+                    <>
+                        <div className='d-flex dropdown' onClick={toggleDropdown} ref={dropdownRef}>
+                            <button className='user-avatar'>
+                                <img src={YellowBanana} alt='Avatar' />
+                                {USER &&
+                                    <div className='user-info'>
+                                        <div className='username'>{USER.name}</div>
+                                        <div className='role'>{USER.role}</div>
+                                    </div>
+                                }
 
-                            </div>
-                        }
-                    </div>
+                                {isDropdownOpen && (
+                                    <div className='dropdown-menu show'>
+                                        <Link className='dropdown-item' to='/user/information'><i className='fa-solid fa-user icon'></i> Thông tin cá nhân</Link>
+                                        <Link className='dropdown-item' onClick={handleLogout}><i className='fas fa-sign-out-alt icon'></i> Đăng xuất</Link>
+                                    </div>
+                                )}
+                            </button>
+                        </div>
+                    </>
                 )
             }
+            {/* <div className='dropdown' ref={dropdownRef}>
+                <button
+                    className='dropdown-toggle'
+                    type='button'
+                    onClick={toggleDropdown}
+                    aria-haspopup='true'
+                    aria-expanded={isDropdownOpen}>
+
+                    <i className='fas fa-cog'></i>
+                </button>
+                {isDropdownOpen && (
+                    <div className='dropdown-menu show'>
+                        <Link className='dropdown-item' to='/user/information'>Profile</Link>
+                        <Link className='dropdown-item' to='/signinsignup'>Logout</Link>
+                    </div>
+                )}
+            </div> */}
         </div>
-    );
+    )
 }

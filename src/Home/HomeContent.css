@@ -50,7 +50,7 @@ body {
             .btn,
             .btn:focus {
                 color: #ffffff;
-                background-color: #28a745;
+                background-color: #fb8b24;
                 margin: 0 10px;
                 font-weight: bold;
                 border: none;
@@ -59,115 +59,91 @@ body {
 
             .btn:hover {
                 color: #ffffff;
-                background-color: #22913c;
+                background-color: #d97720;
             }
         }
     }
 
-    /* .shortcut-booking-pod {
+    .shortcut-booking-store {
+        margin: 40px 0;
+
+        h1 {
+            text-align: center;
+        }
+
+        .image-row {
+            width: 100%;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+
+            .image-col {
+                position: relative;
+
+                .card {
+                    border-radius: 20px;
+                    overflow: hidden;
+
+                    .card-info {
+                        /* font-family: 'Times New Roman', Times, serif; */
+                        color: #666666;
+                    }
+                }
+            }
+        }
+    }
+
+    .shortcut-contact {
         width: 100%;
-        background-color: #eeeeee;
+        margin: 20px 0;
+        background-color: #ffffff;
         display: flex;
         flex-direction: column;
         align-items: center;
 
-        h1 {
-            margin: 50px 0 0;
+        p {
+            margin: 0;
         }
 
-        .image-row {
-            width: 90%;
-            margin: 50px 0;
-            max-width: 1500px;
+        .card-contact {
+            margin: 20px 0;
             height: auto;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: center;
-        }
-
-        .image-col {
-            display: flex;
-            justify-content: center;
-        }
-
-        .image-card {
-            width: 540px;
-            background-color: #ffffff;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px #6666664d;
+            align-items: center;
             overflow: hidden;
-            align-items: center;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
 
-        .image-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px #6666664d;
-        }
-
-        .image-card img {
-            width: 540px;
-            height: 260px;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-        }
-
-        .rating {
-            padding: 0 5px;
-            background-color: #00000060;
-            border-radius: 0 4px 0 0;
-            position: absolute;
-            left: 0;
-            top: 147px;
-        }
-
-        .capacity {
-            color: #ffffff;
-            background-color: #00000060;
-            border-radius: 4px 0 0 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            right: 0;
-            top: 156px;
-        }
-
-        .capacity-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card-body {
-            width: 100%;
-
-            p {
-                margin: 0;
+            img {
+                width: 400px;
+                height: auto;
+                object-fit: cover;
+                object-position: center;
+                display: block;
             }
 
-            .full-detail {
-                display: flex;
-                justify-content: space-between;
+            .card-form {
+                height: 100%;
+                background-color: #ffffff;
+                padding: 40px;
+                text-align: center;
+                transition: all 0.3s ease;
 
-                .short-detail {
-                    display: flex;
-                    flex-direction: column;
-                    text-align: start;
-                }
+                .form-input {
+                    margin: 10px 0 10px 40px;
 
-                .active-button {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: end;
+                    .input {
+                        background-color: 'transparent';
+                        transition: all 0.3 ease;
+                    }
                 }
 
                 .btn,
                 .btn:focus {
+                    width: 100px;
                     color: #ffffff;
-                    background-color: #28a745;
+                    background-color: #fb8b24;
                     font-weight: bold;
                     border: none;
                     border-radius: 7px;
@@ -175,128 +151,9 @@ body {
 
                 .btn:hover {
                     color: #ffffff;
-                    background-color: #22913c;
+                    background-color: #d97720;
                 }
             }
-        }
-    } */
-
-    div.shortcut-booking-pod {
-        display: flex;
-        justify-content: center;
-
-    }
-
-
-    .section-title {
-        text-align: center;
-        padding: 20px;
-        font-family: 'Times New Roman', Times, serif;
-        color: #484848;
-        font-size: 2rem;
-    }
-
-    div.image-row.row {
-        justify-content: center;
-        width: 89%;
-
-    }
-
-    .card-title {
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
-    }
-
-    .card-info {
-        font-family: 'Times New Roman', Times, serif;
-        color: #666666;
-        line-height: 1.5;
-        /* Khoảng cách giữa các dòng */
-    }
-
-    .yellow-star {
-        color: gold;
-    }
-
-    .price {
-        color: #ef5939;
-        font-weight: bold;
-        /* Đậm chữ */
-        display: inline-block;
-        /* Để nó chỉ chiếm không gian cần thiết */
-        position: relative;
-        /* Để có thể sử dụng pseudo-element */
-        font-size: 1.2rem;
-        margin-top: 10px;
-    }
-
-    .image-col {
-        margin-bottom: 20px;
-        border-radius: 8px;
-        position: relative;
-
-    }
-
-    .shortcut-contact {
-        width: 100%;
-        margin: 50px 0;
-        background-color: #ffffff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .card-contact {
-            margin: 40px 0;
-            height: 550px;
-            border-radius: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .card-contact img {
-            width: 400px;
-            height: auto;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-        }
-
-        .card-form {
-            height: 100%;
-            background-color: #ffffff;
-            padding: 40px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .card-form p {
-            color: #666666;
-            margin: 0;
-        }
-
-        .form-input {
-            margin: 10px 0 10px 40px;
-        }
-
-        .input {
-            background-color: 'transparent';
-            transition: all 0.3 ease;
-        }
-
-        .btn,
-        .btn:focus {
-            color: #ffffff;
-            background-color: #3c89bd;
-            font-weight: bold;
-            border: none;
-            border-radius: 7px;
-        }
-
-        .btn:hover {
-            color: #ffffff;
-            background-color: #2874a7;
         }
     }
 
@@ -309,24 +166,18 @@ body {
         .carousel {
             position: relative;
             width: 100%;
-            /* Đảm bảo carousel chiếm toàn bộ chiều rộng */
             overflow: hidden;
-            /* Ẩn các phần hình ảnh tràn ra ngoài */
-        }
 
-        .carousel img {
-            width: 100%;
-            /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng của carousel */
-            height: 60vh;
-            /* Giữ tỷ lệ khung hình của hình ảnh */
-            object-fit: cover;
-            /* Đảm bảo hình ảnh không bị biến dạng */
-            filter: brightness(40%);
+            img {
+                width: 100%;
+                height: 60vh;
+                object-fit: cover;
+                filter: brightness(40%);
+            }
         }
 
         .carousel-item {
             transition: transform 0.5s ease;
-            /* Thêm hiệu ứng chuyển động mượt mà */
         }
 
 
@@ -334,9 +185,7 @@ body {
         .carousel-caption {
 
             padding: 10px;
-            /* Khoảng cách bên trong */
             border-radius: 5px;
-            /* Bo góc */
             position: absolute;
 
             width: 60%;
@@ -344,69 +193,45 @@ body {
             left: 50%;
             transform: translate(-50%, -50%);
 
-            h5 {
+            h3 {
                 color: white;
-                font-size: 1.5rem;
                 font-family: 'Courier New', Courier, monospace;
 
             }
 
             p {
                 color: white;
+                margin: 0;
                 font-family: 'Times New Roman', Times, serif;
-
             }
 
         }
 
         .carousel-text {
-            padding: 10px;
-            /* Khoảng cách bên trong */
-            border-radius: 5px;
-            /* Bo góc */
             text-align: center;
-            /* Căn giữa chữ */
             display: flex;
-            /* Sử dụng flexbox */
             flex-direction: column;
-            /* Sắp xếp theo chiều dọc */
             justify-content: center;
-            /* Căn giữa chiều dọc */
             align-items: center;
         }
 
         span.carousel-control-prev,
         span.carousel-control-next {
-            border-radius: 50%;
             color: white;
-            background-color: rgb(255, 255, 255);
+            background-color: #ffffff;
         }
 
         .carousel-control-prev {
             left: 10px;
-            /* Đặt nút Previous ở bên trái */
 
         }
 
         .carousel-control-next {
             right: 10px;
-            /* Đặt nút Next ở bên phải */
         }
-
-
-
-
-
 
         .carousel-item {
             padding: 20px;
-            /* Thêm khoảng cách giữa các item */
-        }
-
-        .image-col {
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
     }
 }

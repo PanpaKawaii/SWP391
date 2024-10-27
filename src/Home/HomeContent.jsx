@@ -175,7 +175,7 @@ export default function HomeContent() {
                     <p>Có rất nhiều kết quả cho bạn lựa chọn</p>}
             </div>
 
-            <h1><b>CƠ SỞ MỚI SẮP RA MẮT!</b></h1>
+            {/* <h1><b>CƠ SỞ MỚI SẮP RA MẮT!</b></h1> */}
             <div className='shortcut-booking-pod'>
                 {/* <Row className='image-row'>
                     {(STOREs ? STOREs.slice(0, 4) : []).map((store) => ( // Check if STOREs is not null
@@ -223,70 +223,51 @@ export default function HomeContent() {
                         </Col>
                     ))}
                 </Row> */}
-                <Row xs={1} sm={2} md={4} lg={4} className='image-row'>
-                    {STOREs && STOREs.map(store => {
-                        return (
 
-                            <Col key={store.id} className='image-col'>
+
+                <div className='shortcut-booking-store'>
+                    <h1><b>CƠ SỞ THỊNH HÀNH!</b></h1>
+                    <Row className='image-row'>
+                        {STOREs && STOREs.map(store => (
+                            <Col lg={8} xxl={5} key={store.id} className='image-col'>
                                 <Card className='image-card'>
-                                    <Card.Img src={home} alt={store.name} className='pod-image' />
+                                    <img src={home} alt={store.name} />
 
                                     <Card.Body className='card-body'>
-                                        <Card.Title className='card-title'>
-                                            <h4><b>{store.name}</b></h4>
-                                        </Card.Title>
-                                        <Card.Text className='card-info'>
-                                            <div className='full-detail'>
-                                                <div className='short-detail'>
-                                                    <p key={store.id}>Địa chỉ: {store.address}</p>
-                                                </div>
-                                                <span className='short-detail'>
-                                                    Đa dạng loại hình:
-                                                    <span className='type-list'>
-                                                        {TYPEs && TYPEs.map((type, index) => (
-                                                            <span key={type.id}>
-                                                                {type.name}{index < TYPEs.length - 1 ? ', ' : ''}
-                                                            </span>
-                                                        ))}
-                                                    </span>
+                                        <h4><b>{store.name}</b></h4>
+                                        <div className='card-info'>
+                                            <p key={store.id}>Địa chỉ: {store.address}</p>
+                                            <p className='short-detail'>
+                                                Đa dạng loại hình: <span>
+                                                    {TYPEs && TYPEs.map((type, index) => (
+                                                        <span key={type.id}>
+                                                            {type.name}{index < TYPEs.length - 1 ? ', ' : ''}
+                                                        </span>
+                                                    ))}
                                                 </span>
-                                                <div className='short-detail'>
-                                                    {TYPEs && TYPEs.length > 0 ? (
-                                                        <span>{/* Lấy số bé nhất và lớn nhất trong capacity */}
-                                                            {Math.min(...TYPEs.map(type => type.capacity))} - {Math.max(...TYPEs.map(type => type.capacity))}
-                                                            {/* Hiển thị một icon user */}
-                                                            <span className='capacity-icon'> <i className='fa-solid fa-user'></i></span>
-                                                        </span>
-                                                    ) : null}
-                                                </div>
-                                                <div>
-                                                    {/* {slots && slots.length > 0 ? (
-                                                        <span>
-                                                            {Math.min(...slots.map(slot => slot.price))} - {Math.max(...slots.map(slot => slot.price))}
-                                                            <span className='capacity-icon'> vnđ</span>
-                                                        </span>
-                                                    ) : null} */}
-                                                </div>
-                                            </div>
-                                            <div className='star-rating' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> {/* Added flexbox styles */}
-                                                <div> {/* Wrap stars in a div for alignment */}
-                                                    <span key={store.id} className='yellow-star'>{store.rating}★</span>
-                                                </div>
-                                            </div>
-                                        </Card.Text>
+                                            </p>
+                                            {TYPEs && TYPEs.length > 0 ? (
+                                                <p>
+                                                    {Math.min(...TYPEs.map(type => type.capacity))} - {Math.max(...TYPEs.map(type => type.capacity))}
+                                                    <span className='capacity-icon'> <i className='fa-solid fa-user'></i></span>
+                                                </p>
+                                            ) : null}
+                                        </div>
+                                        <div>
+                                            <span style={{ color: 'gold' }}><i className='fa-solid fa-star'></i></span>
+                                        </div>
                                     </Card.Body>
                                 </Card>
                             </Col>
-
-                        );
-                    })}
-                </Row>
+                        ))}
+                    </Row>
+                </div>
             </div>
 
             <hr />
 
             <div className='shortcut-contact'>
-                <h1><b>Bạn gặp vấn đề gì sao?</b></h1>
+                <h1><b>BẠN GẶP VẤN ĐỀ GÌ SAO?</b></h1>
                 <div className='card-contact'>
                     <img src={space} alt='space' />
                     <Form className='card-form'>
@@ -307,9 +288,9 @@ export default function HomeContent() {
                         </Form.Group>
 
                         <Form.Group controlId='formYourProblem' className='form-group form-input'>
-                            <Form.Control className='input' type='text' placeholder='Vấn đề của bạn' />
+                            <Form.Control className='input' as='textarea' placeholder='Vấn đề của bạn' />
                         </Form.Group>
-                        <Button className='btn'>SUBMIT</Button>
+                        <Button className='btn'>GỬI</Button>
                     </Form>
                 </div>
             </div>
@@ -317,8 +298,7 @@ export default function HomeContent() {
             <hr />
 
             <div className='shortcut-why'>
-                <h1 className='section-title'><b>TẠI SAO CHỌN INNOSPACE?</b></h1>
-
+                <h1><b>TẠI SAO CHỌN INNOSPACE?</b></h1>
                 <Carousel data-bs-theme="light">
                     <Carousel.Item>
                         <img
@@ -327,18 +307,18 @@ export default function HomeContent() {
                             alt="First slide"
                         />
                         <Carousel.Caption className='carousel-text'>
-                            <h5>KHÔNG GIAN LÀM VIỆC ĐA DẠNG</h5>
-                            <p>Đáp ứng nhu cầu đa dạng từ các sinh viên, freelancer đến doanh nghiệp nhỏ, với lựa chọn đa dạng từ phòng làm việc cá nhân đến không gian làm việc nhóm.</p>                    </Carousel.Caption>
+                            <h3>KHÔNG GIAN LÀM VIỆC ĐA DẠNG</h3>
+                            <p>Đáp ứng nhu cầu đa dạng từ các sinh viên, freelancer đến doanh nghiệp nhỏ, với lựa chọn đa dạng từ phòng làm việc cá nhân đến không gian làm việc nhóm.</p>
+                        </Carousel.Caption>
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
                             src={home}
-
                             alt="Second slide"
                         />
                         <Carousel.Caption className='carousel-text'>
-                            <h5>QUẢN LÝ ĐẶT CHỖ THÔNG MINH</h5>
+                            <h3>QUẢN LÝ ĐẶT CHỖ THÔNG MINH</h3>
                             <p>Giao diện thân thiện, cho phép bạn dễ dàng tìm kiếm và đặt chỗ theo nhu cầu, thời gian và ngân sách.</p>
                         </Carousel.Caption>
                     </Carousel.Item>
@@ -346,13 +326,11 @@ export default function HomeContent() {
                         <img
                             className="d-block w-100"
                             src={home}
-
                             alt="Third slide"
                         />
                         <Carousel.Caption className='carousel-text'>
-                            <h5>DỊCH VỤ TOÀN DIỆN</h5>
-                            <p>
-                                Hỗ trợ quản lý lịch làm việc, thanh toán trực tuyến và cung cấp các gói dịch vụ linh hoạt kèm các tiện ích.                        </p>
+                            <h3>DỊCH VỤ TOÀN DIỆN</h3>
+                            <p>Hỗ trợ quản lý lịch làm việc, thanh toán trực tuyến và cung cấp các gói dịch vụ linh hoạt kèm các tiện ích.</p>
                         </Carousel.Caption>
                     </Carousel.Item>
                 </Carousel>

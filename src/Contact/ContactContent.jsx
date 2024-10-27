@@ -33,9 +33,9 @@ export default function ContactContent() {
                     </Form.Group>
 
                     <Form.Group controlId='formYourProblem' className='form-group form-input'>
-                        <Form.Control className='input' type='text' placeholder='Vấn đề của bạn' />
+                        <Form.Control className='input' as='textarea' placeholder='Vấn đề của bạn' />
                     </Form.Group>
-                    <Button className='btn'>SUBMIT</Button>
+                    <Button className='btn'>GỬI</Button>
                 </Form>
             </div>
         </div>

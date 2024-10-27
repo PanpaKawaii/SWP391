@@ -31,13 +31,14 @@ export default function SideBar() {
     const handleLogout = () => {
         localStorage.removeItem('token')
         localStorage.removeItem('UserId')
+        localStorage.removeItem('UserRole')
         console.log('Loged out')
         window.location.href = 'http://localhost:5173/signinsignup';
     }
 
     return (
         <div className='nav'>
-            <div id='mySidenav' className={`sidenav ${isOpen ? 'open' : ''}`}>
+            <div className={`sidenav ${isOpen ? 'open' : ''}`}>
 
                 <div className='sidebar-header'>
                     <Link to='/'><h1><b>InnoSpace</b></h1></Link>
@@ -51,9 +52,10 @@ export default function SideBar() {
 
                 {isNaN(id) ?
                     (<></>)
-                    : (<>
+                    :
+                    (<>
                         <Link to='/user/information'><i className='fa-solid fa-user icon'></i> Thông tin cá nhân</Link>
-                        <Link to='/user/historybooking'><i className='fas fa-chart-bar icon'></i> Lịch sử đặt chỗ</Link>
+                        <Link to='/user/booking'><i className='fas fa-chart-bar icon'></i> Pod đã đặt</Link>
                     </>)
                 }
 
@@ -61,7 +63,8 @@ export default function SideBar() {
 
                 {isNaN(id) ?
                     (<Link to='/signinsignup'><i className='fas fa-sign-in-alt icon'></i> Đăng nhập</Link>)
-                    : (<Link onClick={handleLogout}><i className='fas fa-sign-out-alt icon'></i> Đăng xuất</Link>)
+                    :
+                    (<Link onClick={handleLogout}><i className='fas fa-sign-out-alt icon'></i> Đăng xuất</Link>)
                 }
 
                 {/* <button className={`dropdown-btn ${isDropdownOpen ? 'open' : ''}`} onClick={toggleDropdown}>

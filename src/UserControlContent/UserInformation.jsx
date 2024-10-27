@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Spinner } from 'react-bootstrap';
+import { Form, InputGroup, Button, Spinner } from 'react-bootstrap';
 import './UserInformation.css';
 
 import home from '../BackgroundImage/home.jpg';
@@ -18,14 +18,20 @@ export default function UserInformation() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const [ChangeFullNameError, setChangeFullNameError] = useState(null);
+    const [ChangePhoneNumberError, setChangePhoneNumberError] = useState(null);
+    const [ChangePasswordError, setChangePasswordError] = useState(null);
+    const [ChangeConfirmPasswordError, setChangeConfirmPasswordError] = useState(null);
+
     useEffect(() => {
         if (id) {
             const fetchData = async () => {
                 try {
-                    const userResponse = await fetch(`https://localhost:7166/api/User/${id}`);
+                    const userResponse = await fetch(`https://localhost:7166/api/User/GetUser/${id}?id=${id}`);
                     if (!userResponse.ok) throw new Error('Network response was not ok');
                     const userData = await userResponse.json();
                     setUSER(userData);
+
                     setLoading(false);
                 } catch (error) {
                     setError(error);
@@ -37,45 +43,253 @@ export default function UserInformation() {
         }
     }, [id]);
 
+    const ChangeInformation = async (ChangeFullName, ChangePhoneNumber) => {
+
+        if (!ChangeFullName) {
+            console.error('Invalid full name');
+            setChangeFullNameError('Họ tên không hợp lệ');
+            return;
+        }
+        if (!ChangePhoneNumber) {
+            console.error('Invalid phone number');
+            setChangePhoneNumberError('Số điện thoại không hợp lệ');
+            return;
+        }
+
+        if (!/^\d+$/.test(ChangePhoneNumber)) {
+            console.error('Phone number must contain only digits');
+            setChangePhoneNumberError('Số điện thoại không hợp lệ');
+            return;
+        }
+        if (ChangePhoneNumber.length !== 10) {
+            console.error('Phone number must contain exactly 10 digits');
+            setChangePhoneNumberError('Số điện thoại phải có 10 chữ số');
+            return;
+        }
+
+        const changeData = {
+            id: USER.id,
+            email: USER.email,
+            password: USER.password,
+            name: ChangeFullName,
+            image: USER.image,
+            role: USER.role,
+            type: USER.type,
+            phoneNumber: ChangePhoneNumber,
+            point: USER.point,
+            description: USER.description,
+        };
+        console.log('Change Information Data:', changeData);
+
+        try {
+            const response = await fetch(`https://localhost:7166/api/User/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(changeData),
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+            // const data = await response.json();
+            setLoading(false);
+            alert('Đổi thông tin thành công');
+            window.location.reload();
+
+        } catch (error) {
+            setError(error);
+            console.log('Đổi thông tin thất bại:', error);
+            setLoading(false);
+        }
+    }
+    const handleChangeInformation = (e) => {
+        e.preventDefault();
+        setError(null);
+        setChangeFullNameError(null);
+        setChangePhoneNumberError(null);
+        ChangeInformation(e.target.formName.value, e.target.formPhoneNumber.value);
+    }
+
+    const ChangePassword = async (OldPassword, ChangePassword, ChangeConfirm) => {
+
+        if (!OldPassword) {
+            console.error('Invalid password');
+            setChangePasswordError('Mật khẩu cũ không hợp lệ');
+            return;
+        }
+        if (!ChangePassword) {
+            console.error('Invalid password');
+            setChangePasswordError('Mật khẩu mới không hợp lệ');
+            return;
+        }
+        if (!ChangeConfirm) {
+            console.error('Invalid password confirmation');
+            setChangeConfirmPasswordError('Xác nhận mật khẩu không hợp lệ');
+            return;
+        }
+
+        if (ChangePassword.length < 6) {
+            console.error('Password must be at least 6 characters long');
+            setChangePasswordError('Mật khẩu mới phải ít nhất 6 kí tự');
+            return;
+        }
+        if (OldPassword != USER.password) {
+            console.error('Wrong confirm password');
+            setChangePasswordError('Mật khẩu cũ không khớp');
+            return;
+        }
+        if (ChangePassword != ChangeConfirm) {
+            console.error('Wrong confirm password');
+            setChangeConfirmPasswordError('Mật khẩu xác nhận không khớp');
+            return;
+        }
+
+        const changeData = {
+            id: USER.id,
+            email: USER.email,
+            password: ChangePassword,
+            name: USER.name,
+            image: USER.image,
+            role: USER.role,
+            type: USER.type,
+            phoneNumber: USER.phoneNumber,
+            point: USER.point,
+            description: USER.description,
+        };
+        console.log('Change Information Data:', changeData);
+
+        try {
+            const response = await fetch(`https://localhost:7166/api/User/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(changeData),
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+            // const data = await response.json();
+            setLoading(false);
+            alert('Đổi mật khẩu thành công');
+            window.location.reload();
+
+        } catch (error) {
+            setError(error);
+            console.log('Đổi mật khẩu thất bại:', error);
+            setLoading(false);
+        }
+    }
+    const handleChangePassword = (e) => {
+        e.preventDefault();
+        setError(null);
+        setChangePasswordError(null);
+        setChangeConfirmPasswordError(null);
+        ChangePassword(e.target.formOldPassword.value, e.target.formNewPassword.value, e.target.formConfirmNewPassword.value);
+    }
+
 
     if (loading) return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <Spinner animation="border" role="status" style={{ width: '200px', height: '200px', fontSize: '50px' }}>
-                <span className="visually-hidden">Loading...</span>
+            <Spinner animation='border' role='status' style={{ width: '200px', height: '200px', fontSize: '50px' }}>
+                <span className='visually-hidden'>Loading...</span>
             </Spinner>
         </div>
     );
-    if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
+    // if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
 
     return (
         <div className='user-information'>
             <div className='user-information-content'>
 
                 <section className='basic-information'>
-                    <div className='basic-information-content'>
-                        <div className='information-title row-under'>Thông tin cơ bản</div>
-                        <div className='row-under'><strong>Tên:</strong> {USER ? USER.name : '...'}</div>
-                        <div ><strong>Điểm:</strong> {USER ? USER.point : '...'}</div>
+                    <div className='basic-information-box'>
+                        <h3><b>Thông tin cơ bản</b></h3>
+                        <p><b>Tên:</b> {USER ? USER.name : '...'}</p>
+                        <p><b>Điểm:</b> {USER ? USER.point : '...'}</p>
+                        <p><b>Mô tả:</b> {USER ? USER.description : '...'}</p>
+                        <p><b>Danh hiệu:</b> {USER ? USER.type : '...'}</p>
+                        <p><b>Vị trí:</b> {USER ? USER.role : '...'}</p>
                     </div>
                     <div><img className='avatar' src={home} alt='avatar' /></div>
                 </section>
 
                 <section className='contact-information'>
-                    <div className='information-title row-under'>Thông tin liên hệ</div>
-                    <div className='row-under'><strong>Email:</strong> {USER ? USER.email : '...'}</div>
-                    <div ><strong>Số điện thoại:</strong> {USER ? USER.phoneNumber : '...'}</div>
+                    <h3><b>Thông tin liên hệ</b></h3>
+                    <p><b>Email:</b> {USER ? USER.email : '...'}</p>
+                    <p><b>Số điện thoại:</b> {USER ? USER.phoneNumber : '...'}</p>
                 </section>
 
-                <section className='password-change'>
-                    <div className='information-title row-under'>Đổi mật khẩu</div>
-                    <div className='form-input'>
-                        <input id='oldPassword' type='password' placeholder='Mật khẩu cũ' required className='underline-input' />
-                        <input id='newPassword' type='password' placeholder='Mật khẩu mới' required className='underline-input' />
-                        <input id='confirmNewPassword' type='password' placeholder='Nhập lại mật khẩu mới' required className='underline-input' />
+                <section className='change-information'>
+                    <h3><b>Thay đổi thông tin</b></h3>
+                    <div className='form-container'>
+                        <Form className='change-information-form' onSubmit={handleChangeInformation}>
+
+                            <Form.Group controlId='formName' className='form-group'>
+                                <InputGroup>
+                                    <InputGroup.Text>Họ tên</InputGroup.Text>
+                                    <Form.Control type='text' defaultValue={USER ? USER.name : ''} />
+                                </InputGroup>
+                            </Form.Group>
+
+                            <Form.Group controlId='formPhoneNumber' className='form-group'>
+                                <InputGroup>
+                                    <InputGroup.Text>Số điện thoại</InputGroup.Text>
+                                    <Form.Control type='text' defaultValue={USER ? USER.phoneNumber : ''} />
+                                </InputGroup>
+                            </Form.Group>
+
+                            {ChangeFullNameError && <p className='error-message'>{ChangeFullNameError}</p>}
+                            {ChangePhoneNumberError && <p className='error-message'>{ChangePhoneNumberError}</p>}
+
+                            <div className='change-information-button'>
+                                <Button type='submit' className='btn' onClick={() => confirm('Bạn chắc chắn muốn đổi thông tin?')}>ĐỔI THÔNG TIN</Button>
+                                <Button type='reset' className='btn btn-reset'>ĐẶT LẠI</Button>
+                            </div>
+                        </Form>
+
+                        <div style={{ height: '180px', borderRight: '1px solid #a3a3a380' }}></div>
+
+                        <Form className='change-information-form' onSubmit={handleChangePassword}>
+
+                            <Form.Group controlId='formOldPassword' className='form-group'>
+                                <InputGroup>
+                                    <InputGroup.Text>Mật khẩu cũ</InputGroup.Text>
+                                    <Form.Control type='password' placeholder='Nhập mật khẩu cũ' />
+                                </InputGroup>
+                            </Form.Group>
+
+                            <Form.Group controlId='formNewPassword' className='form-group'>
+                                <InputGroup>
+                                    <InputGroup.Text>Mật khẩu mới</InputGroup.Text>
+                                    <Form.Control type='password' placeholder='Nhập mật khẩu mới' />
+                                </InputGroup>
+                            </Form.Group>
+
+                            <Form.Group controlId='formConfirmNewPassword' className='form-group'>
+                                <InputGroup>
+                                    <InputGroup.Text>Xác nhận</InputGroup.Text>
+                                    <Form.Control type='password' placeholder='Xác nhận mật khẩu mới' />
+                                </InputGroup>
+                            </Form.Group>
+
+                            {ChangePasswordError && <p className='error-message'>{ChangePasswordError}</p>}
+                            {ChangeConfirmPasswordError && <p className='error-message'>{ChangeConfirmPasswordError}</p>}
+
+                            <div className='change-information-button'>
+                                <Button type='submit' className='btn' onClick={() => confirm('Bạn chắc chắn muốn đổi mật khẩu?')}>ĐỔI MẬT KHẨU</Button>
+                                <Button type='reset' className='btn btn-reset'>ĐẶT LẠI</Button>
+                            </div>
+                        </Form>
                     </div>
-                    <div className='password-change-button'>
-                        <button type='submit' className='btn'>Đổi mật khẩu</button>
+
+                    {/* <div className='form-input'>
+                        <input id='OldPassword' type='password' placeholder='Mật khẩu cũ' required />
+                        <input id='NewPassword' type='password' placeholder='Mật khẩu mới' required />
+                        <input id='ConfirmNewPassword' type='password' placeholder='Xác nhận mật khẩu mới' required />
                     </div>
+                    <div className='change-information-button'>
+                        <Button type='submit' className='btn' onClick={ChangeInformation}>ĐỔI MẬT KHẨU</Button>
+                    </div> */}
                 </section>
             </div>
         </div>
