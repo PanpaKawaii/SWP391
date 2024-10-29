@@ -12,7 +12,7 @@ body {
 
     .signin-signup-container {
         height: 600px;
-        margin: 100px 10px 140px;
+        margin: 100px 10px 180px;
         background-color: #ffffff;
         border-radius: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -83,24 +83,21 @@ body {
             .movingImage {
                 width: 50%;
                 height: 100%;
-                background: url('../assets/PODs/meeting5.jpg') center;
+                background: url('../BackgroundImage/24.jpg') center;
                 position: absolute;
                 right: 0;
                 transition: all 0.5s ease;
             }
 
-            .btn {
+            .btn,
+            .btn:focus {
                 width: 100%;
-                color: #000000;
-                background-color: #bbbbbb;
+                color: #ffffff;
+                background-color: #fdbc7f;
                 margin: 10px 0;
                 border: none;
                 border-radius: 5px;
                 font-weight: bold;
-            }
-
-            .btn:focus {
-                background-color: #777777;
             }
 
             .form-box {
@@ -113,12 +110,16 @@ body {
 
                 button[type="submit"] {
                     width: 65%;
-                    background-color: #999999;
+                    background-color: #fb8b24;
                 }
 
                 button[type="reset"] {
                     width: 30%;
-                    background-color: #dddddd;
+                    background-color: #feecd9;
+                }
+
+                .btn:hover {
+                    background-color: #fb8b24;
                 }
             }
         }

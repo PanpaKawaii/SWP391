@@ -89,10 +89,10 @@ export default function HomeContent() {
         (pod.typeId.toString() === selectedType.toString() || !selectedType.toString())
     ) : [];
 
-    const getCapacity = (typeId) => {
-        const type = TYPEs ? TYPEs.find(type => type.id === typeId) : null;
-        return type ? type.capacity : 0;
-    };
+    // const getCapacity = (typeId) => {
+    //     const type = TYPEs ? TYPEs.find(type => type.id === typeId) : null;
+    //     return type ? type.capacity : 0;
+    // };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -166,13 +166,13 @@ export default function HomeContent() {
                 </Form>
 
                 {filteredResults && filteredResults.length == 1 &&
-                    <b><p style={{ color: '#28a745', textShadow: '0.4px 0.4px 0 #ffffff' }}>Đi đến POD đó thôi!</p></b>}
+                    <b><p style={{ color: '#28a745', textShadow: '0 0 2px #ffffff' }}>Đi đến POD đó thôi!</p></b>}
                 {filteredResults && filteredResults.length == 0 &&
-                    <b><p style={{ color: '#dc3545', textShadow: '0.4px 0.4px 0 #ffffff' }}>Không tìm thấy kết quả nào</p></b>}
+                    <b><p style={{ color: '#dc3545', textShadow: '0 0 2px #ffffff' }}>Không tìm thấy kết quả nào</p></b>}
                 {filteredResults && PODs && filteredResults.length > 1 && filteredResults.length !== PODs.length &&
-                    <b><p style={{ color: '#ffc107', textShadow: '0.4px 0.4px 0 #ffffff' }}>Có rất nhiều kết quả, vui lòng chọn thêm các tiêu chí khác</p></b>}
+                    <b><p style={{ color: '#dba506', textShadow: '0 0 2px #ffffff' }}>Có rất nhiều kết quả, vui lòng chọn thêm các tiêu chí khác</p></b>}
                 {filteredResults && PODs && filteredResults.length == PODs.length &&
-                    <p>Có rất nhiều kết quả cho bạn lựa chọn</p>}
+                    <b><p style={{ color: '#000000', textShadow: '0 0 2px #ffffff' }}>Có rất nhiều kết quả cho bạn lựa chọn</p></b>}
             </div>
 
             {/* <h1><b>CƠ SỞ MỚI SẮP RA MẮT!</b></h1> */}
@@ -229,12 +229,13 @@ export default function HomeContent() {
                     <h1><b>CƠ SỞ THỊNH HÀNH!</b></h1>
                     <Row className='image-row'>
                         {STOREs && STOREs.map(store => (
-                            <Col lg={8} xxl={5} key={store.id} className='image-col'>
+                            <Col xl={8} xxl={5} key={store.id} className='image-col'>
                                 <Card className='image-card'>
-                                    <img src={home} alt={store.name} />
+                                    {/* <Link to={`booking/store/${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link> */}
+                                    <Link to={`booking/store/${store.id}`}><img src={store.image} alt={store.name} /></Link>
 
                                     <Card.Body className='card-body'>
-                                        <h4><b>{store.name}</b></h4>
+                                        <h3><b>{store.name}</b></h3>
                                         <div className='card-info'>
                                             <p key={store.id}>Địa chỉ: {store.address}</p>
                                             <p className='short-detail'>
@@ -246,16 +247,19 @@ export default function HomeContent() {
                                                     ))}
                                                 </span>
                                             </p>
-                                            {TYPEs && TYPEs.length > 0 ? (
-                                                <p>
-                                                    {Math.min(...TYPEs.map(type => type.capacity))} - {Math.max(...TYPEs.map(type => type.capacity))}
-                                                    <span className='capacity-icon'> <i className='fa-solid fa-user'></i></span>
-                                                </p>
-                                            ) : null}
+                                            {TYPEs && TYPEs.length > 0 ?
+                                                (
+                                                    <p>
+                                                        {Math.min(...TYPEs.map(type => type.capacity))} - {Math.max(...TYPEs.map(type => type.capacity))}
+                                                        <span className='capacity-icon'> <i className='fa-solid fa-user'></i></span>
+                                                    </p>
+                                                ) : null
+                                            }
                                         </div>
                                         <div>
                                             <span style={{ color: 'gold' }}><i className='fa-solid fa-star'></i></span>
                                         </div>
+                                        <Link to={`booking/store/${store.id}`}><Button className='btn'>CHI TIẾT</Button></Link>
                                     </Card.Body>
                                 </Card>
                             </Col>
@@ -280,7 +284,7 @@ export default function HomeContent() {
                         </Form.Group>
 
                         <Form.Group controlId='formEmail' className='form-group form-input'>
-                            <Form.Control className='input' type='text' placeholder='Email' />
+                            <Form.Control className='input' type='email' placeholder='Email' />
                         </Form.Group>
 
                         <Form.Group controlId='formPhoneNumber' className='form-group form-input'>
@@ -298,7 +302,7 @@ export default function HomeContent() {
             <hr />
 
             <div className='shortcut-why'>
-                <h1><b>TẠI SAO CHỌN INNOSPACE?</b></h1>
+                <h1><b>VÌ SAO NÊN CHỌN INNOSPACE?</b></h1>
                 <Carousel data-bs-theme="light">
                     <Carousel.Item>
                         <img

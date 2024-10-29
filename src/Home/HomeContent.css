@@ -73,21 +73,65 @@ body {
 
         .image-row {
             width: 100%;
-            margin: 20px 0;
+            margin: 50px 0;
+            /* max-width: 1500px; */
+            /* height: 350px; */
             display: flex;
-            justify-content: center;
+            justify-content: space-evenly;
 
             .image-col {
-                position: relative;
+                display: flex;
+                justify-content: center;
+                /* position: relative; */
 
-                .card {
+                .image-card {
+                    width: 540px;
+                    margin: 0 0 20px;
+                    background-color: #ffffff;
                     border-radius: 20px;
+                    box-shadow: 0 4px 6px #6666664d;
                     overflow: hidden;
+                    align-items: center;
+                    /* text-align: center; */
+                    transition: all 0.3s ease;
+
+                    img {
+                        width: 540px;
+                        height: 260px;
+                        object-fit: cover;
+                        object-position: center;
+                        display: block;
+                    }
 
                     .card-info {
-                        /* font-family: 'Times New Roman', Times, serif; */
                         color: #666666;
                     }
+
+                    a {
+                        text-decoration: none;
+                        display: flex;
+                        justify-content: end;
+
+                        .btn,
+                        .btn:focus {
+                            color: #ffffff;
+                            background-color: #fb8b24;
+                            font-weight: bold;
+                            border: none;
+                            border-radius: 7px;
+                            text-decoration: none;
+                        }
+
+                        .btn:hover {
+                            color: #ffffff;
+                            background-color: #d97720;
+                        }
+                    }
+                }
+
+                .image-card:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 6px 12px #6666664d;
                 }
             }
         }
@@ -195,14 +239,14 @@ body {
 
             h3 {
                 color: white;
-                font-family: 'Courier New', Courier, monospace;
+                /* font-family: 'Courier New', Courier, monospace; */
 
             }
 
             p {
                 color: white;
                 margin: 0;
-                font-family: 'Times New Roman', Times, serif;
+                /* font-family: 'Times New Roman', Times, serif; */
             }
 
         }

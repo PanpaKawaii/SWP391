@@ -40,3 +40,29 @@
   border-radius: 5px;
   border: none;
 }
+
+/* Thêm thanh cuộn cho component có class 'user-content-body' */
+.user-content-body {
+  height: calc(100vh - [chiều cao của header và footer]);
+  overflow-y: auto;
+  scrollbar-width: 10px;
+  scrollbar-color: #fdbc7f #fff7ee;
+}
+
+/* Tùy chỉnh thanh cuộn cho Chrome, Edge, và Safari */
+.user-content-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.user-content-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.user-content-body::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.user-content-body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

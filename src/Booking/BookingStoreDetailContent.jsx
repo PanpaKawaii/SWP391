@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Spinner } from 'react-bootstrap';
 import './BookingStoreDetailContent.css';
 
@@ -39,6 +39,11 @@ export default function BookingStoreDetailContent() {
         return obj.id == StoreId.Id;
     }) : null;
 
+    const navigate = useNavigate();
+    if (Store && Store.status !== 'Đang hoạt động') {
+        navigate('/booking/store')
+    }
+
 
     if (loading) return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -54,7 +59,9 @@ export default function BookingStoreDetailContent() {
             {Store ? (
                 <div>
                     <div className='store-detail-container'>
-                        <img src={imageSTOREs.find(image => image.id === Store.id)?.image} alt={Store.name} />
+                        {/* <img src={imageSTOREs.find(image => image.id === Store.id)?.image} alt={Store.name} /> */}
+                        <img src={Store.image} alt={Store.name} />
+
                         <div className='store-detail'>
                             <h1><b>{Store.name}</b></h1>
                             <div className='rating'>

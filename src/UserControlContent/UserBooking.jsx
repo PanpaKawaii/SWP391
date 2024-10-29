@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Form, Button, Spinner } from 'react-bootstrap';
 import './UserBooking.css';
 
-import YellowBanana from '../BackgroundImage/YellowBanana.jpg';
+import { imagePODs } from '../assets/listPODs';
 
 export default function UserBooking() {
 
@@ -136,6 +136,7 @@ export default function UserBooking() {
         e.preventDefault();
         console.log('Ngày bắt đầu:', e.target.startDate.value);
         console.log('Ngày kết thúc:', e.target.endDate.value);
+        console.log(getFilteredBOOKINGs && getFilteredBOOKINGs[0].currentDate)
 
         if (!e.target.startDate.value && !e.target.endDate.value) {
             const dateBOOKINGs = BOOKINGs.filter(booking => booking.userId == id)
@@ -193,25 +194,24 @@ export default function UserBooking() {
                             <div className='booking-card'>
                                 <div className='booking-card-container'>
                                     <div className='booking-card-header'>
-                                        <h4><b>Ngày đặt:</b> {booking.date.substring(0, 10)}</h4>
-                                        <p>{(() => {
+                                        <h4><b>Ngày đặt:</b> {booking.currentDate}</h4>
+                                        {(() => {
                                             switch (booking.status) {
                                                 case 'Đã xác nhận':
-                                                    return <span style={{ backgroundColor: '#28a745', color: 'white' }}>{booking.status}</span>;
+                                                    return <h4 style={{ backgroundColor: '#28a745', color: 'white' }}><b>{booking.status}</b></h4>;
                                                 case 'Chờ xác nhận':
-                                                    return <span style={{ backgroundColor: '#ffc107', color: 'white' }}>{booking.status}</span>;
+                                                    return <h4 style={{ backgroundColor: '#ffc107', color: 'white' }}><b>{booking.status}</b></h4>;
                                                 case 'Đã hủy':
-                                                    return <span style={{ backgroundColor: '#dc3545', color: 'white' }}>{booking.status}</span>;
+                                                    return <h4 style={{ backgroundColor: '#dc3545', color: 'white' }}><b>{booking.status}</b></h4>;
                                                 default:
                                                     return booking.status;
                                             }
                                         })()}
-                                        </p>
                                     </div>
                                     <div className='booking-card-body'>
                                         <div className='card-image'>
-                                            <img src={YellowBanana} alt='BookingImage' />
-                                            {/* <img src={getPodImage(booking.podId)} alt={getPodName(booking.podId)} /> */}
+                                            {/* <img src={imagePODs.find(image => image.id === booking.podId)?.image} alt={getPodName(booking.podId)} /> */}
+                                            <img src={getPodImage(booking.podId)} alt={getPodName(booking.podId)} />
                                         </div>
                                         <div className='card-detail'>
                                             <div className='card-information'>
@@ -269,7 +269,7 @@ export default function UserBooking() {
                         </Col>
                     ))
                 ) : (
-                    <span>Không có lịch sử đặt phòng nào.</span>
+                    <span style={{ height: '50vh' }}>Không có lịch sử đặt phòng nào.</span>
                 )}
             </Row>
         </div>

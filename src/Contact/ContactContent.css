@@ -6,73 +6,66 @@ body {
     width: 100%;
     background-color: #ffffff;
     font-family: 'Quicksand', 'Arial', sans-serif;
-}
-
-.POD-contact {
 
     .contact-container {
         background-color: #f9f9f9;
-        padding: 80px;
+        padding: 80px 80px 140px;
         display: flex;
         justify-content: center;
         align-items: center;
         transition: all 0.3s ease;
-    }
 
-    .service {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: auto;
-        margin: 40px;
-    }
+        .service {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: auto;
+            margin: 40px;
 
-    .service h3 {
-        color: #444444;
-    }
+            img {
+                border-radius: 300px;
+            }
+        }
 
-    .service img {
-        border-radius: 300px;
-    }
+        .contact-us {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
 
-    .contact-us {
-        width: 100%;
-        max-width: 600px;
-        height: auto;
-        background-color: #ffffff;
-        padding: 40px;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        transition: all 0.3s ease;
-    }
+            p {
+                color: #666666;
+                margin: 0;
+            }
 
-    .contact-us p {
-        color: #666666;
-        margin: 0;
-    }
+            .form-input {
+                margin: 10px 0 10px 40px;
 
-    .form-input {
-        margin: 10px 0 10px 40px;
-    }
+                .input {
+                    background-color: 'transparent';
+                    transition: all 0.3 ease;
+                }
+            }
 
-    .input {
-        background-color: 'transparent';
-        transition: all 0.3 ease;
-    }
+            .btn,
+            .btn:focus {
+                width: 100px;
+                color: #ffffff;
+                background-color: #fb8b24;
+                font-weight: bold;
+                border: none;
+                border-radius: 7px;
+            }
 
-    .btn,
-    .btn:focus {
-        width: 100px;
-        color: #ffffff;
-        background-color: #fb8b24;
-        font-weight: bold;
-        border: none;
-        border-radius: 7px;
-    }
-
-    .btn:hover {
-        color: #ffffff;
-        background-color: #d97720;
+            .btn:hover {
+                color: #ffffff;
+                background-color: #d97720;
+            }
+        }
     }
 }

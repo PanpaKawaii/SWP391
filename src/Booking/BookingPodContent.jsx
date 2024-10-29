@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { Form, Button, Row, Col, Card, Spinner } from 'react-bootstrap';
 import './BookingPodContent.css';
-
+import ScrollToTop from '../ScrollToTopComponent/ScrollToTop';
 import { imagePODs } from '../assets/listPODs';
 
 export default function BookingPodContent() {
@@ -81,6 +81,9 @@ export default function BookingPodContent() {
     // Lấy Pods của Utility được chọn
     const Pods = (filteredUtilities && filteredUtilities.length > 0) ? filteredUtilities[0].pods : [];
 
+    // Lấy Pods có status là Đang hoạt động
+    const filteredPods = Pods ? Pods.filter(pod => pod.status === 'Đang hoạt động') : [];
+
     // Create a new array uniquePodName with unique pod names
     const [uniquePodName, setUniquePodName] = useState([]);
 
@@ -99,12 +102,13 @@ export default function BookingPodContent() {
     }, [PODs]);
 
     //Lấy Pods trùng khớp với những lựa chọn trên thanh tìm kiếm
-    const filteredResults = Pods ? Pods.filter(pod =>
+    const filteredResults = filteredPods ? filteredPods.filter(pod =>
         (pod.storeId == StoreId.Id || !StoreId.Id) &&
         (pod.storeId == selectedStore || !selectedStore) &&
         (pod.name === selectedPod || !selectedPod) &&
         (pod.typeId.toString() === selectedType.toString() || !selectedType.toString()) &&
-        pod.name.toLowerCase().includes(podName.toLowerCase())
+        pod.name.toLowerCase().includes(podName.toLowerCase()) &&
+        STOREs.filter(store => store.status === 'Đang hoạt động').some(store => store.id === pod.storeId)
     ) : [];
 
     const getCapacity = (typeId) => {
@@ -216,7 +220,7 @@ export default function BookingPodContent() {
                         <Form.Control className='input' type='text' placeholder='Tên POD' value={podName} onChange={(e) => setPodName(e.target.value)} />
                     </Form.Group>
 
-                    <Button type='reset' className='btn' onClick={handleReset}>ĐẶT LẠI</Button>
+                    <Button type='reset' className='btn' onClick={handleReset}>ĐẶT LẠI BỘ LỌC</Button>
 
                 </Form>
 
@@ -242,7 +246,8 @@ export default function BookingPodContent() {
                                 <tr key={index} className='border-bottom list-item'>
                                     <td className='list-index'>{index + 1}</td>
                                     <td>
-                                        <img src={imagePODs.find(image => image.id === pod.id)?.image} alt='image' />
+                                        {/* <img src={imagePODs.find(image => image.id === pod.id)?.image} alt={pod.name} /> */}
+                                        <img src={pod.image} alt={pod.name} />
                                     </td>
                                     <td>
                                         {/* <p>ID: {pod.id}</p> */}

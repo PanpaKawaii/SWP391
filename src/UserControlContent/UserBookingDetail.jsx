@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Row, Col, Spinner, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button, Spinner } from 'react-bootstrap';
 import './UserBookingDetail.css';
 
-import YellowBanana from '../BackgroundImage/YellowBanana.jpg';
+import { imagePODs } from '../assets/listPODs';
 
 export default function UserBookingDetail() {
 
@@ -144,10 +144,10 @@ export default function UserBookingDetail() {
         return pod ? pod.name : null;
     };
 
-    // const getPodImage = (podId) => {
-    //     const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
-    //     return pod ? pod.image : null;
-    // };
+    const getPodImage = (podId) => {
+        const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
+        return pod ? pod.image : null;
+    };
 
     const getPodRating = (podId) => {
         const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
@@ -215,6 +215,52 @@ export default function UserBookingDetail() {
         return payments[0].method;
     };
 
+    const [rating, setRating] = useState(0);
+    const [feedback, setFeedback] = useState('');
+    useEffect(() => {
+        setRating(thisBOOKING ? thisBOOKING.rating : 0);
+        setFeedback(thisBOOKING ? thisBOOKING.feedback : '');
+    }, [thisBOOKING]);
+    const handleSubmitFeedback = (e) => {
+        e.preventDefault();
+        console.log('Rating:', rating);
+        console.log('Feedback submitted:', feedback);
+        SubmitFeedback(rating, feedback);
+    }
+    const SubmitFeedback = async (SubmitRating, SubmitFeedback) => {
+
+        const changeData = {
+            id: thisBOOKING.id,
+            date: thisBOOKING.date,
+            status: thisBOOKING.status,
+            rating: SubmitRating,
+            feedback: SubmitFeedback,
+            podId: thisBOOKING.podId,
+            userId: thisBOOKING.userId,
+        };
+        console.log('Change Information Data:', changeData);
+
+        try {
+            const response = await fetch(`https://localhost:7166/api/Booking/${thisBOOKING.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
+                },
+                body: JSON.stringify(changeData),
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+            // const data = await response.json();
+            setLoading(false);
+            alert('Đánh giá thành công');
+        } catch (error) {
+            setError(error);
+            console.log('Đánh giá thất bại:', error);
+            setLoading(false);
+        }
+    }
+
 
     if (loading) return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -229,18 +275,19 @@ export default function UserBookingDetail() {
         <div className='user-booking-detail'>
             <div className='booking-card'>
                 <div className='booking-card-header'>
-                    <h4><b>Ngày đặt:</b> {thisBOOKING.date.substring(0, 10)}</h4>
+                    <h4><b>Ngày đặt:</b> {thisBOOKING.currentDate}</h4>
                 </div>
                 <Row className='booking-row'>
                     <Col xxl={12} className='booking-col'>
                         <div className='booking-card-body'>
                             <div className='card-image'>
-                                <img src={YellowBanana} alt='BookingImage' />
-                                {/* <img src={getPodImage(booking.podId)} alt={getPodName(booking.podId)} /> */}
+                                {/* <img src={imagePODs.find(image => image.id === thisBOOKING.podId)?.image} alt={getPodName(thisBOOKING.podId)} /> */}
+                                <img src={getPodImage(thisBOOKING.podId)} alt={getPodName(thisBOOKING.podId)} />
                             </div>
                             <div className='card-detail'>
                                 <div className='card-information'>
                                     <p className='booking-id'>Booking ID: {thisBOOKING.id}</p>
+                                    <p>{thisBOOKING.currentDate}</p>
                                     <h1><b>{getPodName(thisBOOKING.podId)}</b></h1>
 
                                     <div className='card-rating-capacity'>
@@ -289,9 +336,9 @@ export default function UserBookingDetail() {
                                             {(() => {
                                                 switch (getBookingPaymentStatus(thisBOOKING.id)) {
                                                     case 'Đã thanh toán':
-                                                        return <h4 style={{ color: '#28a745' }}>{getBookingPaymentStatus(thisBOOKING.id)}</h4>;
+                                                        return <h4 style={{ color: '#28a745' }}><b>{getBookingPaymentStatus(thisBOOKING.id)}</b></h4>;
                                                     case 'Chưa thanh toán':
-                                                        return <h4 style={{ color: '#ffc107' }}>{getBookingPaymentStatus(thisBOOKING.id)}</h4>;
+                                                        return <h4 style={{ color: '#ffc107' }}><b>{getBookingPaymentStatus(thisBOOKING.id)}</b></h4>;
                                                     default:
                                                         return getBookingPaymentStatus(thisBOOKING.id);
                                                 }
@@ -336,9 +383,9 @@ export default function UserBookingDetail() {
                                                     {(() => {
                                                         switch (getBookingOrderStatus(bookingOrder.id)) {
                                                             case 'Đã thanh toán':
-                                                                return <h4 style={{ color: '#28a745' }}>{getBookingOrderStatus(bookingOrder.id)}</h4>;
+                                                                return <h4 style={{ color: '#28a745' }}><b>{getBookingOrderStatus(bookingOrder.id)}</b></h4>;
                                                             case 'Chưa thanh toán':
-                                                                return <h4 style={{ color: '#ffc107' }}>{getBookingOrderStatus(bookingOrder.id)}</h4>;
+                                                                return <h4 style={{ color: '#ffc107' }}><b>{getBookingOrderStatus(bookingOrder.id)}</b></h4>;
                                                             default:
                                                                 return getBookingOrderStatus(bookingOrder.id);
                                                         }
@@ -351,7 +398,7 @@ export default function UserBookingDetail() {
                             </Col>
                         ))
                     ) : (
-                        <span>Không có lịch sử đặt phòng nào.</span>
+                        <span style={{ height: '50vh' }}>Không có lịch sử đặt phòng nào.</span>
                     )}
                 </Row>
                 <div className='booking-card-footer'>
@@ -360,7 +407,43 @@ export default function UserBookingDetail() {
                         <h4><b>Đã thanh toán: <span className='success-amount'>{getSumSuccessBookingAmount(thisBOOKING.id).toLocaleString('vi-VN')}đ</span></b></h4>
                     </div>
                     <div className='button-footer'>
-                        <Link to={`/booking/pod/${thisPOD.id}`} className='link-item'><h5><i className='fa-solid fa-star'></i> <b>Đánh giá</b></h5></Link>
+
+                        <div>
+                            <h3>Đánh giá của bạn:</h3>
+                            <Form className='rating-form' onSubmit={handleSubmitFeedback}>
+
+                                <div>
+                                    <Form.Group controlId='formRating' className='form-group'>
+                                        {[...Array(5)].map((_, i) => (
+                                            <span key={i}
+                                                style={{
+                                                    color: (rating >= i + 1) ? 'gold' : '#cccccc',
+                                                    fontSize: '1.1em',
+                                                    cursor: 'pointer'
+                                                }}
+                                                onClick={() => setRating(i + 1)}
+                                            // onMouseEnter={() => setRating(i + 1)}
+                                            // onMouseLeave={() => setRating(0)}
+                                            >
+                                                <i className='fa-solid fa-star'></i>
+                                            </span>
+                                        ))}
+                                    </Form.Group>
+
+                                    <Form.Group controlId='formFeedback' className='form-group'>
+                                        <Form.Control type='text' placeholder='Nhập phản hồi của bạn' value={feedback} onChange={(e) => setFeedback(e.target.value)} />
+                                    </Form.Group>
+                                </div>
+
+                                {thisBOOKING.feedback ?
+                                    <Button type='submit' className='btn btn-feedback'>THAY ĐỔI</Button>
+                                    :
+                                    <Button type='submit' className='btn btn-feedback'>GỬI</Button>
+                                }
+
+                            </Form>
+                        </div>
+
                         <Link to={`/booking/pod/${thisPOD.id}`} className='link-item'><Button className='rebook-button'>ĐẶT LẠI</Button></Link>
                     </div>
                 </div>

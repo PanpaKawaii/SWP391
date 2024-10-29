@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import './SignInSignUp.css';
 
-import SignInImage from '../assets/PODs/meeting5.jpg'
-import SignUpImage from '../assets/PODs/single6.jpg'
+import SignInImage from '../BackgroundImage/24.jpg'
+import SignUpImage from '../BackgroundImage/4.jpg'
 
 export default function SignInSignUp() {
 
@@ -188,11 +188,11 @@ export default function SignInSignUp() {
         }
 
         const signupData = {
-            id: 19,
+            id: 13,
             email: SignUpEmail,
             password: SignUpPassword,
             name: SignUpFullName,
-            image: '',
+            image: 'https://i.pinimg.com/474x/46/7f/be/467fbe9b03913de9dcd39eb0ee1e06ab.jpg',
             role: 'User',
             type: 'Regular',
             phoneNumber: SignUpPhoneNumber,
@@ -336,16 +336,16 @@ export default function SignInSignUp() {
                             {SignInPasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{SignInPasswordError}</span>}
                             {errorSignIn && <span className='error-message' style={{ color: '#dc3545' }}>Đăng nhập thất bại</span>}
                             <div className='btn-box'>
-                                <Button type='submit' className='btn' >Đăng nhập</Button>
-                                <Button type='reset' className='btn' onClick={resetInputsBox1}>Xóa</Button>
+                                <Button type='submit' className='btn' id='btn-signin'>ĐĂNG NHẬP</Button>
+                                <Button type='reset' className='btn' id='btn-reset-signin' onClick={resetInputsBox1}>XÓA</Button>
                             </div>
                             <hr />
-                            <Button id='signup' className='btn btn-signup' onClick={moveImage}>CHƯA CÓ TÀI KHOẢN?</Button>
+                            <Button id='btn-switch-signup' className='btn' onClick={moveImage}>CHƯA CÓ TÀI KHOẢN?</Button>
                         </Form>
                     </div>
 
                     <div className='card-body card-disappear' id='card-signup'>
-                        <h1 className='title'>ĐĂNG KÍ</h1>
+                        <h1 className='title'>ĐĂNG KÝ</h1>
                         <Form className='form-box form-box2' onSubmit={handleSubmitSignUp}>
                             <Form.Group controlId='SignUpEmail' className='form-group form-input'>
                                 <span className='icon'><i className='fa-solid fa-envelope' style={{ fontSize: '25px' }}></i></span>
@@ -375,11 +375,11 @@ export default function SignInSignUp() {
                             {SignUpConfirmError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpConfirmError}</span>}
                             {errorSignUp && <span className='error-message' style={{ color: '#dc3545' }}>Đăng kí thất bại</span>}
                             <div className='btn-box'>
-                                <Button type='submit' className='btn'>Đăng kí</Button>
-                                <Button type='reset' className='btn' onClick={resetInputsBox2}>Xóa</Button>
+                                <Button type='submit' className='btn' id='btn-signup'>ĐĂNG KÍ</Button>
+                                <Button type='reset' className='btn' id='btn-reset-signup' onClick={resetInputsBox2}>XÓA</Button>
                             </div>
                             <hr />
-                            <Button id='login' className='btn btn-already' onClick={moveImageBack}>ĐÃ CÓ TÀI KHOẢN?</Button>
+                            <Button id='btn-switch-signin' className='btn' onClick={moveImageBack}>ĐÃ CÓ TÀI KHOẢN?</Button>
                         </Form>
                     </div>
 

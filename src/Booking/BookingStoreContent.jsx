@@ -77,7 +77,7 @@ export default function BookingStoreContent() {
                         <Form.Control className='input' type='text' placeholder='Tên cửa hàng' value={storeName} onChange={(e) => setStoreName(e.target.value)} />
                     </Form.Group>
 
-                    <Button type='reset' className='btn' onClick={handleReset}>ĐẶT LẠI</Button>
+                    <Button type='reset' className='btn' onClick={handleReset}>ĐẶT LẠI BỘ LỌC</Button>
 
                 </Form>
 
@@ -87,20 +87,31 @@ export default function BookingStoreContent() {
                 <Row className='image-row'>
                     {filteredResults.length > 0 ? (
                         filteredResults.map((store) => (
-                            <Col key={store.id} xs={12} sm={12} md={12} lg={12} xl={6} xxl={6} className='image-col'>
+                            <Col key={store.id} xs={12} sm={12} md={12} lg={12} xl={8} xxl={6} className='image-col'>
                                 <Card className='image-card'>
-                                    <Link to={`${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link>
+                                    {/* <Link to={`${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link> */}
+                                    {store.status === 'Đang hoạt động' ?
+                                        <Link to={`${store.id}`}><img src={store.image} alt={store.name} /></Link>
+                                        :
+                                        <img src={store.image} alt={store.name} />
+                                    }
+
                                     <Card.Body className='card-body'>
                                         <h3><b>{store.name}</b></h3>
+                                        {store.status === 'Đang hoạt động' && <h5 style={{ color: '#28a745' }}><b>Đang hoạt động</b></h5>}
+                                        {store.status === 'Dừng hoạt động' && <h5 style={{ color: '#dc3545' }}><b>Dừng hoạt động</b></h5>}
                                         <div className='full-detail'>
                                             <div className='short-detail'>
+                                                {/* <p>Đa dạng loại hình: POD phòng đơn, POD phòng đôi, POD phòng tập thể</p> */}
                                                 <p>Địa chỉ: {store.address}</p>
                                                 <p>Liên hệ: {store.contact}</p>
                                             </div>
                                             <div className='active-button'>
-                                                <Link to={`${store.id}`}>
+                                                {store.status === 'Đang hoạt động' ?
+                                                    <Link to={`${store.id}`}><Button className='btn'>CHI TIẾT</Button></Link>
+                                                    :
                                                     <Button className='btn'>CHI TIẾT</Button>
-                                                </Link>
+                                                }
                                             </div>
                                         </div>
                                     </Card.Body>
@@ -112,6 +123,6 @@ export default function BookingStoreContent() {
                     )}
                 </Row>
             </div>
-        </div>
+        </div >
     )
 }

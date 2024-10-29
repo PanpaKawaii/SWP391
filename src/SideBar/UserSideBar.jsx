@@ -38,7 +38,8 @@ export default function SideBar() {
 
     return (
         <div className='nav'>
-            <div className={`sidenav ${isOpen ? 'open' : ''}`}>
+            <div className='user-nav'>
+                <div className={`sidenav ${isOpen ? 'open' : ''}`}>
 
                 <div className='sidebar-header'>
                     <Link to='/'><h1><b>InnoSpace</b></h1></Link>
@@ -78,10 +79,11 @@ export default function SideBar() {
 
             </div>
 
-            <div id='main' className={isOpen ? 'shifted' : ''}>
+            <div id='main-button-nav' className={isOpen ? 'shifted' : ''}>
                 <span style={{ fontSize: '30px', cursor: 'pointer' }} onClick={toggleNav}>
                     &#9776;
                 </span>
+                </div>
             </div>
         </div>
     )

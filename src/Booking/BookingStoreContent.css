@@ -9,12 +9,14 @@ body {
 }
 
 .POD-booking-store {
+    position: relative;
 
     .search-container {
         width: 100%;
         background-color: #fafafa;
         position: sticky;
         top: 0;
+        z-index: 1;
 
         .search {
             display: flex;
@@ -46,6 +48,7 @@ body {
     }
 
     .booking-store-container {
+        z-index: 2;
         width: 100%;
         min-height: 100vh;
         display: flex;
@@ -69,10 +72,9 @@ body {
 
                 .image-card {
                     width: 540px;
-                    margin-bottom: 20px;
+                    margin: 0 0 20px;
                     background-color: #ffffff;
-                    border: none;
-                    border-radius: 10px;
+                    border-radius: 20px;
                     box-shadow: 0 4px 6px #6666664d;
                     overflow: hidden;
                     align-items: center;
@@ -86,37 +88,38 @@ body {
                         object-position: center;
                         display: block;
                     }
-                }
 
-                .card-body {
-                    width: 100%;
+                    .card-body {
+                        width: 100%;
 
-                    .full-detail {
-                        display: flex;
-                        justify-content: space-between;
+                        .full-detail {
+                            display: flex;
+                            justify-content: space-between;
 
-                        .short-detail {
-                            display: block;
-                            text-align: start;
-                        }
+                            .short-detail {
+                                display: block;
+                                text-align: start;
+                            }
 
-                        .active-button {
-                            display: block;
-                            text-align: end;
-                        }
+                            .active-button {
+                                display: flex;
+                                justify-content: end;
+                                align-items: end;
+                            }
 
-                        .btn,
-                        .btn:focus {
-                            color: #ffffff;
-                            background-color: #fb8b24;
-                            font-weight: bold;
-                            border: none;
-                            border-radius: 7px;
-                        }
+                            .btn,
+                            .btn:focus {
+                                color: #ffffff;
+                                background-color: #fb8b24;
+                                font-weight: bold;
+                                border: none;
+                                border-radius: 7px;
+                            }
 
-                        .btn:hover {
-                            color: #ffffff;
-                            background-color: #d97720;
+                            .btn:hover {
+                                color: #ffffff;
+                                background-color: #d97720;
+                            }
                         }
                     }
                 }

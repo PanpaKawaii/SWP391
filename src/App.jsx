@@ -5,9 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Route, Routes } from 'react-router-dom'
 
 
-import GuestHeader from './HeaderFooter/GuestHeader'
-
+import GuestHeader from './GuestComponent/Header/GuestHeader'
 import Header from './HeaderFooter/Header'
+
 import Footer from './HeaderFooter/Footer'
 
 import HomeContent from './Home/HomeContent'
@@ -17,13 +17,13 @@ import BookingStoreContent from './Booking/BookingStoreContent'
 import BookingStoreDetailContent from './Booking/BookingStoreDetailContent'
 import BookingPodContent from './Booking/BookingPodContent'
 import BookingPodDetailContent from './Booking/BookingPodDetailContent'
-import PaymentContent from './Payment/PaymentContent'
 
 import AboutContent from './About/AboutContent'
 
 import UserInformation from './UserControlContent/UserInformation'
 import UserBooking from './UserControlContent/UserBooking'
 import UserBookingDetail from './UserControlContent/UserBookingDetail'
+
 import SignInSignUp from './SignInSignUp/SignInSignUp'
 
 import ScrollToTop from './ScrollToTopComponent/ScrollToTop';
@@ -51,7 +51,7 @@ function App() {
       </>
     )
   }
-  if (UserRole === null) {
+  else if (UserRole === null) {
     return (
       <>
         <ScrollToTop />
@@ -66,7 +66,6 @@ function App() {
               <Route path='/booking/store/:Id' element={<BookingStoreDetailContent />} />
               <Route path='/booking/pod' element={<BookingPodContent />} />
               <Route path='/booking/pod/:Id' element={<BookingPodDetailContent />} />
-              <Route path='/booking/pod/:Id/payment' element={<PaymentContent />} />
 
               <Route path='/contact' element={<ContactContent />} />
 
@@ -81,9 +80,9 @@ function App() {
   else if (UserRole === 'User') {
     return (
       <>
-        <ScrollToTop />
         <div className='user-container'>
           <Sidebar className='sidebar' />
+          {/* <ScrollToTop /> */}
           <div className='user-content' >
             <Header />
             <div className='user-content-body'>
@@ -95,7 +94,6 @@ function App() {
                 <Route path='/booking/store/:Id' element={<BookingStoreDetailContent />} />
                 <Route path='/booking/pod' element={<BookingPodContent />} />
                 <Route path='/booking/pod/:Id' element={<BookingPodDetailContent />} />
-                <Route path='/booking/pod/:Id/payment' element={<PaymentContent />} />
 
                 <Route path='/contact' element={<ContactContent />} />
 

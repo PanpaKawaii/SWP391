@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Form, InputGroup, Button, Spinner } from 'react-bootstrap';
 import './UserInformation.css';
 
-import home from '../BackgroundImage/home.jpg';
+import InnoSpace from '../BackgroundImage/InnoSpace.png';
 
 export default function UserInformation() {
 
@@ -20,6 +20,7 @@ export default function UserInformation() {
 
     const [ChangeFullNameError, setChangeFullNameError] = useState(null);
     const [ChangePhoneNumberError, setChangePhoneNumberError] = useState(null);
+    const [ChangeAvatarError, setChangeAvatarError] = useState(null);
     const [ChangePasswordError, setChangePasswordError] = useState(null);
     const [ChangeConfirmPasswordError, setChangeConfirmPasswordError] = useState(null);
 
@@ -43,7 +44,7 @@ export default function UserInformation() {
         }
     }, [id]);
 
-    const ChangeInformation = async (ChangeFullName, ChangePhoneNumber) => {
+    const ChangeInformation = async (ChangeFullName, ChangePhoneNumber, ChangeAvatar) => {
 
         if (!ChangeFullName) {
             console.error('Invalid full name');
@@ -53,6 +54,11 @@ export default function UserInformation() {
         if (!ChangePhoneNumber) {
             console.error('Invalid phone number');
             setChangePhoneNumberError('Số điện thoại không hợp lệ');
+            return;
+        }
+        if (!ChangeAvatar) {
+            console.error('Invalid avatar');
+            setChangeAvatarError('Link ảnh đại diện không hợp lệ');
             return;
         }
 
@@ -72,7 +78,7 @@ export default function UserInformation() {
             email: USER.email,
             password: USER.password,
             name: ChangeFullName,
-            image: USER.image,
+            image: ChangeAvatar,
             role: USER.role,
             type: USER.type,
             phoneNumber: ChangePhoneNumber,
@@ -86,6 +92,7 @@ export default function UserInformation() {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
                 },
                 body: JSON.stringify(changeData),
             });
@@ -94,7 +101,7 @@ export default function UserInformation() {
             // const data = await response.json();
             setLoading(false);
             alert('Đổi thông tin thành công');
-            window.location.reload();
+            setUSER(changeData);
 
         } catch (error) {
             setError(error);
@@ -107,7 +114,8 @@ export default function UserInformation() {
         setError(null);
         setChangeFullNameError(null);
         setChangePhoneNumberError(null);
-        ChangeInformation(e.target.formName.value, e.target.formPhoneNumber.value);
+        setChangeAvatarError(null);
+        ChangeInformation(e.target.formName.value, e.target.formPhoneNumber.value, e.target.formAvatar.value);
     }
 
     const ChangePassword = async (OldPassword, ChangePassword, ChangeConfirm) => {
@@ -163,6 +171,7 @@ export default function UserInformation() {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
                 },
                 body: JSON.stringify(changeData),
             });
@@ -171,7 +180,7 @@ export default function UserInformation() {
             // const data = await response.json();
             setLoading(false);
             alert('Đổi mật khẩu thành công');
-            window.location.reload();
+            setUSER(changeData);
 
         } catch (error) {
             setError(error);
@@ -208,9 +217,8 @@ export default function UserInformation() {
                         <p><b>Điểm:</b> {USER ? USER.point : '...'}</p>
                         <p><b>Mô tả:</b> {USER ? USER.description : '...'}</p>
                         <p><b>Danh hiệu:</b> {USER ? USER.type : '...'}</p>
-                        <p><b>Vị trí:</b> {USER ? USER.role : '...'}</p>
                     </div>
-                    <div><img className='avatar' src={home} alt='avatar' /></div>
+                    <div><img className='avatar' src={USER ? USER.image : InnoSpace} alt={USER ? USER.name : ''} /></div>
                 </section>
 
                 <section className='contact-information'>
@@ -227,22 +235,30 @@ export default function UserInformation() {
                             <Form.Group controlId='formName' className='form-group'>
                                 <InputGroup>
                                     <InputGroup.Text>Họ tên</InputGroup.Text>
-                                    <Form.Control type='text' defaultValue={USER ? USER.name : ''} />
+                                    <Form.Control type='text' placeholder='Nhập họ tên' defaultValue={USER ? USER.name : ''} />
                                 </InputGroup>
                             </Form.Group>
 
                             <Form.Group controlId='formPhoneNumber' className='form-group'>
                                 <InputGroup>
                                     <InputGroup.Text>Số điện thoại</InputGroup.Text>
-                                    <Form.Control type='text' defaultValue={USER ? USER.phoneNumber : ''} />
+                                    <Form.Control type='text' placeholder='Nhập số điện thoại' defaultValue={USER ? USER.phoneNumber : ''} />
                                 </InputGroup>
                             </Form.Group>
 
-                            {ChangeFullNameError && <p className='error-message'>{ChangeFullNameError}</p>}
-                            {ChangePhoneNumberError && <p className='error-message'>{ChangePhoneNumberError}</p>}
+                            <Form.Group controlId='formAvatar' className='form-group'>
+                                <InputGroup>
+                                    <InputGroup.Text>Ảnh đại diện</InputGroup.Text>
+                                    <Form.Control type='text' placeholder='Nhập link ảnh đại diện' defaultValue={USER ? USER.image : ''} />
+                                </InputGroup>
+                            </Form.Group>
+
+                            {ChangeFullNameError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangeFullNameError}</span>}
+                            {ChangePhoneNumberError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangePhoneNumberError}</span>}
 
                             <div className='change-information-button'>
-                                <Button type='submit' className='btn' onClick={() => confirm('Bạn chắc chắn muốn đổi thông tin?')}>ĐỔI THÔNG TIN</Button>
+                                {/* <Button type='submit' className='btn' onClick={() => confirm('Bạn chắc chắn muốn đổi thông tin?')}>ĐỔI THÔNG TIN</Button> */}
+                                <Button type='submit' className='btn'>ĐỔI THÔNG TIN</Button>
                                 <Button type='reset' className='btn btn-reset'>ĐẶT LẠI</Button>
                             </div>
                         </Form>
@@ -272,11 +288,12 @@ export default function UserInformation() {
                                 </InputGroup>
                             </Form.Group>
 
-                            {ChangePasswordError && <p className='error-message'>{ChangePasswordError}</p>}
-                            {ChangeConfirmPasswordError && <p className='error-message'>{ChangeConfirmPasswordError}</p>}
+                            {ChangePasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangePasswordError}</span>}
+                            {ChangeConfirmPasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangeConfirmPasswordError}</span>}
 
                             <div className='change-information-button'>
-                                <Button type='submit' className='btn' onClick={() => confirm('Bạn chắc chắn muốn đổi mật khẩu?')}>ĐỔI MẬT KHẨU</Button>
+                                {/* <Button type='submit' className='btn' onClick={() => confirm('Bạn chắc chắn muốn đổi mật khẩu?')}>ĐỔI MẬT KHẨU</Button> */}
+                                <Button type='submit' className='btn'>ĐỔI MẬT KHẨU</Button>
                                 <Button type='reset' className='btn btn-reset'>ĐẶT LẠI</Button>
                             </div>
                         </Form>

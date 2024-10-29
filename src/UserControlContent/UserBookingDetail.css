@@ -5,7 +5,7 @@ body {
 .user-booking-detail {
     width: 100%;
     padding: 20px;
-    margin: 0 0 160px;
+    margin: 0 0 200px;
     background-color: #ffffff;
     font-family: 'Quicksand', 'Arial', sans-serif;
     display: flex;
@@ -229,8 +229,23 @@ body {
             .button-footer {
                 padding: 10px 0 20px;
                 display: flex;
-                justify-content: end;
+                justify-content: space-between;
                 align-items: center;
+
+                .rating-form {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: end;
+
+                    .btn-feedback {
+                        width: 100px;
+                        margin: 0 10px;
+                    }
+                }
+
+                .form-group {
+                    margin: 5px 0 0;
+                }
 
                 .btn,
                 .btn:focus {
@@ -246,12 +261,6 @@ body {
                     color: #ffffff;
                     background-color: #d97720;
                     /* background-color: #ad3103; */
-                }
-
-                h5 {
-                    margin: 0;
-                    color: #fb8b24;
-                    /* color: #fb8159; */
                 }
 
                 .link-item {

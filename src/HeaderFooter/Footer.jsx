@@ -27,21 +27,21 @@ export default function Footer() {
     }, []);
 
     return (
-        <div className='footer'>
+        <div className='user-footer'>
             <div className='footer-container'>
                 <div className='footer-brand'>
-                    <h3>InnoSpace</h3>
+                    <h3><b>InnoSpace</b></h3>
                     <p>InnoSpace là hệ thống quản lý và đặt chỗ làm việc cá nhân, giúp người dùng dễ dàng tìm kiếm và đặt chỗ theo nhu cầu.</p>
                 </div>
                 <div className='footer-solution'>
-                    <h3>Giải pháp</h3>
+                    <h3><b>Giải pháp</b></h3>
                     <p>Phòng đơn 1 người</p>
                     <p>Phòng đôi 2 người</p>
                     <p>Phòng nhóm 6 người</p>
                     <p>Phòng họp 10 người</p>
                 </div>
                 <div className='footer-location'>
-                    <h3>Địa chỉ</h3>
+                    <h3><b>Địa chỉ</b></h3>
                     <p>info@innospace.com.vn</p>
                     <p>12 Đường Sáng Tạo, Thủ Đức, TPHCM</p>
                     <p>+84 922 678 301</p>

@@ -3,58 +3,66 @@ body {
 }
 
 .nav {
+    height: 100vh;
     background-color: #fff7ee;
 
-    .sidenav {
-        height: auto;
-        width: 0;
-        padding: 25px 0 0;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        position: fixed;
-        overflow: hidden;
-        transition: 0.2s;
-        transition: width 0.3s ease;
-        font-family: 'Quicksand', 'Arial', sans-serif;
+    .user-nav {
+        height: 100vh;
 
-        .sidebar-header {
-            text-align: center;
+        .sidenav {
+            height: 100%;
+            width: 0;
+            padding: 25px 0 0;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            position: fixed;
+            overflow: hidden;
+            transition: 0.2s;
+            transition: width 0.3s ease;
+            font-family: 'Quicksand', 'Arial', sans-serif;
+
+            .sidebar-header {
+                text-align: center;
+            }
+
+            a {
+                color: #000000;
+                padding: 15px 20px;
+                text-decoration: none;
+                display: block;
+                transition: 0.3s;
+            }
+
+            a:hover {
+                /* color: #cdcaca; */
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .icon {
+                width: 20px;
+                margin: 0 10px;
+            }
         }
 
-        a {
-            color: #000000;
-            padding: 15px 20px;
-            text-decoration: none;
-            display: block;
-            transition: 0.3s;
+        .sidenav.open {
+            width: 250px;
         }
 
-        a:hover {
-            /* color: #cdcaca; */
-            font-size: 18px;
-            font-weight: bold;
+        #main-button-nav {
+            height: 100vh;
+            padding: 15px;
+            /* position: sticky; */
+            transition: margin-left .5s;
+            background-color: #feecd9;
+            border-right: 1px solid #ffddb9;
+            box-shadow: -60px 0px 50px 40px #feecd9;
         }
 
-        .icon {
-            width: 20px;
-            margin: 0 10px;
+        #main-button-nav.shifted {
+            margin-left: 250px;
         }
-    }
-
-    .sidenav.open {
-        width: 250px;
-    }
-
-    #main {
-        transition: margin-left .5s;
-        padding: 15px;
-        background-color: #feecd9;
-        border-right: 1px solid #ffddb9;
-    }
-
-    #main.shifted {
-        margin-left: 250px;
     }
 }
 

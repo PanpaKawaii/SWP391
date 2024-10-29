@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { CDBInput } from 'cdbreact';
 import './Header.css';
 
-import YellowBanana from '../BackgroundImage/YellowBanana.jpg';
-
+import InnoSpace from '../BackgroundImage/InnoSpace.png';
 export default function Header() {
 
     const [id, setId] = useState(null);
@@ -75,14 +74,14 @@ export default function Header() {
             <div className='search-bar'>
                 <CDBInput type='text' placeholder='Tìm kiếm...' style={{ width: '100%', maxWidth: '300px' }} />
             </div>
-            {isNaN(id) ?
+            {/* {isNaN(id) ?
                 (<Link to='/signinsignup'><i className='fas fa-sign-in-alt'></i> Đăng nhập</Link>)
                 :
-                (
+                ( */}
                     <>
                         <div className='d-flex dropdown' onClick={toggleDropdown} ref={dropdownRef}>
                             <button className='user-avatar'>
-                                <img src={YellowBanana} alt='Avatar' />
+                                <img src={USER ? USER.image : InnoSpace} alt={USER ? USER.name : ''} />
                                 {USER &&
                                     <div className='user-info'>
                                         <div className='username'>{USER.name}</div>
@@ -99,8 +98,8 @@ export default function Header() {
                             </button>
                         </div>
                     </>
-                )
-            }
+                {/* )
+            } */}
             {/* <div className='dropdown' ref={dropdownRef}>
                 <button
                     className='dropdown-toggle'

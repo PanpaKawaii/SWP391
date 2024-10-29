@@ -39,27 +39,27 @@ export default function AboutContent() {
 
                     <div className='introduction-convenient'>
                         <div className='convenient-item'>
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Bàn làm việc linh hoạt</b></h3>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#d97720' }}></i> <b>Bàn làm việc linh hoạt</b></h3>
                             <p>Đơn giản hóa việc đặt bàn cho không gian làm việc linh hoạt và hợp tác.</p>
                         </div>
                         <div>
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Đặt phòng họp</b></h3>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#fb8b24' }}></i> <b>Đặt phòng họp</b></h3>
                             <p>Xem và đặt phòng có sẵn khi lên lịch họp nhóm.</p>
                         </div>
                         <div>
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Thông tin văn phòng</b></h3>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#d97720' }}></i> <b>Thông tin văn phòng</b></h3>
                             <p>Nhận dữ liệu thời gian thực về việc sử dụng không gian làm việc, tình trạng sử dụng và nhiều hơn nữa.</p>
                         </div>
                         <div>
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Quản lý khách</b></h3>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#fb8b24' }}></i> <b>Quản lý khách</b></h3>
                             <p>Tối ưu hóa quy trình đăng ký cho khách với nền tảng kỹ thuật số.</p>
                         </div>
                         <div>
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#53737e' }}></i> <b>Quản lý chính sách</b></h3>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#d97720' }}></i> <b>Quản lý chính sách</b></h3>
                             <p>Xác định, tùy chỉnh và triển khai chính sách làm việc kết hợp một cách dễ dàng.</p>
                         </div>
                         <div>
-                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#83999f' }}></i> <b>Quản lý nghỉ phép</b></h3>
+                            <h3><i className='fa-regular fa-circle-check' style={{ color: '#fb8b24' }}></i> <b>Quản lý nghỉ phép</b></h3>
                             <p>Quản lý yêu cầu nghỉ phép và phê duyệt của nhân viên một cách dễ dàng.</p>
                         </div>
                     </div>
@@ -67,7 +67,7 @@ export default function AboutContent() {
                 </div>
 
                 <div>
-                    <h1><b>Vì sao chọn InnoSpace</b></h1>
+                    <h1><b>Vì sao nên chọn InnoSpace</b></h1>
                     <div className='reason-container'>
                         <img src={location} alt='location' />
                         <div>
@@ -81,7 +81,8 @@ export default function AboutContent() {
                             </div>
                             <div className='reason-item'>
                                 <h4><b>Dịch vụ toàn diện: </b></h4>
-                                <p>Hỗ trợ quản lý lịch làm việc, thanh toán trực tuyến và cung cấp các gói dịch vụ linh hoạt kèm các tiện ích.</p>
+                                {/* <p>Hỗ trợ quản lý lịch làm việc, thanh toán trực tuyến và cung cấp các gói dịch vụ linh hoạt kèm các tiện ích.</p> */}
+                                <p>Thanh toán trực tuyến và cung cấp các gói dịch vụ linh hoạt kèm các tiện ích.</p>
                             </div>
                         </div>
                     </div>
@@ -91,8 +92,8 @@ export default function AboutContent() {
                     <div className='community-text'>
                         <h1><b>Cộng đồng và kết nối</b></h1>
                         <p>InnoSpace không chỉ đơn thuần là một nền tảng đặt chỗ làm việc, mà còn là một cộng đồng sáng tạo, năng động và đầy cảm hứng. Với mục tiêu kết nối những cá nhân và doanh nghiệp có chung niềm đam mê phát triển, chúng tôi không chỉ cung cấp một không gian hiện đại với đầy đủ tiện nghi, mà còn tạo ra một môi trường thân thiện, nơi mọi người có thể dễ dàng giao lưu, chia sẻ kiến thức và kinh nghiệm.</p>
-                        <p>Chúng tôi hiểu rằng việc làm việc một mình đôi khi có thể hạn chế sự sáng tạo và hiệu quả, vì thế InnoSpace không chỉ là nơi để bạn đến làm việc, mà còn là nơi bạn có thể gặp gỡ những con người cùng chung chí hướng, cùng nhau phát triển và khám phá những cơ hội mới. Những thành viên của cộng đồng chúng tôi không chỉ là những người làm việc độc lập, mà còn là các startup, doanh nghiệp nhỏ và những nhóm dự án đang cố gắng biến ý tưởng của mình thành hiện thực.</p>
-                        <p>Bên cạnh việc cung cấp các dịch vụ đặt chỗ linh hoạt, chúng tôi còn tổ chức các sự kiện thường xuyên, từ hội thảo, hội nghị cho đến những buổi gặp gỡ không chính thức, nhằm tạo cơ hội cho các thành viên kết nối và học hỏi từ nhau. Đây là nơi mà sự sáng tạo không bị giới hạn bởi không gian hay thời gian, mà thay vào đó là một cộng đồng luôn sẵn lòng hỗ trợ lẫn nhau trong hành trình phát triển.</p>
+                        {/* <p>Chúng tôi hiểu rằng việc làm việc một mình đôi khi có thể hạn chế sự sáng tạo và hiệu quả, vì thế InnoSpace không chỉ là nơi để bạn đến làm việc, mà còn là nơi bạn có thể gặp gỡ những con người cùng chung chí hướng, cùng nhau phát triển và khám phá những cơ hội mới. Những thành viên của cộng đồng chúng tôi không chỉ là những người làm việc độc lập, mà còn là các startup, doanh nghiệp nhỏ và những nhóm dự án đang cố gắng biến ý tưởng của mình thành hiện thực.</p> */}
+                        {/* <p>Bên cạnh việc cung cấp các dịch vụ đặt chỗ linh hoạt, chúng tôi còn tổ chức các sự kiện thường xuyên, từ hội thảo, hội nghị cho đến những buổi gặp gỡ không chính thức, nhằm tạo cơ hội cho các thành viên kết nối và học hỏi từ nhau. Đây là nơi mà sự sáng tạo không bị giới hạn bởi không gian hay thời gian, mà thay vào đó là một cộng đồng luôn sẵn lòng hỗ trợ lẫn nhau trong hành trình phát triển.</p> */}
                         <p>Tại InnoSpace, chúng tôi tin rằng sự thành công của mỗi cá nhân và doanh nghiệp không chỉ phụ thuộc vào ý tưởng mà còn dựa vào sức mạnh của cộng đồng và sự hợp tác. Vì vậy, chúng tôi luôn cam kết mang đến một môi trường làm việc hiệu quả, nơi mà không chỉ công việc được thực hiện mà còn là nơi mà những giấc mơ lớn được nuôi dưỡng và phát triển cùng nhau.</p>
                     </div>
                     <img className='building-img' src={building} alt='location' />

@@ -25,7 +25,7 @@ export default function ContactContent() {
                     </Form.Group>
 
                     <Form.Group controlId='formEmail' className='form-group form-input'>
-                        <Form.Control className='input' type='text' placeholder='Email' />
+                        <Form.Control className='input' type='email' placeholder='Email' />
                     </Form.Group>
 
                     <Form.Group controlId='formPhoneNumber' className='form-group form-input'>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Row, Col, Spinner } from 'react-bootstrap';
 import './BookingPodDetailContent.css';
 
@@ -8,7 +8,7 @@ import { imagePODs } from '../assets/listPODs';
 import { imageSTOREs } from '../assets/listSTOREs';
 import { imageUTILITIes } from '../assets/listUTILITIes';
 
-import QRcode from '../BackgroundImage/QRcode.jpg'
+// import QRcode from '../BackgroundImage/QRcode.jpg'
 
 export default function BookingPodDetailContent() {
 
@@ -78,8 +78,11 @@ export default function BookingPodDetailContent() {
     // Lấy những Utility của Pod đó
     const AvailableUTILITIes = UTILITIes ? UTILITIes.filter(utility => utility.pods && utility.pods.some(pod => pod.id === Pod.id)) : [];
 
+    // Lấy những Slot có status là Đang hoạt động
+    const filteredSLOTs = SLOTs ? SLOTs.filter(slot => slot.status === 'Đang hoạt động') : [];
+
     // Lấy những Slot của Pod đó
-    const AvailableSLOTs = SLOTs ? SLOTs.filter(slot => slot.podId === Pod?.id) : [];
+    const AvailableSLOTs = filteredSLOTs ? filteredSLOTs.filter(slot => slot.podId === Pod?.id) : [];
 
     // Lấy Type của Pod đó
     const thisTYPE = TYPEs ? TYPEs.find(type => type.id === Pod?.typeId) : null;
@@ -90,6 +93,7 @@ export default function BookingPodDetailContent() {
 
     const currentDate = new Date();
     const [MaxID, setMaxID] = useState(null);
+    const [MaxPaymentID, setMaxPaymentID] = useState(null);
     const [date, setDate] = useState(new Date(currentDate.getTime()).toISOString().substring(0, 10));
     const [SlotId, setSlotId] = useState('');
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Thanh toán qua VNPay');
@@ -99,21 +103,20 @@ export default function BookingPodDetailContent() {
 
     // Những Slot được chọn từ AvailableSLOTs
     const selectedSlots = AvailableSLOTs ? AvailableSLOTs.filter(slot => SlotId.includes(slot.id)) : [];
-    console.log('selectedSlots: ', selectedSlots)
 
     // Những Booking có cùng Date được chọn
     const bookingsHaveTheSameDate = BOOKINGs ? BOOKINGs.filter(booking =>
         booking.date.substring(0, 10) === date
     ).map(booking => booking.id) : [];
-    console.log('bookingsHaveTheSameDate: ', bookingsHaveTheSameDate)
 
     // Những Booking có cùng Date và cùng Slot được chọn
-    const aaaaaaa = selectedSlots ? selectedSlots.filter(slot => (slot.bookings).some(booking => bookingsHaveTheSameDate.includes(booking.id))) : [];
+    const getBookingsHaveTheSameDateAndSlot = selectedSlots ? selectedSlots.filter(slot => (slot.bookings).some(booking => bookingsHaveTheSameDate.includes(booking.id))) : [];
 
     useEffect(() => {
-        setBookingsHaveTheSameDateAndSlot(aaaaaaa)
-        console.log('SameDateSlot: ', aaaaaaa)
-        console.log('SameDateSlot: ', aaaaaaa.length)
+        setBookingsHaveTheSameDateAndSlot(getBookingsHaveTheSameDateAndSlot)
+        console.log('selectedSlots: ', selectedSlots)
+        console.log('SameDate: ', bookingsHaveTheSameDate)
+        console.log('SameDateSlot: ', getBookingsHaveTheSameDateAndSlot)
     }, [SlotId]);
 
 
@@ -150,7 +153,7 @@ export default function BookingPodDetailContent() {
         console.log('Booking data:', bookingData);
 
         const paymentData = {
-            id: MaxID + 10,
+            id: MaxPaymentID + 1,
             method: selectedPaymentMethod,
             amount: Amount,
             date: date,
@@ -160,11 +163,11 @@ export default function BookingPodDetailContent() {
         console.log('Payment data:', paymentData);
 
         const paymentMethodData = {
-            orderId: MaxID + 10,
+            orderId: MaxPaymentID + 1,
             fullname: 'NGUYEN VAN A',
             description: 'Thanh toán qua VNPay',
             amount: Amount,
-            createdDate: date,
+            createdDate: new Date().toISOString().substring(0, 10),
         };
         console.log('PaymentMethod data:', paymentMethodData);
 
@@ -219,8 +222,8 @@ export default function BookingPodDetailContent() {
 
             if (!response.ok) throw new Error('Network response was not ok');
             const result = await response.json();
-            window.location.href = result.paymentUrl;
             console.log('Creating PaymentMethod successful:', result);
+            window.location.href = result.paymentUrl;
         } catch (error) {
             console.error('Error during booking:', error);
         }
@@ -240,7 +243,7 @@ export default function BookingPodDetailContent() {
         e.preventDefault();
         setIsPopupOpen(true);
 
-        const fetchMaxBookingId = async () => {
+        const fetchMaxID = async () => {
             try {
                 const bookingResponse = await fetch('https://localhost:7166/api/Booking');
                 if (!bookingResponse.ok) throw new Error('Network response was not ok');
@@ -248,11 +251,19 @@ export default function BookingPodDetailContent() {
                 const MaxID = bookingData.reduce((max, booking) => Math.max(max, booking.id), 0);
                 setMaxID(MaxID);
                 console.log('Max Booking ID:', MaxID);
+
+                const paymentResponse = await fetch('https://localhost:7166/api/Payment');
+                if (!paymentResponse.ok) throw new Error('Network response was not ok');
+                const paymentData = await paymentResponse.json();
+                const MaxPaymentID = paymentData.reduce((max, payment) => Math.max(max, payment.id), 0);
+                setMaxPaymentID(MaxPaymentID);
+                console.log('Max Payment ID:', MaxPaymentID);
+
             } catch (error) {
-                console.error('Error fetching bookings:', error);
+                console.error('Error fetching bookings and payments:', error);
             }
         };
-        await fetchMaxBookingId();
+        await fetchMaxID();
         console.log({ date, SlotId, IsPopupOpen, Confirm, selectedPaymentMethod });
         window.location.href = '#popupConfirm';
     };
@@ -261,6 +272,14 @@ export default function BookingPodDetailContent() {
         setIsQROpen(true)
         setConfirm(true);
     };
+
+    const navigate = useNavigate();
+    if (Pod && Pod.status !== 'Đang hoạt động') {
+        navigate('/booking/pod')
+    }
+    if (thisSTORE && thisSTORE.status !== 'Đang hoạt động') {
+        navigate('/booking/store')
+    }
 
 
     if (loading) return (
@@ -288,21 +307,24 @@ export default function BookingPodDetailContent() {
                         <h1><b>{Pod.name}</b></h1>
                         <div className='image-detail'>
                             <div className='image-detail-pod'>
-                                <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
-                                {/* <img src={Pod.image} alt={Pod.name}></img> */}
+                                {/* <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img> */}
+                                <img src={Pod.image} alt={Pod.name}></img>
                             </div>
                             <div className='image-detail-2'>
                                 <div className='image-detail-2-item-store'>
-                                    <img src={imageSTOREs.find(image => image.id === Pod.storeId)?.image} alt={Pod.name}></img>
+                                    {/* <img src={imageSTOREs.find(image => image.id === Pod.storeId)?.image} alt={Pod.name}></img> */}
+                                    <img src={thisSTORE.image} alt={thisSTORE.name}></img>
                                 </div>
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(0, 3).map((utility) => (
                                     <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length / 4)), "--available-utilities-slice": AvailableUTILITIes.slice(0, 3).length }}>
-                                        <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img>
+                                        {/* <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img> */}
+                                        <img src={utility.image} alt={utility.name}></img>
                                     </div>
                                 ))}
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(3, 6).map((utility) => (
                                     <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length / 4)), "--available-utilities-slice": AvailableUTILITIes.slice(3, 6).length }}>
-                                        <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img>
+                                        {/* <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img> */}
+                                        <img src={utility.image} alt={utility.name}></img>
                                     </div>
                                 ))}
                                 {/* <div className='image-detail-2-item'>
@@ -348,8 +370,6 @@ export default function BookingPodDetailContent() {
                                     ))}
                                 </div>
 
-
-
                                 <h4><b>Mô tả về POD:</b></h4>
                                 <p>{Pod.description}</p>
                             </div>
@@ -393,12 +413,22 @@ export default function BookingPodDetailContent() {
                                                                         }
                                                                     });
                                                                 }}
+                                                                // style={{
+                                                                //     cursor: 'pointer',
+                                                                //     backgroundColor: slot.selected ? '#d3f9d8' : '#ffffff',
+                                                                //     // backgroundColor: bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '#fad7d9' : '#ffffff',
+                                                                //     padding: '5px',
+                                                                //     margin: '5px',
+                                                                //     border: slot.selected ? '1px solid #28a745' : '1px solid #cccccc',
+                                                                //     // border: bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '1px solid #ff0000' : '1px solid #cccccc',
+                                                                //     borderRadius: '5px'
+                                                                // }}
                                                                 style={{
                                                                     cursor: 'pointer',
-                                                                    backgroundColor: slot.selected ? '#d3f9d8' : '#fff',
+                                                                    backgroundColor: slot.selected ? (bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '#fad7d9' : '#d3f9d8') : '#ffffff',
                                                                     padding: '5px',
                                                                     margin: '5px',
-                                                                    border: slot.selected ? '1px solid #28a745' : '1px solid #ccc',
+                                                                    border: slot.selected ? (bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '1px solid #ff0000' : '1px solid #28a745') : '1px solid #cccccc',
                                                                     borderRadius: '5px'
                                                                 }}
                                                             >
@@ -443,9 +473,20 @@ export default function BookingPodDetailContent() {
 
                                         <h2><b>Tổng: {Amount.toLocaleString('vi-VN')}đ</b></h2>
 
-                                        {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length !== 0 && <p>Slot không khả dụng</p>}
-                                        {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length === 0 && SlotId.length > 0 && new Date(date) > new Date().setHours(0, 0, 0, 0) && <Button type='submit' className='btn'>CHỌN</Button>}
-
+                                        {id ?
+                                            (
+                                                <>
+                                                    {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length !== 0 && <p style={{ color: '#ff0000' }}>Slot không khả dụng</p>}
+                                                    {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length === 0 &&
+                                                        SlotId.length > 0 &&
+                                                        new Date(date) >= new Date().setHours(0, 0, 0, 0) &&
+                                                        new Date(date) <= new Date().setHours(0, 0, 0, 0) + 30 * 24 * 60 * 60 * 1000 &&
+                                                        <Button type='submit' className='btn'>CHỌN</Button>}
+                                                </>
+                                            )
+                                            :
+                                            <Link to='/signinsignup'><Button>VUI LÒNG ĐĂNG NHẬP</Button></Link>
+                                        }
                                     </Form>
                                 </Card>
                             </div>
@@ -459,7 +500,7 @@ export default function BookingPodDetailContent() {
                             <p>Một trong căn phòng nhà được yêu thích nhất trên InnoSpace dựa trên điểm xếp hạng, đánh giá và độ tin cậy</p>
                         </div>
 
-                        <div>
+                        {/* <div>
                             <h3>Đánh giá của khách hàng:</h3>
                             {BOOKINGs && BOOKINGs.filter(booking => booking.podId === Pod.id).map((booking, index) => (
                                 <div key={index} style={{
@@ -468,14 +509,15 @@ export default function BookingPodDetailContent() {
                                     padding: '10px',
                                     margin: '10px 0'
                                 }}>
-                                    <p><strong>Date:</strong> {booking.date}</p>
-                                    <p><strong>Date:</strong> {booking.date.substring(0, 10)}</p>
-                                    <p><strong>Date:</strong> {date}</p>
-                                    <p><strong>Status:</strong> {booking.status}</p>
-                                    <p><strong>Feedback:</strong> {booking.feedback || 'No feedback yet'}</p>
+                                    <div className='booking-pod-detail-item'>
+                                        <p><b>Tên người dùng:</b> {booking.id}</p>
+                                        <p><b>Ngày đặt phòng:</b> {booking.date.substring(0, 10)}</p>
+                                        <p><b>Trạng thái:</b> {booking.status}</p>
+                                        <p><b>Đánh giá:</b> {booking.feedback || 'Không có đánh giá'}</p>
+                                    </div>
                                 </div>
                             ))}
-                        </div>
+                        </div> */}
 
                     </>
                 ) : (
@@ -495,19 +537,17 @@ export default function BookingPodDetailContent() {
                 {IsPopupOpen && date && SlotId && (
                     <div id='popupConfirm' className='overlay'>
                         <div className='popup'>
-                            <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
+                            {/* <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img> */}
+                            <img src={Pod.image} alt={Pod.name}></img>
                             <div className='confirm-information'>
 
                                 <h1><b>{Pod.name}</b></h1>
-                                {/* <img src={Pod.image} alt={Pod.name}></img> */}
 
                                 {thisSTORE ? <h4><b>{thisSTORE.name}:</b> {thisSTORE.address}</h4> : 'Store not found'}
                                 {thisTYPE ? <h4><b>{thisTYPE.name}:</b> Sức chứa {thisTYPE.capacity} người</h4> : 'Type not found'}
 
                                 <h4><b>Ngày nhận phòng:</b> {date}</h4>
-
                                 <h4><b>Phương thức thanh toán:</b> {selectedPaymentMethod}</h4>
-
                                 <h4><b>Giờ nhận phòng: </b></h4>
                                 <Row className='row-slot'>
                                     {selectedSlots && selectedSlots.map(slot => (
