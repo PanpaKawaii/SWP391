@@ -4,9 +4,9 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Row, Col, Spinner } from 'react-bootstrap';
 import './BookingPodDetailContent.css';
 
-import { imagePODs } from '../assets/listPODs';
-import { imageSTOREs } from '../assets/listSTOREs';
-import { imageUTILITIes } from '../assets/listUTILITIes';
+import { imagePODs } from '../../assets/listPODs';
+import { imageSTOREs } from '../../assets/listSTOREs';
+import { imageUTILITIes } from '../../assets/listUTILITIes';
 
 // import QRcode from '../BackgroundImage/QRcode.jpg'
 
@@ -79,10 +79,10 @@ export default function BookingPodDetailContent() {
     const AvailableUTILITIes = UTILITIes ? UTILITIes.filter(utility => utility.pods && utility.pods.some(pod => pod.id === Pod.id)) : [];
 
     // Lấy những Slot có status là Đang hoạt động
-    const filteredSLOTs = SLOTs ? SLOTs.filter(slot => slot.status === 'Đang hoạt động') : [];
+    const activeSLOTs = SLOTs ? SLOTs.filter(slot => slot.status === 'Đang hoạt động') : [];
 
     // Lấy những Slot của Pod đó
-    const AvailableSLOTs = filteredSLOTs ? filteredSLOTs.filter(slot => slot.podId === Pod?.id) : [];
+    const AvailableSLOTs = activeSLOTs ? activeSLOTs.filter(slot => slot.podId === Pod?.id) : [];
 
     // Lấy Type của Pod đó
     const thisTYPE = TYPEs ? TYPEs.find(type => type.id === Pod?.typeId) : null;
@@ -92,7 +92,7 @@ export default function BookingPodDetailContent() {
 
 
     const currentDate = new Date();
-    const [MaxID, setMaxID] = useState(null);
+    const [MaxBookingID, setMaxBookingID] = useState(null);
     const [MaxPaymentID, setMaxPaymentID] = useState(null);
     const [date, setDate] = useState(new Date(currentDate.getTime()).toISOString().substring(0, 10));
     const [SlotId, setSlotId] = useState('');
@@ -112,6 +112,13 @@ export default function BookingPodDetailContent() {
     // Những Booking có cùng Date và cùng Slot được chọn
     const getBookingsHaveTheSameDateAndSlot = selectedSlots ? selectedSlots.filter(slot => (slot.bookings).some(booking => bookingsHaveTheSameDate.includes(booking.id))) : [];
 
+    // Lấy đánh giá của POD dựa trên đánh giá của các Booking
+    const getPodBookingRating = (podId) => {
+        const booking = BOOKINGs ? BOOKINGs.filter(booking => booking.podId === podId && booking.rating !== null && booking.rating > 0) : [];
+        const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
+        return rating / booking.length;
+    };
+
     useEffect(() => {
         setBookingsHaveTheSameDateAndSlot(getBookingsHaveTheSameDateAndSlot)
         console.log('selectedSlots: ', selectedSlots)
@@ -122,9 +129,9 @@ export default function BookingPodDetailContent() {
 
 
 
-    // Tạo Booking và Payment ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Tạo Booking và Payment và PaymentMethod////////////////////////////////////////////////////////////////////////////////////////////////////
     const Booking = async () => {
-        if (!MaxID) {
+        if (!MaxBookingID) {
             console.error('Please wait for the system');
             return;
         }
@@ -142,7 +149,7 @@ export default function BookingPodDetailContent() {
         }
 
         const bookingData = {
-            id: MaxID + 1,
+            id: MaxBookingID + 1,
             date: date,
             currentDate: new Date(),
             status: 'Chờ xác nhận',
@@ -160,7 +167,7 @@ export default function BookingPodDetailContent() {
             amount: Amount,
             date: date,
             status: 'Chưa thanh toán',
-            bookingId: MaxID + 1,
+            bookingId: MaxBookingID + 1,
         };
         console.log('Payment data:', paymentData);
 
@@ -250,9 +257,9 @@ export default function BookingPodDetailContent() {
                 const bookingResponse = await fetch('https://localhost:7166/api/Booking');
                 if (!bookingResponse.ok) throw new Error('Network response was not ok');
                 const bookingData = await bookingResponse.json();
-                const MaxID = bookingData.reduce((max, booking) => Math.max(max, booking.id), 0);
-                setMaxID(MaxID);
-                console.log('Max Booking ID:', MaxID);
+                const MaxBookingID = bookingData.reduce((max, booking) => Math.max(max, booking.id), 0);
+                setMaxBookingID(MaxBookingID);
+                console.log('Max Booking ID:', MaxBookingID);
 
                 const paymentResponse = await fetch('https://localhost:7166/api/Payment');
                 if (!paymentResponse.ok) throw new Error('Network response was not ok');
@@ -343,16 +350,30 @@ export default function BookingPodDetailContent() {
 
                                 <div className='favorite'>
                                     <div className='favorite-title'>
-                                        <h3><b><i className='fa-solid fa-heart'></i> Yêu thích <i className='fa-solid fa-heart'></i></b></h3>
+                                        <h3><b><i className='fa-regular fa-heart'></i> Yêu thích <i className='fa-regular fa-heart'></i></b></h3>
                                     </div>
                                     <div className='favorite-text'>
-                                        <p><b>Khách đánh giá đây là một trong những căn phòng được yêu thích nhất trên InnoSpace</b></p>
+                                        {getPodBookingRating(Pod.id) ?
+                                            <p><b>Khách đánh giá đây là một trong những căn phòng được yêu thích nhất trên InnoSpace</b></p>
+                                            :
+                                            <p><b>Đây là một trong những căn phòng tâm đắc nhất của InnoSpace</b></p>
+                                        }
                                     </div>
                                     <div className='favorite-rating'>
-                                        <h3>{Pod.rating}</h3>
-                                        {Array.from({ length: Pod.rating }, (_, index) => (
+                                        {getPodBookingRating(Pod.id) ?
+                                            <span style={{ color: 'gold', fontSize: '2em' }}><b>{getPodBookingRating(Pod.id)}</b><i className='fa-solid fa-star'></i></span>
+                                            :
+                                            <>
+                                                {[...Array(Pod.rating)].map((_, i) => (
+                                                    <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
+                                                ))}
+                                                <br />
+                                                <span>(ĐƯỢC ĐỀ XUẤT)</span>
+                                            </>
+                                        }
+                                        {/* {Array.from({ length: Pod.rating }, (_, index) => (
                                             <span key={index} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
-                                        ))}
+                                        ))} */}
                                     </div>
                                     <p></p>
                                 </div>
@@ -498,9 +519,20 @@ export default function BookingPodDetailContent() {
                         <hr />
 
                         <div className='big-rating'>
-                            <h1><b>{Pod.rating}<span style={{ color: 'gold' }}><i className='fa-solid fa-star'></i></span></b></h1>
-                            <h4>Được khách hàng yêu thích</h4>
-                            <p>Một trong căn phòng nhà được yêu thích nhất trên InnoSpace dựa trên điểm xếp hạng, đánh giá và độ tin cậy</p>
+
+                            {getPodBookingRating(Pod.id) ?
+                                <>
+                                    <h1><b>{getPodBookingRating(Pod.id)}<span style={{ color: 'gold', fontSize: '150px' }}><i className='fa-solid fa-star'></i></span></b></h1>
+                                    <h4>Được khách hàng yêu thích</h4>
+                                    <p>Một trong căn phòng được yêu thích nhất trên InnoSpace dựa trên điểm xếp hạng, đánh giá và độ tin cậy</p>
+                                </>
+                                :
+                                <>
+                                    <h1><b>{Pod.rating}<span style={{ color: 'gold', fontSize: '150px' }}><i className='fa-solid fa-star'></i></span></b></h1>
+                                    <h4>Được đề xuất bởi InnoSpace</h4>
+                                    <p>Một trong căn phòng được đề xuất bởi InnoSpace dựa trên điểm xếp hạng, đánh giá và độ tin cậy</p>
+                                </>
+                            }
                         </div>
 
                         {/* <div>

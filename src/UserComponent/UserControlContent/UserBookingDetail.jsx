@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Row, Col, Form, Button, Spinner } from 'react-bootstrap';
 import './UserBookingDetail.css';
 
-import { imagePODs } from '../assets/listPODs';
+import { imagePODs } from '../../assets/listPODs';
 
 export default function UserBookingDetail() {
 
@@ -93,6 +93,13 @@ export default function UserBookingDetail() {
     const filteredBOOKINGORDERs = BOOKINGORDERs ? BOOKINGORDERs.filter(bookingOrder => bookingOrder.bookingId == BookingId.Id) : null;
     // Lấy Pod của Booking này
     const thisPOD = PODs ? PODs.find(pod => pod.id == thisBOOKING.podId) : null;
+
+    // Lấy đánh giá của POD dựa trên đánh giá của các Booking
+    const getPodBookingRating = (podId) => {
+        const booking = BOOKINGs ? BOOKINGs.filter(booking => booking.podId === podId && booking.rating !== null && booking.rating > 0) : [];
+        const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
+        return rating / booking.length;
+    };
 
     const getBookingOrderAmount = (bookingOrderId) => {
         const bookingOrder = filteredBOOKINGORDERs ? filteredBOOKINGORDERs.find(bookingOrder => bookingOrder.id === bookingOrderId) : null;
@@ -292,9 +299,19 @@ export default function UserBookingDetail() {
 
                                     <div className='card-rating-capacity'>
                                         <div className='rating'>
-                                            {[...Array(getPodRating(thisBOOKING.podId))].map((_, i) => (
-                                                <span key={i} style={{ color: 'gold', fontSize: '1.1em' }}><i className='fa-solid fa-star'></i></span>
-                                            ))}
+                                            {getPodBookingRating(thisBOOKING.podId) ?
+                                                <span style={{ color: 'gold', fontSize: '1.3em' }}><b>Đánh giá: {getPodBookingRating(thisBOOKING.podId)}</b><i className='fa-solid fa-star'></i></span>
+                                                :
+                                                <>
+                                                    {[...Array(getPodRating(booking.podId))].map((_, i) => (
+                                                        <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
+                                                    ))}
+                                                    <span>(ĐƯỢC ĐỀ XUẤT)</span>
+                                                </>
+                                            }
+                                            {/* {[...Array(getPodRating(thisBOOKING.podId))].map((_, i) => (
+                                                <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
+                                            ))} */}
                                         </div>
 
                                         {/* <div className='capacity'>
@@ -407,44 +424,46 @@ export default function UserBookingDetail() {
                         <h4><b>Đã thanh toán: <span className='success-amount'>{getSumSuccessBookingAmount(thisBOOKING.id).toLocaleString('vi-VN')}đ</span></b></h4>
                     </div>
                     <div className='button-footer'>
+                        {thisBOOKING.status === 'Đã xác nhận' ? (
+                            <div>
+                                <h3>Đánh giá của bạn:</h3>
+                                <Form className='rating-form' onSubmit={handleSubmitFeedback}>
 
-                        <div>
-                            <h3>Đánh giá của bạn:</h3>
-                            <Form className='rating-form' onSubmit={handleSubmitFeedback}>
+                                    <div>
+                                        <Form.Group controlId='formRating' className='form-group'>
+                                            {[...Array(5)].map((_, i) => (
+                                                <span key={i}
+                                                    style={{
+                                                        color: (rating >= i + 1) ? 'gold' : '#cccccc',
+                                                        fontSize: '1.1em',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                    onClick={() => setRating(i + 1)}
+                                                // onMouseEnter={() => setRating(i + 1)}
+                                                // onMouseLeave={() => setRating(0)}
+                                                >
+                                                    <i className='fa-solid fa-star'></i>
+                                                </span>
+                                            ))}
+                                        </Form.Group>
 
-                                <div>
-                                    <Form.Group controlId='formRating' className='form-group'>
-                                        {[...Array(5)].map((_, i) => (
-                                            <span key={i}
-                                                style={{
-                                                    color: (rating >= i + 1) ? 'gold' : '#cccccc',
-                                                    fontSize: '1.1em',
-                                                    cursor: 'pointer'
-                                                }}
-                                                onClick={() => setRating(i + 1)}
-                                            // onMouseEnter={() => setRating(i + 1)}
-                                            // onMouseLeave={() => setRating(0)}
-                                            >
-                                                <i className='fa-solid fa-star'></i>
-                                            </span>
-                                        ))}
-                                    </Form.Group>
+                                        <Form.Group controlId='formFeedback' className='form-group'>
+                                            <Form.Control type='text' placeholder='Nhập phản hồi của bạn' value={feedback} onChange={(e) => setFeedback(e.target.value)} />
+                                        </Form.Group>
+                                    </div>
 
-                                    <Form.Group controlId='formFeedback' className='form-group'>
-                                        <Form.Control type='text' placeholder='Nhập phản hồi của bạn' value={feedback} onChange={(e) => setFeedback(e.target.value)} />
-                                    </Form.Group>
-                                </div>
+                                    {thisBOOKING.feedback ?
+                                        <Button type='submit' className='btn btn-feedback'>THAY ĐỔI</Button>
+                                        :
+                                        <Button type='submit' className='btn btn-feedback'>GỬI</Button>
+                                    }
 
-                                {thisBOOKING.feedback ?
-                                    <Button type='submit' className='btn btn-feedback'>THAY ĐỔI</Button>
-                                    :
-                                    <Button type='submit' className='btn btn-feedback'>GỬI</Button>
-                                }
-
-                            </Form>
+                                </Form>
+                            </div>
+                        ) : <div></div>}
+                        <div className='rebook-button-container'>
+                            <Link to={`/booking/pod/${thisPOD.id}`} className='link-item'><Button className='rebook-button'>ĐẶT LẠI</Button></Link>
                         </div>
-
-                        <Link to={`/booking/pod/${thisPOD.id}`} className='link-item'><Button className='rebook-button'>ĐẶT LẠI</Button></Link>
                     </div>
                 </div>
             </div>

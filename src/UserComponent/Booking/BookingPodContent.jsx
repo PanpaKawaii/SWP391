@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { Form, Button, Row, Col, Card, Spinner } from 'react-bootstrap';
 import './BookingPodContent.css';
-import ScrollToTop from '../ScrollToTopComponent/ScrollToTop';
-import { imagePODs } from '../assets/listPODs';
+
+import { imagePODs } from '../../assets/listPODs';
 
 export default function BookingPodContent() {
 
@@ -25,6 +25,7 @@ export default function BookingPodContent() {
     const [TYPEs, setTYPEs] = useState(null);
     const [UTILITIes, setUTILITIes] = useState(null);
     const [SLOTs, setSLOTs] = useState(null);
+    const [BOOKINGs, setBOOKINGs] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -56,6 +57,11 @@ export default function BookingPodContent() {
                 const slotData = await slotResponse.json();
                 setSLOTs(slotData);
 
+                const bookingResponse = await fetch('https://localhost:7166/api/Booking');
+                if (!bookingResponse.ok) throw new Error('Network response was not ok');
+                const bookingData = await bookingResponse.json();
+                setBOOKINGs(bookingData);
+
                 setLoading(false);
             } catch (error) {
                 setError(error);
@@ -68,10 +74,8 @@ export default function BookingPodContent() {
 
     // Những lựa chọn trên thanh tìm kiếm
     const [selectedStore, setSelectedStore] = useState('');
-    const [selectedPod, setSelectedPod] = useState('');
     const [selectedType, setSelectedType] = useState('');
     const [selectedUtility, setSelectedUtility] = useState('');
-    const [podName, setPodName] = useState('');
 
     // Lấy Utility được chọn
     const filteredUtilities = UTILITIes ? UTILITIes.filter(utility =>
@@ -85,31 +89,47 @@ export default function BookingPodContent() {
     const filteredPods = Pods ? Pods.filter(pod => pod.status === 'Đang hoạt động') : [];
 
     // Create a new array uniquePodName with unique pod names
-    const [uniquePodName, setUniquePodName] = useState([]);
+    // const [uniquePodName, setUniquePodName] = useState([]);
 
-    useEffect(() => {
-        if (PODs) {
-            const uniquePods = PODs.reduce((acc, current) => {
-                const x = acc.find(item => item.name === current.name);
-                if (!x) {
-                    return acc.concat([current]);
-                } else {
-                    return acc;
-                }
-            }, []);
-            setUniquePodName(uniquePods);
-        }
-    }, [PODs]);
+    // useEffect(() => {
+    //     if (PODs) {
+    //         const uniquePods = PODs.reduce((acc, current) => {
+    //             const x = acc.find(item => item.name === current.name);
+    //             if (!x) {
+    //                 return acc.concat([current]);
+    //             } else {
+    //                 return acc;
+    //             }
+    //         }, []);
+    //         setUniquePodName(uniquePods);
+    //     }
+    // }, [PODs]);
 
     //Lấy Pods trùng khớp với những lựa chọn trên thanh tìm kiếm
     const filteredResults = filteredPods ? filteredPods.filter(pod =>
         (pod.storeId == StoreId.Id || !StoreId.Id) &&
         (pod.storeId == selectedStore || !selectedStore) &&
-        (pod.name === selectedPod || !selectedPod) &&
         (pod.typeId.toString() === selectedType.toString() || !selectedType.toString()) &&
-        pod.name.toLowerCase().includes(podName.toLowerCase()) &&
         STOREs.filter(store => store.status === 'Đang hoạt động').some(store => store.id === pod.storeId)
     ) : [];
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log({ selectedStore, selectedType, selectedUtility });
+    };
+
+    const handleReset = () => {
+        setSelectedStore('');
+        setSelectedType('');
+        setSelectedUtility('');
+    };
+
+    // Lấy đánh giá của POD dựa trên đánh giá của các Booking
+    const getPodBookingRating = (podId) => {
+        const booking = BOOKINGs ? BOOKINGs.filter(booking => booking.podId === podId && booking.rating !== null && booking.rating > 0) : [];
+        const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
+        return rating / booking.length;
+    };
 
     const getCapacity = (typeId) => {
         const type = TYPEs ? TYPEs.find(type => type.id === typeId) : null;
@@ -146,19 +166,6 @@ export default function BookingPodContent() {
         return store ? store.address : null;
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log({ selectedStore, selectedPod, selectedType, selectedUtility, podName });
-    };
-
-    const handleReset = () => {
-        setSelectedStore('');
-        setSelectedPod('');
-        setSelectedType('');
-        setSelectedUtility('');
-        setPodName('');
-    };
-
 
     if (loading) return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -177,7 +184,7 @@ export default function BookingPodContent() {
                 <Form className='search' onSubmit={handleSubmit}>
 
                     {StoreId.Id ?
-                        (<div className='search-title'><h1>POD có sẵn</h1></div>) : (
+                        (<div className='search-title'><h1><b>POD có sẵn:</b></h1></div>) : (
                             <Form.Group controlId='formStore' className='form-group'>
                                 <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
                                     <option value=''>[Cửa hàng]</option>
@@ -188,15 +195,6 @@ export default function BookingPodContent() {
                             </Form.Group>
                         )
                     }
-
-                    <Form.Group controlId='formPod' className='form-group'>
-                        <Form.Control as='select' value={selectedPod} onChange={(e) => setSelectedPod(e.target.value)}>
-                            <option value=''>[Tên POD]</option>
-                            {uniquePodName && uniquePodName.map(pod => (
-                                <option key={pod.id} value={pod.name}>{pod.name}</option>
-                            ))}
-                        </Form.Control>
-                    </Form.Group>
 
                     <Form.Group controlId='formType' className='form-group'>
                         <Form.Control as='select' value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
@@ -214,10 +212,6 @@ export default function BookingPodContent() {
                                 <option key={utility.id} value={utility.id}>{utility.name}</option>
                             ))}
                         </Form.Control>
-                    </Form.Group>
-
-                    <Form.Group controlId='formName' className='form-group form-input'>
-                        <Form.Control className='input' type='text' placeholder='Tên POD' value={podName} onChange={(e) => setPodName(e.target.value)} />
                     </Form.Group>
 
                     <Button type='reset' className='btn' onClick={handleReset}>ĐẶT LẠI BỘ LỌC</Button>
@@ -250,11 +244,19 @@ export default function BookingPodContent() {
                                         <img src={pod.image} alt={pod.name} />
                                     </td>
                                     <td>
-                                        {/* <p>ID: {pod.id}</p> */}
+                                        <p>ID: {pod.id}</p>
                                         <h3><b>{pod.name}</b></h3>
-                                        {[...Array(pod.rating)].map((_, i) => (
-                                            <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
-                                        ))}
+                                        {getPodBookingRating(pod.id) ?
+                                            <span style={{ color: 'gold', fontSize: '1.3em' }}><b>Đánh giá: {getPodBookingRating(pod.id)}</b><i className='fa-solid fa-star'></i></span>
+                                            :
+                                            <>
+                                                {[...Array(pod.rating)].map((_, i) => (
+                                                    <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
+                                                ))}
+                                                <span>(ĐƯỢC ĐỀ XUẤT)</span>
+                                                {/* <span style={{ color: 'gold', fontSize: '1.3em' }}><b>0</b><i className='fa-solid fa-star'></i></span> */}
+                                            </>
+                                        }
                                         <p>{getSlotPrice(pod.id).toLocaleString('vi-VN')}đ/slot</p>
                                     </td>
                                     <td>

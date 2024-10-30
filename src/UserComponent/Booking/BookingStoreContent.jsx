@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Card, Form, Button, Spinner } from 'react-bootstrap';
 import './BookingStoreContent.css';
 
-import { imageSTOREs } from '../assets/listSTOREs';
+import { imageSTOREs } from '../../assets/listSTOREs';
 
 export default function BookingStoreContent() {
 
     const [STOREs, setSTOREs] = useState(null);
+    const [PODs, setPODs] = useState(null);
+    const [BOOKINGs, setBOOKINGs] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -19,6 +21,16 @@ export default function BookingStoreContent() {
                 if (!storeResponse.ok) throw new Error('Network response was not ok');
                 const storeData = await storeResponse.json();
                 setSTOREs(storeData);
+
+                const podResponse = await fetch('https://localhost:7166/api/Pod');
+                if (!podResponse.ok) throw new Error('Network response was not ok');
+                const podData = await podResponse.json();
+                setPODs(podData);
+
+                const bookingResponse = await fetch('https://localhost:7166/api/Booking');
+                if (!bookingResponse.ok) throw new Error('Network response was not ok');
+                const bookingData = await bookingResponse.json();
+                setBOOKINGs(bookingData);
 
                 setLoading(false);
             } catch (error) {
@@ -46,6 +58,15 @@ export default function BookingStoreContent() {
     const handleReset = () => {
         setSelectedStore('');
         setStoreName('');
+    };
+
+    // Lấy đánh giá của STORE dựa trên đánh giá của các Booking
+    const getStoreBookingRating = (storeId) => {
+        const podsOfStore = PODs ? PODs.filter(pod => pod.storeId == storeId) : [];
+        const bookingsOfPods = podsOfStore.length > 0 ? BOOKINGs.filter(booking => podsOfStore.some(pod => pod.id == booking.podId)) : [];
+        const filteredBooking = bookingsOfPods ? bookingsOfPods.filter(booking => booking.rating !== null && booking.rating > 0) : [];
+        const rating = filteredBooking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
+        return rating / filteredBooking.length;
     };
 
 
@@ -103,6 +124,7 @@ export default function BookingStoreContent() {
                                         <div className='full-detail'>
                                             <div className='short-detail'>
                                                 {/* <p>Đa dạng loại hình: POD phòng đơn, POD phòng đôi, POD phòng tập thể</p> */}
+                                                <span style={{ color: 'gold', fontSize: '1.3em' }}><b>Đánh giá: {getStoreBookingRating(store.id)}</b><i className='fa-solid fa-star'></i></span>
                                                 <p>Địa chỉ: {store.address}</p>
                                                 <p>Liên hệ: {store.contact}</p>
                                             </div>

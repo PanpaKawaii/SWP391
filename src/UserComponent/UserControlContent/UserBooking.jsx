@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Form, Button, Spinner } from 'react-bootstrap';
 import './UserBooking.css';
 
-import { imagePODs } from '../assets/listPODs';
+import { imagePODs } from '../../assets/listPODs';
 
 export default function UserBooking() {
 
@@ -77,14 +77,17 @@ export default function UserBooking() {
     const [filteredBOOKINGs, setFilteredBOOKINGs] = useState([]);
     const getFilteredBOOKINGs = id && BOOKINGs ? BOOKINGs.filter(booking => booking.userId == id)
         .sort((a, b) => b.id - a.id) : [];
+
     useEffect(() => {
         setFilteredBOOKINGs(getFilteredBOOKINGs);
     }, [BOOKINGs]);
 
-    const sortBOOKINGsDate = () => {
-        const sortedBOOKINGs = filteredBOOKINGs.sort((a, b) => new Date(b.date) - new Date(a.date));
-        setFilteredBOOKINGs(sortedBOOKINGs);
-    }
+    // Lấy đánh giá của POD dựa trên đánh giá của các Booking
+    const getPodBookingRating = (podId) => {
+        const booking = BOOKINGs ? BOOKINGs.filter(booking => booking.podId === podId && booking.rating !== null && booking.rating > 0) : [];
+        const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
+        return rating / booking.length;
+    };
 
     const getPodName = (podId) => {
         const pod = PODs ? PODs.find(pod => pod.id === podId) : null;
@@ -136,7 +139,6 @@ export default function UserBooking() {
         e.preventDefault();
         console.log('Ngày bắt đầu:', e.target.startDate.value);
         console.log('Ngày kết thúc:', e.target.endDate.value);
-        console.log(getFilteredBOOKINGs && getFilteredBOOKINGs[0].currentDate)
 
         if (!e.target.startDate.value && !e.target.endDate.value) {
             const dateBOOKINGs = BOOKINGs.filter(booking => booking.userId == id)
@@ -183,8 +185,8 @@ export default function UserBooking() {
                         <Form.Label>Ngày kết thúc</Form.Label>
                         <Form.Control type='date' name='endDate' />
                     </Form.Group>
-                    <Button type='submit' className='btn'><i className='fa-solid fa-magnifying-glass'></i></Button>
-                    <Button type='reset' className='btn btn-reset'>XÓA</Button>
+                    <Button type='submit' className='btn'>TÌM KIẾM <i className='fa-solid fa-magnifying-glass'></i></Button>
+                    <Button type='reset' className='btn btn-reset'>ĐẶT LẠI BỘ LỌC</Button>
                 </Form>
             </div>
             <Row className='booking-row'>
@@ -231,9 +233,19 @@ export default function UserBooking() {
                                                 <h1><b>{getPodName(booking.podId)}</b></h1>
 
                                                 <div className='card-rating'>
-                                                    {[...Array(getPodRating(booking.podId))].map((_, i) => (
-                                                        <span key={i} style={{ color: 'gold', fontSize: '1.1em' }}><i className='fa-solid fa-star'></i></span>
-                                                    ))}
+                                                    {getPodBookingRating(booking.podId) ?
+                                                        <span style={{ color: 'gold', fontSize: '1.3em' }}><b>Đánh giá: {getPodBookingRating(booking.podId)}</b><i className='fa-solid fa-star'></i></span>
+                                                        :
+                                                        <>
+                                                            {[...Array(getPodRating(booking.podId))].map((_, i) => (
+                                                                <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
+                                                            ))}
+                                                            <span>(ĐƯỢC ĐỀ XUẤT)</span>
+                                                        </>
+                                                    }
+                                                    {/* {[...Array(getPodRating(booking.podId))].map((_, i) => (
+                                                        <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
+                                                    ))} */}
                                                 </div>
                                                 <p>Loại: {getTypeName(booking.podId)}</p>
                                                 <p>Địa chỉ: {getStoreName(booking.podId)}, {getStoreAddress(booking.podId)}</p>

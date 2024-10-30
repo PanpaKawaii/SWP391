@@ -67,10 +67,10 @@ body {
                         }
                     }
 
-                    .forget-link {
-                        display: block;
-                        text-align: right;
+                    a.forget-link {
                         color: #ffc107;
+                        display: flex;
+                        justify-content: end;
                         text-decoration: none;
                     }
 
@@ -83,7 +83,7 @@ body {
             .movingImage {
                 width: 50%;
                 height: 100%;
-                background: url('../BackgroundImage/24.jpg') center;
+                background: url('../../BackgroundImage/24.jpg') center;
                 position: absolute;
                 right: 0;
                 transition: all 0.5s ease;

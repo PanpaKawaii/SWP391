@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Form, InputGroup, Button, Spinner, Card } from 'react-bootstrap';
 import './PaymentStatus.css';
 
-import InnoSpace from '../BackgroundImage/InnoSpace.png';
+import InnoSpace from '../../BackgroundImage/InnoSpace.png';
 
 export default function UserInformation() {
 

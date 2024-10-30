@@ -1,25 +1,25 @@
 .user-container {
   display: flex;
   min-height: 100vh;
+
+  .user-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .user-content-body {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .user-content-body::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
-.user-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-.user-content-body {
-  flex: 1;
-  overflow-y: auto;
-}
-
-.user-content-body::-webkit-scrollbar {
-  display: none;
-}
-
-.add-link {
+/* .add-link {
   width: 100%;
   background-color: #f4e4e4;
   color: #000000;
@@ -39,7 +39,7 @@
   padding: 10px 20px;
   border-radius: 5px;
   border: none;
-}
+} */
 
 /* Thêm thanh cuộn cho component có class 'user-content-body' */
 .user-content-body {

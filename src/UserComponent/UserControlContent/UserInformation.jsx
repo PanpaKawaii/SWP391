@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Form, InputGroup, Button, Spinner } from 'react-bootstrap';
 import './UserInformation.css';
 
-import InnoSpace from '../BackgroundImage/InnoSpace.png';
+import InnoSpace from '../../BackgroundImage/InnoSpace.png';
 
 export default function UserInformation() {
 

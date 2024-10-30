@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import './AboutContent.css'
 
-import adminhome from '../BackgroundImage/adminhome.jpg'
-import location from '../BackgroundImage/location.jpg'
-import building from '../BackgroundImage/building.jpg'
-import videoSrc from '../BackgroundImage/VIDEO.mp4';
+import adminhome from '../../BackgroundImage/adminhome.jpg'
+import location from '../../BackgroundImage/location.jpg'
+import building from '../../BackgroundImage/building.jpg'
+import videoSrc from '../../BackgroundImage/VIDEO.mp4';
 
 export default function AboutContent() {
     return (

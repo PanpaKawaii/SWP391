@@ -28,7 +28,7 @@ body {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: url('../BackgroundImage/home3.jpg') center no-repeat;
+        background: url('../../BackgroundImage/home3.jpg') center no-repeat;
         background-size: cover;
 
         .booking-now-text {
@@ -67,6 +67,10 @@ body {
     .shortcut-booking-store {
         margin: 40px 0;
 
+        p {
+            margin: 0;
+        }
+
         h1 {
             text-align: center;
         }
@@ -101,6 +105,17 @@ body {
                         object-fit: cover;
                         object-position: center;
                         display: block;
+                    }
+
+                    .card-name-rating {
+                        margin: 0 0 10px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        h3 {
+                            margin: 0;
+                        }
                     }
 
                     .card-info {

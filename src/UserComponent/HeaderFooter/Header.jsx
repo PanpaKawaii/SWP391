@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { CDBInput } from 'cdbreact';
 import './Header.css';
 
-import InnoSpace from '../BackgroundImage/InnoSpace.png';
+import InnoSpace from '../../BackgroundImage/InnoSpace.png';
+
 export default function Header() {
 
     const [id, setId] = useState(null);
@@ -71,34 +71,35 @@ export default function Header() {
 
     return (
         <div className='user-header-container'>
-            <div className='search-bar'>
+            {/* <div className='search-bar'>
                 <CDBInput type='text' placeholder='Tìm kiếm...' style={{ width: '100%', maxWidth: '300px' }} />
-            </div>
+            </div> */}
+
             {/* {isNaN(id) ?
                 (<Link to='/signinsignup'><i className='fas fa-sign-in-alt'></i> Đăng nhập</Link>)
                 :
                 ( */}
-                    <>
-                        <div className='d-flex dropdown' onClick={toggleDropdown} ref={dropdownRef}>
-                            <button className='user-avatar'>
-                                <img src={USER ? USER.image : InnoSpace} alt={USER ? USER.name : ''} />
-                                {USER &&
-                                    <div className='user-info'>
-                                        <div className='username'>{USER.name}</div>
-                                        <div className='role'>{USER.role}</div>
-                                    </div>
-                                }
+            <>
+                <div className='d-flex dropdown' onClick={toggleDropdown} ref={dropdownRef}>
+                    <button className='user-avatar'>
+                        <img src={USER ? USER.image : InnoSpace} alt={USER ? USER.name : ''} />
+                        {USER &&
+                            <div className='user-info'>
+                                <div className='username'>{USER.name}</div>
+                                <div className='role'>{USER.role}</div>
+                            </div>
+                        }
 
-                                {isDropdownOpen && (
-                                    <div className='dropdown-menu show'>
-                                        <Link className='dropdown-item' to='/user/information'><i className='fa-solid fa-user icon'></i> Thông tin cá nhân</Link>
-                                        <Link className='dropdown-item' onClick={handleLogout}><i className='fas fa-sign-out-alt icon'></i> Đăng xuất</Link>
-                                    </div>
-                                )}
-                            </button>
-                        </div>
-                    </>
-                {/* )
+                        {isDropdownOpen && (
+                            <div className='dropdown-menu show'>
+                                <Link className='dropdown-item' to='/user/information'><i className='fa-solid fa-user icon'></i> Thông tin cá nhân</Link>
+                                <Link className='dropdown-item' onClick={handleLogout}><i className='fas fa-sign-out-alt icon'></i> Đăng xuất</Link>
+                            </div>
+                        )}
+                    </button>
+                </div>
+            </>
+            {/* )
             } */}
             {/* <div className='dropdown' ref={dropdownRef}>
                 <button

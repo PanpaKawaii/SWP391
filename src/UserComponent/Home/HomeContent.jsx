@@ -4,15 +4,16 @@ import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col, Card, Spinner, Carousel } from 'react-bootstrap';
 import './HomeContent.css'
 
-import { imageSTOREs } from '../assets/listSTOREs';
+import { imageSTOREs } from '../../assets/listSTOREs';
 
-import home from '../BackgroundImage/home3.jpg'
-import space from '../BackgroundImage/space.jpg'
+import home from '../../BackgroundImage/home3.jpg'
+import space from '../../BackgroundImage/space.jpg'
 
 export default function HomeContent() {
 
     const [STOREs, setSTOREs] = useState(null);
     const [PODs, setPODs] = useState(null);
+    const [BOOKINGs, setBOOKINGs] = useState(null);
     const [TYPEs, setTYPEs] = useState(null);
     const [UTILITIes, setUTILITIes] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -30,6 +31,11 @@ export default function HomeContent() {
                 if (!podResponse.ok) throw new Error('Network response was not ok');
                 const podData = await podResponse.json();
                 setPODs(podData);
+
+                const bookingResponse = await fetch('https://localhost:7166/api/Booking');
+                if (!bookingResponse.ok) throw new Error('Network response was not ok');
+                const bookingData = await bookingResponse.json();
+                setBOOKINGs(bookingData);
 
                 const typeResponse = await fetch('https://localhost:7166/api/Type');
                 if (!typeResponse.ok) throw new Error('Network response was not ok');
@@ -68,6 +74,15 @@ export default function HomeContent() {
     // Create a new array uniquePodName with unique pod names
     const [uniquePodName, setUniquePodName] = useState([]);
 
+    // Lấy đánh giá của STORE dựa trên đánh giá của các Booking
+    const getStoreBookingRating = (storeId) => {
+        const podsOfStore = PODs ? PODs.filter(pod => pod.storeId == storeId) : [];
+        const bookingsOfPods = podsOfStore.length > 0 ? BOOKINGs.filter(booking => podsOfStore.some(pod => pod.id == booking.podId)) : [];
+        const filteredBooking = bookingsOfPods ? bookingsOfPods.filter(booking => booking.rating !== null && booking.rating > 0) : [];
+        const rating = filteredBooking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
+        return rating / filteredBooking.length;
+    };
+
     useEffect(() => {
         if (PODs) {
             const uniquePods = PODs.reduce((acc, current) => {
@@ -88,11 +103,6 @@ export default function HomeContent() {
         (pod.name === selectedPod || !selectedPod) &&
         (pod.typeId.toString() === selectedType.toString() || !selectedType.toString())
     ) : [];
-
-    // const getCapacity = (typeId) => {
-    //     const type = TYPEs ? TYPEs.find(type => type.id === typeId) : null;
-    //     return type ? type.capacity : 0;
-    // };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -235,11 +245,16 @@ export default function HomeContent() {
                                     <Link to={`booking/store/${store.id}`}><img src={store.image} alt={store.name} /></Link>
 
                                     <Card.Body className='card-body'>
-                                        <h3><b>{store.name}</b></h3>
+                                        <div className='card-name-rating'>
+                                            <h3><b>{store.name}</b></h3>
+                                            <span style={{ color: 'gold', fontSize: '2em' }}><b>{getStoreBookingRating(store.id)}</b><i className='fa-solid fa-star'></i></span>
+                                        </div>
+                                        {store.status === 'Đang hoạt động' && <h5 style={{ color: '#28a745' }}><b>Đang hoạt động</b></h5>}
+                                        {store.status === 'Dừng hoạt động' && <h5 style={{ color: '#dc3545' }}><b>Dừng hoạt động</b></h5>}
                                         <div className='card-info'>
-                                            <p key={store.id}>Địa chỉ: {store.address}</p>
+                                            <p><b>Địa chỉ:</b> {store.address}</p>
                                             <p className='short-detail'>
-                                                Đa dạng loại hình: <span>
+                                                <b>Đa dạng loại hình:</b> <span>
                                                     {TYPEs && TYPEs.map((type, index) => (
                                                         <span key={type.id}>
                                                             {type.name}{index < TYPEs.length - 1 ? ', ' : ''}
@@ -249,15 +264,11 @@ export default function HomeContent() {
                                             </p>
                                             {TYPEs && TYPEs.length > 0 ?
                                                 (
-                                                    <p>
-                                                        {Math.min(...TYPEs.map(type => type.capacity))} - {Math.max(...TYPEs.map(type => type.capacity))}
-                                                        <span className='capacity-icon'> <i className='fa-solid fa-user'></i></span>
+                                                    <p><b>Sức chứa:</b> {Math.min(...TYPEs.map(type => type.capacity))} - {Math.max(...TYPEs.map(type => type.capacity))}
+                                                        <span className='capacity-icon'> người <i className='fa-solid fa-user'></i></span>
                                                     </p>
                                                 ) : null
                                             }
-                                        </div>
-                                        <div>
-                                            <span style={{ color: 'gold' }}><i className='fa-solid fa-star'></i></span>
                                         </div>
                                         <Link to={`booking/store/${store.id}`}><Button className='btn'>CHI TIẾT</Button></Link>
                                     </Card.Body>
@@ -334,7 +345,7 @@ export default function HomeContent() {
                         />
                         <Carousel.Caption className='carousel-text'>
                             <h3>DỊCH VỤ TOÀN DIỆN</h3>
-                            <p>Hỗ trợ quản lý lịch làm việc, thanh toán trực tuyến và cung cấp các gói dịch vụ linh hoạt kèm các tiện ích.</p>
+                            <p>Thanh toán trực tuyến và cung cấp các gói dịch vụ linh hoạt kèm các tiện ích.</p>
                         </Carousel.Caption>
                     </Carousel.Item>
                 </Carousel>

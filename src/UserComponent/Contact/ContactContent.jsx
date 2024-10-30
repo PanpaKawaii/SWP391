@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Button } from 'react-bootstrap';
 import './ContactContent.css'
 
-import service from '../BackgroundImage/service.jpg'
+import service from '../../BackgroundImage/service.jpg'
 
 export default function ContactContent() {
     return (

@@ -1,4 +1,3 @@
-import Sidebar from './SideBar/UserSideBar'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'materialize-css/dist/css/materialize.min.css';
@@ -6,42 +5,35 @@ import { Route, Routes } from 'react-router-dom'
 
 
 import GuestHeader from './GuestComponent/Header/GuestHeader'
-import Header from './HeaderFooter/Header'
 
-import Footer from './HeaderFooter/Footer'
 
-import HomeContent from './Home/HomeContent'
-import ContactContent from './Contact/ContactContent'
+import Sidebar from './UserComponent/SideBar/UserSideBar'
+import Header from './UserComponent/HeaderFooter/Header'
+import Footer from './UserComponent/HeaderFooter/Footer'
 
-import BookingStoreContent from './Booking/BookingStoreContent'
-import BookingStoreDetailContent from './Booking/BookingStoreDetailContent'
-import BookingPodContent from './Booking/BookingPodContent'
-import BookingPodDetailContent from './Booking/BookingPodDetailContent'
+import HomeContent from './UserComponent/Home/HomeContent'
+import ContactContent from './UserComponent/Contact/ContactContent'
 
-import AboutContent from './About/AboutContent'
+import BookingStoreContent from './UserComponent/Booking/BookingStoreContent'
+import BookingStoreDetailContent from './UserComponent/Booking/BookingStoreDetailContent'
+import BookingPodContent from './UserComponent/Booking/BookingPodContent'
+import BookingPodDetailContent from './UserComponent/Booking/BookingPodDetailContent'
 
-import UserInformation from './UserControlContent/UserInformation'
-import UserBooking from './UserControlContent/UserBooking'
-import UserBookingDetail from './UserControlContent/UserBookingDetail'
+import AboutContent from './UserComponent/About/AboutContent'
 
-import PaymentStatus from './Payment/PaymentStatus'
+import UserInformation from './UserComponent/UserControlContent/UserInformation'
+import UserBooking from './UserComponent/UserControlContent/UserBooking'
+import UserBookingDetail from './UserComponent/UserControlContent/UserBookingDetail'
 
-import SignInSignUp from './SignInSignUp/SignInSignUp'
+import PaymentStatus from './UserComponent/Payment/PaymentStatus'
+
+import SignInSignUp from './UserComponent/SignInSignUp/SignInSignUp'
 
 import ScrollToTop from './ScrollToTopComponent/ScrollToTop';
 
 function App() {
   const UserRole = localStorage.getItem('UserRole');
-  // if (UserRole === null) {
-  //   return (
-  //     <>
-  //       <ScrollToTop />
-  //       <div className='user-container'>
-  //         <Sidebar className='sidebar' />
-  //       </div>
-  //     </>
-  //   )
-  // }
+
   if (UserRole === 'Admin') {
     return (
       <>
@@ -84,7 +76,7 @@ function App() {
       <>
         <div className='user-container'>
           <Sidebar className='sidebar' />
-          {/* <ScrollToTop /> */}
+          <ScrollToTop />
           <div className='user-content' >
             <Header />
             <div className='user-content-body'>

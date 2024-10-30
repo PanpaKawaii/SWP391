@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import './SignInSignUp.css';
 
-import SignInImage from '../BackgroundImage/24.jpg'
-import SignUpImage from '../BackgroundImage/4.jpg'
+import SignInImage from '../../BackgroundImage/24.jpg'
+import SignUpImage from '../../BackgroundImage/4.jpg'
 
 export default function SignInSignUp() {
 
@@ -188,7 +188,7 @@ export default function SignInSignUp() {
         }
 
         const signupData = {
-            id: 13,
+            id: 14,
             email: SignUpEmail,
             password: SignUpPassword,
             name: SignUpFullName,

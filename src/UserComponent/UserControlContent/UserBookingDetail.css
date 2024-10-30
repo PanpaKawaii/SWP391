@@ -247,6 +247,14 @@ body {
                     margin: 5px 0 0;
                 }
 
+                .rebook-button-container {
+                    /* width: 100%; */
+                    display: flex;
+                    justify-self: end;
+                    justify-content: end;
+                    align-items: end;
+                }
+
                 .btn,
                 .btn:focus {
                     color: #ffffff;
@@ -255,6 +263,7 @@ body {
                     font-weight: bold;
                     border: none;
                     border-radius: 7px;
+                    display: inline-block;
                 }
 
                 .btn:hover {
