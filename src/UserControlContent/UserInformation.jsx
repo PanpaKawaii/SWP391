@@ -58,7 +58,7 @@ export default function UserInformation() {
         }
         if (!ChangeAvatar) {
             console.error('Invalid avatar');
-            setChangeAvatarError('Link ảnh đại diện không hợp lệ');
+            setChangeAvatarError('Đường dẫn ảnh không hợp lệ');
             return;
         }
 
@@ -116,6 +116,11 @@ export default function UserInformation() {
         setChangePhoneNumberError(null);
         setChangeAvatarError(null);
         ChangeInformation(e.target.formName.value, e.target.formPhoneNumber.value, e.target.formAvatar.value);
+    }
+    const handleResetChangeInformation = () => {
+        setChangeFullNameError(null);
+        setChangePhoneNumberError(null);
+        setChangeAvatarError(null);
     }
 
     const ChangePassword = async (OldPassword, ChangePassword, ChangeConfirm) => {
@@ -195,6 +200,10 @@ export default function UserInformation() {
         setChangeConfirmPasswordError(null);
         ChangePassword(e.target.formOldPassword.value, e.target.formNewPassword.value, e.target.formConfirmNewPassword.value);
     }
+    const handleResetChangePassword = () => {
+        setChangePasswordError(null);
+        setChangeConfirmPasswordError(null);
+    }
 
 
     if (loading) return (
@@ -249,17 +258,18 @@ export default function UserInformation() {
                             <Form.Group controlId='formAvatar' className='form-group'>
                                 <InputGroup>
                                     <InputGroup.Text>Ảnh đại diện</InputGroup.Text>
-                                    <Form.Control type='text' placeholder='Nhập link ảnh đại diện' defaultValue={USER ? USER.image : ''} />
+                                    <Form.Control type='text' placeholder='Nhập đường dẫn ảnh' defaultValue={USER ? USER.image : ''} />
                                 </InputGroup>
                             </Form.Group>
 
                             {ChangeFullNameError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangeFullNameError}</span>}
                             {ChangePhoneNumberError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangePhoneNumberError}</span>}
+                            {ChangeAvatarError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangeAvatarError}</span>}
 
                             <div className='change-information-button'>
                                 {/* <Button type='submit' className='btn' onClick={() => confirm('Bạn chắc chắn muốn đổi thông tin?')}>ĐỔI THÔNG TIN</Button> */}
                                 <Button type='submit' className='btn'>ĐỔI THÔNG TIN</Button>
-                                <Button type='reset' className='btn btn-reset'>ĐẶT LẠI</Button>
+                                <Button type='reset' className='btn btn-reset' onClick={handleResetChangeInformation}>ĐẶT LẠI</Button>
                             </div>
                         </Form>
 
@@ -294,7 +304,7 @@ export default function UserInformation() {
                             <div className='change-information-button'>
                                 {/* <Button type='submit' className='btn' onClick={() => confirm('Bạn chắc chắn muốn đổi mật khẩu?')}>ĐỔI MẬT KHẨU</Button> */}
                                 <Button type='submit' className='btn'>ĐỔI MẬT KHẨU</Button>
-                                <Button type='reset' className='btn btn-reset'>ĐẶT LẠI</Button>
+                                <Button type='reset' className='btn btn-reset' onClick={handleResetChangePassword}>ĐẶT LẠI</Button>
                             </div>
                         </Form>
                     </div>

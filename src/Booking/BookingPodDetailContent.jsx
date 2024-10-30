@@ -144,8 +144,10 @@ export default function BookingPodDetailContent() {
         const bookingData = {
             id: MaxID + 1,
             date: date,
+            currentDate: new Date(),
             status: 'Chờ xác nhận',
             feedback: '',
+            rating: 0,
             podId: Pod.id,
             userId: id,
             slotIds: SlotId.map(id => parseInt(id, 10)),
@@ -167,7 +169,7 @@ export default function BookingPodDetailContent() {
             fullname: 'NGUYEN VAN A',
             description: 'Thanh toán qua VNPay',
             amount: Amount,
-            createdDate: new Date().toISOString().substring(0, 10),
+            createdDate: new Date(),
         };
         console.log('PaymentMethod data:', paymentMethodData);
 
@@ -264,6 +266,7 @@ export default function BookingPodDetailContent() {
             }
         };
         await fetchMaxID();
+
         console.log({ date, SlotId, IsPopupOpen, Confirm, selectedPaymentMethod });
         window.location.href = '#popupConfirm';
     };

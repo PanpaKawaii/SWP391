@@ -64,6 +64,8 @@ export default function BookingStoreDetailContent() {
 
                         <div className='store-detail'>
                             <h1><b>{Store.name}</b></h1>
+                            {Store.status === 'Đang hoạt động' && <h5 style={{ color: '#28a745' }}><b>Đang hoạt động</b></h5>}
+                            {Store.status === 'Dừng hoạt động' && <h5 style={{ color: '#dc3545' }}><b>Dừng hoạt động</b></h5>}
                             <div className='rating'>
                                 <span style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
                                 {Array.from({ length: Store.rating }, (_, index) => (

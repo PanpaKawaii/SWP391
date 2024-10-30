@@ -148,13 +148,13 @@ export default function UserBooking() {
         const dateBOOKINGs = BOOKINGs.filter(booking => booking.userId == id)
             .sort((a, b) => b.id - a.id)
             .filter(booking => {
-                const bookingDate = new Date(booking.date);
+                const bookingDate = new Date(booking.currentDate);
                 if (!e.target.startDate.value) {
-                    return bookingDate <= new Date(e.target.endDate.value).setHours(0, 0, 0, 0);
+                    return bookingDate <= new Date(e.target.endDate.value).setHours(23, 59, 59, 999);
                 } else if (!e.target.endDate.value) {
                     return bookingDate >= new Date(e.target.startDate.value).setHours(0, 0, 0, 0);
                 } else {
-                    return bookingDate >= new Date(e.target.startDate.value).setHours(0, 0, 0, 0) && bookingDate <= new Date(e.target.endDate.value).setHours(0, 0, 0, 0);
+                    return bookingDate >= new Date(e.target.startDate.value).setHours(0, 0, 0, 0) && bookingDate <= new Date(e.target.endDate.value).setHours(23, 59, 59, 999);
                 }
             });
         setFilteredBOOKINGs(dateBOOKINGs);
@@ -195,7 +195,7 @@ export default function UserBooking() {
                                 <div className='booking-card-container'>
                                     <div className='booking-card-header'>
                                         <h4><b>Ngày đặt:</b> {booking.currentDate}</h4>
-                                        {(() => {
+                                        {/* {(() => {
                                             switch (booking.status) {
                                                 case 'Đã xác nhận':
                                                     return <h4 style={{ backgroundColor: '#28a745', color: 'white' }}><b>{booking.status}</b></h4>;
@@ -203,6 +203,18 @@ export default function UserBooking() {
                                                     return <h4 style={{ backgroundColor: '#ffc107', color: 'white' }}><b>{booking.status}</b></h4>;
                                                 case 'Đã hủy':
                                                     return <h4 style={{ backgroundColor: '#dc3545', color: 'white' }}><b>{booking.status}</b></h4>;
+                                                default:
+                                                    return booking.status;
+                                            }
+                                        })()} */}
+                                        {(() => {
+                                            switch (booking.status) {
+                                                case 'Đã xác nhận':
+                                                    return <h4 style={{ backgroundColor: '#28a745', color: 'white' }}><b>Đã diễn ra</b></h4>;
+                                                case 'Chờ xác nhận':
+                                                    return <h4 style={{ backgroundColor: '#ffc107', color: 'white' }}><b>Chưa diễn ra</b></h4>;
+                                                case 'Đã hủy':
+                                                    return <h4 style={{ backgroundColor: '#dc3545', color: 'white' }}><b>Đã hủy</b></h4>;
                                                 default:
                                                     return booking.status;
                                             }

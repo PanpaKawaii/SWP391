@@ -24,6 +24,8 @@ import UserInformation from './UserControlContent/UserInformation'
 import UserBooking from './UserControlContent/UserBooking'
 import UserBookingDetail from './UserControlContent/UserBookingDetail'
 
+import PaymentStatus from './Payment/PaymentStatus'
+
 import SignInSignUp from './SignInSignUp/SignInSignUp'
 
 import ScrollToTop from './ScrollToTopComponent/ScrollToTop';
@@ -101,6 +103,8 @@ function App() {
                 <Route path='/user/information' element={<UserInformation />} />
                 <Route path='/user/booking' element={<UserBooking />} />
                 <Route path='/user/booking/:Id' element={<UserBookingDetail />} />
+
+                <Route path='/payment/status/:StatusURL' element={<PaymentStatus />} />
 
                 <Route path='/signinsignup' element={<SignInSignUp />} />
               </Routes>
