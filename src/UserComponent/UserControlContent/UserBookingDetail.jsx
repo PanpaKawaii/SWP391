@@ -294,7 +294,6 @@ export default function UserBookingDetail() {
                             <div className='card-detail'>
                                 <div className='card-information'>
                                     <p className='booking-id'>Booking ID: {thisBOOKING.id}</p>
-                                    <p>{thisBOOKING.currentDate}</p>
                                     <h1><b>{getPodName(thisBOOKING.podId)}</b></h1>
 
                                     <div className='card-rating-capacity'>
@@ -303,7 +302,7 @@ export default function UserBookingDetail() {
                                                 <span style={{ color: 'gold', fontSize: '1.3em' }}><b>Đánh giá: {getPodBookingRating(thisBOOKING.podId)}</b><i className='fa-solid fa-star'></i></span>
                                                 :
                                                 <>
-                                                    {[...Array(getPodRating(booking.podId))].map((_, i) => (
+                                                    {[...Array(getPodRating(thisBOOKING.podId))].map((_, i) => (
                                                         <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
                                                     ))}
                                                     <span>(ĐƯỢC ĐỀ XUẤT)</span>

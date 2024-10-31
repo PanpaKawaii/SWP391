@@ -1,9 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Form, InputGroup, Button, Spinner, Card } from 'react-bootstrap';
+import { Spinner, Card } from 'react-bootstrap';
 import './PaymentStatus.css';
-
-import InnoSpace from '../../BackgroundImage/InnoSpace.png';
 
 export default function UserInformation() {
 
@@ -54,6 +52,9 @@ export default function UserInformation() {
                 <Card className='payment-status-card'>
                     <h1><b>THANH TOÁN THÀNH CÔNG</b></h1>
                     <h1><b>THANH TOÁN THẤT BẠI</b></h1>
+                    <p>Ngày giờ (GMT+7): {new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString().slice(0, 19)}</p>
+                    <p>Ngày giờ hiện tại: {new Date().toISOString()}</p>
+                    <p>Ngày giờ hiện tại: {new Date().toLocaleString()}</p>
 
                 </Card>
             </div>

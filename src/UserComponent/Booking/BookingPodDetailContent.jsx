@@ -94,7 +94,7 @@ export default function BookingPodDetailContent() {
     const currentDate = new Date();
     const [MaxBookingID, setMaxBookingID] = useState(null);
     const [MaxPaymentID, setMaxPaymentID] = useState(null);
-    const [date, setDate] = useState(new Date(currentDate.getTime()).toISOString().substring(0, 10));
+    const [date, setDate] = useState(new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString().substring(0, 10));
     const [SlotId, setSlotId] = useState('');
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Thanh toán qua VNPay');
     const [Confirm, setConfirm] = useState(false);
@@ -124,6 +124,9 @@ export default function BookingPodDetailContent() {
         console.log('selectedSlots: ', selectedSlots)
         console.log('SameDate: ', bookingsHaveTheSameDate)
         console.log('SameDateSlot: ', getBookingsHaveTheSameDateAndSlot)
+        console.log('currentDate: ', new Date().toISOString())
+        console.log('select date: ', new Date(currentDate.getTime()).toISOString().substring(0, 10))
+        console.log('select+ date: ', new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString().substring(0, 10))
     }, [SlotId]);
 
 
@@ -151,7 +154,7 @@ export default function BookingPodDetailContent() {
         const bookingData = {
             id: MaxBookingID + 1,
             date: date,
-            currentDate: new Date(),
+            currentDate: new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString(),
             status: 'Chờ xác nhận',
             feedback: '',
             rating: 0,
@@ -165,18 +168,19 @@ export default function BookingPodDetailContent() {
             id: MaxPaymentID + 1,
             method: selectedPaymentMethod,
             amount: Amount,
-            date: date,
+            date: new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString(),
             status: 'Chưa thanh toán',
             bookingId: MaxBookingID + 1,
         };
         console.log('Payment data:', paymentData);
 
         const paymentMethodData = {
-            orderId: MaxPaymentID + 1,
+            id: MaxPaymentID + 1,
+            orderId: MaxBookingID + 1,
             fullname: 'NGUYEN VAN A',
             description: 'Thanh toán qua VNPay',
             amount: Amount,
-            createdDate: new Date(),
+            createdDate: new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString(),
         };
         console.log('PaymentMethod data:', paymentMethodData);
 
@@ -202,22 +206,22 @@ export default function BookingPodDetailContent() {
             console.error('Error during booking:', error);
         }
 
-        try {
-            const response = await fetch('https://localhost:7166/api/Payment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify(paymentData),
-            });
+        // try {
+        //     const response = await fetch('https://localhost:7166/api/Payment', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Authorization': `Bearer ${token}`,
+        //         },
+        //         body: JSON.stringify(paymentData),
+        //     });
 
-            if (!response.ok) throw new Error('Network response was not ok');
-            const result = await response.json();
-            console.log('Creating Payment successful:', result);
-        } catch (error) {
-            console.error('Error during booking:', error);
-        }
+        //     if (!response.ok) throw new Error('Network response was not ok');
+        //     const result = await response.json();
+        //     console.log('Creating Payment successful:', result);
+        // } catch (error) {
+        //     console.error('Error during booking:', error);
+        // }
 
         try {
             const response = await fetch('https://localhost:7166/api/Payment/create', {
@@ -232,7 +236,7 @@ export default function BookingPodDetailContent() {
             if (!response.ok) throw new Error('Network response was not ok');
             const result = await response.json();
             console.log('Creating PaymentMethod successful:', result);
-            window.location.href = result.paymentUrl;
+            // window.location.href = result.paymentUrl;
         } catch (error) {
             console.error('Error during booking:', error);
         }
