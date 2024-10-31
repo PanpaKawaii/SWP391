@@ -236,7 +236,7 @@ export default function BookingPodDetailContent() {
             if (!response.ok) throw new Error('Network response was not ok');
             const result = await response.json();
             console.log('Creating PaymentMethod successful:', result);
-            // window.location.href = result.paymentUrl;
+            window.location.href = result.paymentUrl;
         } catch (error) {
             console.error('Error during booking:', error);
         }
@@ -597,7 +597,7 @@ export default function BookingPodDetailContent() {
                                 </Row>
 
                                 <div className='button-confirm-amount'>
-                                    <h2><b>Tổng: {Amount.toLocaleString('vi-VN')}đ</b></h2>
+                                    <h2><b>Tổng: <span>{Amount.toLocaleString('vi-VN')}đ</span></b></h2>
                                     {!Confirm ?
                                         <Button type='submit' className='btn' onClick={handleConfirm}>XÁC NHẬN</Button>
                                         :

@@ -96,7 +96,7 @@ function App() {
                 <Route path='/user/booking' element={<UserBooking />} />
                 <Route path='/user/booking/:Id' element={<UserBookingDetail />} />
 
-                <Route path='/payment/status/:StatusURL' element={<PaymentStatus />} />
+                <Route path='/paymentstatus/?' element={<PaymentStatus />} />
 
                 <Route path='/signinsignup' element={<SignInSignUp />} />
               </Routes>
