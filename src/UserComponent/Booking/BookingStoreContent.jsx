@@ -11,6 +11,7 @@ export default function BookingStoreContent() {
     const [STOREs, setSTOREs] = useState(null);
     const [PODs, setPODs] = useState(null);
     const [BOOKINGs, setBOOKINGs] = useState(null);
+    const [TYPEs, setTYPEs] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -31,6 +32,11 @@ export default function BookingStoreContent() {
                 if (!bookingResponse.ok) throw new Error('Network response was not ok');
                 const bookingData = await bookingResponse.json();
                 setBOOKINGs(bookingData);
+
+                const typeResponse = await fetch('https://localhost:7166/api/Type');
+                if (!typeResponse.ok) throw new Error('Network response was not ok');
+                const typeData = await typeResponse.json();
+                setTYPEs(typeData);
 
                 setLoading(false);
             } catch (error) {
@@ -108,7 +114,7 @@ export default function BookingStoreContent() {
                 <Row className='image-row'>
                     {filteredResults.length > 0 ? (
                         filteredResults.map((store) => (
-                            <Col key={store.id} xs={12} sm={12} md={12} lg={12} xl={8} xxl={6} className='image-col'>
+                            <Col lg={12} xl={6} xxl={5} key={store.id} className='image-col'>
                                 <Card className='image-card'>
                                     {/* <Link to={`${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link> */}
                                     {store.status === 'Đang hoạt động' ?
@@ -118,24 +124,44 @@ export default function BookingStoreContent() {
                                     }
 
                                     <Card.Body className='card-body'>
-                                        <h3><b>{store.name}</b></h3>
+                                        <div className='card-name-rating'>
+                                            <h3><b>{store.name}</b></h3>
+                                            <span style={{ color: 'gold', fontSize: '2em' }}><b>{getStoreBookingRating(store.id)}</b><i className='fa-solid fa-star'></i></span>
+                                        </div>
                                         {store.status === 'Đang hoạt động' && <h5 style={{ color: '#28a745' }}><b>Đang hoạt động</b></h5>}
                                         {store.status === 'Dừng hoạt động' && <h5 style={{ color: '#dc3545' }}><b>Dừng hoạt động</b></h5>}
-                                        <div className='full-detail'>
-                                            <div className='short-detail'>
-                                                {/* <p>Đa dạng loại hình: POD phòng đơn, POD phòng đôi, POD phòng tập thể</p> */}
-                                                <span style={{ color: 'gold', fontSize: '1.3em' }}><b>Đánh giá: {getStoreBookingRating(store.id)}</b><i className='fa-solid fa-star'></i></span>
-                                                <p>Địa chỉ: {store.address}</p>
-                                                <p>Liên hệ: {store.contact}</p>
-                                            </div>
-                                            <div className='active-button'>
+                                        <div className='card-info'>
+                                            <p><b>Địa chỉ:</b> {store.address}</p>
+                                            <p><b>Liên hệ:</b> {store.contact}</p>
+                                            <p>
+                                                <b>Đa dạng loại hình:</b> <span>
+                                                    {TYPEs && TYPEs.map((type, index) => (
+                                                        <span key={type.id}>
+                                                            {type.name}{index < TYPEs.length - 1 ? ', ' : ''}
+                                                        </span>
+                                                    ))}
+                                                </span>
+                                            </p>
+                                            {TYPEs && TYPEs.length > 0 ?
+                                                (
+                                                    <p><b>Sức chứa:</b> {Math.min(...TYPEs.map(type => type.capacity))} - {Math.max(...TYPEs.map(type => type.capacity))}
+                                                        <span className='capacity-icon'> người <i className='fa-solid fa-user'></i></span>
+                                                    </p>
+                                                ) : null
+                                            }
+                                            {/* <div className='active-button'>
                                                 {store.status === 'Đang hoạt động' ?
                                                     <Link to={`${store.id}`}><Button className='btn'>CHI TIẾT</Button></Link>
                                                     :
                                                     <Button className='btn'>CHI TIẾT</Button>
                                                 }
-                                            </div>
+                                            </div> */}
                                         </div>
+                                        {store.status === 'Đang hoạt động' ?
+                                            <Link to={`${store.id}`}><Button className='btn'>CHI TIẾT</Button></Link>
+                                            :
+                                            <Button className='btn'>CHI TIẾT</Button>
+                                        }
                                     </Card.Body>
                                 </Card>
                             </Col>

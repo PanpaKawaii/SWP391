@@ -77,30 +77,26 @@ body {
 
         .image-row {
             width: 100%;
-            margin: 50px 0;
-            /* max-width: 1500px; */
-            /* height: 350px; */
+            margin: 50px 0 0;
             display: flex;
             justify-content: space-evenly;
 
             .image-col {
                 display: flex;
                 justify-content: center;
-                /* position: relative; */
 
                 .image-card {
-                    width: 540px;
-                    margin: 0 0 20px;
+                    width: 500px;
+                    margin: 0 0 40px;
                     background-color: #ffffff;
                     border-radius: 20px;
                     box-shadow: 0 4px 6px #6666664d;
                     overflow: hidden;
                     align-items: center;
-                    /* text-align: center; */
                     transition: all 0.3s ease;
 
                     img {
-                        width: 540px;
+                        width: 500px;
                         height: 260px;
                         object-fit: cover;
                         object-position: center;
@@ -154,8 +150,9 @@ body {
 
     .shortcut-contact {
         width: 100%;
-        margin: 20px 0;
-        background-color: #ffffff;
+        padding: 20px 0;
+        margin: 0 0 50px;
+        background-color: #fafafa;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -167,6 +164,7 @@ body {
         .card-contact {
             margin: 20px 0;
             height: auto;
+            background-color: #ffffff;
             border-radius: 15px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             display: flex;

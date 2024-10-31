@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Form, Button, Card, Row, Col, Spinner } from 'react-bootstrap';
+import { Form, Button, Card, Row, Col, Modal, Spinner } from 'react-bootstrap';
 import './BookingPodDetailContent.css';
 
 import { imagePODs } from '../../assets/listPODs';
@@ -27,6 +27,9 @@ export default function BookingPodDetailContent() {
     const [STOREs, setSTOREs] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [Picture, setPicture] = useState(null);
+    const [IsModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -298,8 +301,8 @@ export default function BookingPodDetailContent() {
 
     if (loading) return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <Spinner animation="border" role="status" style={{ width: '200px', height: '200px', fontSize: '50px' }}>
-                <span className="visually-hidden">Loading...</span>
+            <Spinner animation='border' role='status' style={{ width: '200px', height: '200px', fontSize: '50px' }}>
+                <span className='visually-hidden'>Loading...</span>
             </Spinner>
         </div>
     );
@@ -322,23 +325,23 @@ export default function BookingPodDetailContent() {
                         <div className='image-detail'>
                             <div className='image-detail-pod'>
                                 {/* <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img> */}
-                                <img src={Pod.image} alt={Pod.name}></img>
+                                <img src={Pod.image} alt={Pod.name} onClick={() => { setPicture(Pod); setIsModalOpen(true) }}></img>
                             </div>
                             <div className='image-detail-2'>
                                 <div className='image-detail-2-item-store'>
                                     {/* <img src={imageSTOREs.find(image => image.id === Pod.storeId)?.image} alt={Pod.name}></img> */}
-                                    <img src={thisSTORE.image} alt={thisSTORE.name}></img>
+                                    <img src={thisSTORE.image} alt={thisSTORE.name} onClick={() => { setPicture(thisSTORE); setIsModalOpen(true) }}></img>
                                 </div>
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(0, 3).map((utility) => (
-                                    <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length / 4)), "--available-utilities-slice": AvailableUTILITIes.slice(0, 3).length }}>
+                                    <div key={utility.id} className='image-detail-2-item-utility' style={{ '--available-utilities-length': Math.ceil((AvailableUTILITIes.length / 4)), '--available-utilities-slice': AvailableUTILITIes.slice(0, 3).length }}>
                                         {/* <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img> */}
-                                        <img src={utility.image} alt={utility.name}></img>
+                                        <img src={utility.image} alt={utility.name} onClick={() => { setPicture(utility); setIsModalOpen(true) }}></img>
                                     </div>
                                 ))}
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(3, 6).map((utility) => (
-                                    <div key={utility.id} className='image-detail-2-item-utility' style={{ "--available-utilities-length": Math.ceil((AvailableUTILITIes.length / 4)), "--available-utilities-slice": AvailableUTILITIes.slice(3, 6).length }}>
+                                    <div key={utility.id} className='image-detail-2-item-utility' style={{ '--available-utilities-length': Math.ceil((AvailableUTILITIes.length / 4)), '--available-utilities-slice': AvailableUTILITIes.slice(3, 6).length }}>
                                         {/* <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img> */}
-                                        <img src={utility.image} alt={utility.name}></img>
+                                        <img src={utility.image} alt={utility.name} onClick={() => { setPicture(utility); setIsModalOpen(true) }}></img>
                                     </div>
                                 ))}
                                 {/* <div className='image-detail-2-item'>
@@ -385,15 +388,15 @@ export default function BookingPodDetailContent() {
                                 <h4><b>Tiện nghi có sẵn:</b></h4>
                                 <div className='utility-container'>
                                     <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className='fa-solid fa-wifi icon'></i> Wifi miễn phí</p></Col>
-                                    <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-regular fa-snowflake icon"></i> Máy điều hòa</p></Col>
-                                    <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-regular fa-lightbulb icon"></i> Đèn dự phòng</p></Col>
+                                    <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className='fa-regular fa-snowflake icon'></i> Máy điều hòa</p></Col>
+                                    <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className='fa-regular fa-lightbulb icon'></i> Đèn dự phòng</p></Col>
                                     {AvailableUTILITIes.map((utility) => (
                                         <React.Fragment key={utility.id}>
-                                            {utility.name === 'Ổ cắm điện' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-solid fa-plug icon"></i> {utility.name}</p></Col>}
-                                            {utility.name === 'Máy chiếu' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-solid fa-chalkboard icon"></i> {utility.name}</p></Col>}
-                                            {utility.name === 'Máy pha cà phê' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-solid fa-mug-saucer icon"></i> {utility.name}</p></Col>}
-                                            {utility.name === 'Hệ thống âm thanh' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-solid fa-microphone-lines icon"></i> {utility.name}</p></Col>}
-                                            {utility.name === 'Bảng trắng thông minh' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className="fa-solid fa-tv icon"></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Ổ cắm điện' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className='fa-solid fa-plug icon'></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Máy chiếu' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className='fa-solid fa-chalkboard icon'></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Máy pha cà phê' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className='fa-solid fa-mug-saucer icon'></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Hệ thống âm thanh' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className='fa-solid fa-microphone-lines icon'></i> {utility.name}</p></Col>}
+                                            {utility.name === 'Bảng trắng thông minh' && <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}><p><i className='fa-solid fa-tv icon'></i> {utility.name}</p></Col>}
                                         </React.Fragment>
                                     ))}
                                 </div>
@@ -616,6 +619,25 @@ export default function BookingPodDetailContent() {
                             </div>
                         </div>
                     </div>
+                )}
+
+                {IsModalOpen && (
+                    <Modal show={IsModalOpen} onHide={() => setIsModalOpen(false)} size='xl'>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{Picture.name}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <img src={Picture.image} alt={Picture.name}
+                                style={{
+                                    width: '100%',
+                                    height: '700px',
+                                    objectFit: 'cover',
+                                    borderRadius: '10px',
+                                    border: '1px solid #cccccc'
+                                }}>
+                            </img>
+                        </Modal.Body>
+                    </Modal>
                 )}
 
             </div>

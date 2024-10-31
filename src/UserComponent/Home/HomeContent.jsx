@@ -239,7 +239,7 @@ export default function HomeContent() {
                     <h1><b>CƠ SỞ THỊNH HÀNH!</b></h1>
                     <Row className='image-row'>
                         {STOREs && STOREs.map(store => (
-                            <Col xl={8} xxl={5} key={store.id} className='image-col'>
+                            <Col lg={12} xl={6} xxl={5} key={store.id} className='image-col'>
                                 <Card className='image-card'>
                                     {/* <Link to={`booking/store/${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link> */}
                                     <Link to={`booking/store/${store.id}`}><img src={store.image} alt={store.name} /></Link>
@@ -253,7 +253,8 @@ export default function HomeContent() {
                                         {store.status === 'Dừng hoạt động' && <h5 style={{ color: '#dc3545' }}><b>Dừng hoạt động</b></h5>}
                                         <div className='card-info'>
                                             <p><b>Địa chỉ:</b> {store.address}</p>
-                                            <p className='short-detail'>
+                                            <p><b>Liên hệ:</b> {store.contact}</p>
+                                            <p>
                                                 <b>Đa dạng loại hình:</b> <span>
                                                     {TYPEs && TYPEs.map((type, index) => (
                                                         <span key={type.id}>
@@ -278,8 +279,6 @@ export default function HomeContent() {
                     </Row>
                 </div>
             </div>
-
-            <hr />
 
             <div className='shortcut-contact'>
                 <h1><b>BẠN GẶP VẤN ĐỀ GÌ SAO?</b></h1>
@@ -309,8 +308,6 @@ export default function HomeContent() {
                     </Form>
                 </div>
             </div>
-
-            <hr />
 
             <div className='shortcut-why'>
                 <h1><b>VÌ SAO NÊN CHỌN INNOSPACE?</b></h1>

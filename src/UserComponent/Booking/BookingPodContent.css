@@ -14,14 +14,17 @@ body {
 
     .search-container {
         width: 100%;
+        padding: 20px;
         background-color: #fafafa;
         position: sticky;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         top: 0;
 
         .search {
             display: flex;
             align-items: center;
-            padding: 20px 10px;
 
             .search-title {
                 margin: 0 20px;
@@ -43,7 +46,7 @@ body {
                 border: none;
                 border-radius: 7px;
             }
-        
+
             .btn:hover {
                 color: #ffffff;
                 background-color: #d97720;

@@ -218,6 +218,8 @@ export default function BookingPodContent() {
 
                 </Form>
 
+                <Link to={`../user/booking`}><Button className='btn'>POD ĐÃ ĐẶT</Button></Link>
+
             </div>
 
             <div className='booking-pod-container'>
