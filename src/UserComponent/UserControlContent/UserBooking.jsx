@@ -229,7 +229,7 @@ export default function UserBooking() {
                                         </div>
                                         <div className='card-detail'>
                                             <div className='card-information'>
-                                                <p className='booking-id'>Booking ID: {booking.id}</p>
+                                                <p className='booking-id'>ID: {booking.id}</p>
                                                 <h1><b>{getPodName(booking.podId)}</b></h1>
 
                                                 <div className='card-rating'>
@@ -247,8 +247,8 @@ export default function UserBooking() {
                                                         <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
                                                     ))} */}
                                                 </div>
-                                                <p>Loại: {getTypeName(booking.podId)}</p>
-                                                <p>Địa chỉ: {getStoreName(booking.podId)}, {getStoreAddress(booking.podId)}</p>
+                                                <p><b>Loại:</b> {getTypeName(booking.podId)}</p>
+                                                <p><b>Địa chỉ:</b> {getStoreName(booking.podId)}, {getStoreAddress(booking.podId)}</p>
                                                 {/* <p>Dịch vụ: {getCategoryName(booking.id)}</p> */}
                                             </div>
 

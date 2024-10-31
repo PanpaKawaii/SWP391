@@ -5,7 +5,7 @@ body {
 .user-booking-detail {
     width: 100%;
     padding: 20px;
-    margin: 0 0 100px;
+    margin: 0 0 200px;
     background-color: #ffffff;
     font-family: 'Quicksand', 'Arial', sans-serif;
     display: flex;
@@ -21,10 +21,6 @@ body {
         border: 1px solid #cccccc;
         margin: 0 0 20px;
         overflow: hidden;
-
-        p {
-            margin: 0;
-        }
 
         h4 {
             margin: 10px;
@@ -48,6 +44,11 @@ body {
 
             .booking-col {
                 padding: 0;
+                border-bottom: 1px solid #cccccc;
+
+                p {
+                    margin: 0;
+                }
 
                 .booking-card-body {
                     background-color: #ffffff;
@@ -56,7 +57,7 @@ body {
                     display: flex;
 
                     .card-image {
-                        width: 40%;
+                        width: 25%;
                         padding: 10px;
 
                         img {
@@ -144,6 +145,17 @@ body {
                     justify-content: center;
                     align-items: center;
 
+                    /* .card-image {
+                        height: 140px;
+                        display: flex;
+                        justify-content: center;
+
+                        img {
+                            width: 80%;
+                            height: 120px;
+                        }
+                    } */
+
                     .card-detail {
                         width: 100%;
                         height: 140px;
@@ -184,93 +196,9 @@ body {
             }
         }
 
-        .booking-tabs {
-            height: auto;
-        }
-
-        .tab-content {
-            border-bottom: 1px solid #cccccc;
-
-            h1 {
-                border-bottom: 1px solid #cccccc;
-            }
-        }
-
-        .booking-tab {
-            padding: 0 0 20px;
-        }
-
-        .slot-tab {
-            padding: 0 0 20px;
-
-            h4 {
-                margin: 0 0 10px;
-            }
-
-            .slot-name {
-                margin: 0;
-
-                .col {
-                    padding: 0 5px 5px 0;
-
-                    .slot-card {
-                        padding: 10px;
-                        border: 1px solid #cccccc;
-                        border-radius: 10px;
-                    }
-                }
-            }
-        }
-
-        .order-tab {
-            padding: 0 0 20px;
-        }
-
-        .user-tab {
-            padding: 0 0 20px;
-        }
-
-        .payment-tab {
-            padding: 0 0 20px;
-        }
-
-        .store-tab {
-            padding: 0 0 20px;
-
-            .store-card {
-                width: 100%;
-                text-shadow: 1px 1px 3px #ffffff;
-                height: 400px;
-                background-size: cover;
-                background-position: center;
-                position: relative;
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 10px;
-                    filter: blur(2px);
-                    object-fit: cover;
-                    object-position: center;
-                    display: block;
-                }
-
-                .store-card-body {
-                    top: 20px;
-                    left: 20px;
-                    position: absolute;
-                    z-index: 1;
-                }
-            }
-        }
-
         .booking-card-footer {
             width: 100%;
             padding: 0;
-            padding: 10px 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
 
             .card-amount {
                 width: 100%;
@@ -278,42 +206,74 @@ body {
                 flex-direction: column;
                 justify-content: center;
                 align-items: end;
+
+                h4 {
+                    margin: 10px 10px 0;
+                }
+
+                .total-amount {
+                    color: #ee4f2e;
+                }
+
+                .success-amount {
+                    color: #28a745;
+                }
             }
 
-            .rating-form {
+            .button-footer {
+                padding: 10px 0 20px;
                 display: flex;
                 justify-content: space-between;
-                align-items: end;
+                align-items: center;
+
+                .rating-form {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: end;
+
+                    .btn-feedback {
+                        width: 100px;
+                        margin: 0 10px;
+                    }
+                }
 
                 .form-group {
                     margin: 5px 0 0;
                 }
 
-                .btn-feedback {
-                    width: 100px;
-                    margin: 0 10px;
+                .rebook-button-container {
+                    /* width: 100%; */
+                    display: flex;
+                    justify-self: end;
+                    justify-content: end;
+                    align-items: end;
                 }
-            }
 
-            .btn,
-            .btn:focus {
-                color: #ffffff;
-                background-color: #fb8b24;
-                /* background-color: #e05a29; */
-                font-weight: bold;
-                border: none;
-                border-radius: 7px;
-                display: inline-block;
-            }
+                .btn,
+                .btn:focus {
+                    color: #ffffff;
+                    background-color: #fb8b24;
+                    /* background-color: #e05a29; */
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 7px;
+                    display: inline-block;
+                }
 
-            .btn:hover {
-                color: #ffffff;
-                background-color: #d97720;
-                /* background-color: #ad3103; */
-            }
+                .btn:hover {
+                    color: #ffffff;
+                    background-color: #d97720;
+                    /* background-color: #ad3103; */
+                }
 
-            .rebook-button {
-                width: 150px;
+                .link-item {
+                    text-decoration: none;
+                    margin: 0 10px;
+
+                    .rebook-button {
+                        width: 150px;
+                    }
+                }
             }
         }
     }

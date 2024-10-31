@@ -4,6 +4,7 @@ import './Footer.css';
 
 export default function Footer() {
 
+    const [STOREs, setSTOREs] = useState(null);
     const [TYPEs, setTYPEs] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -11,11 +12,16 @@ export default function Footer() {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const storeResponse = await fetch('https://localhost:7166/api/Store');
+                if (!storeResponse.ok) throw new Error('Network response was not ok');
+                const storeData = await storeResponse.json();
+                setSTOREs(storeData);
+
                 const typeResponse = await fetch('https://localhost:7166/api/Type');
                 if (!typeResponse.ok) throw new Error('Network response was not ok');
                 const typeData = await typeResponse.json();
                 setTYPEs(typeData);
-
+                
                 setLoading(false);
             } catch (error) {
                 setError(error);
@@ -35,18 +41,19 @@ export default function Footer() {
                 </div>
                 <div className='footer-solution'>
                     <h3><b>Giải pháp</b></h3>
-                    <p>Phòng đơn 1 người</p>
-                    <p>Phòng đôi 2 người</p>
-                    <p>Phòng nhóm 6 người</p>
-                    <p>Phòng họp 10 người</p>
+                    {TYPEs && TYPEs.map((type) => (
+                        <p key={type.id}>{type.name} {type.capacity} Người</p>
+                    ))}
                 </div>
                 <div className='footer-location'>
                     <h3><b>Địa chỉ</b></h3>
                     <p>info@innospace.com.vn</p>
-                    <p>12 Đường Sáng Tạo, Thủ Đức, TPHCM</p>
-                    <p>+84 922 678 301</p>
-                    <p>34 Đại lộ Kinh Doanh, Thủ Đức, TPHCM</p>
-                    <p>+84 995 678 017</p>
+                    {STOREs && STOREs.map((store) => (
+                        <div key={store.id}>
+                            <p>+84{store.contact.substring(1)}</p>
+                            <p>{store.address}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
             <div className='footer-end'>

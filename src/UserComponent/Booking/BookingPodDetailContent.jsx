@@ -181,8 +181,10 @@ export default function BookingPodDetailContent() {
             id: MaxPaymentID + 1,
             orderId: MaxBookingID + 1,
             fullname: 'NGUYEN VAN A',
-            description: 'Thanh toán qua VNPay',
+            description: 'Thanh toán qua VNPay cho Booking có Id: ' + MaxBookingID + 1,
             amount: Amount,
+            status: 'Chưa thanh toán',
+            method: 'Thanh toán qua VNPay',
             createdDate: new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString(),
         };
         console.log('PaymentMethod data:', paymentMethodData);
@@ -239,7 +241,7 @@ export default function BookingPodDetailContent() {
             if (!response.ok) throw new Error('Network response was not ok');
             const result = await response.json();
             console.log('Creating PaymentMethod successful:', result);
-            window.location.href = result.paymentUrl;
+            // window.location.href = result.paymentUrl;
         } catch (error) {
             console.error('Error during booking:', error);
         }
