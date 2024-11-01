@@ -3,20 +3,12 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './UserSideBar.css';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquare } from '@fortawesome/free-solid-svg-icons';
-
 export default function SideBar() {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const toggleNav = () => {
         setIsOpen(!isOpen);
-    };
-
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
     };
 
 
@@ -68,15 +60,6 @@ export default function SideBar() {
                         :
                         (<Link onClick={handleLogout}><i className='fas fa-sign-out-alt icon'></i> Đăng xuất</Link>)
                     }
-
-                    {/* <button className={`dropdown-btn ${isDropdownOpen ? 'open' : ''}`} onClick={toggleDropdown}>
-                    <FontAwesomeIcon icon={faSquare} />Quản lí tài khoản
-                    <i className={`fa fa-caret-down ${isDropdownOpen ? 'active' : ''}`}></i>
-                </button>
-                <div className={`dropdown-container ${isDropdownOpen ? 'open' : ''}`}>
-                    <Link to='/customer'>Khách hàng</Link>
-                    <Link to='/staff'>Nhân viên</Link>
-                </div> */}
 
                 </div>
 

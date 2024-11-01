@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Row, Col, Form, Button, Tabs, Tab, Spinner } from 'react-bootstrap';
+import { Row, Col, Form, Button, Tabs, Tab, DropdownButton, Dropdown, Spinner } from 'react-bootstrap';
 import './UserBookingDetail.css';
 
 import MyTabs from './MyTabs';
@@ -112,7 +112,7 @@ export default function UserBookingDetail() {
     const getPodBookingRating = (podId) => {
         const booking = BOOKINGs ? BOOKINGs.filter(booking => booking.podId === podId && booking.rating !== null && booking.rating > 0) : [];
         const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
-        return rating / booking.length;
+        return (rating / booking.length).toFixed(1);
     };
 
     const getCategoryName = (productId) => {
@@ -228,9 +228,50 @@ export default function UserBookingDetail() {
             // const data = await response.json();
             setLoading(false);
             alert('Đánh giá thành công');
+            window.location.reload();
         } catch (error) {
             setError(error);
             console.log('Đánh giá thất bại:', error);
+            setLoading(false);
+        }
+    }
+
+    const handleCancelBooking = () => {
+        if (confirm('Bạn có chắc chắn muốn hủy đơn đặt phòng không?')) {
+            CancelBooking();
+        }
+    }
+    const CancelBooking = async () => {
+
+        const changeData = {
+            id: thisBOOKING.id,
+            date: thisBOOKING.date,
+            status: 'Đã hủy',
+            rating: thisBOOKING.rating,
+            feedback: thisBOOKING.feedback,
+            podId: thisBOOKING.podId,
+            userId: thisBOOKING.userId,
+        };
+        console.log('Change Information Data:', changeData);
+
+        try {
+            const response = await fetch(`https://localhost:7166/api/Booking/${thisBOOKING.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
+                },
+                body: JSON.stringify(changeData),
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+            // const data = await response.json();
+            setLoading(false);
+            alert('Hủy đơn đặt phòng thành công');
+            window.location.reload();
+        } catch (error) {
+            setError(error);
+            console.log('Hủy đơn đặt phòng thất bại:', error);
             setLoading(false);
         }
     }
@@ -251,18 +292,29 @@ export default function UserBookingDetail() {
 
                 <div className='booking-card-header'>
                     <h4><b>Ngày đặt:</b> {thisBOOKING.currentDate}</h4>
-                    {(() => {
-                        switch (thisBOOKING.status) {
-                            case 'Đã xác nhận':
-                                return <h4 style={{ backgroundColor: '#28a745', color: 'white' }}><b>Đã diễn ra</b></h4>;
-                            case 'Chờ xác nhận':
-                                return <h4 style={{ backgroundColor: '#ffc107', color: 'white' }}><b>Chưa diễn ra</b></h4>;
-                            case 'Đã hủy':
-                                return <h4 style={{ backgroundColor: '#dc3545', color: 'white' }}><b>Đã hủy</b></h4>;
-                            default:
-                                return thisBOOKING.status;
-                        }
-                    })()}
+                    <div className='status-booking'>
+                        {(() => {
+                            switch (thisBOOKING.status) {
+                                case 'Chưa diễn ra':
+                                    return <h4 style={{ backgroundColor: '#ffc107', color: 'white' }}><b>Chưa diễn ra</b></h4>;
+                                case 'Đang diễn ra':
+                                    return <h4 style={{ backgroundColor: '#28a745', color: 'white' }}><b>Đang diễn ra</b></h4>;
+                                case 'Đã kết thúc':
+                                    return <h4 style={{ backgroundColor: '#0dcaf0', color: 'white' }}><b>Đã kết thúc</b></h4>;
+                                case 'Đã hủy':
+                                    return <h4 style={{ backgroundColor: '#dc3545', color: 'white' }}><b>Đã hủy</b></h4>;
+                                case 'Đã hoàn tiền':
+                                    return <h4 style={{ backgroundColor: '#fb8b24', color: 'white' }}><b>Đã hoàn tiền</b></h4>;
+                                default:
+                                    return <h4><b>{thisBOOKING.status}</b></h4>;
+                            }
+                        })()}
+                        {thisBOOKING.status && thisBOOKING.status === 'Chưa diễn ra' && (
+                            <DropdownButton id='dropdown-basic-button' title=''>
+                                <Dropdown.Item onClick={handleCancelBooking}>Hủy đơn đặt phòng</Dropdown.Item>
+                            </DropdownButton>
+                        )}
+                    </div>
                 </div>
 
                 <Row className='booking-row'>
@@ -274,22 +326,18 @@ export default function UserBookingDetail() {
                             </div>
                             <div className='card-detail'>
                                 <div className='card-information'>
-                                    <p className='booking-id'>ID: {thisBOOKING.id}</p>
+                                    <p className='booking-id'>ID đơn đặt phòng: {thisBOOKING.id}</p>
                                     <h1><b>{thisPOD.name}</b></h1>
-                                    <div className='card-rating-capacity'>
-                                        <div className='rating'>
-                                            {getPodBookingRating(thisBOOKING.podId) ?
-                                                <span style={{ color: 'gold', fontSize: '1.3em' }}><b>Đánh giá: {getPodBookingRating(thisBOOKING.podId)}</b><i className='fa-solid fa-star'></i></span>
-                                                :
-                                                <>
-                                                    {[...Array(thisPOD.rating)].map((_, i) => (
-                                                        <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
-                                                    ))}
-                                                    <span>(ĐƯỢC ĐỀ XUẤT)</span>
-                                                </>
-                                            }
-                                        </div>
-                                    </div>
+                                    {getPodBookingRating(thisBOOKING.podId) && getPodBookingRating(thisBOOKING.podId) > 0 ?
+                                        <span style={{ color: 'gold', fontSize: '1.3em' }}><b>Đánh giá: {getPodBookingRating(thisBOOKING.podId)}</b><i className='fa-solid fa-star'></i></span>
+                                        :
+                                        <>
+                                            {[...Array(thisPOD.rating)].map((_, i) => (
+                                                <span key={i} style={{ color: 'gold', fontSize: '1.3em' }}><i className='fa-solid fa-star'></i></span>
+                                            ))}
+                                            <span>(ĐƯỢC ĐỀ XUẤT)</span>
+                                        </>
+                                    }
                                     <p><b>Loại:</b> {thisTYPE.name}</p>
                                     <p><b>Địa chỉ:</b> {thisSTORE.name}, {thisSTORE.address}</p>
                                 </div>
@@ -331,7 +379,7 @@ export default function UserBookingDetail() {
                         <div className='tab-content order-tab'>
                             <h1><b>DỊCH VỤ ĐÃ ĐẶT</b></h1>
                             <Row className='booking-row'>
-                                {filteredBOOKINGORDERs ? (
+                                {filteredBOOKINGORDERs && filteredBOOKINGORDERs.length !== 0 ? (
                                     filteredBOOKINGORDERs.map((bookingOrder, index) => (
                                         <Col key={index} xxl={6} className='booking-col'>
                                             <h3><b>{getProductName(bookingOrder.productId)}</b></h3>

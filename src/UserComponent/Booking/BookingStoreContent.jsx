@@ -72,7 +72,7 @@ export default function BookingStoreContent() {
         const bookingsOfPods = podsOfStore.length > 0 ? BOOKINGs.filter(booking => podsOfStore.some(pod => pod.id == booking.podId)) : [];
         const filteredBooking = bookingsOfPods ? bookingsOfPods.filter(booking => booking.rating !== null && booking.rating > 0) : [];
         const rating = filteredBooking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
-        return rating / filteredBooking.length;
+        return (rating / filteredBooking.length).toFixed(1);
     };
 
 
@@ -126,7 +126,11 @@ export default function BookingStoreContent() {
                                     <Card.Body className='card-body'>
                                         <div className='card-name-rating'>
                                             <h3><b>{store.name}</b></h3>
-                                            <span style={{ color: 'gold', fontSize: '2em' }}><b>{getStoreBookingRating(store.id)}</b><i className='fa-solid fa-star'></i></span>
+                                            {getStoreBookingRating(store.id) && getStoreBookingRating(store.id) > 0 ?
+                                                <span style={{ color: 'gold', fontSize: '2em' }}><b>{getStoreBookingRating(store.id)}</b><i className='fa-solid fa-star'></i></span>
+                                                :
+                                                <span style={{ color: 'gold', fontSize: '2em' }}><i className='fa-solid fa-star'></i></span>
+                                            }
                                         </div>
                                         {store.status === 'Đang hoạt động' && <h5 style={{ color: '#28a745' }}><b>Đang hoạt động</b></h5>}
                                         {store.status === 'Dừng hoạt động' && <h5 style={{ color: '#dc3545' }}><b>Dừng hoạt động</b></h5>}

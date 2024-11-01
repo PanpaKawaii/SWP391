@@ -107,9 +107,9 @@ export default function BookingPodDetailContent() {
     // Những Slot được chọn từ AvailableSLOTs
     const selectedSlots = AvailableSLOTs ? AvailableSLOTs.filter(slot => SlotId.includes(slot.id)) : [];
 
-    // Những Booking có cùng Date được chọn
+    // Những Booking có cùng Date được chọn (Không bao gồm Booking đã hủy)
     const bookingsHaveTheSameDate = BOOKINGs ? BOOKINGs.filter(booking =>
-        booking.date.substring(0, 10) === date
+        booking.date.substring(0, 10) === date && booking.status !== 'Đã hủy'
     ).map(booking => booking.id) : [];
 
     // Những Booking có cùng Date và cùng Slot được chọn
@@ -119,7 +119,7 @@ export default function BookingPodDetailContent() {
     const getPodBookingRating = (podId) => {
         const booking = BOOKINGs ? BOOKINGs.filter(booking => booking.podId === podId && booking.rating !== null && booking.rating > 0) : [];
         const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
-        return rating / booking.length;
+        return (rating / booking.length).toFixed(1);
     };
 
     useEffect(() => {
@@ -158,7 +158,7 @@ export default function BookingPodDetailContent() {
             id: MaxBookingID + 1,
             date: date,
             currentDate: new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString(),
-            status: 'Chờ xác nhận',
+            status: 'Chưa diễn ra',
             feedback: '',
             rating: 0,
             podId: Pod.id,
@@ -241,7 +241,7 @@ export default function BookingPodDetailContent() {
             if (!response.ok) throw new Error('Network response was not ok');
             const result = await response.json();
             console.log('Creating PaymentMethod successful:', result);
-            // window.location.href = result.paymentUrl;
+            window.location.href = result.paymentUrl;
         } catch (error) {
             console.error('Error during booking:', error);
         }
@@ -369,7 +369,7 @@ export default function BookingPodDetailContent() {
                                         }
                                     </div>
                                     <div className='favorite-rating'>
-                                        {getPodBookingRating(Pod.id) ?
+                                        {getPodBookingRating(Pod.id) && getPodBookingRating(Pod.id) > 0 ?
                                             <span style={{ color: 'gold', fontSize: '2em' }}><b>{getPodBookingRating(Pod.id)}</b><i className='fa-solid fa-star'></i></span>
                                             :
                                             <>
@@ -413,102 +413,101 @@ export default function BookingPodDetailContent() {
                                         <h1><b>{AvailableSLOTs[0].price.toLocaleString('vi-VN')}đ/slot</b></h1>
                                     </div>
                                     <Form className='form-card' onSubmit={handleBooking}>
-                                        {SlotId.length === 0 ? (
-                                            <Form.Group controlId='BookingDate' className='form-group'>
-                                                {/* <Form.Label>Ngày nhận phòng</Form.Label> */}
-                                                <Form.Control className='input' type='date' value={date} onChange={(e) => {
-                                                    const selectedDate = e.target.value;
-                                                    setDate(selectedDate);
-                                                    console.log(selectedDate);
-                                                }} required />
-                                            </Form.Group>
-                                        ) : (
-                                            <div style={{ padding: '3px' }}><h3>Ngày: {date}</h3></div>
-                                        )}
-
-                                        {date &&
-                                            <Form.Group controlId='BookingSlot' className='form-group'>
-                                                <Row className='row'>
-                                                    {AvailableSLOTs.map((slot, index) => (
-                                                        <Col key={index} xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className='col'>
-                                                            <div
-                                                                onClick={() => {
-                                                                    const selectedSlot = AvailableSLOTs.find(s => s.id === slot.id);
-                                                                    setAmount(prevAmount => prevAmount + (selectedSlot.price * (selectedSlot.selected ? 1 : -1)));
-                                                                    selectedSlot.selected = !selectedSlot.selected; // Toggle selection
-                                                                    console.log(selectedSlot.selected ? `Selected: ${slot.id}` : `Deselected: ${slot.id}`);
-                                                                    setSlotId(prevSlotId => {
-                                                                        const isSelected = prevSlotId.includes(slot.id);
-                                                                        if (isSelected) {
-                                                                            return prevSlotId.filter(id => id !== slot.id); // Remove if already selected
-                                                                        } else {
-                                                                            return [...prevSlotId, slot.id]; // Add if not selected
-                                                                        }
-                                                                    });
-                                                                }}
-                                                                // style={{
-                                                                //     cursor: 'pointer',
-                                                                //     backgroundColor: slot.selected ? '#d3f9d8' : '#ffffff',
-                                                                //     // backgroundColor: bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '#fad7d9' : '#ffffff',
-                                                                //     padding: '5px',
-                                                                //     margin: '5px',
-                                                                //     border: slot.selected ? '1px solid #28a745' : '1px solid #cccccc',
-                                                                //     // border: bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '1px solid #ff0000' : '1px solid #cccccc',
-                                                                //     borderRadius: '5px'
-                                                                // }}
-                                                                style={{
-                                                                    cursor: 'pointer',
-                                                                    backgroundColor: slot.selected ? (bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '#fad7d9' : '#d3f9d8') : '#ffffff',
-                                                                    padding: '5px',
-                                                                    margin: '5px',
-                                                                    border: slot.selected ? (bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '1px solid #ff0000' : '1px solid #28a745') : '1px solid #cccccc',
-                                                                    borderRadius: '5px'
-                                                                }}
-                                                            >
-                                                                {`[${slot.name}] ${slot.startTime}:00 - ${slot.endTime}:00`}
-                                                            </div>
-                                                        </Col>
-                                                    ))}
-                                                </Row>
-                                            </Form.Group>
-                                        }
-
-                                        <Form.Group controlId='DateValidation' className='form-group'>
-                                            {(() => {
-                                                const selectedDate = new Date(date);
-                                                const currentDate = new Date();
-                                                currentDate.setHours(0, 0, 0, 0); // Reset time to start of day for fair comparison
-
-                                                if (selectedDate < currentDate) {
-                                                    return (
-                                                        <Form.Text className='text-danger'>
-                                                            Vui lòng chọn ngày từ ngày hôm nay trở đi.
-                                                        </Form.Text>
-                                                    );
-                                                } else if (selectedDate > new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000)) {
-                                                    return (
-                                                        <Form.Text className='text-warning'>
-                                                            Đặt phòng chỉ có thể đặt trong vòng 30 ngày tới.
-                                                        </Form.Text>
-                                                    );
-                                                }
-                                                return null;
-                                            })()}
-                                        </Form.Group>
-
-                                        <Form.Group controlId='PaymentMethod' className='form-group'>
-                                            <Form.Label>Hình thức thanh toán</Form.Label>
-                                            <Form.Control as='select' value={selectedPaymentMethod} onChange={(e) => setSelectedPaymentMethod(e.target.value)}>
-                                                <option value='Thanh toán qua VNPay'>Thanh toán qua VNPay</option>
-                                                {/* <option value='Thanh toán bằng tiền mặt'>Thanh toán bằng tiền mặt</option> */}
-                                            </Form.Control>
-                                        </Form.Group>
-
-                                        <h2><b>Tổng: {Amount.toLocaleString('vi-VN')}đ</b></h2>
-
                                         {id ?
                                             (
                                                 <>
+                                                    {SlotId.length === 0 ? (
+                                                        <Form.Group controlId='BookingDate' className='form-group'>
+                                                            {/* <Form.Label>Ngày nhận phòng</Form.Label> */}
+                                                            <Form.Control className='input' type='date' value={date} onChange={(e) => {
+                                                                const selectedDate = e.target.value;
+                                                                setDate(selectedDate);
+                                                                console.log(selectedDate);
+                                                            }} required />
+                                                        </Form.Group>
+                                                    ) : (
+                                                        <div style={{ padding: '3px' }}><h3>Ngày: {date}</h3></div>
+                                                    )}
+
+                                                    {date &&
+                                                        <Form.Group controlId='BookingSlot' className='form-group'>
+                                                            <Row className='row'>
+                                                                {AvailableSLOTs.map((slot, index) => (
+                                                                    <Col key={index} xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className='col'>
+                                                                        <div
+                                                                            onClick={() => {
+                                                                                const selectedSlot = AvailableSLOTs.find(s => s.id === slot.id);
+                                                                                setAmount(prevAmount => prevAmount + (selectedSlot.price * (selectedSlot.selected ? 1 : -1)));
+                                                                                selectedSlot.selected = !selectedSlot.selected; // Toggle selection
+                                                                                console.log(selectedSlot.selected ? `Selected: ${slot.id}` : `Deselected: ${slot.id}`);
+                                                                                setSlotId(prevSlotId => {
+                                                                                    const isSelected = prevSlotId.includes(slot.id);
+                                                                                    if (isSelected) {
+                                                                                        return prevSlotId.filter(id => id !== slot.id); // Remove if already selected
+                                                                                    } else {
+                                                                                        return [...prevSlotId, slot.id]; // Add if not selected
+                                                                                    }
+                                                                                });
+                                                                            }}
+                                                                            // style={{
+                                                                            //     cursor: 'pointer',
+                                                                            //     backgroundColor: slot.selected ? '#d3f9d8' : '#ffffff',
+                                                                            //     // backgroundColor: bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '#fad7d9' : '#ffffff',
+                                                                            //     padding: '5px',
+                                                                            //     margin: '5px',
+                                                                            //     border: slot.selected ? '1px solid #28a745' : '1px solid #cccccc',
+                                                                            //     // border: bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '1px solid #ff0000' : '1px solid #cccccc',
+                                                                            //     borderRadius: '5px'
+                                                                            // }}
+                                                                            style={{
+                                                                                cursor: 'pointer',
+                                                                                backgroundColor: slot.selected ? (bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '#fad7d9' : '#d3f9d8') : '#ffffff',
+                                                                                padding: '5px',
+                                                                                margin: '5px',
+                                                                                border: slot.selected ? (bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '1px solid #ff0000' : '1px solid #28a745') : '1px solid #cccccc',
+                                                                                borderRadius: '5px'
+                                                                            }}
+                                                                        >
+                                                                            {`[${slot.name}] ${slot.startTime}:00 - ${slot.endTime}:00`}
+                                                                        </div>
+                                                                    </Col>
+                                                                ))}
+                                                            </Row>
+                                                        </Form.Group>
+                                                    }
+
+                                                    <Form.Group controlId='DateValidation' className='form-group'>
+                                                        {(() => {
+                                                            const selectedDate = new Date(date);
+                                                            const currentDate = new Date();
+                                                            currentDate.setHours(0, 0, 0, 0); // Reset time to start of day for fair comparison
+
+                                                            if (selectedDate < currentDate) {
+                                                                return (
+                                                                    <Form.Text className='text-danger'>
+                                                                        Vui lòng chọn ngày từ ngày hôm nay trở đi.
+                                                                    </Form.Text>
+                                                                );
+                                                            } else if (selectedDate > new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000)) {
+                                                                return (
+                                                                    <Form.Text className='text-warning'>
+                                                                        Đặt phòng chỉ có thể đặt trong vòng 30 ngày tới.
+                                                                    </Form.Text>
+                                                                );
+                                                            }
+                                                            return null;
+                                                        })()}
+                                                    </Form.Group>
+
+                                                    <Form.Group controlId='PaymentMethod' className='form-group'>
+                                                        <Form.Label>Hình thức thanh toán</Form.Label>
+                                                        <Form.Control as='select' value={selectedPaymentMethod} onChange={(e) => setSelectedPaymentMethod(e.target.value)}>
+                                                            <option value='Thanh toán qua VNPay'>Thanh toán qua VNPay</option>
+                                                            {/* <option value='Thanh toán bằng tiền mặt'>Thanh toán bằng tiền mặt</option> */}
+                                                        </Form.Control>
+                                                    </Form.Group>
+
+                                                    <h2><b>Tổng: {Amount.toLocaleString('vi-VN')}đ</b></h2>
                                                     {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length !== 0 && <p style={{ color: '#ff0000' }}>Slot không khả dụng</p>}
                                                     {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length === 0 &&
                                                         SlotId.length > 0 &&
@@ -529,7 +528,7 @@ export default function BookingPodDetailContent() {
 
                         <div className='big-rating'>
 
-                            {getPodBookingRating(Pod.id) ?
+                            {getPodBookingRating(Pod.id) && getPodBookingRating(Pod.id) > 0 ?
                                 <>
                                     <h1><b>{getPodBookingRating(Pod.id)}<span style={{ color: 'gold', fontSize: '150px' }}><i className='fa-solid fa-star'></i></span></b></h1>
                                     <h4>Được khách hàng yêu thích</h4>

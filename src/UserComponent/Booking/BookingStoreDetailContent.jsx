@@ -68,7 +68,7 @@ export default function BookingStoreDetailContent() {
         const bookingsOfPods = podsOfStore.length > 0 ? BOOKINGs.filter(booking => podsOfStore.some(pod => pod.id == booking.podId)) : [];
         const filteredBooking = bookingsOfPods ? bookingsOfPods.filter(booking => booking.rating !== null && booking.rating > 0) : [];
         const rating = filteredBooking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
-        return rating / filteredBooking.length;
+        return (rating / filteredBooking.length).toFixed(1);
     };
 
 
@@ -93,7 +93,11 @@ export default function BookingStoreDetailContent() {
                             <h1><b>{Store.name}</b></h1>
                             {Store.status === 'Đang hoạt động' && <h5 style={{ color: '#28a745' }}><b>Đang hoạt động</b></h5>}
                             {Store.status === 'Dừng hoạt động' && <h5 style={{ color: '#dc3545' }}><b>Dừng hoạt động</b></h5>}
-                            <span style={{ color: 'gold', fontSize: '3em' }}><b>{getStoreBookingRating(Store.id)}</b><i className='fa-solid fa-star'></i></span>
+                            {getStoreBookingRating(Store.id) && getStoreBookingRating(Store.id) > 0 ?
+                                <span style={{ color: 'gold', fontSize: '3em' }}><b>{getStoreBookingRating(Store.id)}</b><i className='fa-solid fa-star'></i></span>
+                                :
+                                <span style={{ color: 'gold', fontSize: '3em' }}><i className='fa-solid fa-star'></i></span>
+                            }
                             <p><b>Địa chỉ:</b> {Store.address}</p>
                             <p><b>Liên hệ:</b> {Store.contact}</p>
                             <p><b>Trạng thái:</b> {Store.status}</p>

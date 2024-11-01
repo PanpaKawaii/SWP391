@@ -86,7 +86,7 @@ export default function UserBooking() {
     const getPodBookingRating = (podId) => {
         const booking = BOOKINGs ? BOOKINGs.filter(booking => booking.podId === podId && booking.rating !== null && booking.rating > 0) : [];
         const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
-        return rating / booking.length;
+        return (rating / booking.length).toFixed(1);
     };
 
     const getPodName = (podId) => {
@@ -211,14 +211,18 @@ export default function UserBooking() {
                                         })()} */}
                                         {(() => {
                                             switch (booking.status) {
-                                                case 'Đã xác nhận':
-                                                    return <h4 style={{ backgroundColor: '#28a745', color: 'white' }}><b>Đã diễn ra</b></h4>;
-                                                case 'Chờ xác nhận':
+                                                case 'Chưa diễn ra':
                                                     return <h4 style={{ backgroundColor: '#ffc107', color: 'white' }}><b>Chưa diễn ra</b></h4>;
+                                                case 'Đang diễn ra':
+                                                    return <h4 style={{ backgroundColor: '#28a745', color: 'white' }}><b>Đang diễn ra</b></h4>;
+                                                case 'Đã kết thúc':
+                                                    return <h4 style={{ backgroundColor: '#0dcaf0', color: 'white' }}><b>Đã kết thúc</b></h4>;
                                                 case 'Đã hủy':
                                                     return <h4 style={{ backgroundColor: '#dc3545', color: 'white' }}><b>Đã hủy</b></h4>;
+                                                case 'Đã hoàn tiền':
+                                                    return <h4 style={{ backgroundColor: '#fb8b24', color: 'white' }}><b>Đã hoàn tiền</b></h4>;
                                                 default:
-                                                    return booking.status;
+                                                    return <h4><b>{booking.status}</b></h4>;
                                             }
                                         })()}
                                     </div>
@@ -229,11 +233,11 @@ export default function UserBooking() {
                                         </div>
                                         <div className='card-detail'>
                                             <div className='card-information'>
-                                                <p className='booking-id'>ID: {booking.id}</p>
+                                                <p className='booking-id'>ID đơn đặt phòng: {booking.id}</p>
                                                 <h1><b>{getPodName(booking.podId)}</b></h1>
 
                                                 <div className='card-rating'>
-                                                    {getPodBookingRating(booking.podId) ?
+                                                    {getPodBookingRating(booking.podId) && getPodBookingRating(booking.podId) > 0 ?
                                                         <span style={{ color: 'gold', fontSize: '1.3em' }}><b>Đánh giá: {getPodBookingRating(booking.podId)}</b><i className='fa-solid fa-star'></i></span>
                                                         :
                                                         <>

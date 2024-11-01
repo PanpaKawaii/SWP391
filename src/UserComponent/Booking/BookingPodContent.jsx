@@ -128,7 +128,7 @@ export default function BookingPodContent() {
     const getPodBookingRating = (podId) => {
         const booking = BOOKINGs ? BOOKINGs.filter(booking => booking.podId === podId && booking.rating !== null && booking.rating > 0) : [];
         const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
-        return rating / booking.length;
+        return (rating / booking.length).toFixed(1);
     };
 
     const getCapacity = (typeId) => {
@@ -248,7 +248,7 @@ export default function BookingPodContent() {
                                     <td>
                                         <p>ID: {pod.id}</p>
                                         <h3><b>{pod.name}</b></h3>
-                                        {getPodBookingRating(pod.id) ?
+                                        {getPodBookingRating(pod.id) && getPodBookingRating(pod.id) > 0 ?
                                             <span style={{ color: 'gold', fontSize: '1.3em' }}><b>Đánh giá: {getPodBookingRating(pod.id)}</b><i className='fa-solid fa-star'></i></span>
                                             :
                                             <>

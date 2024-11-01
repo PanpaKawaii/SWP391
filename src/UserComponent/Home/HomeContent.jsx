@@ -80,7 +80,7 @@ export default function HomeContent() {
         const bookingsOfPods = podsOfStore.length > 0 ? BOOKINGs.filter(booking => podsOfStore.some(pod => pod.id == booking.podId)) : [];
         const filteredBooking = bookingsOfPods ? bookingsOfPods.filter(booking => booking.rating !== null && booking.rating > 0) : [];
         const rating = filteredBooking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
-        return rating / filteredBooking.length;
+        return (rating / filteredBooking.length).toFixed(1);
     };
 
     useEffect(() => {
@@ -185,56 +185,7 @@ export default function HomeContent() {
                     <b><p style={{ color: '#000000', textShadow: '0 0 2px #ffffff' }}>Có rất nhiều kết quả cho bạn lựa chọn</p></b>}
             </div>
 
-            {/* <h1><b>CƠ SỞ MỚI SẮP RA MẮT!</b></h1> */}
             <div className='shortcut-booking-pod'>
-                {/* <Row className='image-row'>
-                    {(STOREs ? STOREs.slice(0, 4) : []).map((store) => ( // Check if STOREs is not null
-                        <Col key={store.id} xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} className='image-col'>
-                            <Card className='image-card'>
-                                <Link to={`booking/store/${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link>
-                                <Card.Body className='card-body'>
-                                    <h3><b>{store.name}</b></h3>
-                                    <div className='full-detail'>
-                                        <div className='short-detail'>
-                                            <p>Địa chỉ: {store.address}</p>
-                                            <p>Liên hệ: {store.contact}</p>
-                                        </div>
-                                        <div className='active-button'>
-                                            <Link to={`booking/store/${store.id}`}>
-                                                <Button className='btn' style={{ backgroundColor: '#28a745' }}>CHỌN</Button>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row> */}
-                {/* <Row className='image-row'>
-                    {(STOREs ? STOREs.slice(0, 1) : []).map((store) => ( // Check if STOREs is not null
-                        <Col key={store.id} xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className='image-col'>
-                            <Card className='image-card'>
-                                <Link to={`booking/store/3`}><img src={imageSTOREs[2].image} alt='Cơ Sở 3' /></Link>
-                                <Card.Body className='card-body'>
-                                    <h3><b>Cơ Sở 3</b></h3>
-                                    <div className='full-detail'>
-                                        <div className='short-detail'>
-                                            <p>Địa chỉ: {store.address}</p>
-                                            <p>Liên hệ: {store.contact}</p>
-                                        </div>
-                                        <div className='active-button'>
-                                            <Link to={`booking/store/3`}>
-                                                <Button className='btn' style={{ backgroundColor: '#28a745' }}>CHỌN</Button>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row> */}
-
-
                 <div className='shortcut-booking-store'>
                     <h1><b>CƠ SỞ THỊNH HÀNH!</b></h1>
                     <Row className='image-row'>
@@ -242,12 +193,20 @@ export default function HomeContent() {
                             <Col lg={12} xl={6} xxl={5} key={store.id} className='image-col'>
                                 <Card className='image-card'>
                                     {/* <Link to={`booking/store/${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link> */}
-                                    <Link to={`booking/store/${store.id}`}><img src={store.image} alt={store.name} /></Link>
+                                    {store.status === 'Đang hoạt động' ?
+                                        <Link to={`booking/store/${store.id}`}><img src={store.image} alt={store.name} /></Link>
+                                        :
+                                        <img src={store.image} alt={store.name} />
+                                    }
 
                                     <Card.Body className='card-body'>
                                         <div className='card-name-rating'>
                                             <h3><b>{store.name}</b></h3>
-                                            <span style={{ color: 'gold', fontSize: '2em' }}><b>{getStoreBookingRating(store.id)}</b><i className='fa-solid fa-star'></i></span>
+                                            {getStoreBookingRating(store.id) && getStoreBookingRating(store.id) > 0 ?
+                                                <span style={{ color: 'gold', fontSize: '2em' }}><b>{getStoreBookingRating(store.id)}</b><i className='fa-solid fa-star'></i></span>
+                                                :
+                                                <span style={{ color: 'gold', fontSize: '2em' }}><i className='fa-solid fa-star'></i></span>
+                                            }
                                         </div>
                                         {store.status === 'Đang hoạt động' && <h5 style={{ color: '#28a745' }}><b>Đang hoạt động</b></h5>}
                                         {store.status === 'Dừng hoạt động' && <h5 style={{ color: '#dc3545' }}><b>Dừng hoạt động</b></h5>}
@@ -271,7 +230,11 @@ export default function HomeContent() {
                                                 ) : null
                                             }
                                         </div>
-                                        <Link to={`booking/store/${store.id}`}><Button className='btn'>CHI TIẾT</Button></Link>
+                                        {store.status === 'Đang hoạt động' ?
+                                            <Link to={`booking/store/${store.id}`}><Button className='btn'>CHI TIẾT</Button></Link>
+                                            :
+                                            <Button className='btn'>CHI TIẾT</Button>
+                                        }
                                     </Card.Body>
                                 </Card>
                             </Col>

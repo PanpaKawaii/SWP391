@@ -34,18 +34,7 @@ import ScrollToTop from './ScrollToTopComponent/ScrollToTop';
 function App() {
   const UserRole = localStorage.getItem('UserRole');
 
-  if (UserRole === 'Admin') {
-    return (
-      <>
-        <ScrollToTop />
-        <div className='admin-container'>
-          <Sidebar className='sidebar' />
-          This is Admin
-        </div>
-      </>
-    )
-  }
-  else if (UserRole === null) {
+  if (UserRole === null) {
     return (
       <>
         <ScrollToTop />
@@ -126,6 +115,24 @@ function App() {
         <Route path='/signinsignup' element={<SignInSignUp />} />
       </Routes>
       <Footer /> */}
+      </>
+    )
+  }
+  else if (UserRole === 'Admin') {
+    return (
+      <>
+        <ScrollToTop />
+        <div className='admin-container'>
+          <Sidebar className='sidebar' />
+          This is Admin
+        </div>
+      </>
+    )
+  }
+  else {
+    return (
+      <>
+        <div>Chức vụ không có sẵn.</div>
       </>
     )
   }

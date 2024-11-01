@@ -41,6 +41,18 @@ body {
                 padding: 5px 10px;
                 border-radius: 5px;
             }
+
+            .status-booking {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                #dropdown-basic-button {
+                    background-color: #bbbbbb;
+                    border: none;
+                    font-weight: bold;
+                }
+            }
         }
 
         .booking-row {
@@ -81,55 +93,6 @@ body {
 
                             .booking-id {
                                 margin: 0 0 5px;
-                            }
-
-                            .card-rating-capacity {
-                                display: flex;
-                                align-items: end;
-                            }
-                        }
-
-                        .card-slot {
-                            width: 100%;
-                            background-color: #881a1a;
-                        }
-
-                        .card-amount-method-datetime-status {
-                            width: 50%;
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: end;
-                            text-align: right;
-
-                            .slot-name {
-                                width: 100%;
-                                margin: 0;
-                                display: flex;
-                                justify-content: end;
-
-                                .col {
-                                    padding: 0;
-                                    margin: 2px 0 0 2px;
-                                    border: 1px solid #cccccc;
-                                    border-radius: 5px;
-                                    text-align: center;
-                                }
-                            }
-
-                            .card-amount {
-                                text-align: right;
-                            }
-
-                            .card-method {
-                                text-align: right;
-                            }
-
-                            .card-datetime-status {
-                                text-align: right;
-
-                                h4 {
-                                    margin: 5px 0;
-                                }
                             }
                         }
                     }
