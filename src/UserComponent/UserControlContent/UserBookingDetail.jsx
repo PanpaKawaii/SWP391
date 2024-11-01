@@ -33,6 +33,7 @@ export default function UserBookingDetail() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        const UserIdInt = parseInt(UserId, 10);
         const fetchData = async () => {
             try {
                 const bookingResponse = await fetch('https://localhost:7166/api/Booking');
@@ -80,7 +81,12 @@ export default function UserBookingDetail() {
                 const categoryData = await categoryResponse.json();
                 setCATEGORYs(categoryData);
 
-                const userResponse = await fetch(`https://localhost:7166/api/User/GetUser/${parseInt(UserId, 10)}?id=${parseInt(UserId, 10)}`);
+                const userResponse = await fetch(`https://localhost:7166/api/User/${UserIdInt}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                });
                 if (!userResponse.ok) throw new Error('Network response was not ok');
                 const userData = await userResponse.json();
                 setUSER(userData);
@@ -93,7 +99,7 @@ export default function UserBookingDetail() {
         };
 
         fetchData();
-    }, []);
+    }, [id]);
 
     // Lấy Booking này
     const thisBOOKING = BOOKINGs ? BOOKINGs.find(booking => booking.id == BookingId.Id) : null;
@@ -219,7 +225,7 @@ export default function UserBookingDetail() {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify(changeData),
             });
@@ -259,7 +265,7 @@ export default function UserBookingDetail() {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify(changeData),
             });

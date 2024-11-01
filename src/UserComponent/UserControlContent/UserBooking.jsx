@@ -17,7 +17,6 @@ export default function UserBooking() {
 
     const [BOOKINGs, setBOOKINGs] = useState(null);
     const [PODs, setPODs] = useState(null);
-    const [UTILITies, setUTILITies] = useState(null);
     const [TYPEs, setTYPEs] = useState(null);
     const [SLOTs, setSLOTs] = useState([]);
     const [STOREs, setSTOREs] = useState(null);
@@ -37,11 +36,6 @@ export default function UserBooking() {
                 if (!podResponse.ok) throw new Error('Network response was not ok');
                 const podData = await podResponse.json();
                 setPODs(podData);
-
-                const utilityResponse = await fetch('https://localhost:7166/api/Utility');
-                if (!utilityResponse.ok) throw new Error('Network response was not ok');
-                const utilityData = await utilityResponse.json();
-                setUTILITies(utilityData);
 
                 const typeResponse = await fetch('https://localhost:7166/api/Type');
                 if (!typeResponse.ok) throw new Error('Network response was not ok');

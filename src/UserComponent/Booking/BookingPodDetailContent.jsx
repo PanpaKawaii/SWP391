@@ -191,15 +191,12 @@ export default function BookingPodDetailContent() {
 
         console.log('Confirm status:', Confirm);
 
-        const token = localStorage.getItem('token');
-        console.log('Token data:', token);
-
         try {
             const response = await fetch('https://localhost:7166/api/Booking', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
                 body: JSON.stringify(bookingData),
             });
@@ -216,7 +213,7 @@ export default function BookingPodDetailContent() {
         //         method: 'POST',
         //         headers: {
         //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${token}`,
+        //             'Authorization': `Bearer ${localStorage.getItem('token')}`,
         //         },
         //         body: JSON.stringify(paymentData),
         //     });
@@ -233,7 +230,7 @@ export default function BookingPodDetailContent() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
                 body: JSON.stringify(paymentMethodData),
             });

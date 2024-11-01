@@ -28,7 +28,12 @@ export default function UserInformation() {
         if (id) {
             const fetchData = async () => {
                 try {
-                    const userResponse = await fetch(`https://localhost:7166/api/User/GetUser/${id}?id=${id}`);
+                    const userResponse = await fetch(`https://localhost:7166/api/User/${id}`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        },
+                    });
                     if (!userResponse.ok) throw new Error('Network response was not ok');
                     const userData = await userResponse.json();
                     setUSER(userData);
@@ -92,7 +97,7 @@ export default function UserInformation() {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify(changeData),
             });
@@ -176,7 +181,7 @@ export default function UserInformation() {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify(changeData),
             });

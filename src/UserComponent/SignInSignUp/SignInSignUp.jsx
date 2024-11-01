@@ -78,7 +78,7 @@ export default function SignInSignUp() {
     const [SignUpConfirmError, setSignUpConfirmError] = useState(null);
 
 
-    const [token, setToken] = useState(null);
+    const [MaxUserID, setMaxUserID] = useState(null);
     const [loading, setLoading] = useState(true);
     const [errorSignIn, setErrorSignIn] = useState(null);
     const [errorSignUp, setErrorSignUp] = useState(null);
@@ -107,7 +107,6 @@ export default function SignInSignUp() {
 
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
-            setToken(data.token);
             setLoading(false);
 
             localStorage.removeItem('token');
@@ -131,15 +130,6 @@ export default function SignInSignUp() {
 
     const SignUp = async (SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm) => {
 
-        // if (!SignUpEmail || !SignUpFullName || !SignUpPhoneNumber || !SignUpPassword || !SignUpConfirm) {
-        //     console.error('Invalid value');
-        //     setSignUpEmailError('Email không hợp lệ');
-        //     setSignUpFullNameError('Họ tên không hợp lệ');
-        //     setSignUpPhoneNumberError('Số điện thoại không hợp lệ');
-        //     setSignUpPasswordError('Mật khẩu không hợp lệ');
-        //     setSignUpConfirmError('Mật khẩu không hợp lệ');
-        //     return;
-        // }
         if (!SignUpEmail) {
             console.error('Invalid email');
             setSignUpEmailError('Email không hợp lệ');
@@ -187,8 +177,23 @@ export default function SignInSignUp() {
             return;
         }
 
+        const fetchMaxID = async () => {
+            try {
+                const userResponse = await fetch('https://localhost:7166/api/User/GetIDandName');
+                if (!userResponse.ok) throw new Error('Network response was not ok');
+                const userData = await userResponse.json();
+                const MaxUserID = userData.reduce((max, user) => Math.max(max, user.id), 0);
+                setMaxUserID(MaxUserID);
+                console.log('Max User ID:', MaxUserID);
+
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+        await fetchMaxID();
+
         const signupData = {
-            id: 14,
+            id: MaxUserID + 1,
             email: SignUpEmail,
             password: SignUpPassword,
             name: SignUpFullName,
@@ -201,7 +206,7 @@ export default function SignInSignUp() {
         };
         console.log('Sign Up Data:', signupData);
 
-        
+
         try {
             const userResponse = await fetch(`https://localhost:7166/api/User/GetUserByEmail/${SignUpEmail}`);
             if (!userResponse.ok) throw new Error('Network response was not ok');
@@ -238,17 +243,17 @@ export default function SignInSignUp() {
         }
     }
 
-    useEffect(() => {
-        if (SignInEmail && SignInPassword) {
-            Login(SignInEmail, SignInPassword);
-        }
-    }, [SignInEmail, SignInPassword]);
+    // useEffect(() => {
+    //     if (SignInEmail && SignInPassword) {
+    //         Login(SignInEmail, SignInPassword);
+    //     }
+    // }, [SignInEmail, SignInPassword]);
 
-    useEffect(() => {
-        if (SignUpEmail && SignUpFullName && SignUpPhoneNumber && SignUpPassword && SignUpConfirm) {
-            SignUp(SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm);
-        }
-    }, [SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm]);
+    // useEffect(() => {
+    //     if (SignUpEmail && SignUpFullName && SignUpPhoneNumber && SignUpPassword && SignUpConfirm) {
+    //         SignUp(SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm);
+    //     }
+    // }, [SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm]);
 
 
     const handleSubmitSignIn = (e) => {
