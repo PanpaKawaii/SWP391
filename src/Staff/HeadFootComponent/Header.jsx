@@ -4,6 +4,9 @@ import avatar from "../ManagerImage/avatar.jpg"; // Nhập file CSS
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Nhập FontAwesomeIcon
 // import { faSearch } from '@fortawesome/free-solid-svg-icons'; // Nhập biểu tượng kính lúp
 export default function Header() {
+  const userId = localStorage.getItem("UserId") || "Tên người dùng"; // Thay thế 'Tên người dùng' bằng giá trị mặc định
+  const userRole = localStorage.getItem("UserRole") || "Chức vụ"; // Thay thế 'Chức vụ' bằng giá trị mặc định
+  // const staffIamge = localStorage.getItem("image");
   return (
     <div className="staff-header-container">
       {" "}
@@ -27,14 +30,11 @@ export default function Header() {
         <div className="inno">INNO SPACE</div>{" "}
         {/* Div cho hình đại diện và thông tin người dùng */}
         <div className="user-info">
-          {" "}
-          {/* Căn chỉnh văn bản bên phải */}
-          <div className="username">Jijue Anderson</div> {/* Tên người dùng */}
-          <div className="role">Admin</div> {/* Chức vụ */}
+          <div className="username">{userId}</div> {""}
+          <div className="role">{userRole}</div> {/* Chức vụ */}
         </div>
         <div className="admin-avatar">
           {" "}
-          {/* Thêm khoảng cách bên phải */}
           <img src={avatar} alt="Admin Avatar" /> {/* Hình đại diện */}
         </div>
       </div>

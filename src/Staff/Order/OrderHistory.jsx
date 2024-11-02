@@ -65,7 +65,14 @@ const OrderHistory = () => {
   // API calls
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(apiUser);
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5nbmdvY2hhaXRyaWV1QGdtYWlsLmNvbSIsImp0aSI6ImE5MmUwOTBkLTQ2NmEtNDE2My1hMDQ3LWUyOWNjYjExOGE2OCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiOSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMzMDc1ODUxLCJpc3MiOiJQb2RCb29raW5nIiwiYXVkIjoiUG9kV2ViIn0.SljDy518ZlaoY5hp6kKZvBp3-j5vXItyHQ0H7Y0ik3o"; // Thay thế bằng token thực tế của bạn
+
+      const response = await axios.get(apiUser, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        },
+      });
       const users = response.data.filter((user) => user.role === "User");
       console.log("Fetched users:", users);
       setUserData(users);
@@ -322,7 +329,7 @@ const OrderHistory = () => {
     }
   }, [orderData, paymentData, selectedBooking]);
 
-  // Cập nhật lại hàm handleUpdatePaymentAmount
+  // Update Payment amount
   const handleUpdatePaymentAmount = async (amount) => {
     if (!selectedBooking) return;
 
@@ -343,14 +350,17 @@ const OrderHistory = () => {
       });
 
       message.success("Cập nhật thanh toán thành công");
-      fetchPaymentData(); // Fetch lại dữ liệu thanh toán
+      await fetchPaymentData(); // Fetch lại dữ liệu thanh toán
+      await fetchBookingData(); // Fetch lại dữ liệu booking
+      calculateRevenue(); // Tính toán lại doanh thu
       handleCloseModal();
     } catch (error) {
       console.error("Lỗi khi cập nhật thanh toán:", error);
       message.error("Cập nhật thanh toán thất bại");
     }
   };
-  // điều chỉnh trạng thái thanh toán
+
+  // Update trạng thái thanh toán
   const handleUpdatePaymentStatus = async (paymentId, newStatus) => {
     try {
       const payment = paymentData.find((p) => p.id === paymentId);
@@ -364,7 +374,9 @@ const OrderHistory = () => {
         status: newStatus,
       });
 
-      fetchPaymentData(); // Fetch lại dữ liệu thanh toán
+      await fetchPaymentData(); // Fetch lại dữ liệu thanh toán
+      await fetchBookingData(); // Fetch lại dữ liệu booking
+      calculateRevenue(); // Tính toán lại doanh thu
       message.success("Cập nhật trạng thái thanh toán thành công");
       handleCloseModal();
     } catch (error) {

@@ -44,12 +44,22 @@ const Customer = () => {
   };
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(apiUser);
-      setUserData(response.data.filter((user) => user.role === "User"));
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5nbmdvY2hhaXRyaWV1QGdtYWlsLmNvbSIsImp0aSI6ImE5MmUwOTBkLTQ2NmEtNDE2My1hMDQ3LWUyOWNjYjExOGE2OCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiOSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMzMDc1ODUxLCJpc3MiOiJQb2RCb29raW5nIiwiYXVkIjoiUG9kV2ViIn0.SljDy518ZlaoY5hp6kKZvBp3-j5vXItyHQ0H7Y0ik3o"; // Thay thế bằng token thực tế của bạn
+
+      const response = await axios.get(apiUser, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        },
+      });
+      const users = response.data.filter((user) => user.role === "User");
+      console.log("Fetched users:", users);
+      setUserData(users);
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
   };
+
   const fetchBookingData = async () => {
     try {
       const response = await axios.get(apiBooking);
