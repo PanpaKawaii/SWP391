@@ -32,19 +32,13 @@ export default function PaymentStatus() {
         // setPaymentInfo(paymentData);
 
         const messageParam = urlParams.get('message');
-        // Bỏ 4 ký tự cuối của chuỗi
-        const trimmedMessage = messageParam ? messageParam : '';
-        setMessage(trimmedMessage);
+        setMessage(messageParam);
     }, []);
 
     return (
         <div className='payment-status'>
             <div className='payment-status-content'>
                 <Card className='payment-status-card'>
-
-                    {/* {message &&
-                        <h1 style={{ color: decodeURIComponent(message) === 'Thanh toán thành công' ? '#28a745' : '#dc3545' }}><b>{decodeURIComponent(message)}</b></h1>
-                    } */}
 
                     {message &&
                         (decodeURIComponent(message) === 'Thanh toán thành công' ?

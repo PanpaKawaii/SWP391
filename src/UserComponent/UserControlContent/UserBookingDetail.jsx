@@ -212,6 +212,7 @@ export default function UserBookingDetail() {
         const changeData = {
             id: thisBOOKING.id,
             date: thisBOOKING.date,
+            currentDate: thisBOOKING.currentDate,
             status: thisBOOKING.status,
             rating: SubmitRating,
             feedback: SubmitFeedback,
@@ -252,6 +253,7 @@ export default function UserBookingDetail() {
         const changeData = {
             id: thisBOOKING.id,
             date: thisBOOKING.date,
+            currentDate: thisBOOKING.currentDate,
             status: 'Đã hủy',
             rating: thisBOOKING.rating,
             feedback: thisBOOKING.feedback,

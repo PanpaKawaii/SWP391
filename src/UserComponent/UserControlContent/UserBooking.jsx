@@ -157,6 +157,105 @@ export default function UserBooking() {
         console.log('Date booking:', dateBOOKINGs)
     };
 
+    useEffect(() => {
+        if (BOOKINGs && PAYMENTs) {
+            filteredBOOKINGs.forEach(booking => {
+                handleUpdateBookingStatus(booking.id);
+            });
+        }
+    }, [filteredBOOKINGs]);
+    const handleUpdateBookingStatus = (bookingId) => {
+        const thisPayment = PAYMENTs.find(payment => payment.bookingId == bookingId);
+        const thisBooking = BOOKINGs.find(booking => booking.id == bookingId);
+        console.log('This payment:', thisPayment.status);
+        console.log('This booking:', thisBooking.status);
+        console.log('Date now:', new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString());
+        // console.log('Date current date:', new Date(new Date(thisBooking.currentDate).getTime() + 7 * 60 * 60 * 1000).toISOString());
+        console.log('Date current date:', thisBooking.currentDate);
+        console.log('Time now:', new Date().getTime() + 7 * 60 * 60 * 1000);
+        console.log('Time current date:', new Date(thisBooking.currentDate).getTime() + 7 * 60 * 60 * 1000);
+        console.log('Minus time:', ((new Date().getTime() + 7 * 60 * 60 * 1000) - (new Date(thisBooking.currentDate).getTime() + 7 * 60 * 60 * 1000)) / 1000 / 60 / 60 / 24);
+        if (
+            thisPayment.status === 'Chưa thanh toán' &&
+            thisBooking.status === 'Chưa diễn ra' &&
+            // 15 minutes
+            new Date().getTime() - new Date(thisBooking.currentDate).getTime() > 1 * 60 * 1000
+        ) {
+            UpdateBookingStatus(bookingId);
+        }
+    };
+    const UpdateBookingStatus = async (bookingId) => {
+        const thisBooking = BOOKINGs.find(booking => booking.id == bookingId);
+        const changeData = {
+            id: thisBooking.id,
+            date: thisBooking.date,
+            currentDate: thisBooking.currentDate,
+            status: 'Đã hủy',
+            rating: thisBooking.rating,
+            feedback: thisBooking.feedback,
+            podId: thisBooking.podId,
+            userId: thisBooking.userId,
+        };
+        console.log('Change Information Data:', changeData);
+
+        try {
+            const response = await fetch(`https://localhost:7166/api/Booking/${thisBooking.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify(changeData),
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+            // const data = await response.json();
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            console.log('Đổi trạng thái thất bại:', error);
+            setLoading(false);
+        }
+    };
+
+    const [countdowns, setCountdowns] = useState({});
+    const calculateTimeLeft = (bookingDate) => {
+        const now = new Date().getTime();
+        const bookingTime = new Date(bookingDate).getTime();
+        const timeLimit = 1 * 60 * 1000; // 15 minutes in milliseconds
+        const difference = (bookingTime + timeLimit) - now;
+
+        if (difference <= 0) return null;
+
+        const minutes = Math.floor((difference / 1000 / 60) % 60);
+        const seconds = Math.floor((difference / 1000) % 60);
+
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    };
+    useEffect(() => {
+        const timer = setInterval(() => {
+            if (filteredBOOKINGs && PAYMENTs) {
+                const newCountdowns = {};
+                filteredBOOKINGs.forEach(booking => {
+                    const payment = PAYMENTs.find(p => p.bookingId === booking.id);
+                    if (payment?.status === 'Chưa thanh toán' && booking.status === 'Chưa diễn ra') {
+                        const timeLeft = calculateTimeLeft(booking.currentDate);
+                        if (timeLeft) {
+                            newCountdowns[booking.id] = timeLeft;
+                        } else {
+                            handleUpdateBookingStatus(booking.id);
+                            clearInterval(timer);
+                            window.location.reload();
+                        }
+                    }
+                });
+                setCountdowns(newCountdowns);
+            }
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [filteredBOOKINGs, PAYMENTs]);
+
 
     if (loading) return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -182,6 +281,7 @@ export default function UserBooking() {
                     <Button type='submit' className='btn'>TÌM KIẾM <i className='fa-solid fa-magnifying-glass'></i></Button>
                     <Button type='reset' className='btn btn-reset'>ĐẶT LẠI BỘ LỌC</Button>
                 </Form>
+
             </div>
             <Row className='booking-row'>
                 {(filteredBOOKINGs && filteredBOOKINGs.length !== 0) ? (
@@ -191,7 +291,17 @@ export default function UserBooking() {
                                 <div className='booking-card-container'>
                                     <div className='booking-card-header'>
                                         <h4><b>Ngày đặt:</b> {booking.currentDate}</h4>
-                                        {/* {(() => {
+                                        <div className='booking-card-status'>
+                                            {(() => {
+                                                const payment = PAYMENTs?.find(p => p.bookingId === booking.id);
+                                                if (payment?.status === 'Chưa thanh toán' && booking.status === 'Chưa diễn ra' && countdowns[booking.id]) {
+                                                    return <h4 style={{ backgroundColor: '#dc3545', color: 'white' }}>
+                                                        <b>Hủy sau: {countdowns[booking.id]}</b>
+                                                    </h4>;
+                                                }
+                                                return null;
+                                            })()}
+                                            {/* {(() => {
                                             switch (booking.status) {
                                                 case 'Đã xác nhận':
                                                     return <h4 style={{ backgroundColor: '#28a745', color: 'white' }}><b>{booking.status}</b></h4>;
@@ -202,23 +312,24 @@ export default function UserBooking() {
                                                 default:
                                                     return booking.status;
                                             }
-                                        })()} */}
-                                        {(() => {
-                                            switch (booking.status) {
-                                                case 'Chưa diễn ra':
-                                                    return <h4 style={{ backgroundColor: '#ffc107', color: 'white' }}><b>Chưa diễn ra</b></h4>;
-                                                case 'Đang diễn ra':
-                                                    return <h4 style={{ backgroundColor: '#28a745', color: 'white' }}><b>Đang diễn ra</b></h4>;
-                                                case 'Đã kết thúc':
-                                                    return <h4 style={{ backgroundColor: '#0dcaf0', color: 'white' }}><b>Đã kết thúc</b></h4>;
-                                                case 'Đã hủy':
-                                                    return <h4 style={{ backgroundColor: '#dc3545', color: 'white' }}><b>Đã hủy</b></h4>;
-                                                case 'Đã hoàn tiền':
-                                                    return <h4 style={{ backgroundColor: '#fb8b24', color: 'white' }}><b>Đã hoàn tiền</b></h4>;
-                                                default:
-                                                    return <h4><b>{booking.status}</b></h4>;
-                                            }
-                                        })()}
+                                            })()} */}
+                                            {(() => {
+                                                switch (booking.status) {
+                                                    case 'Chưa diễn ra':
+                                                        return <h4 style={{ backgroundColor: '#ffc107', color: 'white' }}><b>Chưa diễn ra</b></h4>;
+                                                    case 'Đang diễn ra':
+                                                        return <h4 style={{ backgroundColor: '#28a745', color: 'white' }}><b>Đang diễn ra</b></h4>;
+                                                    case 'Đã kết thúc':
+                                                        return <h4 style={{ backgroundColor: '#0dcaf0', color: 'white' }}><b>Đã kết thúc</b></h4>;
+                                                    case 'Đã hủy':
+                                                        return <h4 style={{ backgroundColor: '#dc3545', color: 'white' }}><b>Đã hủy</b></h4>;
+                                                    case 'Đã hoàn tiền':
+                                                        return <h4 style={{ backgroundColor: '#fb8b24', color: 'white' }}><b>Đã hoàn tiền</b></h4>;
+                                                    default:
+                                                        return <h4><b>{booking.status}</b></h4>;
+                                                }
+                                            })()}
+                                        </div>
                                     </div>
                                     <div className='booking-card-body'>
                                         <div className='card-image'>

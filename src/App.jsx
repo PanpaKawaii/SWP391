@@ -3,33 +3,44 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'materialize-css/dist/css/materialize.min.css';
 import { Route, Routes } from 'react-router-dom'
 
-
+// Guest
 import GuestHeader from './GuestComponent/Header/GuestHeader'
 
-
+// User
 import Sidebar from './UserComponent/SideBar/UserSideBar'
 import Header from './UserComponent/HeaderFooter/Header'
 import Footer from './UserComponent/HeaderFooter/Footer'
-
 import HomeContent from './UserComponent/Home/HomeContent'
 import ContactContent from './UserComponent/Contact/ContactContent'
-
 import BookingStoreContent from './UserComponent/Booking/BookingStoreContent'
 import BookingStoreDetailContent from './UserComponent/Booking/BookingStoreDetailContent'
 import BookingPodContent from './UserComponent/Booking/BookingPodContent'
 import BookingPodDetailContent from './UserComponent/Booking/BookingPodDetailContent'
-
 import AboutContent from './UserComponent/About/AboutContent'
-
 import UserInformation from './UserComponent/UserControlContent/UserInformation'
 import UserBooking from './UserComponent/UserControlContent/UserBooking'
 import UserBookingDetail from './UserComponent/UserControlContent/UserBookingDetail'
-
 import PaymentStatus from './UserComponent/Payment/PaymentStatus'
-
 import SignInSignUp from './UserComponent/SignInSignUp/SignInSignUp'
-
 import ScrollToTop from './ScrollToTopComponent/ScrollToTop';
+
+// Admin
+import AdminHome from "./AdminComponent/AdminHome/Home.jsx";
+import AdminPOD from "./AdminComponent/ManagePODComponent/POD.jsx";
+import AdminSidebar from "./AdminComponent/AdminBar/Sidebar.jsx";
+import AdminHeader from "./AdminComponent/HeadFootComponent/Header.jsx";
+import AdminReport from "./AdminComponent/ManageReportComponent/ReportManage.jsx";
+import AdminStore from "./AdminComponent/StoreManage/Store.jsx";
+import AdminAddStore from "./AdminComponent/StoreManage/AddStore.jsx";
+import AdminStaff from "./AdminComponent/ManageUserComponent/Staff.jsx";
+// import Manager from "../AdminComponent/ManageUserComponent/Manager.jsx";
+import AdminCustomer from "./AdminComponent/ManageUserComponent/Customer.jsx";
+import AdminAddPOD from "./AdminComponent/ManagePODComponent/AddPOD.jsx";
+import AdminAddStaff from "./AdminComponent/ManageUserComponent/AddStaff.jsx";
+import AdminProduct from "./AdminComponent/ProductComponent/Product.jsx";
+// import Order from "../AdminComponent/Order/Order.jsx";
+import AdminOrderHistory from "./AdminComponent/Order/OrderHistory.jsx";
+import AdminAddProduct from "./AdminComponent/ProductComponent/AddProduct.jsx";
 
 function App() {
   const UserRole = localStorage.getItem('UserRole');
@@ -58,7 +69,7 @@ function App() {
           </div>
         </div>
       </>
-    )
+    );
   }
   else if (UserRole === 'User') {
     return (
@@ -116,25 +127,44 @@ function App() {
       </Routes>
       <Footer /> */}
       </>
-    )
+    );
   }
   else if (UserRole === 'Admin') {
     return (
-      <>
-        <ScrollToTop />
-        <div className='admin-container'>
-          <Sidebar className='sidebar' />
-          This is Admin
+      <div className="admin-container">
+        <AdminSidebar className="sidebar" /> {/* Giữ nguyên Sidebar */}
+        <div className="admin-content">
+          <AdminHeader />
+          <div className="admin-content-body">
+            <Routes>
+              <Route path="/" element={<AdminHome />}></Route>
+              <Route path="/pod" element={<AdminPOD />}></Route>
+              {/* <Route path="/user" element={<User />}></Route> */}
+              <Route path="/report" element={<AdminReport />}></Route>
+              <Route path="/store" element={<AdminStore />}></Route>
+              <Route path="/addstore" element={<AdminAddStore />}></Route>
+              <Route path="/staff" element={<AdminStaff />}></Route>
+              {/* <Route path="/manager" element={<Manager />}></Route> */}
+              <Route path="/customer" element={<AdminCustomer />}></Route>
+              <Route path="/addpod" element={<AdminAddPOD />}></Route>
+              <Route path="/addstaff" element={<AdminAddStaff />}></Route>
+              <Route path="/product" element={<AdminProduct />}></Route>
+              <Route path="/history" element={<AdminOrderHistory />}></Route>
+              {/* <Route path="/order" element={<Order />}></Route> */}
+              <Route path="/addproduct" element={<AdminAddProduct />}></Route>
+              {/* <Route path="/booking-order" element={<OrderProduct />}></Route> */}
+            </Routes>
+          </div>
         </div>
-      </>
-    )
+      </div>
+    );
   }
   else {
     return (
       <>
         <div>Chức vụ không có sẵn.</div>
       </>
-    )
+    );
   }
 }
 
