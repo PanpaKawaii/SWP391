@@ -12,13 +12,6 @@ export default function AboutContent() {
     return (
         <div className='POD-about'>
 
-            {/* <div className='video-container'>
-                <video className='fit' autoPlay muted loop>
-                    <source src={videoSrc} type='video/mp4' />
-                    Your browser does not support the video tag.
-                </video>
-            </div> */}
-
             <div className='video-container'>
                 <h1><b>Nơi làm việc lý tưởng cho sự sáng tạo và hiệu quả</b></h1>
                 <p><i>Tự hào mang đến cho bạn giải pháp tối ưu để làm việc tại bất kỳ đâu, với không gian linh hoạt và dịch vụ chất lượng cao.</i></p>
