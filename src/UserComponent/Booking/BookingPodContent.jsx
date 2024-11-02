@@ -8,6 +8,13 @@ import { imagePODs } from '../../assets/listPODs';
 
 export default function BookingPodContent() {
 
+    const [id, setId] = useState(null);
+    const UserId = localStorage.getItem('UserId');
+    useEffect(() => {
+        const UserIdInt = parseInt(UserId, 10);
+        setId(UserIdInt);
+    }, [UserId]);
+
     const [StoreId, setStoreId] = useState(null);
     const { pathname } = useLocation();
     console.log(pathname);
@@ -218,7 +225,7 @@ export default function BookingPodContent() {
 
                 </Form>
 
-                <Link to={`../user/booking`}><Button className='btn'>POD ĐÃ ĐẶT</Button></Link>
+                {id ? <Link to={`../user/booking`}><Button className='btn'>POD ĐÃ ĐẶT</Button></Link> : <></>}
 
             </div>
 
