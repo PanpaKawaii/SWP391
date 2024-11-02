@@ -13,13 +13,9 @@ import {
   faCircleUser,
   faFileInvoiceDollar,
   faMugHot,
-  faCommentDollar,
-  faBurger,
-  faFileClipboard,
   faStore,
   faBoxes,
 } from "@fortawesome/free-solid-svg-icons";
-import { Badge } from "antd";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);

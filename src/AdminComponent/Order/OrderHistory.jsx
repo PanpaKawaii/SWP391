@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../api/axios";
 import {
   Table,
   Card,
@@ -49,7 +50,7 @@ const OrderHistory = () => {
   const [endDate, setEndDate] = useState(null);
   const [revenueData, setRevenueData] = useState([]);
   const [showRevenue, setShowRevenue] = useState(false);
-
+  const apiBase = "https://localhost:7166/api";
   const apiUser = "https://localhost:7166/api/User";
   const apiBooking = "https://localhost:7166/api/Booking";
   const apiPayment = "https://localhost:7166/api/Payment";
@@ -60,18 +61,25 @@ const OrderHistory = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(apiUser);
-      console.log("User Data:", response.data);
+      const token = localStorage.getItem("token"); // Lấy token từ localStorage
+        const response = await api.get(apiUser, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        },
+      });
       setUserData(response.data.filter((user) => user.role === "User"));
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
   };
-
   const fetchBookingData = async () => {
     try {
-      const response = await axios.get(apiBooking);
-      console.log("Booking Data:", response.data);
+      const token = localStorage.getItem("token"); // Lấy token từ localStorage
+      const response = await api.get(apiBooking, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        },
+      });
       setBookingData(response.data);
     } catch (error) {
       console.error("Failed to fetch booking data:", error);
@@ -80,7 +88,12 @@ const OrderHistory = () => {
 
   const fetchOrderData = async () => {
     try {
-      const response = await axios.get(apiOrder);
+      const token = localStorage.getItem("token"); // Lấy token từ localStorage
+      const response = await api.get(apiOrder, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        },
+      });
       setOrderData(response.data);
     } catch (error) {
       console.error("Failed to fetch order data:", error);
@@ -89,7 +102,12 @@ const OrderHistory = () => {
 
   const fetchProductData = async () => {
     try {
-      const response = await axios.get(apiProduct);
+        const token = localStorage.getItem("token"); // Lấy token từ localStorage
+      const response = await api.get(apiProduct, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        },
+      });
       setProductData(response.data);
     } catch (error) {
       console.error("Failed to fetch product data:", error);
@@ -98,7 +116,12 @@ const OrderHistory = () => {
 
   const fetchPaymentData = async () => {
     try {
-      const response = await axios.get(apiPayment);
+      const token = localStorage.getItem("token"); // Lấy token từ localStorage
+      const response = await api.get(apiPayment, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        },
+      });
       setPaymentData(response.data);
     } catch (error) {
       console.error("Failed to fetch payment data:", error);
@@ -107,7 +130,12 @@ const OrderHistory = () => {
 
   const fetchPodData = async () => {
     try {
-      const response = await axios.get(apiPod);
+      const token = localStorage.getItem("token"); // Lấy token từ localStorage
+      const response = await api.get(apiPod, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        },
+      });
       setPodData(response.data);
     } catch (error) {
       console.error("Failed to fetch pod data:", error);
@@ -116,7 +144,12 @@ const OrderHistory = () => {
 
   const fetchSlotData = async () => {
     try {
-      const response = await axios.get(apiSlot);
+      const token = localStorage.getItem("token"); // Lấy token từ localStorage
+      const response = await api.get(apiSlot, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        },
+      });
       setSlotData(response.data);
     } catch (error) {
       console.error("Failed to fetch slot data:", error);
@@ -302,7 +335,7 @@ const OrderHistory = () => {
   };
 
   const userColumns = [
-    { title: "Booking ID", dataIndex: "id", key: "id", align: "center" },
+    { title: "Booking ID", dataIndex: "id", key: "bookingId", align: "center" },
     {
       title: "Ngày đặt",
       dataIndex: "date",
@@ -381,7 +414,7 @@ const OrderHistory = () => {
   ];
 
   const orderColumns = [
-    { title: "OrderId", dataIndex: "id", key: "id" },
+    { title: "OrderId", dataIndex: "id", key: "orderId" },
     { title: "BookingId", dataIndex: "bookingId", key: "bookingId" },
     {
       title: "Ngày đặt",
@@ -405,30 +438,6 @@ const OrderHistory = () => {
       key: "amount",
       render: (amount) => formatCurrency(amount),
     },
-    // {
-    //   title: "Trạng thái đơn hàng",
-    //   dataIndex: "status",
-    //   key: "status",
-    //   render: (status) => renderOrderStatus(status),
-    // },
-    // {
-    //   title: "Chỉnh sửa",
-    //   key: "actions",
-    //   render: (_, record) => (
-    //     <Space>
-    //       <Popconfirm
-    //         title="Bạn có chắc chắn muốn xóa sản phẩm này?"
-    //         onConfirm={() => handleDeleteOrderProduct(record.id)}
-    //         okText="Có"
-    //         cancelText="Không"
-    //       >
-    //         <Button type="primary" danger>
-    //           <DeleteFilled />
-    //         </Button>
-    //       </Popconfirm>
-    //     </Space>
-    //   ),
-    // },
   ];
 
   const modalContent = selectedBooking ? (
@@ -492,6 +501,7 @@ const OrderHistory = () => {
           columns={orderColumns}
           pagination={false}
           bordered
+          rowKey="id"
         />
       </Card>
       <Card
@@ -551,9 +561,19 @@ const OrderHistory = () => {
           )}
         </p>
         <p>
-          <strong>Trạng thái đơn hàng:</strong>{" "}
-          {renderOrderStatus(selectedBooking.bookingOrders[0]?.status)}
+          <strong>Số tiền đã thanh toán:</strong>{" "}
+          {formatCurrency(
+            (paymentData.find(
+              (payment) => payment.bookingId === selectedBooking.id
+            )?.amount || 0) +
+            (selectedBooking.bookingOrders?.reduce(
+              (total, order) => 
+                order.status === "Đã thanh toán" ? total + order.amount : total,
+              0
+            ) || 0)
+          )}
         </p>
+      
         {/* <Button type="primary" onClick={handleUpdatePayment}>
           Cập nhật thanh toán
         </Button> */}
