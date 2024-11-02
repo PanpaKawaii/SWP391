@@ -8,6 +8,8 @@ import { imagePODs } from '../../assets/listPODs';
 import { imageSTOREs } from '../../assets/listSTOREs';
 import { imageUTILITIes } from '../../assets/listUTILITIes';
 
+import InnoSpace from '../../BackgroundImage/InnoSpace.png';
+
 // import QRcode from '../BackgroundImage/QRcode.jpg'
 
 export default function BookingPodDetailContent() {
@@ -25,6 +27,7 @@ export default function BookingPodDetailContent() {
     const [UTILITIes, setUTILITIes] = useState(null);
     const [SLOTs, setSLOTs] = useState([]);
     const [STOREs, setSTOREs] = useState(null);
+    const [USERS, setUSERS] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -63,6 +66,11 @@ export default function BookingPodDetailContent() {
                 if (!storeResponse.ok) throw new Error('Network response was not ok');
                 const storeData = await storeResponse.json();
                 setSTOREs(storeData);
+
+                const userResponse = await fetch('https://localhost:7166/api/User/GetIDandName');
+                if (!userResponse.ok) throw new Error('Network response was not ok');
+                const userData = await userResponse.json();
+                setUSERS(userData);
 
                 setLoading(false);
             } catch (error) {
@@ -120,6 +128,18 @@ export default function BookingPodDetailContent() {
         const booking = BOOKINGs ? BOOKINGs.filter(booking => booking.podId === podId && booking.rating !== null && booking.rating > 0) : [];
         const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
         return (rating / booking.length).toFixed(1);
+    };
+
+    // Lấy Feedback của Booking
+    const FeedbackBooking = BOOKINGs ? BOOKINGs.filter(booking =>
+        // booking.podId == Pod?.id && booking.feedback !== null && booking.feedback !== ''
+        booking.podId == Pod?.id && booking.rating !== null && booking.rating > 0
+    ) : [];
+
+    // Lấy tên người dùng của Booking
+    const getUserNameBooking = (userId) => {
+        const user = USERS ? USERS.find(user => user.id === userId) : null;
+        return user ? user.name : null;
     };
 
     useEffect(() => {
@@ -563,6 +583,33 @@ export default function BookingPodDetailContent() {
                 ) : (
                     <span>Không tìm thấy POD nào.</span>
                 )}
+
+                <div className='feedback-container'>
+                    <h2><b>Đánh giá của khách hàng:</b></h2>
+                    <Row className='feedback-row'>
+                        {FeedbackBooking && FeedbackBooking.length !== 0 ? (
+                            FeedbackBooking.map((comment, index) => (
+                                <Col key={index} xs={12} sm={12} md={12} lg={6} xl={4} xxl={4} className='feedback-col'>
+                                    <div className='feedback-item'>
+                                        <div className='feedback-item-user'>
+                                            <img src={InnoSpace} alt='InnoSpace'></img>
+                                            <div>
+                                                <p><b>{getUserNameBooking(comment.userId)}</b></p>
+                                                <p>{comment.date.substring(0, 10)}</p>
+                                            </div>
+                                        </div>
+                                        {Array.from({ length: comment.rating }, (_, i) => (
+                                            <span key={i} style={{ color: 'gold', fontSize: '1em' }}><i className='fa-solid fa-star'></i></span>
+                                        ))}
+                                        <p>{comment.feedback ? comment.feedback : '(Không có đánh giá)'}</p>
+                                    </div>
+                                </Col>
+                            ))
+                        ) : (
+                            <p>Không có đánh giá nào.</p>
+                        )}
+                    </Row>
+                </div>
 
 
                 {/*

@@ -119,6 +119,9 @@ export default function SignInSignUp() {
             if (data.role && data.role === 'User') {
                 window.location.href = 'http://localhost:5173/user/information';
             }
+            if (data.role && data.role === 'Staff') {
+                window.location.href = 'http://localhost:5173';
+            }
             if (data.role && data.role === 'Admin') {
                 window.location.href = 'http://localhost:5173';
             }

@@ -222,6 +222,44 @@ body {
             }
         }
 
+        .feedback-container {
+            margin: 20px 0;
+
+            p {
+                margin: 0;
+            }
+
+            .feedback-row {
+
+                .feedback-col {
+                    padding: 0 10px 20px;
+                    margin: 0;
+
+                    .feedback-item {
+                        border: 1px solid #cccccc;
+                        border-radius: 10px;
+                        padding: 10px;
+
+                        .feedback-item-user {
+                            margin: 0 0 10px;
+                            display: flex;
+                            align-items: center;
+
+                            img {
+                                width: 50px;
+                                height: 50px;
+                                border-radius: 50%;
+                                object-fit: cover;
+                                object-position: center;
+                                display: block;
+                                margin: 0 10px 0 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         .overlay {
             position: fixed;
             top: 0;

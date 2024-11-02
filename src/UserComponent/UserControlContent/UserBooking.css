@@ -85,7 +85,7 @@ body {
                         }
 
                         .booking-card-status {
-                            margin: 10px;
+                            margin: 0;
                             display: flex;
                             justify-content: center;
                         }

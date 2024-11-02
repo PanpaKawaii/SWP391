@@ -2,6 +2,7 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'materialize-css/dist/css/materialize.min.css';
 import { Route, Routes } from 'react-router-dom'
+import ScrollToTop from './ScrollToTopComponent/ScrollToTop';
 
 // Guest
 import GuestHeader from './GuestComponent/Header/GuestHeader'
@@ -22,7 +23,19 @@ import UserBooking from './UserComponent/UserControlContent/UserBooking'
 import UserBookingDetail from './UserComponent/UserControlContent/UserBookingDetail'
 import PaymentStatus from './UserComponent/Payment/PaymentStatus'
 import SignInSignUp from './UserComponent/SignInSignUp/SignInSignUp'
-import ScrollToTop from './ScrollToTopComponent/ScrollToTop';
+
+// Staff
+import StaffSidebar from "./Staff/Sidebar/Sidebar";
+import StaffHeader from "./Staff/HeadFootComponent/Header";
+import StaffHome from "./Staff/HomeComponent/Home";
+import StaffPOD from "./Staff/PODComponent/PODManage";
+import StaffOrder from "./Staff/Order/Order";
+import StaffReport from "./Staff/ReportComponent/ReportManage";
+import Staff from "./Staff/UserComponent/Staff";
+import StaffCustomer from "./Staff/UserComponent/Customer";
+import StaffOrderHistory from "./Staff/Order/OrderHistory";
+import StaffProduct from "./Staff/ProductComponent/Product";
+import StaffOrderProduct from "./Staff/ProductComponent/OrderProduct";
 
 // Admin
 import AdminHome from "./AdminComponent/AdminHome/Home.jsx";
@@ -126,6 +139,38 @@ function App() {
         <Route path='/signinsignup' element={<SignInSignUp />} />
       </Routes>
       <Footer /> */}
+      </>
+    );
+  }
+  else if (UserRole === 'Staff') {
+    return (
+      <>
+        <div className="main-container">
+          <StaffSidebar className="sidebar" />
+          <div className="main-content">
+            <StaffHeader />
+            <div className="main-content-body">
+              <Routes>
+                {/* <Route path="/" element={<Home />}></Route>
+              <Route path="/pod" element={<POD />}></Route>
+              <Route path='/order' element={<Order />}></Route>
+              <Route path="/report" element={<Report />}></Route>
+              <Route path='/store' element={<Store />}></Route>
+              <Route path='/staff' element={<Staff />}></Route> */}
+                {/*import staff */}
+                <Route path="/" element={<StaffHome />}></Route>
+                <Route path="/pod" element={<StaffPOD />}></Route>
+                <Route path="/order" element={<StaffOrder />}></Route>
+                <Route path="/history" element={<StaffOrderHistory />}></Route>
+                <Route path="/report" element={<StaffReport />}></Route>
+                <Route path="/staff" element={<Staff />}></Route>
+                <Route path="/customer" element={<StaffCustomer />}></Route>
+                <Route path="/product" element={<StaffProduct />}></Route>
+                <Route path="/booking-order" element={<StaffOrderProduct />}></Route>
+              </Routes>
+            </div>
+          </div>
+        </div>
       </>
     );
   }

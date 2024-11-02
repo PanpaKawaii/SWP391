@@ -90,9 +90,9 @@ export default function Header() {
                     <button className='user-avatar'>
                         <img src={USER ? USER.image : InnoSpace} alt={USER ? USER.name : ''} />
                         {USER &&
-                            <div className='user-info'>
-                                <div className='username'>{USER.name}</div>
-                                <div className='role'>{USER.role}</div>
+                            <div className='user-information'>
+                                <div className='user-name'>{USER.name}</div>
+                                <div className='user-role'>{USER.role}</div>
                             </div>
                         }
 
