@@ -344,23 +344,23 @@ export default function BookingPodDetailContent() {
                         <div className='image-detail'>
                             <div className='image-detail-pod'>
                                 {/* <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img> */}
-                                <img src={Pod.image} alt={Pod.name} onClick={() => { setPicture(Pod); setIsModalOpen(true) }}></img>
+                                <img src={Pod.image} alt={Pod.name}></img>
                             </div>
                             <div className='image-detail-2'>
                                 <div className='image-detail-2-item-store'>
                                     {/* <img src={imageSTOREs.find(image => image.id === Pod.storeId)?.image} alt={Pod.name}></img> */}
-                                    <img src={thisSTORE.image} alt={thisSTORE.name} onClick={() => { setPicture(thisSTORE); setIsModalOpen(true) }}></img>
+                                    <img src={thisSTORE.image} alt={thisSTORE.name}></img>
                                 </div>
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(0, 3).map((utility) => (
                                     <div key={utility.id} className='image-detail-2-item-utility' style={{ '--available-utilities-length': Math.ceil((AvailableUTILITIes.length / 4)), '--available-utilities-slice': AvailableUTILITIes.slice(0, 3).length }}>
                                         {/* <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img> */}
-                                        <img src={utility.image} alt={utility.name} onClick={() => { setPicture(utility); setIsModalOpen(true) }}></img>
+                                        <img src={utility.image} alt={utility.name}></img>
                                     </div>
                                 ))}
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(3, 6).map((utility) => (
                                     <div key={utility.id} className='image-detail-2-item-utility' style={{ '--available-utilities-length': Math.ceil((AvailableUTILITIes.length / 4)), '--available-utilities-slice': AvailableUTILITIes.slice(3, 6).length }}>
                                         {/* <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img> */}
-                                        <img src={utility.image} alt={utility.name} onClick={() => { setPicture(utility); setIsModalOpen(true) }}></img>
+                                        <img src={utility.image} alt={utility.name}></img>
                                     </div>
                                 ))}
                                 {/* <div className='image-detail-2-item'>
@@ -666,7 +666,7 @@ export default function BookingPodDetailContent() {
                     </div>
                 )}
 
-                {IsModalOpen && (
+                {/* {IsModalOpen && (
                     <Modal show={IsModalOpen} onHide={() => setIsModalOpen(false)} size='xl'>
                         <Modal.Header closeButton>
                             <Modal.Title>{Picture.name}</Modal.Title>
@@ -683,7 +683,7 @@ export default function BookingPodDetailContent() {
                             </img>
                         </Modal.Body>
                     </Modal>
-                )}
+                )} */}
 
             </div>
         </div>
