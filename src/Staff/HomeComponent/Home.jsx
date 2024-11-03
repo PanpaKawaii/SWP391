@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./HomeStyle.css";
-import welcomeImage from "../ManagerImage/avatar.jpg"; // Thay thế bằng đường dẫn đến hình ảnh chào mừng
 import axios from "axios";
 
 export default function Home() {
@@ -24,6 +23,7 @@ export default function Home() {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
+      console.log(token);
       return response.data; // Trả về dữ liệu người dùng
     } catch (error) {
       console.error("Failed to fetch user data:", error);

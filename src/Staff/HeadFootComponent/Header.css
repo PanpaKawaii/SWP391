@@ -33,19 +33,16 @@
   }
 
   .user-info {
-    text-align: start;
-    /* Căn chỉnh văn bản bên trái */
     display: flex;
-    /* Sử dụng flexbox để căn chỉnh */
-    align-items: center;
-    /* Căn giữa theo chiều dọc */
+    flex-direction: column; /* Đặt chiều dọc cho các phần tử con */
+    align-items: flex-start; /* Căn trái các phần tử con */
   }
-
+  
   .user-info .username {
     font-weight: bold;
     /* Tên người dùng đậm */
   }
-
+  
   .user-info .role {
     color: #6c757d;
     /* Màu cho chức vụ */

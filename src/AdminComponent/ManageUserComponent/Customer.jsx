@@ -35,7 +35,7 @@ const Customer = () => {
   const fetchUserData = async () => {
     try {
       const token = localStorage.getItem("token"); // Lấy token từ localStorage
-        const response = await api.get(apiUser, {
+      const response = await api.get(apiUser, {
         headers: {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
@@ -153,7 +153,6 @@ const Customer = () => {
 
   const filteredUserData = userData.filter(
     (user) =>
-      
       user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.phoneNumber.includes(searchTerm)
   );
@@ -164,7 +163,7 @@ const Customer = () => {
     {
       title: "Avatar",
       key: "avatar",
-      render: ( record) => (
+      render: (record) => (
         <img
           src={record.image}
           alt="Avatar"
@@ -304,188 +303,185 @@ const Customer = () => {
 
   return (
     <div className="admin-manage-user-container">
-    <div
-      className="one-user"
-      
-    >
-      <h1 style={{ fontFamily: "Arial" }}>Tài khoản khách hàng</h1>
-      <Modal
-        show={showBookingModal}
-        onHide={() => setShowBookingModal(false)}
-        size="lg"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Chi tiết đơn đặt hàng</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Table
-            className="one-booking"
-            dataSource={selectedUserBookings}
-            columns={[
-              {
-                title: "ID",
-                dataIndex: "id",
-                key: "id",
-              },
-              {
-                title: "Ngày đặt",
-                dataIndex: "date",
-                key: "date",
-                render: (date) => new Date(date).toLocaleDateString(),
-              },
-              {
-                title: "Trạng thái",
-                dataIndex: "status",
-                key: "status",
-                render: (status) => (
-                  <Tag color={status === "Xác nhận" ? "green" : "blue"}>
-                    {status}
-                  </Tag>
-                ),
-              },
-              {
-                title: "Phản hồi",
-                dataIndex: "feedback",
-                key: "feedback",
-              },
-              {
-                title: "ID POD",
-                dataIndex: "podId",
-                key: "podId",
-              },
-            ]}
-            pagination={false}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setShowBookingModal(false)}
-          >
-            Đóng
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Search
-        placeholder="Tìm kiếm theo email hoặc số điện thoại"
-        allowClear
-        enterButton="Tìm kiếm"
-        size="large"
-        onSearch={handleSearch}
-        style={{ marginBottom: 16 }}
-        prefix={<SearchOutlined />}
-      />
-      <p>
-        <strong>
-          <UserOutlined /> Tổng số người dùng:
-        </strong>{" "}
-        {totalUsers}
-      </p>
-      <Table
-        dataSource={filteredUserData}
-        columns={columns}
-        rowKey="id"
-        pagination={{ pageSize: 4 }}
-        bordered
-        style={{
-          backgroundColor: "#FAFBFB",
-          borderRadius: 10,
-          padding: 17,
-          boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
-          border: "1px solid #E0E0E0",
-        }}
-      />
+      <div className="one-user">
+        <h1 style={{ fontFamily: "Arial" }}>Tài khoản khách hàng</h1>
+        <Modal
+          show={showBookingModal}
+          onHide={() => setShowBookingModal(false)}
+          size="lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Chi tiết đơn đặt hàng</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Table
+              className="one-booking"
+              dataSource={selectedUserBookings}
+              columns={[
+                {
+                  title: "ID",
+                  dataIndex: "id",
+                  key: "id",
+                },
+                {
+                  title: "Ngày đặt",
+                  dataIndex: "date",
+                  key: "date",
+                  render: (date) => new Date(date).toLocaleDateString(),
+                },
+                {
+                  title: "Trạng thái",
+                  dataIndex: "status",
+                  key: "status",
+                  render: (status) => (
+                    <Tag color={status === "Xác nhận" ? "green" : "blue"}>
+                      {status}
+                    </Tag>
+                  ),
+                },
+                {
+                  title: "Phản hồi",
+                  dataIndex: "feedback",
+                  key: "feedback",
+                },
+                {
+                  title: "ID POD",
+                  dataIndex: "podId",
+                  key: "podId",
+                },
+              ]}
+              pagination={false}
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowBookingModal(false)}
+            >
+              Đóng
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Search
+          placeholder="Tìm kiếm theo email hoặc số điện thoại"
+          allowClear
+          enterButton="Tìm kiếm"
+          size="large"
+          onSearch={handleSearch}
+          style={{ marginBottom: 16 }}
+          prefix={<SearchOutlined />}
+        />
+        <p>
+          <strong>
+            <UserOutlined /> Tổng số người dùng:
+          </strong>{" "}
+          {totalUsers}
+        </p>
+        <Table
+          dataSource={filteredUserData}
+          columns={columns}
+          rowKey="id"
+          pagination={{ pageSize: 4 }}
+          bordered
+          style={{
+            backgroundColor: "#FAFBFB",
+            borderRadius: 10,
+            padding: 17,
+            boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+            border: "1px solid #E0E0E0",
+          }}
+        />
 
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Chỉnh sửa thông tin người dùng</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="customer-modal-body">
-          {editedUser && (
-            <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>Tên</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  value={editedUser.name}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  value={editedUser.email}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  value={editedUser.password}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Số điện thoại</Form.Label>
-                <Form.Control
-                  type="tel"
-                  name="phoneNumber"
-                  value={editedUser.phoneNumber}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Loại tài khoản</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="type"
-                  value={editedUser.type}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Điểm</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="point"
-                  value={editedUser.point}
-                  onChange={handleInputChange}
-                  step={100}
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Mô tả</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  name="description"
-                  value={editedUser.description}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </Form>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Đóng
-          </Button>
-          <Popconfirm
-            title="Bạn có chắc chắn muốn lưu thay đổi không?"
-            onConfirm={handleSaveChanges}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button variant="primary">Lưu thay đổi</Button>
-          </Popconfirm>
-        </Modal.Footer>
-      </Modal>
-    </div>
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Chỉnh sửa thông tin người dùng</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="customer-modal-body">
+            {editedUser && (
+              <Form>
+                <Form.Group className="mb-3">
+                  <Form.Label>Tên</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    value={editedUser.name}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={editedUser.email}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    value={editedUser.password}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Số điện thoại</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    name="phoneNumber"
+                    value={editedUser.phoneNumber}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Loại tài khoản</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="type"
+                    value={editedUser.type}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Điểm</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="point"
+                    value={editedUser.point}
+                    onChange={handleInputChange}
+                    step={100}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Mô tả</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    name="description"
+                    value={editedUser.description}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+              </Form>
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Đóng
+            </Button>
+            <Popconfirm
+              title="Bạn có chắc chắn muốn lưu thay đổi không?"
+              onConfirm={handleSaveChanges}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button variant="primary">Lưu thay đổi</Button>
+            </Popconfirm>
+          </Modal.Footer>
+        </Modal>
+      </div>
     </div>
   );
 };
