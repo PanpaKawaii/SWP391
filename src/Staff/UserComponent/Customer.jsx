@@ -90,9 +90,17 @@ const Customer = () => {
     setShowModal(true);
   };
 
+  // Delete User
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`${apiUser}/${userId}`);
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5nbmdvY2hhaXRyaWV1QGdtYWlsLmNvbSIsImp0aSI6ImE5MmUwOTBkLTQ2NmEtNDE2My1hMDQ3LWUyOWNjYjExOGE2OCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiOSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMzMDc1ODUxLCJpc3MiOiJQb2RCb29raW5nIiwiYXVkIjoiUG9kV2ViIn0.SljDy518ZlaoY5hp6kKZvBp3-j5vXItyHQ0H7Y0ik3o"; // Thay thế bằng token thực tế của bạn
+
+      await axios.delete(`${apiUser}/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        },
+      });
       message.success("Xoá thành công");
       fetchUserData();
     } catch (error) {
@@ -101,6 +109,34 @@ const Customer = () => {
     }
   };
 
+  const handleSaveChanges = async () => {
+    try {
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5nbmdvY2hhaXRyaWV1QGdtYWlsLmNvbSIsImp0aSI6ImE5MmUwOTBkLTQ2NmEtNDE2My1hMDQ3LWUyOWNjYjExOGE2OCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiOSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMzMDc1ODUxLCJpc3MiOiJQb2RCb29raW5nIiwiYXVkIjoiUG9kV2ViIn0.SljDy518ZlaoY5hp6kKZvBp3-j5vXItyHQ0H7Y0ik3o"; // Thay thế bằng token thực tế của bạn
+
+      const response = await axios.put(
+        `${apiUser}/${editedUser.id}`,
+        editedUser,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Thêm token vào header
+          },
+        }
+      );
+      if (response.status === 200) {
+        setUserData((prevData) =>
+          prevData.map((user) =>
+            user.id === editedUser.id ? editedUser : user
+          )
+        );
+      }
+      handleCloseModal();
+      fetchUserData();
+      message.success("Thay đổi thành công");
+    } catch (error) {
+      console.error("Failed to update user:", error);
+    }
+  };
   const handleCloseModal = () => {
     setShowModal(false);
     setSelectedUser(null);
@@ -115,26 +151,6 @@ const Customer = () => {
     }));
   };
 
-  const handleSaveChanges = async () => {
-    try {
-      const response = await axios.put(
-        `${apiUser}/${editedUser.id}`,
-        editedUser
-      );
-      if (response.status === 200) {
-        setUserData((prevData) =>
-          prevData.map((user) =>
-            user.id === editedUser.id ? editedUser : user
-          )
-        );
-      }
-      handleCloseModal();
-      message.success("Thay đổi thành công");
-      fetchUserData();
-    } catch (error) {
-      console.error("Failed to update user:", error);
-    }
-  };
   // hàm sử lý data để lưu vào tương ứng với từng User
   const handleViewBookings = (userId) => {
     const userBookings = bookingData.filter(
