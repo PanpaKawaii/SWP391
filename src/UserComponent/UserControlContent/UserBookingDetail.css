@@ -185,6 +185,7 @@ body {
 
             .slot-name {
                 margin: 0;
+                padding: 5px 0 0 5px;
 
                 .col {
                     padding: 0 5px 5px 0;
