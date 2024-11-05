@@ -2,13 +2,10 @@ body {
     margin: 0;
 }
 
-.POD-booking-store-detail {
+.user-booking-store-detail {
     width: 100%;
     background-color: #ffffff;
     font-family: 'Quicksand', 'Arial', sans-serif;
-}
-
-.POD-booking-store-detail {
 
     .store-detail-container {
         width: 100%;

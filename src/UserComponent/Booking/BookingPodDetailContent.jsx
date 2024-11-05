@@ -341,7 +341,7 @@ export default function BookingPodDetailContent() {
         //[Slot] (Id, Name, StartTime, EndTime, Price, Status, PodId)
         //[Booking] (Id, Date, Status, Feedback, PodId, UserId)
 
-        <div className='POD-booking-pod-detail'>
+        <div className='user-booking-pod-detail'>
             <div className='booking-pod-detail-container'>
                 {Pod ? (
                     <>
@@ -565,66 +565,37 @@ export default function BookingPodDetailContent() {
                             }
                         </div>
 
-                        {/* <div>
-                            <h3>Đánh giá của khách hàng:</h3>
-                            {BOOKINGs && BOOKINGs.filter(booking => booking.podId === Pod.id).map((booking, index) => (
-                                <div key={index} style={{
-                                    border: '1px solid #cccccc',
-                                    borderRadius: '5px',
-                                    padding: '10px',
-                                    margin: '10px 0'
-                                }}>
-                                    <div className='booking-pod-detail-item'>
-                                        <p><b>Tên người dùng:</b> {booking.id}</p>
-                                        <p><b>Ngày đặt phòng:</b> {booking.date.substring(0, 10)}</p>
-                                        <p><b>Trạng thái:</b> {booking.status}</p>
-                                        <p><b>Đánh giá:</b> {booking.feedback || 'Không có đánh giá'}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div> */}
+                        <div className='feedback-container'>
+                            <h2><b>Đánh giá của khách hàng:</b></h2>
+                            <Row className='feedback-row'>
+                                {FeedbackBooking && FeedbackBooking.length !== 0 ? (
+                                    FeedbackBooking.map((comment, index) => (
+                                        <Col key={index} xs={12} sm={12} md={12} lg={6} xl={4} xxl={4} className='feedback-col'>
+                                            <div className='feedback-item'>
+                                                <div className='feedback-item-user'>
+                                                    <img src={getUserImageBooking(comment.userId)} alt=''></img>
+                                                    <div>
+                                                        <p><b>{getUserNameBooking(comment.userId)}</b></p>
+                                                        <p>{comment.date.substring(0, 10)}</p>
+                                                    </div>
+                                                </div>
+                                                {Array.from({ length: comment.rating }, (_, i) => (
+                                                    <span key={i} style={{ color: 'gold', fontSize: '1em' }}><i className='fa-solid fa-star'></i></span>
+                                                ))}
+                                                <p>{comment.feedback ? comment.feedback : '(Không có đánh giá)'}</p>
+                                            </div>
+                                        </Col>
+                                    ))
+                                ) : (
+                                    <p>Không có đánh giá nào.</p>
+                                )}
+                            </Row>
+                        </div>
 
                     </>
                 ) : (
                     <span>Không tìm thấy POD nào.</span>
                 )}
-
-                <div className='feedback-container'>
-                    <h2><b>Đánh giá của khách hàng:</b></h2>
-                    <Row className='feedback-row'>
-                        {FeedbackBooking && FeedbackBooking.length !== 0 ? (
-                            FeedbackBooking.map((comment, index) => (
-                                <Col key={index} xs={12} sm={12} md={12} lg={6} xl={4} xxl={4} className='feedback-col'>
-                                    <div className='feedback-item'>
-                                        <div className='feedback-item-user'>
-                                            <img src={getUserImageBooking(comment.userId)} alt=''></img>
-                                            <div>
-                                                <p><b>{getUserNameBooking(comment.userId)}</b></p>
-                                                <p>{comment.date.substring(0, 10)}</p>
-                                            </div>
-                                        </div>
-                                        {Array.from({ length: comment.rating }, (_, i) => (
-                                            <span key={i} style={{ color: 'gold', fontSize: '1em' }}><i className='fa-solid fa-star'></i></span>
-                                        ))}
-                                        <p>{comment.feedback ? comment.feedback : '(Không có đánh giá)'}</p>
-                                    </div>
-                                </Col>
-                            ))
-                        ) : (
-                            <p>Không có đánh giá nào.</p>
-                        )}
-                    </Row>
-                </div>
-
-
-                {/*
-                [Store] (Id, Name, Address, Contact, Status)
-                [Pod] (Id, Name, Image, Description, Rating, Status, TypeId, StoreId)
-                [Type] (Id, Name, Capacity)
-                [Utility] (Id, Name, Image, Description)
-                [Slot] (Id, Name, StartTime, EndTime, Price, Status, PodId)
-                [Booking] (Id, Date, Status, Feedback, PodId, UserId)
-                */}
 
                 {IsPopupOpen && date && SlotId && (
                     <div id='popupConfirm' className='overlay'>

@@ -184,7 +184,7 @@ export default function BookingPodContent() {
     if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
 
     return (
-        <div className='POD-booking-pod'>
+        <div className='user-booking-pod'>
 
             <div className='search-container'>
 

@@ -2,15 +2,12 @@ body {
     margin: 0;
 }
 
-.POD-booking-pod {
+.user-booking-pod {
     width: 100%;
     height: auto;
     min-height: 70vh;
     background-color: #ffffff;
     font-family: 'Quicksand', 'Arial', sans-serif;
-}
-
-.POD-booking-pod {
 
     .search-container {
         width: 100%;

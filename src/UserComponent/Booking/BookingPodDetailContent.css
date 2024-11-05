@@ -2,16 +2,13 @@ body {
     margin: 0;
 }
 
-.POD-booking-pod-detail {
+.user-booking-pod-detail {
     width: 100%;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Quicksand', 'Arial', sans-serif;
-}
-
-.POD-booking-pod-detail {
 
     .booking-pod-detail-container {
         width: 90%;

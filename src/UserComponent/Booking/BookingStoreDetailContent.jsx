@@ -82,7 +82,7 @@ export default function BookingStoreDetailContent() {
     if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
 
     return (
-        <div className='POD-booking-store-detail'>
+        <div className='user-booking-store-detail'>
             {Store ? (
                 <div>
                     <div className='store-detail-container'>
