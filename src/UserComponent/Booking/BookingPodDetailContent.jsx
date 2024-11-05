@@ -141,6 +141,11 @@ export default function BookingPodDetailContent() {
         const user = USERS ? USERS.find(user => user.id === userId) : null;
         return user ? user.name : null;
     };
+    // Lấy ảnh người dùng của Booking
+    const getUserImageBooking = (userId) => {
+        const user = USERS ? USERS.find(user => user.id === userId) : null;
+        return user ? user.image : null;
+    };
 
     useEffect(() => {
         setBookingsHaveTheSameDateAndSlot(getBookingsHaveTheSameDateAndSlot)
@@ -592,7 +597,7 @@ export default function BookingPodDetailContent() {
                                 <Col key={index} xs={12} sm={12} md={12} lg={6} xl={4} xxl={4} className='feedback-col'>
                                     <div className='feedback-item'>
                                         <div className='feedback-item-user'>
-                                            <img src={InnoSpace} alt='InnoSpace'></img>
+                                            <img src={getUserImageBooking(comment.userId)} alt=''></img>
                                             <div>
                                                 <p><b>{getUserNameBooking(comment.userId)}</b></p>
                                                 <p>{comment.date.substring(0, 10)}</p>

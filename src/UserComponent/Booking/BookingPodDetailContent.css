@@ -251,6 +251,7 @@ body {
                                 border-radius: 50%;
                                 object-fit: cover;
                                 object-position: center;
+                                border: 1px solid #a7a4a486;
                                 display: block;
                                 margin: 0 10px 0 0;
                             }
