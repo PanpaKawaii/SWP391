@@ -67,12 +67,14 @@ export default function SignInSignUp() {
     const [SignUpPhoneNumber, setSignUpPhoneNumber] = useState(null);
     const [SignUpPassword, setSignUpPassword] = useState(null);
     const [SignUpConfirm, setSignUpConfirm] = useState(null);
+    const [Accept, setAccept] = useState(false);
 
     const [SignUpEmailError, setSignUpEmailError] = useState(null);
     const [SignUpFullNameError, setSignUpFullNameError] = useState(null);
     const [SignUpPhoneNumberError, setSignUpPhoneNumberError] = useState(null);
     const [SignUpPasswordError, setSignUpPasswordError] = useState(null);
     const [SignUpConfirmError, setSignUpConfirmError] = useState(null);
+    const [AcceptError, setAcceptError] = useState(null);
 
     const [MaxUserID, setMaxUserID] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -132,6 +134,9 @@ export default function SignInSignUp() {
     };
 
     const SignUp = async (SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm) => {
+
+        console.log('Accept: ', Accept);
+
         if (!SignUpEmail) {
             console.error("Invalid email");
             setSignUpEmailError("Email không hợp lệ");
@@ -178,20 +183,25 @@ export default function SignInSignUp() {
             setSignUpConfirmError("Mật khẩu xác nhận không khớp");
             return;
         }
+        if (Accept === false) {
+            console.error("Accept is false");
+            setAcceptError("Bạn phải đồng ý điều khoản");
+            return;
+        }
 
-        const fetchMaxID = async () => {
-            try {
-                const userResponse = await fetch("https://localhost:7166/api/User/GetIDandName");
-                if (!userResponse.ok) throw new Error("Network response was not ok");
-                const userData = await userResponse.json();
-                const MaxUserID = userData.reduce((max, user) => Math.max(max, user.id), 0);
-                setMaxUserID(MaxUserID);
-                console.log("Max User ID:", MaxUserID);
-            } catch (error) {
-                console.error("Error fetching users:", error);
-            }
-        };
-        await fetchMaxID();
+        // const fetchMaxID = async () => {
+        //     try {
+        //         const userResponse = await fetch("https://localhost:7166/api/User/GetIDandName");
+        //         if (!userResponse.ok) throw new Error("Network response was not ok");
+        //         const userData = await userResponse.json();
+        //         const MaxUserID = userData.reduce((max, user) => Math.max(max, user.id), 0);
+        //         setMaxUserID(MaxUserID);
+        //         console.log("Max User ID:", MaxUserID);
+        //     } catch (error) {
+        //         console.error("Error fetching users:", error);
+        //     }
+        // };
+        // await fetchMaxID();
 
         const signupData = {
             id: MaxUserID + 1,
@@ -273,6 +283,7 @@ export default function SignInSignUp() {
     const handleSubmitSignUp = (e) => {
         e.preventDefault();
         setErrorSignUp(null);
+        setAcceptError(null);
         setSignUpEmailError(null);
         setSignUpFullNameError(null);
         setSignUpPhoneNumberError(null);
@@ -302,6 +313,23 @@ export default function SignInSignUp() {
             SignUpPassword,
             SignUpConfirm
         );
+    };
+    const handleAccept = async () => {
+        setAccept(!Accept);
+
+        const fetchMaxID = async () => {
+            try {
+                const userResponse = await fetch("https://localhost:7166/api/User/GetIDandName");
+                if (!userResponse.ok) throw new Error("Network response was not ok");
+                const userData = await userResponse.json();
+                const MaxUserID = userData.reduce((max, user) => Math.max(max, user.id), 0);
+                setMaxUserID(MaxUserID);
+                console.log("Max User ID:", MaxUserID);
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
+        };
+        await fetchMaxID();
     };
 
     // npm install nodemailer
@@ -341,7 +369,7 @@ export default function SignInSignUp() {
                         <h1 className="title">ĐĂNG NHẬP</h1>
                         <Form className="form-box form-box1" onSubmit={handleSubmitSignIn}>
                             <Form.Group controlId="SignInEmail" className="form-group form-input">
-                                <span className="icon"><i className="fa-solid fa-user" style={{ fontSize: "25px" }}></i></span>
+                                <span className="icon"><i className="fa-solid fa-envelope" style={{ fontSize: "25px" }}></i></span>
                                 <Form.Control className="input" type="email" placeholder="Email đăng nhập" style={{ border: (SignInEmailError || errorSignIn) && "1px solid #dc3545", }} />
                             </Form.Group>
                             <Form.Group controlId="SignInPassword" className="form-group form-input">
@@ -385,11 +413,21 @@ export default function SignInSignUp() {
                                 <span className="icon"><i className="fa-solid fa-key" style={{ fontSize: "25px" }}></i></span>
                                 <Form.Control className="input" type="password" placeholder="Xác nhận mật khẩu" style={{ border: (SignUpConfirmError || errorSignUp) && "1px solid #dc3545", }} />
                             </Form.Group>
+
+                            <div className='accept-box'>
+                                <a href="#" className="provision" target="_blank"><b>ĐIỀU KHOẢN</b></a>
+
+                                <Form.Group controlId="Accept" className="form-group form-check">
+                                    <Form.Check type="checkbox" label="Đồng ý điều khoản" name='Accept' onChange={handleAccept} />
+                                </Form.Group>
+                            </div>
+
                             {SignUpEmailError && (<span className="error-message" style={{ color: "#dc3545" }}>{SignUpEmailError}</span>)}
                             {SignUpFullNameError && (<span className="error-message" style={{ color: "#dc3545" }}>{SignUpFullNameError}</span>)}
                             {SignUpPhoneNumberError && (<span className="error-message" style={{ color: "#dc3545" }}>{SignUpPhoneNumberError}</span>)}
                             {SignUpPasswordError && (<span className="error-message" style={{ color: "#dc3545" }}>{SignUpPasswordError}</span>)}
                             {SignUpConfirmError && (<span className="error-message" style={{ color: "#dc3545" }}>{SignUpConfirmError}</span>)}
+                            {AcceptError && (<span className="error-message" style={{ color: "#dc3545" }}>{AcceptError}</span>)}
                             {errorSignUp && (<span className="error-message" style={{ color: "#dc3545" }}>Đăng kí thất bại</span>)}
                             <div className="btn-box">
                                 <Button type="submit" className="btn" id="btn-signup">ĐĂNG KÍ</Button>
