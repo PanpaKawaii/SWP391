@@ -14,6 +14,7 @@ export default function UserBooking() {
         const UserIdInt = parseInt(UserId, 10);
         setId(UserIdInt);
     }, [UserId]);
+    const [refresh, setRefresh] = useState(0);
 
     const [BOOKINGs, setBOOKINGs] = useState(null);
     const [PODs, setPODs] = useState(null);
@@ -65,7 +66,7 @@ export default function UserBooking() {
         };
 
         fetchData();
-    }, []);
+    }, [refresh]);
 
     // Lấy những Booking của User này
     const [filteredBOOKINGs, setFilteredBOOKINGs] = useState([]);
@@ -157,16 +158,16 @@ export default function UserBooking() {
         console.log('Date booking:', dateBOOKINGs)
     };
 
-    useEffect(() => {
-        if (BOOKINGs && PAYMENTs) {
-            filteredBOOKINGs.forEach(booking => {
-                handleUpdateBookingStatus(booking.id);
-            });
-        }
-    }, [filteredBOOKINGs]);
+    // useEffect(() => {
+    //     if (BOOKINGs && PAYMENTs) {
+    //         filteredBOOKINGs.forEach(booking => {
+    //             handleUpdateBookingStatus(booking.id);
+    //         });
+    //     }
+    // }, [filteredBOOKINGs]);
     const handleUpdateBookingStatus = (bookingId) => {
-        const thisPayment = PAYMENTs.find(payment => payment.bookingId == bookingId);
-        const thisBooking = BOOKINGs.find(booking => booking.id == bookingId);
+        const thisPayment = PAYMENTs && PAYMENTs.find(payment => payment.bookingId == bookingId);
+        const thisBooking = BOOKINGs && BOOKINGs.find(booking => booking.id == bookingId);
         console.log('This payment:', thisPayment.status);
         console.log('This booking:', thisBooking.status);
         console.log('Date now:', new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString());
@@ -244,8 +245,8 @@ export default function UserBooking() {
                             newCountdowns[booking.id] = timeLeft;
                         } else {
                             handleUpdateBookingStatus(booking.id);
-                            clearInterval(timer);
-                            window.location.reload();
+                            // clearInterval(timer);
+                            setRefresh(refresh + 1);
                         }
                     }
                 });
@@ -279,7 +280,7 @@ export default function UserBooking() {
                         <Form.Control type='date' name='endDate' />
                     </Form.Group>
                     <Button type='submit' className='btn'>TÌM KIẾM <i className='fa-solid fa-magnifying-glass'></i></Button>
-                    <Button type='reset' className='btn btn-reset'>ĐẶT LẠI BỘ LỌC</Button>
+                    <Button type='reset' className='btn btn-reset' onClick={() => setRefresh(refresh + 1)}>ĐẶT LẠI BỘ LỌC</Button>
                 </Form>
 
             </div>

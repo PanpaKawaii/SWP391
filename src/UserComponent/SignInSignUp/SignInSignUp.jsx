@@ -226,7 +226,6 @@ export default function SignInSignUp() {
             if (data.role && data.role === 'User') {
                 alert('Đăng kí thành công');
                 moveImageBack();
-                // window.location.href = 'http://localhost:5173/signinsignup';
             }
         } catch (error) {
             setErrorSignUp(error);
