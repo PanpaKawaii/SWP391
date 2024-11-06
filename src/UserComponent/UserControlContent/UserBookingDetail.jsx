@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Row, Col, Form, Button, Tabs, Tab, DropdownButton, Dropdown, Spinner } from 'react-bootstrap';
 import './UserBookingDetail.css';
 
@@ -17,6 +17,7 @@ export default function UserBookingDetail() {
         setId(UserIdInt);
     }, [UserId]);
     const [refresh, setRefresh] = useState(0);
+    const navigate = useNavigate();
 
     const [BOOKINGs, setBOOKINGs] = useState(null);
     const [PODs, setPODs] = useState(null);
@@ -302,8 +303,14 @@ export default function UserBookingDetail() {
         <div className='user-booking-detail' style={{ position: 'relative' }}>
 
             <div className='back-button' style={{ position: 'absolute', top: '20px', left: '20px' }}>
-                <Link to='/user/booking'><Button>BACK</Button></Link>
+                <Link to='/user/booking'>
+                    <i className='fa-solid fa-arrow-left' style={{ color: '#fdbc7f', fontSize: '40px' }}></i>
+                </Link>
             </div>
+
+            {/* <div className='back-button' style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                <i className='fa-solid fa-arrow-left' style={{ color: '#fdbc7f', fontSize: '40px', cursor: 'pointer' }} onClick={() => navigate(-1)}></i>
+            </div> */}
 
             <div className='booking-card'>
 
@@ -329,9 +336,9 @@ export default function UserBookingDetail() {
                         {thisBOOKING.status && (thisBOOKING.status === 'Chưa diễn ra' || thisBOOKING.status === 'Đang diễn ra') && (
                             <DropdownButton id='dropdown-basic-button' title=''>
                                 <Dropdown.Item onClick={() => handleUpdateBooking('Đã hủy')}>Hủy đơn đặt phòng</Dropdown.Item>
-                                {thisBOOKING.status === 'Đang diễn ra' &&
+                                {/* {thisBOOKING.status === 'Đang diễn ra' &&
                                     <Dropdown.Item onClick={() => handleUpdateBooking('Đã kết thúc')}>Xác nhận kết thúc</Dropdown.Item>
-                                }
+                                } */}
                             </DropdownButton>
                         )}
                     </div>

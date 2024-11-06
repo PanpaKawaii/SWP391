@@ -9,7 +9,7 @@ body {
 
     .store-detail-container {
         width: 100%;
-        padding: 40px;
+        padding: 80px 40px 40px;
         display: flex;
         justify-content: start;
 

@@ -20,6 +20,7 @@ export default function BookingPodDetailContent() {
         const UserIdInt = parseInt(UserId, 10);
         setId(UserIdInt);
     }, [UserId]);
+    const navigate = useNavigate();
 
     const [BOOKINGs, setBOOKINGs] = useState(null);
     const [PODs, setPODs] = useState(null);
@@ -314,7 +315,6 @@ export default function BookingPodDetailContent() {
         setConfirm(true);
     };
 
-    const navigate = useNavigate();
     if (Pod && Pod.status !== 'Đang hoạt động') {
         navigate('/booking/pod')
     }
@@ -333,15 +333,18 @@ export default function BookingPodDetailContent() {
     if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
 
     return (
+        <div className='user-booking-pod-detail' style={{ position: 'relative' }}>
 
-        //[Store] (Id, Name, Address, Contact, Status)
-        //[Pod] (Id, Name, Image, Description, Rating, Status, TypeId, StoreId)
-        //[Type] (Id, Name, Capacity)
-        //[Utility] (Id, Name, Image, Description)
-        //[Slot] (Id, Name, StartTime, EndTime, Price, Status, PodId)
-        //[Booking] (Id, Date, Status, Feedback, PodId, UserId)
+            {/* <div className='back-button' style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                <Link to='/booking/pod'>
+                    <i className='fa-solid fa-arrow-left' style={{ color: '#fdbc7f', fontSize: '40px' }}></i>
+                </Link>
+            </div> */}
 
-        <div className='user-booking-pod-detail'>
+            <div className='back-button' style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                <i className='fa-solid fa-arrow-left' style={{ color: '#fdbc7f', fontSize: '40px', cursor: 'pointer' }} onClick={() => navigate(-1)}></i>
+            </div>
+
             <div className='booking-pod-detail-container'>
                 {Pod ? (
                     <>
