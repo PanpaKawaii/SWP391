@@ -4,8 +4,6 @@ import { Link, useParams } from 'react-router-dom';
 import { Row, Col, Form, Button, Tabs, Tab, DropdownButton, Dropdown, Spinner } from 'react-bootstrap';
 import './UserBookingDetail.css';
 
-import MyTabs from './MyTabs';
-
 import { imagePODs } from '../../assets/listPODs';
 
 export default function UserBookingDetail() {
@@ -18,6 +16,7 @@ export default function UserBookingDetail() {
         const UserIdInt = parseInt(UserId, 10);
         setId(UserIdInt);
     }, [UserId]);
+    const [refresh, setRefresh] = useState(0);
 
     const [BOOKINGs, setBOOKINGs] = useState(null);
     const [PODs, setPODs] = useState(null);
@@ -99,7 +98,7 @@ export default function UserBookingDetail() {
         };
 
         fetchData();
-    }, [id]);
+    }, [id, refresh]);
 
     // Lấy Booking này
     const thisBOOKING = BOOKINGs ? BOOKINGs.find(booking => booking.id == BookingId.Id) : null;
@@ -240,7 +239,7 @@ export default function UserBookingDetail() {
             // const data = await response.json();
             setLoading(false);
             alert('Đánh giá thành công');
-            window.location.reload();
+            setRefresh(refresh + 1);
         } catch (error) {
             setError(error);
             console.log('Đánh giá thất bại:', error);
@@ -248,18 +247,18 @@ export default function UserBookingDetail() {
         }
     }
 
-    const handleCancelBooking = () => {
-        if (confirm('Bạn có chắc chắn muốn hủy đơn đặt phòng không?')) {
-            CancelBooking();
+    const handleUpdateBooking = (status) => {
+        if (confirm('Bạn có chắc chắn muốn cập nhật trạng thái đơn đặt phòng không?')) {
+            UpdateBooking(status);
         }
     }
-    const CancelBooking = async () => {
+    const UpdateBooking = async (status) => {
 
         const changeData = {
             id: thisBOOKING.id,
             date: thisBOOKING.date,
             currentDate: thisBOOKING.currentDate,
-            status: 'Đã hủy',
+            status: status,
             rating: thisBOOKING.rating,
             feedback: thisBOOKING.feedback,
             podId: thisBOOKING.podId,
@@ -280,11 +279,11 @@ export default function UserBookingDetail() {
             if (!response.ok) throw new Error('Network response was not ok');
             // const data = await response.json();
             setLoading(false);
-            alert('Hủy đơn đặt phòng thành công');
-            window.location.reload();
+            alert('Cập nhật trạng thái thành công');
+            setRefresh(refresh + 1);
         } catch (error) {
             setError(error);
-            console.log('Hủy đơn đặt phòng thất bại:', error);
+            console.log('Cập nhật trạng thái thất bại:', error);
             setLoading(false);
         }
     }
@@ -322,11 +321,12 @@ export default function UserBookingDetail() {
                                     return <h4><b>{thisBOOKING.status}</b></h4>;
                             }
                         })()}
-                        {thisBOOKING.status && thisBOOKING.status === 'Chưa diễn ra' && (
+                        {/* {thisBOOKING.status && (thisBOOKING.status === 'Chưa diễn ra' || thisBOOKING.status === 'Đang diễn ra') && ( */}
                             <DropdownButton id='dropdown-basic-button' title=''>
-                                <Dropdown.Item onClick={handleCancelBooking}>Hủy đơn đặt phòng</Dropdown.Item>
+                                <Dropdown.Item onClick={() => handleUpdateBooking('Đã hủy')}>Hủy đơn đặt phòng</Dropdown.Item>
+                                <Dropdown.Item onClick={() => handleUpdateBooking('Đã kết thúc')}>Xác nhận kết thúc</Dropdown.Item>
                             </DropdownButton>
-                        )}
+                        {/* )} */}
                     </div>
                 </div>
 
