@@ -517,7 +517,7 @@ export default function UserBookingDetail() {
                 </Tabs>
 
                 <div className='booking-card-footer'>
-                    {getBookingPaymentStatus(thisBOOKING.id) === 'Đã thanh toán' ? (
+                    {thisBOOKING.status === 'Đã kết thúc' ? (
                         <div className='rating-container'>
                             <h3><b>Đánh giá của bạn:</b></h3>
                             <Form className='rating-form' onSubmit={handleSubmitFeedback}>
