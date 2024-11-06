@@ -265,6 +265,7 @@ body {
         }
 
         .carousel-text {
+            width: 50%;
             text-align: center;
             display: flex;
             flex-direction: column;
