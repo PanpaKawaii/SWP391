@@ -29,6 +29,7 @@ export default function BookingPodDetailContent() {
     const [SLOTs, setSLOTs] = useState([]);
     const [STOREs, setSTOREs] = useState(null);
     const [USERS, setUSERS] = useState(null);
+    const [USER, setUSER] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -36,6 +37,7 @@ export default function BookingPodDetailContent() {
     const [IsModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
+        const UserIdInt = parseInt(UserId, 10);
         const fetchData = async () => {
             try {
                 const bookingResponse = await fetch('https://localhost:7166/api/Booking');
@@ -68,10 +70,20 @@ export default function BookingPodDetailContent() {
                 const storeData = await storeResponse.json();
                 setSTOREs(storeData);
 
-                const userResponse = await fetch('https://localhost:7166/api/User/GetIDandName');
+                const usersResponse = await fetch('https://localhost:7166/api/User/GetIDandName');
+                if (!usersResponse.ok) throw new Error('Network response was not ok');
+                const usersData = await usersResponse.json();
+                setUSERS(usersData);
+
+                const userResponse = await fetch(`https://localhost:7166/api/User/${UserIdInt}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                });
                 if (!userResponse.ok) throw new Error('Network response was not ok');
                 const userData = await userResponse.json();
-                setUSERS(userData);
+                setUSER(userData);
 
                 setLoading(false);
             } catch (error) {
@@ -234,39 +246,41 @@ export default function BookingPodDetailContent() {
             console.error('Error during booking:', error);
         }
 
-        // try {
-        //     const response = await fetch('https://localhost:7166/api/Payment', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        //         },
-        //         body: JSON.stringify(paymentData),
-        //     });
+        if (selectedPaymentMethod && selectedPaymentMethod === 'Thanh toán bằng tiền mặt') {
+            try {
+                const response = await fetch('https://localhost:7166/api/Payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify(paymentData),
+                });
 
-        //     if (!response.ok) throw new Error('Network response was not ok');
-        //     const result = await response.json();
-        //     console.log('Creating Payment successful:', result);
-        // } catch (error) {
-        //     console.error('Error during booking:', error);
-        // }
+                if (!response.ok) throw new Error('Network response was not ok');
+                const result = await response.json();
+                console.log('Creating Payment successful:', result);
+            } catch (error) {
+                console.error('Error during booking:', error);
+            }
+        } else {
+            try {
+                const response = await fetch('https://localhost:7166/api/Payment/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify(paymentMethodData),
+                });
 
-        try {
-            const response = await fetch('https://localhost:7166/api/Payment/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
-                body: JSON.stringify(paymentMethodData),
-            });
-
-            if (!response.ok) throw new Error('Network response was not ok');
-            const result = await response.json();
-            console.log('Creating PaymentMethod successful:', result);
-            window.location.href = result.paymentUrl;
-        } catch (error) {
-            console.error('Error during booking:', error);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const result = await response.json();
+                console.log('Creating PaymentMethod successful:', result);
+                window.location.href = result.paymentUrl;
+            } catch (error) {
+                console.error('Error during booking:', error);
+            }
         }
     };
 
@@ -528,7 +542,7 @@ export default function BookingPodDetailContent() {
                                                         <Form.Label>Hình thức thanh toán</Form.Label>
                                                         <Form.Control as='select' value={selectedPaymentMethod} onChange={(e) => setSelectedPaymentMethod(e.target.value)}>
                                                             <option value='Thanh toán qua VNPay'>Thanh toán qua VNPay</option>
-                                                            {/* <option value='Thanh toán bằng tiền mặt'>Thanh toán bằng tiền mặt</option> */}
+                                                            {USER && USER.type === 'VIP' && <option value='Thanh toán bằng tiền mặt'>Thanh toán bằng tiền mặt</option>}
                                                         </Form.Control>
                                                     </Form.Group>
 

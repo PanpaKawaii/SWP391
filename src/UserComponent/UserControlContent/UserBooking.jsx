@@ -178,6 +178,7 @@ export default function UserBooking() {
         console.log('Minus time:', ((new Date().getTime() + 7 * 60 * 60 * 1000) - (new Date(thisBooking.currentDate).getTime() + 7 * 60 * 60 * 1000)) / 1000 / 60 / 60 / 24);
         if (
             thisPayment.status === 'Chưa thanh toán' &&
+            thisPayment.method !== 'Thanh toán bằng tiền mặt' &&
             thisBooking.status === 'Chưa diễn ra' &&
             // 15 minutes
             new Date().getTime() - new Date(thisBooking.currentDate).getTime() > 1 * 60 * 1000
@@ -239,7 +240,7 @@ export default function UserBooking() {
                 const newCountdowns = {};
                 filteredBOOKINGs.forEach(booking => {
                     const payment = PAYMENTs.find(p => p.bookingId === booking.id);
-                    if (payment?.status === 'Chưa thanh toán' && booking.status === 'Chưa diễn ra') {
+                    if (payment?.status === 'Chưa thanh toán' && payment?.method !== 'Thanh toán bằng tiền mặt' && booking.status === 'Chưa diễn ra') {
                         const timeLeft = calculateTimeLeft(booking.currentDate);
                         if (timeLeft) {
                             newCountdowns[booking.id] = timeLeft;
@@ -295,7 +296,7 @@ export default function UserBooking() {
                                         <div className='booking-card-status'>
                                             {(() => {
                                                 const payment = PAYMENTs?.find(p => p.bookingId === booking.id);
-                                                if (payment?.status === 'Chưa thanh toán' && booking.status === 'Chưa diễn ra' && countdowns[booking.id]) {
+                                                if (payment?.status === 'Chưa thanh toán' && payment?.method !== 'Thanh toán bằng tiền mặt' && booking.status === 'Chưa diễn ra' && countdowns[booking.id]) {
                                                     return <h4 style={{ backgroundColor: '#dc3545', color: 'white' }}>
                                                         <b>Hủy sau: {countdowns[booking.id]}</b>
                                                     </h4>;
