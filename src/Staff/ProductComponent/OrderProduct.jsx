@@ -24,17 +24,22 @@ const { Option } = Select;
 const OrderProduct = () => {
   const apiOrderProduct = "https://localhost:7166/api/BookingOrder";
   const apiProduct = "https://localhost:7166/api/Product";
-
+  const apiBooking = "https://localhost:7166/api/Booking";
   const [form] = Form.useForm();
   const [products, setProducts] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [nextBookingOrderId, setNextBookingOrderId] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchProducts();
-    fetchNextBookingOrderId();
-  }, []);
-
+  const fetchBookingData = async () => {
+    try {
+      const response = await axios.get(apiBooking);
+      setBookings(response.data);
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách booking:", error);
+      message.error("Không thể lấy danh sách booking");
+    }
+  };
   const fetchProducts = async () => {
     try {
       const response = await axios.get(apiProduct);
@@ -57,8 +62,23 @@ const OrderProduct = () => {
     }
   };
 
-  const onFinish = async (values) => {
+  useEffect(() => {
+    fetchProducts();
+    fetchBookingData();
+    fetchNextBookingOrderId();
+  }, []);
+
+  const submitBookingOrder = async (values) => {
     try {
+      // Kiểm tra trạng thái của booking
+      const booking = bookings.find((b) => b.id === values.bookingId);
+      if (!booking || booking.status !== "Đang diễn ra") {
+        message.error(
+          "Không thể thêm BookingOrder. Booking không hợp lệ hoặc không đang diễn ra."
+        );
+        return;
+      }
+
       const bookingOrder = {
         ...values,
         id: nextBookingOrderId,
@@ -124,10 +144,10 @@ const OrderProduct = () => {
       <Form
         form={form}
         layout="vertical"
-        onFinish={onFinish}
+        onFinish={submitBookingOrder}
         initialValues={{ id: nextBookingOrderId }}
       >
-        <Form.Item name="id" label="ID BookingOrder">
+        <Form.Item name="id" label="ID BookingOrder" hidden>
           <InputNumber style={{ width: "100%" }} disabled />
         </Form.Item>
         <Form.Item
@@ -159,7 +179,17 @@ const OrderProduct = () => {
           label="Booking ID"
           rules={[{ required: true }]}
         >
-          <InputNumber style={{ width: "100%" }} />
+          <Select>
+            {bookings
+              .filter((booking) => booking.status === "Đang diễn ra") // Lọc các booking có trạng thái "Đang diễn ra"
+              .map((booking) => (
+                <Option key={booking.id} value={booking.id}>
+                  {`Booking ID: ${booking.id} - Ngày: ${moment(
+                    booking.date
+                  ).format("DD/MM/YYYY")}`}
+                </Option>
+              ))}
+          </Select>
         </Form.Item>
         <Form.Item name="date" label="Ngày" rules={[{ required: true }]}>
           <DatePicker style={{ width: "100%" }} disabledDate={disabledDate} />

@@ -261,6 +261,34 @@ const OrderHistory = () => {
       </h4>
     );
   };
+
+  const renderStatusOptions = (currentStatus) => {
+    // Các option mặc định cho trạng thái "Chưa diễn ra"
+    if (currentStatus === "Chưa diễn ra") {
+      return [
+        { value: "Đang diễn ra", label: "Đang diễn ra" },
+        { value: "Đã huỷ", label: "Đã huỷ" },
+        { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
+      ];
+    }
+    // Các option cho trạng thái "Đang diễn ra"
+    else if (currentStatus === "Đang diễn ra") {
+      return [
+        { value: "Đã kết thúc", label: "Đã kết thúc" },
+        { value: "Đã huỷ", label: "Đã huỷ" },
+        { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
+      ];
+    }
+    // Trả về tất cả các option cho các trạng thái khác
+    return [
+      { value: "Chưa diễn ra", label: "Chưa diễn ra" },
+      { value: "Đang diễn ra", label: "Đang diễn ra" },
+      { value: "Đã kết thúc", label: "Đã kết thúc" },
+      { value: "Đã huỷ", label: "Đã huỷ" },
+      { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
+    ];
+  };
+
   // Filtering and handlers
   const filteredUsers = userData.filter((user) =>
     user.phoneNumber.includes(searchTerm)
@@ -588,28 +616,21 @@ const OrderHistory = () => {
               align: "center",
               render: (_, record) => (
                 <Space>
-                  {renderOrderStatus(record.status)}{" "}
-                  {/* Gọi hàm renderOrderStatus */}
+                  {renderOrderStatus(record.status)}
+                  {/* render ra màu cho status */}
                   <Select
-                    defaultValue={record.status}
+                    value={record.status}
                     style={{ width: 150, padding: "5px 5px" }}
                     onChange={(value) =>
                       handleUpdateBookingStatus(record.id, value)
                     }
                   >
-                    <Select.Option value="Chưa diễn ra">
-                      Chưa diễn ra
-                    </Select.Option>
-                    <Select.Option value="Đang diễn ra">
-                      Đang diễn ra
-                    </Select.Option>
-                    <Select.Option value="Đã kết thúc">
-                      Đã kết thúc
-                    </Select.Option>
-                    <Select.Option value="Đã huỷ">Đã huỷ</Select.Option>
-                    <Select.Option value="Đã hoàn tiền">
-                      Đã hoàn tiền
-                    </Select.Option>
+                    {renderStatusOptions(record.status).map((option) => (
+                      // sử dụng map để hiện ra các giá trị cho status
+                      <Select.Option key={option.value} value={option.value}>
+                        {option.label}
+                      </Select.Option>
+                    ))}
                   </Select>
                 </Space>
               ),
