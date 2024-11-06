@@ -299,7 +299,12 @@ export default function UserBookingDetail() {
     if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
 
     return (
-        <div className='user-booking-detail'>
+        <div className='user-booking-detail' style={{ position: 'relative' }}>
+
+            <div className='back-button' style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                <Link to='/user/booking'><Button>BACK</Button></Link>
+            </div>
+
             <div className='booking-card'>
 
                 <div className='booking-card-header'>
@@ -321,12 +326,14 @@ export default function UserBookingDetail() {
                                     return <h4><b>{thisBOOKING.status}</b></h4>;
                             }
                         })()}
-                        {/* {thisBOOKING.status && (thisBOOKING.status === 'Chưa diễn ra' || thisBOOKING.status === 'Đang diễn ra') && ( */}
+                        {thisBOOKING.status && (thisBOOKING.status === 'Chưa diễn ra' || thisBOOKING.status === 'Đang diễn ra') && (
                             <DropdownButton id='dropdown-basic-button' title=''>
                                 <Dropdown.Item onClick={() => handleUpdateBooking('Đã hủy')}>Hủy đơn đặt phòng</Dropdown.Item>
-                                <Dropdown.Item onClick={() => handleUpdateBooking('Đã kết thúc')}>Xác nhận kết thúc</Dropdown.Item>
+                                {thisBOOKING.status === 'Đang diễn ra' &&
+                                    <Dropdown.Item onClick={() => handleUpdateBooking('Đã kết thúc')}>Xác nhận kết thúc</Dropdown.Item>
+                                }
                             </DropdownButton>
-                        {/* )} */}
+                        )}
                     </div>
                 </div>
 
