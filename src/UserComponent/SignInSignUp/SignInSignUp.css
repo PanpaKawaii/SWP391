@@ -45,7 +45,7 @@ body {
                     position: relative;
 
                     .form-input {
-                        margin: 2px 0 2px 40px;
+                        margin: 5px 0 5px 40px;
 
                         .icon {
                             margin: 10px 0;
@@ -64,6 +64,53 @@ body {
                             margin: 0;
                             box-sizing: border-box;
                             outline: none;
+                        }
+
+                        input:focus {
+                            box-shadow: 0 0 0 0.25rem rgba(251, 139, 36, 0.25);
+                            border-color: #fdbc7f;
+                        }
+                    }
+
+                    .accept-box {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        a {
+                            padding: 0 5px;
+                            border-radius: 5px;
+                            color: #666666;
+                            border: 1px solid #cccccc;
+                            text-decoration: none;
+                            cursor: pointer;
+                        }
+
+                        .form-check {
+                            padding: 0;
+                            margin: 5px 0;
+                            display: flex;
+                            justify-content: end;
+                            align-items: center;
+
+                            input {
+                                margin: 0 5px;
+                                border-color: #fdbc7f;
+                            }
+
+                            input:focus {
+                                box-shadow: 0 0 0 0.25rem rgba(251, 139, 36, 0.25);
+                            }
+
+                            .form-check-input:checked {
+                                background-color: #fb8b24;
+                                border-color: #fb8b24;
+                            }
+
+                            label {
+                                color: #d97720;
+                                font-weight: bold;
+                            }
                         }
                     }
 

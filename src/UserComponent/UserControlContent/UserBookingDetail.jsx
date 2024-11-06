@@ -1,10 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Row, Col, Form, Button, Tabs, Tab, DropdownButton, Dropdown, Spinner } from 'react-bootstrap';
 import './UserBookingDetail.css';
-
-import MyTabs from './MyTabs';
 
 import { imagePODs } from '../../assets/listPODs';
 
@@ -18,6 +16,8 @@ export default function UserBookingDetail() {
         const UserIdInt = parseInt(UserId, 10);
         setId(UserIdInt);
     }, [UserId]);
+    const [refresh, setRefresh] = useState(0);
+    const navigate = useNavigate();
 
     const [BOOKINGs, setBOOKINGs] = useState(null);
     const [PODs, setPODs] = useState(null);
@@ -99,7 +99,7 @@ export default function UserBookingDetail() {
         };
 
         fetchData();
-    }, [id]);
+    }, [id, refresh]);
 
     // Lấy Booking này
     const thisBOOKING = BOOKINGs ? BOOKINGs.find(booking => booking.id == BookingId.Id) : null;
@@ -209,9 +209,15 @@ export default function UserBookingDetail() {
     }
     const SubmitFeedback = async (SubmitRating, SubmitFeedback) => {
 
+        if (SubmitRating === 0) {
+            alert('Vui lòng đánh giá điểm số từ 1 đến 5');
+            return;
+        }
+
         const changeData = {
             id: thisBOOKING.id,
             date: thisBOOKING.date,
+            currentDate: thisBOOKING.currentDate,
             status: thisBOOKING.status,
             rating: SubmitRating,
             feedback: SubmitFeedback,
@@ -234,7 +240,7 @@ export default function UserBookingDetail() {
             // const data = await response.json();
             setLoading(false);
             alert('Đánh giá thành công');
-            window.location.reload();
+            setRefresh(refresh + 1);
         } catch (error) {
             setError(error);
             console.log('Đánh giá thất bại:', error);
@@ -242,17 +248,18 @@ export default function UserBookingDetail() {
         }
     }
 
-    const handleCancelBooking = () => {
-        if (confirm('Bạn có chắc chắn muốn hủy đơn đặt phòng không?')) {
-            CancelBooking();
+    const handleUpdateBooking = (status) => {
+        if (confirm('Bạn có chắc chắn muốn cập nhật trạng thái đơn đặt phòng không?')) {
+            UpdateBooking(status);
         }
     }
-    const CancelBooking = async () => {
+    const UpdateBooking = async (status) => {
 
         const changeData = {
             id: thisBOOKING.id,
             date: thisBOOKING.date,
-            status: 'Đã hủy',
+            currentDate: thisBOOKING.currentDate,
+            status: status,
             rating: thisBOOKING.rating,
             feedback: thisBOOKING.feedback,
             podId: thisBOOKING.podId,
@@ -273,11 +280,11 @@ export default function UserBookingDetail() {
             if (!response.ok) throw new Error('Network response was not ok');
             // const data = await response.json();
             setLoading(false);
-            alert('Hủy đơn đặt phòng thành công');
-            window.location.reload();
+            alert('Cập nhật trạng thái thành công');
+            setRefresh(refresh + 1);
         } catch (error) {
             setError(error);
-            console.log('Hủy đơn đặt phòng thất bại:', error);
+            console.log('Cập nhật trạng thái thất bại:', error);
             setLoading(false);
         }
     }
@@ -293,7 +300,18 @@ export default function UserBookingDetail() {
     if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
 
     return (
-        <div className='user-booking-detail'>
+        <div className='user-booking-detail' style={{ position: 'relative' }}>
+
+            <div className='back-button' style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                <Link to='/user/booking'>
+                    <i className='fa-solid fa-arrow-left' style={{ color: '#fdbc7f', fontSize: '40px' }}></i>
+                </Link>
+            </div>
+
+            {/* <div className='back-button' style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                <i className='fa-solid fa-arrow-left' style={{ color: '#fdbc7f', fontSize: '40px', cursor: 'pointer' }} onClick={() => navigate(-1)}></i>
+            </div> */}
+
             <div className='booking-card'>
 
                 <div className='booking-card-header'>
@@ -315,9 +333,12 @@ export default function UserBookingDetail() {
                                     return <h4><b>{thisBOOKING.status}</b></h4>;
                             }
                         })()}
-                        {thisBOOKING.status && thisBOOKING.status === 'Chưa diễn ra' && (
+                        {thisBOOKING.status && (thisBOOKING.status === 'Chưa diễn ra' || thisBOOKING.status === 'Đang diễn ra') && (
                             <DropdownButton id='dropdown-basic-button' title=''>
-                                <Dropdown.Item onClick={handleCancelBooking}>Hủy đơn đặt phòng</Dropdown.Item>
+                                <Dropdown.Item onClick={() => handleUpdateBooking('Đã hủy')}>Hủy đơn đặt phòng</Dropdown.Item>
+                                {/* {thisBOOKING.status === 'Đang diễn ra' &&
+                                    <Dropdown.Item onClick={() => handleUpdateBooking('Đã kết thúc')}>Xác nhận kết thúc</Dropdown.Item>
+                                } */}
                             </DropdownButton>
                         )}
                     </div>
@@ -384,10 +405,10 @@ export default function UserBookingDetail() {
                     <Tab eventKey='order' title='Dịch vụ'>
                         <div className='tab-content order-tab'>
                             <h1><b>DỊCH VỤ ĐÃ ĐẶT</b></h1>
-                            <Row className='booking-row'>
+                            <Row>
                                 {filteredBOOKINGORDERs && filteredBOOKINGORDERs.length !== 0 ? (
                                     filteredBOOKINGORDERs.map((bookingOrder, index) => (
-                                        <Col key={index} xxl={6} className='booking-col'>
+                                        <Col key={index} xxl={6}>
                                             <h3><b>{getProductName(bookingOrder.productId)}</b></h3>
                                             <p><b>Loại dịch vụ:</b> {getCategoryName(bookingOrder.productId)}</p>
                                             <p><b>Mô tả:</b> {getProductDescription(bookingOrder.productId)}</p>
@@ -415,36 +436,28 @@ export default function UserBookingDetail() {
                         <div className='tab-content payment-tab'>
                             <h1><b>THÔNG TIN THANH TOÁN</b></h1>
                             <Row className='booking-row'>
-                                <Col xxl={12} className='booking-col'>
+                                <Col xxl={12} className='booking-col col-1'>
                                     <div className='bookingorder-card-body'>
                                         <div className='card-detail'>
                                             <div>
                                                 <h2><b>{thisPOD.name}</b></h2>
+                                                <p><b>Giá tiền mỗi slot:</b> {thisSLOTs[0].price.toLocaleString('vi-VN')}đ</p>
+                                                <p><b>Số lượng slot:</b> {thisSLOTs.length}</p>
                                             </div>
                                             <div className='card-amount-method-datetime-status'>
-                                                <div className='card-amount'>
-                                                    <p><b>Thành tiền:</b> {getBookingAmount(thisBOOKING.id).toLocaleString('vi-VN')}đ</p>
-                                                </div>
-                                                <div className='card-method'>
-                                                    <p>{getBookingOrderPaymentMethod(thisBOOKING.id)}</p>
-                                                </div>
-                                                <div className='card-datetime-status'>
-                                                    <div className='card-datetime'>
-                                                        <p><b>Ngày thanh toán:</b> {getBookingPaymentDate(thisBOOKING.id).substring(0, 10)}</p>
-                                                    </div>
-                                                    <div className='card-status'>
-                                                        {(() => {
-                                                            switch (getBookingPaymentStatus(thisBOOKING.id)) {
-                                                                case 'Đã thanh toán':
-                                                                    return <h4 style={{ color: '#28a745' }}><b>{getBookingPaymentStatus(thisBOOKING.id)}</b></h4>;
-                                                                case 'Chưa thanh toán':
-                                                                    return <h4 style={{ color: '#ffc107' }}><b>{getBookingPaymentStatus(thisBOOKING.id)}</b></h4>;
-                                                                default:
-                                                                    return getBookingPaymentStatus(thisBOOKING.id);
-                                                            }
-                                                        })()}
-                                                    </div>
-                                                </div>
+                                                <p><b>Thành tiền:</b> {getBookingAmount(thisBOOKING.id).toLocaleString('vi-VN')}đ</p>
+                                                <p>{getBookingOrderPaymentMethod(thisBOOKING.id)}</p>
+                                                <p><b>Ngày thanh toán:</b> {getBookingPaymentDate(thisBOOKING.id).substring(0, 10)}</p>
+                                                {(() => {
+                                                    switch (getBookingPaymentStatus(thisBOOKING.id)) {
+                                                        case 'Đã thanh toán':
+                                                            return <h4 style={{ color: '#28a745' }}><b>{getBookingPaymentStatus(thisBOOKING.id)}</b></h4>;
+                                                        case 'Chưa thanh toán':
+                                                            return <h4 style={{ color: '#ffc107' }}><b>{getBookingPaymentStatus(thisBOOKING.id)}</b></h4>;
+                                                        default:
+                                                            return getBookingPaymentStatus(thisBOOKING.id);
+                                                    }
+                                                })()}
                                             </div>
                                         </div>
                                     </div>
@@ -453,43 +466,35 @@ export default function UserBookingDetail() {
                             <Row className='booking-row'>
                                 {filteredBOOKINGORDERs &&
                                     filteredBOOKINGORDERs.map((bookingOrder, index) => (
-                                        <Col key={index} xxl={12} className='booking-col'>
+                                        <Col key={index} xxl={12} className='booking-col col-2'>
                                             <div className='bookingorder-card-body'>
                                                 <div className='card-detail'>
                                                     <div>
                                                         <h2><b>{getProductName(bookingOrder.productId)}</b></h2>
+                                                        <p><b>Giá tiền:</b> {getProductPrice(bookingOrder.productId).toLocaleString('vi-VN')}đ</p>
+                                                        <p><b>Số lượng:</b> {getBookingOrderQuantity(bookingOrder.id)}</p>
                                                     </div>
                                                     <div className='card-amount-method-datetime-status'>
-                                                        <div className='card-amount'>
-                                                            <p><b>Thành tiền:</b> {getBookingOrderAmount(bookingOrder.id).toLocaleString('vi-VN')}đ</p>
-                                                        </div>
-                                                        <div className='card-method'>
-                                                            <p>Thanh toán bằng tiền mặt</p>
-                                                        </div>
-                                                        <div className='card-datetime-status'>
-                                                            <div className='card-datetime'>
-                                                                <p><b>Ngày thanh toán:</b> {getBookingOrderDate(bookingOrder.id).substring(0, 10)}</p>
-                                                            </div>
-                                                            <div className='card-status'>
-                                                                {(() => {
-                                                                    switch (getBookingOrderStatus(bookingOrder.id)) {
-                                                                        case 'Đã thanh toán':
-                                                                            return <h4 style={{ color: '#28a745' }}><b>{getBookingOrderStatus(bookingOrder.id)}</b></h4>;
-                                                                        case 'Chưa thanh toán':
-                                                                            return <h4 style={{ color: '#ffc107' }}><b>{getBookingOrderStatus(bookingOrder.id)}</b></h4>;
-                                                                        default:
-                                                                            return getBookingOrderStatus(bookingOrder.id);
-                                                                    }
-                                                                })()}
-                                                            </div>
-                                                        </div>
+                                                        <p><b>Thành tiền:</b> {getBookingOrderAmount(bookingOrder.id).toLocaleString('vi-VN')}đ</p>
+                                                        <p>Thanh toán bằng tiền mặt</p>
+                                                        <p><b>Ngày thanh toán:</b> {getBookingOrderDate(bookingOrder.id).substring(0, 10)}</p>
+                                                        {(() => {
+                                                            switch (getBookingOrderStatus(bookingOrder.id)) {
+                                                                case 'Đã thanh toán':
+                                                                    return <h4 style={{ color: '#28a745' }}><b>{getBookingOrderStatus(bookingOrder.id)}</b></h4>;
+                                                                case 'Chưa thanh toán':
+                                                                    return <h4 style={{ color: '#ffc107' }}><b>{getBookingOrderStatus(bookingOrder.id)}</b></h4>;
+                                                                default:
+                                                                    return getBookingOrderStatus(bookingOrder.id);
+                                                            }
+                                                        })()}
                                                     </div>
                                                 </div>
                                             </div>
                                         </Col>
                                     ))}
                             </Row>
-                            <div className='card-amount'>
+                            <div className='card-amount-success'>
                                 <h4><b>Tổng tiền: <span style={{ color: '#ee4f2e' }}>{getSumBookingAmount(thisBOOKING.id).toLocaleString('vi-VN')}đ</span></b></h4>
                                 <h4><b>Đã thanh toán: <span style={{ color: '#28a745' }}>{getSumSuccessBookingAmount(thisBOOKING.id).toLocaleString('vi-VN')}đ</span></b></h4>
                             </div>
@@ -512,7 +517,7 @@ export default function UserBookingDetail() {
                 </Tabs>
 
                 <div className='booking-card-footer'>
-                    {getBookingPaymentStatus(thisBOOKING.id) === 'Đã thanh toán' ? (
+                    {thisBOOKING.status === 'Đã kết thúc' ? (
                         <div className='rating-container'>
                             <h3><b>Đánh giá của bạn:</b></h3>
                             <Form className='rating-form' onSubmit={handleSubmitFeedback}>

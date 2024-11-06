@@ -2,21 +2,18 @@ body {
     margin: 0;
 }
 
-.POD-booking-pod-detail {
+.user-booking-pod-detail {
     width: 100%;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Quicksand', 'Arial', sans-serif;
-}
-
-.POD-booking-pod-detail {
 
     .booking-pod-detail-container {
         width: 90%;
         max-width: 1400px;
-        margin: 20px 0 0;
+        margin: 60px 0 0;
 
         .image-detail {
             height: 40vw;
@@ -219,6 +216,45 @@ body {
                 color: #999999;
                 width: 500px;
                 text-align: center;
+            }
+        }
+
+        .feedback-container {
+            margin: 20px 0;
+
+            p {
+                margin: 0;
+            }
+
+            .feedback-row {
+
+                .feedback-col {
+                    padding: 0 10px 20px;
+                    margin: 0;
+
+                    .feedback-item {
+                        border: 1px solid #cccccc;
+                        border-radius: 10px;
+                        padding: 10px;
+
+                        .feedback-item-user {
+                            margin: 0 0 10px;
+                            display: flex;
+                            align-items: center;
+
+                            img {
+                                width: 50px;
+                                height: 50px;
+                                border-radius: 50%;
+                                object-fit: cover;
+                                object-position: center;
+                                border: 1px solid #a7a4a486;
+                                display: block;
+                                margin: 0 10px 0 0;
+                            }
+                        }
+                    }
+                }
             }
         }
 

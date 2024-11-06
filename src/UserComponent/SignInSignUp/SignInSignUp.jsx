@@ -1,13 +1,12 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
+import React from 'react';
+import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import './SignInSignUp.css';
 
-import SignInImage from '../../BackgroundImage/24.jpg'
-import SignUpImage from '../../BackgroundImage/4.jpg'
+import SignInImage from '../../BackgroundImage/24.jpg';
+import SignUpImage from '../../BackgroundImage/4.jpg';
 
 export default function SignInSignUp() {
-
     const moveImage = () => {
         const img = document.getElementById('movingImage');
         img.style.marginRight = '50%';
@@ -19,7 +18,7 @@ export default function SignInSignUp() {
         const signup = document.getElementById('card-signup');
         signup.classList.remove('card-disappear');
         signup.classList.add('card-appear');
-    }
+    };
 
     const moveImageBack = () => {
         const img = document.getElementById('movingImage');
@@ -32,7 +31,7 @@ export default function SignInSignUp() {
         const signup = document.getElementById('card-signup');
         signup.classList.remove('card-appear');
         signup.classList.add('card-disappear');
-    }
+    };
 
     const resetInputsBox1 = () => {
         var inputs = document.querySelectorAll('.form-box1 input');
@@ -42,7 +41,7 @@ export default function SignInSignUp() {
         setErrorSignIn(null);
         setSignInEmailError(null);
         setSignInPasswordError(null);
-    }
+    };
 
     const resetInputsBox2 = () => {
         var inputs = document.querySelectorAll('.form-box2 input');
@@ -55,21 +54,11 @@ export default function SignInSignUp() {
         setSignUpPhoneNumberError(null);
         setSignUpPasswordError(null);
         setSignUpConfirmError(null);
-    }
+    };
 
-
-    const [SignInEmail, setSignInEmail] = useState(null);
-    const [SignInPassword, setSignInPassword] = useState(null);
 
     const [SignInEmailError, setSignInEmailError] = useState(null);
     const [SignInPasswordError, setSignInPasswordError] = useState(null);
-
-
-    const [SignUpEmail, setSignUpEmail] = useState(null);
-    const [SignUpFullName, setSignUpFullName] = useState(null);
-    const [SignUpPhoneNumber, setSignUpPhoneNumber] = useState(null);
-    const [SignUpPassword, setSignUpPassword] = useState(null);
-    const [SignUpConfirm, setSignUpConfirm] = useState(null);
 
     const [SignUpEmailError, setSignUpEmailError] = useState(null);
     const [SignUpFullNameError, setSignUpFullNameError] = useState(null);
@@ -77,14 +66,15 @@ export default function SignInSignUp() {
     const [SignUpPasswordError, setSignUpPasswordError] = useState(null);
     const [SignUpConfirmError, setSignUpConfirmError] = useState(null);
 
+    const [Accept, setAccept] = useState(false);
 
     const [MaxUserID, setMaxUserID] = useState(null);
     const [loading, setLoading] = useState(true);
     const [errorSignIn, setErrorSignIn] = useState(null);
     const [errorSignUp, setErrorSignUp] = useState(null);
+    const [AcceptError, setAcceptError] = useState(null);
 
     const Login = async (SignInEmail, SignInPassword) => {
-
         if (!SignInEmail) {
             console.error('Invalid value');
             setSignInEmailError('Email không hợp lệ');
@@ -97,13 +87,18 @@ export default function SignInSignUp() {
         }
 
         try {
-            const response = await fetch('https://localhost:7166/api/Login/authenticate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: SignInEmail, password: SignInPassword }),
-            });
+            const response = await fetch('https://localhost:7166/api/Login/authenticate',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: SignInEmail,
+                        password: SignInPassword,
+                    }),
+                }
+            );
 
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
@@ -119,6 +114,9 @@ export default function SignInSignUp() {
             if (data.role && data.role === 'User') {
                 window.location.href = 'http://localhost:5173/user/information';
             }
+            if (data.role && data.role === 'Staff') {
+                window.location.href = 'http://localhost:5173';
+            }
             if (data.role && data.role === 'Admin') {
                 window.location.href = 'http://localhost:5173';
             }
@@ -129,6 +127,8 @@ export default function SignInSignUp() {
     };
 
     const SignUp = async (SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm) => {
+
+        console.log('Accept: ', Accept);
 
         if (!SignUpEmail) {
             console.error('Invalid email');
@@ -176,21 +176,11 @@ export default function SignInSignUp() {
             setSignUpConfirmError('Mật khẩu xác nhận không khớp');
             return;
         }
-
-        const fetchMaxID = async () => {
-            try {
-                const userResponse = await fetch('https://localhost:7166/api/User/GetIDandName');
-                if (!userResponse.ok) throw new Error('Network response was not ok');
-                const userData = await userResponse.json();
-                const MaxUserID = userData.reduce((max, user) => Math.max(max, user.id), 0);
-                setMaxUserID(MaxUserID);
-                console.log('Max User ID:', MaxUserID);
-
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        };
-        await fetchMaxID();
+        if (Accept === false) {
+            console.error('Accept is false');
+            setAcceptError('Bạn phải đồng ý điều khoản');
+            return;
+        }
 
         const signupData = {
             id: MaxUserID + 1,
@@ -206,7 +196,6 @@ export default function SignInSignUp() {
         };
         console.log('Sign Up Data:', signupData);
 
-
         try {
             const userResponse = await fetch(`https://localhost:7166/api/User/GetUserByEmail/${SignUpEmail}`);
             if (!userResponse.ok) throw new Error('Network response was not ok');
@@ -220,13 +209,15 @@ export default function SignInSignUp() {
         }
 
         try {
-            const response = await fetch('https://localhost:7166/api/User', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(signupData),
-            });
+            const response = await fetch('https://localhost:7166/api/User',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(signupData),
+                }
+            );
 
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
@@ -234,27 +225,14 @@ export default function SignInSignUp() {
 
             if (data.role && data.role === 'User') {
                 alert('Đăng kí thành công');
-                window.location.href = 'http://localhost:5173/signinsignup';
+                moveImageBack();
             }
         } catch (error) {
             setErrorSignUp(error);
             console.log('Đăng kí thất bại:', error);
             setLoading(false);
         }
-    }
-
-    // useEffect(() => {
-    //     if (SignInEmail && SignInPassword) {
-    //         Login(SignInEmail, SignInPassword);
-    //     }
-    // }, [SignInEmail, SignInPassword]);
-
-    // useEffect(() => {
-    //     if (SignUpEmail && SignUpFullName && SignUpPhoneNumber && SignUpPassword && SignUpConfirm) {
-    //         SignUp(SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm);
-    //     }
-    // }, [SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm]);
-
+    };
 
     const handleSubmitSignIn = (e) => {
         e.preventDefault();
@@ -263,8 +241,6 @@ export default function SignInSignUp() {
         setSignInPasswordError(null);
         const SignInEmail = e.target.SignInEmail.value;
         const SignInPassword = e.target.SignInPassword.value;
-        setSignInEmail(SignInEmail);
-        setSignInPassword(SignInPassword);
         console.log({ SignInEmail, SignInPassword });
         Login(SignInEmail, SignInPassword);
     };
@@ -272,6 +248,7 @@ export default function SignInSignUp() {
     const handleSubmitSignUp = (e) => {
         e.preventDefault();
         setErrorSignUp(null);
+        setAcceptError(null);
         setSignUpEmailError(null);
         setSignUpFullNameError(null);
         setSignUpPhoneNumberError(null);
@@ -282,13 +259,37 @@ export default function SignInSignUp() {
         const SignUpPhoneNumber = e.target.SignUpPhoneNumber.value;
         const SignUpPassword = e.target.SignUpPassword.value;
         const SignUpConfirm = e.target.SignUpConfirm.value;
-        setSignUpEmail(SignUpEmail);
-        setSignUpFullName(SignUpFullName);
-        setSignUpPhoneNumber(SignUpPhoneNumber);
-        setSignUpPassword(SignUpPassword);
-        setSignUpConfirm(SignUpConfirm);
-        console.log({ SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm });
-        SignUp(SignUpEmail, SignUpFullName, SignUpPhoneNumber, SignUpPassword, SignUpConfirm);
+        console.log({
+            SignUpEmail,
+            SignUpFullName,
+            SignUpPhoneNumber,
+            SignUpPassword,
+            SignUpConfirm,
+        });
+        SignUp(
+            SignUpEmail,
+            SignUpFullName,
+            SignUpPhoneNumber,
+            SignUpPassword,
+            SignUpConfirm
+        );
+    };
+    const handleAccept = async () => {
+        setAccept(!Accept);
+
+        const fetchMaxID = async () => {
+            try {
+                const userResponse = await fetch('https://localhost:7166/api/User/GetIDandName');
+                if (!userResponse.ok) throw new Error('Network response was not ok');
+                const userData = await userResponse.json();
+                const MaxUserID = userData.reduce((max, user) => Math.max(max, user.id), 0);
+                setMaxUserID(MaxUserID);
+                console.log('Max User ID:', MaxUserID);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+        await fetchMaxID();
     };
 
     // npm install nodemailer
@@ -324,12 +325,11 @@ export default function SignInSignUp() {
         <div className='user-signin-signup'>
             <div className='signin-signup-container'>
                 <div className='card-box'>
-
                     <div className='card-body card-appear' id='card-signin'>
                         <h1 className='title'>ĐĂNG NHẬP</h1>
                         <Form className='form-box form-box1' onSubmit={handleSubmitSignIn}>
                             <Form.Group controlId='SignInEmail' className='form-group form-input'>
-                                <span className='icon'><i className='fa-solid fa-user' style={{ fontSize: '25px' }}></i></span>
+                                <span className='icon'><i className='fa-solid fa-envelope' style={{ fontSize: '25px' }}></i></span>
                                 <Form.Control className='input' type='email' placeholder='Email đăng nhập' style={{ border: (SignInEmailError || errorSignIn) && '1px solid #dc3545', }} />
                             </Form.Group>
                             <Form.Group controlId='SignInPassword' className='form-group form-input'>
@@ -337,9 +337,9 @@ export default function SignInSignUp() {
                                 <Form.Control className='input' type='password' placeholder='Mật khẩu đăng nhập' style={{ border: (SignInPasswordError || errorSignIn) && '1px solid #dc3545', }} />
                             </Form.Group>
                             <a href='#' className='forget-link'><b>Quên mật khẩu?</b></a>
-                            {SignInEmailError && <span className='error-message' style={{ color: '#dc3545' }}>{SignInEmailError}</span>}
-                            {SignInPasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{SignInPasswordError}</span>}
-                            {errorSignIn && <span className='error-message' style={{ color: '#dc3545' }}>Đăng nhập thất bại</span>}
+                            {SignInEmailError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignInEmailError}</span>)}
+                            {SignInPasswordError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignInPasswordError}</span>)}
+                            {errorSignIn && (<span className='error-message' style={{ color: '#dc3545' }}>Đăng nhập thất bại</span>)}
                             <div className='btn-box'>
                                 <Button type='submit' className='btn' id='btn-signin'>ĐĂNG NHẬP</Button>
                                 <Button type='reset' className='btn' id='btn-reset-signin' onClick={resetInputsBox1}>XÓA</Button>
@@ -373,12 +373,22 @@ export default function SignInSignUp() {
                                 <span className='icon'><i className='fa-solid fa-key' style={{ fontSize: '25px' }}></i></span>
                                 <Form.Control className='input' type='password' placeholder='Xác nhận mật khẩu' style={{ border: (SignUpConfirmError || errorSignUp) && '1px solid #dc3545', }} />
                             </Form.Group>
-                            {SignUpEmailError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpEmailError}</span>}
-                            {SignUpFullNameError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpFullNameError}</span>}
-                            {SignUpPhoneNumberError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpPhoneNumberError}</span>}
-                            {SignUpPasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpPasswordError}</span>}
-                            {SignUpConfirmError && <span className='error-message' style={{ color: '#dc3545' }}>{SignUpConfirmError}</span>}
-                            {errorSignUp && <span className='error-message' style={{ color: '#dc3545' }}>Đăng kí thất bại</span>}
+
+                            <div className='accept-box'>
+                                <a href='#' className='provision' target='_blank'><b>ĐIỀU KHOẢN</b></a>
+
+                                <Form.Group controlId='Accept' className='form-group form-check'>
+                                    <Form.Check type='checkbox' label='Đồng ý điều khoản' name='Accept' onChange={handleAccept} />
+                                </Form.Group>
+                            </div>
+
+                            {SignUpEmailError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignUpEmailError}</span>)}
+                            {SignUpFullNameError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignUpFullNameError}</span>)}
+                            {SignUpPhoneNumberError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignUpPhoneNumberError}</span>)}
+                            {SignUpPasswordError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignUpPasswordError}</span>)}
+                            {SignUpConfirmError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignUpConfirmError}</span>)}
+                            {AcceptError && (<span className='error-message' style={{ color: '#dc3545' }}>{AcceptError}</span>)}
+                            {errorSignUp && (<span className='error-message' style={{ color: '#dc3545' }}>Đăng kí thất bại</span>)}
                             <div className='btn-box'>
                                 <Button type='submit' className='btn' id='btn-signup'>ĐĂNG KÍ</Button>
                                 <Button type='reset' className='btn' id='btn-reset-signup' onClick={resetInputsBox2}>XÓA</Button>
@@ -389,9 +399,8 @@ export default function SignInSignUp() {
                     </div>
 
                     <div className='movingImage' id='movingImage'></div>
-
                 </div>
             </div>
         </div>
-    )
+    );
 }

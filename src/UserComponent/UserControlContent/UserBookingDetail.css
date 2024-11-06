@@ -149,10 +149,23 @@ body {
 
         .booking-tabs {
             height: auto;
+
+            .nav-link {
+                color: #fb8b24;
+            }
+
+            .active {
+                color: #fb8b24;
+                font-weight: bold;
+            }
         }
 
         .tab-content {
             border-bottom: 1px solid #cccccc;
+
+            p {
+                margin: 0 0 2px;
+            }
 
             h1 {
                 border-bottom: 1px solid #cccccc;
@@ -172,6 +185,7 @@ body {
 
             .slot-name {
                 margin: 0;
+                padding: 5px 0 0 5px;
 
                 .col {
                     padding: 0 5px 5px 0;
@@ -195,6 +209,20 @@ body {
 
         .payment-tab {
             padding: 0 0 20px;
+
+            h4 {
+                margin: 10px 0 0;
+            }
+
+            .booking-col {
+                border-bottom: 1px solid #cccccc;
+            }
+
+            .card-amount-success {
+                display: flex;
+                flex-direction: column;
+                align-items: end;
+            }
         }
 
         .store-tab {

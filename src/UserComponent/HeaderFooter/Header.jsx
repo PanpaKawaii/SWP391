@@ -77,22 +77,14 @@ export default function Header() {
 
     return (
         <div className='user-header-container'>
-            {/* <div className='search-bar'>
-                <CDBInput type='text' placeholder='Tìm kiếm...' style={{ width: '100%', maxWidth: '300px' }} />
-            </div> */}
-
-            {/* {isNaN(id) ?
-                (<Link to='/signinsignup'><i className='fas fa-sign-in-alt'></i> Đăng nhập</Link>)
-                :
-                ( */}
             <>
                 <div className='d-flex dropdown' onClick={toggleDropdown} ref={dropdownRef}>
                     <button className='user-avatar'>
                         <img src={USER ? USER.image : InnoSpace} alt={USER ? USER.name : ''} />
                         {USER &&
-                            <div className='user-info'>
-                                <div className='username'>{USER.name}</div>
-                                <div className='role'>{USER.role}</div>
+                            <div className='user-information'>
+                                <div className='user-name'>{USER.name}</div>
+                                <div className='user-role'>{USER.role}</div>
                             </div>
                         }
 
@@ -105,25 +97,6 @@ export default function Header() {
                     </button>
                 </div>
             </>
-            {/* )
-            } */}
-            {/* <div className='dropdown' ref={dropdownRef}>
-                <button
-                    className='dropdown-toggle'
-                    type='button'
-                    onClick={toggleDropdown}
-                    aria-haspopup='true'
-                    aria-expanded={isDropdownOpen}>
-
-                    <i className='fas fa-cog'></i>
-                </button>
-                {isDropdownOpen && (
-                    <div className='dropdown-menu show'>
-                        <Link className='dropdown-item' to='/user/information'>Profile</Link>
-                        <Link className='dropdown-item' to='/signinsignup'>Logout</Link>
-                    </div>
-                )}
-            </div> */}
         </div>
     )
 }

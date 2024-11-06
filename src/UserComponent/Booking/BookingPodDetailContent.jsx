@@ -8,6 +8,8 @@ import { imagePODs } from '../../assets/listPODs';
 import { imageSTOREs } from '../../assets/listSTOREs';
 import { imageUTILITIes } from '../../assets/listUTILITIes';
 
+import InnoSpace from '../../BackgroundImage/InnoSpace.png';
+
 // import QRcode from '../BackgroundImage/QRcode.jpg'
 
 export default function BookingPodDetailContent() {
@@ -18,6 +20,7 @@ export default function BookingPodDetailContent() {
         const UserIdInt = parseInt(UserId, 10);
         setId(UserIdInt);
     }, [UserId]);
+    const navigate = useNavigate();
 
     const [BOOKINGs, setBOOKINGs] = useState(null);
     const [PODs, setPODs] = useState(null);
@@ -25,6 +28,8 @@ export default function BookingPodDetailContent() {
     const [UTILITIes, setUTILITIes] = useState(null);
     const [SLOTs, setSLOTs] = useState([]);
     const [STOREs, setSTOREs] = useState(null);
+    const [USERS, setUSERS] = useState(null);
+    const [USER, setUSER] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -32,6 +37,7 @@ export default function BookingPodDetailContent() {
     const [IsModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
+        const UserIdInt = parseInt(UserId, 10);
         const fetchData = async () => {
             try {
                 const bookingResponse = await fetch('https://localhost:7166/api/Booking');
@@ -63,6 +69,21 @@ export default function BookingPodDetailContent() {
                 if (!storeResponse.ok) throw new Error('Network response was not ok');
                 const storeData = await storeResponse.json();
                 setSTOREs(storeData);
+
+                const usersResponse = await fetch('https://localhost:7166/api/User/GetIDandName');
+                if (!usersResponse.ok) throw new Error('Network response was not ok');
+                const usersData = await usersResponse.json();
+                setUSERS(usersData);
+
+                const userResponse = await fetch(`https://localhost:7166/api/User/${UserIdInt}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                });
+                if (!userResponse.ok) throw new Error('Network response was not ok');
+                const userData = await userResponse.json();
+                setUSER(userData);
 
                 setLoading(false);
             } catch (error) {
@@ -120,6 +141,23 @@ export default function BookingPodDetailContent() {
         const booking = BOOKINGs ? BOOKINGs.filter(booking => booking.podId === podId && booking.rating !== null && booking.rating > 0) : [];
         const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
         return (rating / booking.length).toFixed(1);
+    };
+
+    // Lấy Feedback của Booking
+    const FeedbackBooking = BOOKINGs ? BOOKINGs.filter(booking =>
+        // booking.podId == Pod?.id && booking.feedback !== null && booking.feedback !== ''
+        booking.podId == Pod?.id && booking.rating !== null && booking.rating > 0
+    ) : [];
+
+    // Lấy tên người dùng của Booking
+    const getUserNameBooking = (userId) => {
+        const user = USERS ? USERS.find(user => user.id === userId) : null;
+        return user ? user.name : null;
+    };
+    // Lấy ảnh người dùng của Booking
+    const getUserImageBooking = (userId) => {
+        const user = USERS ? USERS.find(user => user.id === userId) : null;
+        return user ? user.image : null;
     };
 
     useEffect(() => {
@@ -208,39 +246,41 @@ export default function BookingPodDetailContent() {
             console.error('Error during booking:', error);
         }
 
-        // try {
-        //     const response = await fetch('https://localhost:7166/api/Payment', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        //         },
-        //         body: JSON.stringify(paymentData),
-        //     });
+        if (selectedPaymentMethod && selectedPaymentMethod === 'Thanh toán bằng tiền mặt') {
+            try {
+                const response = await fetch('https://localhost:7166/api/Payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify(paymentData),
+                });
 
-        //     if (!response.ok) throw new Error('Network response was not ok');
-        //     const result = await response.json();
-        //     console.log('Creating Payment successful:', result);
-        // } catch (error) {
-        //     console.error('Error during booking:', error);
-        // }
+                if (!response.ok) throw new Error('Network response was not ok');
+                const result = await response.json();
+                console.log('Creating Payment successful:', result);
+            } catch (error) {
+                console.error('Error during booking:', error);
+            }
+        } else {
+            try {
+                const response = await fetch('https://localhost:7166/api/Payment/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify(paymentMethodData),
+                });
 
-        try {
-            const response = await fetch('https://localhost:7166/api/Payment/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
-                body: JSON.stringify(paymentMethodData),
-            });
-
-            if (!response.ok) throw new Error('Network response was not ok');
-            const result = await response.json();
-            console.log('Creating PaymentMethod successful:', result);
-            window.location.href = result.paymentUrl;
-        } catch (error) {
-            console.error('Error during booking:', error);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const result = await response.json();
+                console.log('Creating PaymentMethod successful:', result);
+                window.location.href = result.paymentUrl;
+            } catch (error) {
+                console.error('Error during booking:', error);
+            }
         }
     };
 
@@ -289,7 +329,6 @@ export default function BookingPodDetailContent() {
         setConfirm(true);
     };
 
-    const navigate = useNavigate();
     if (Pod && Pod.status !== 'Đang hoạt động') {
         navigate('/booking/pod')
     }
@@ -308,15 +347,18 @@ export default function BookingPodDetailContent() {
     if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
 
     return (
+        <div className='user-booking-pod-detail' style={{ position: 'relative' }}>
 
-        //[Store] (Id, Name, Address, Contact, Status)
-        //[Pod] (Id, Name, Image, Description, Rating, Status, TypeId, StoreId)
-        //[Type] (Id, Name, Capacity)
-        //[Utility] (Id, Name, Image, Description)
-        //[Slot] (Id, Name, StartTime, EndTime, Price, Status, PodId)
-        //[Booking] (Id, Date, Status, Feedback, PodId, UserId)
+            {/* <div className='back-button' style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                <Link to='/booking/pod'>
+                    <i className='fa-solid fa-arrow-left' style={{ color: '#fdbc7f', fontSize: '40px' }}></i>
+                </Link>
+            </div> */}
 
-        <div className='POD-booking-pod-detail'>
+            <div className='back-button' style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                <i className='fa-solid fa-arrow-left' style={{ color: '#fdbc7f', fontSize: '40px', cursor: 'pointer' }} onClick={() => navigate(-1)}></i>
+            </div>
+
             <div className='booking-pod-detail-container'>
                 {Pod ? (
                     <>
@@ -324,23 +366,23 @@ export default function BookingPodDetailContent() {
                         <div className='image-detail'>
                             <div className='image-detail-pod'>
                                 {/* <img src={imagePODs.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img> */}
-                                <img src={Pod.image} alt={Pod.name} onClick={() => { setPicture(Pod); setIsModalOpen(true) }}></img>
+                                <img src={Pod.image} alt={Pod.name}></img>
                             </div>
                             <div className='image-detail-2'>
                                 <div className='image-detail-2-item-store'>
                                     {/* <img src={imageSTOREs.find(image => image.id === Pod.storeId)?.image} alt={Pod.name}></img> */}
-                                    <img src={thisSTORE.image} alt={thisSTORE.name} onClick={() => { setPicture(thisSTORE); setIsModalOpen(true) }}></img>
+                                    <img src={thisSTORE.image} alt={thisSTORE.name}></img>
                                 </div>
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(0, 3).map((utility) => (
                                     <div key={utility.id} className='image-detail-2-item-utility' style={{ '--available-utilities-length': Math.ceil((AvailableUTILITIes.length / 4)), '--available-utilities-slice': AvailableUTILITIes.slice(0, 3).length }}>
                                         {/* <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img> */}
-                                        <img src={utility.image} alt={utility.name} onClick={() => { setPicture(utility); setIsModalOpen(true) }}></img>
+                                        <img src={utility.image} alt={utility.name}></img>
                                     </div>
                                 ))}
                                 {AvailableUTILITIes && AvailableUTILITIes.slice(3, 6).map((utility) => (
                                     <div key={utility.id} className='image-detail-2-item-utility' style={{ '--available-utilities-length': Math.ceil((AvailableUTILITIes.length / 4)), '--available-utilities-slice': AvailableUTILITIes.slice(3, 6).length }}>
                                         {/* <img src={imageUTILITIes.find(image => image.id === utility.id)?.image} alt={utility.name}></img> */}
-                                        <img src={utility.image} alt={utility.name} onClick={() => { setPicture(utility); setIsModalOpen(true) }}></img>
+                                        <img src={utility.image} alt={utility.name}></img>
                                     </div>
                                 ))}
                                 {/* <div className='image-detail-2-item'>
@@ -500,7 +542,7 @@ export default function BookingPodDetailContent() {
                                                         <Form.Label>Hình thức thanh toán</Form.Label>
                                                         <Form.Control as='select' value={selectedPaymentMethod} onChange={(e) => setSelectedPaymentMethod(e.target.value)}>
                                                             <option value='Thanh toán qua VNPay'>Thanh toán qua VNPay</option>
-                                                            {/* <option value='Thanh toán bằng tiền mặt'>Thanh toán bằng tiền mặt</option> */}
+                                                            {USER && USER.type === 'VIP' && <option value='Thanh toán bằng tiền mặt'>Thanh toán bằng tiền mặt</option>}
                                                         </Form.Control>
                                                     </Form.Group>
 
@@ -540,39 +582,37 @@ export default function BookingPodDetailContent() {
                             }
                         </div>
 
-                        {/* <div>
-                            <h3>Đánh giá của khách hàng:</h3>
-                            {BOOKINGs && BOOKINGs.filter(booking => booking.podId === Pod.id).map((booking, index) => (
-                                <div key={index} style={{
-                                    border: '1px solid #cccccc',
-                                    borderRadius: '5px',
-                                    padding: '10px',
-                                    margin: '10px 0'
-                                }}>
-                                    <div className='booking-pod-detail-item'>
-                                        <p><b>Tên người dùng:</b> {booking.id}</p>
-                                        <p><b>Ngày đặt phòng:</b> {booking.date.substring(0, 10)}</p>
-                                        <p><b>Trạng thái:</b> {booking.status}</p>
-                                        <p><b>Đánh giá:</b> {booking.feedback || 'Không có đánh giá'}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div> */}
+                        <div className='feedback-container'>
+                            <h2><b>Đánh giá của khách hàng:</b></h2>
+                            <Row className='feedback-row'>
+                                {FeedbackBooking && FeedbackBooking.length !== 0 ? (
+                                    FeedbackBooking.map((comment, index) => (
+                                        <Col key={index} xs={12} sm={12} md={12} lg={6} xl={4} xxl={4} className='feedback-col'>
+                                            <div className='feedback-item'>
+                                                <div className='feedback-item-user'>
+                                                    <img src={getUserImageBooking(comment.userId)} alt=''></img>
+                                                    <div>
+                                                        <p><b>{getUserNameBooking(comment.userId)}</b></p>
+                                                        <p>{comment.date.substring(0, 10)}</p>
+                                                    </div>
+                                                </div>
+                                                {Array.from({ length: comment.rating }, (_, i) => (
+                                                    <span key={i} style={{ color: 'gold', fontSize: '1em' }}><i className='fa-solid fa-star'></i></span>
+                                                ))}
+                                                <p>{comment.feedback ? comment.feedback : '(Không có đánh giá)'}</p>
+                                            </div>
+                                        </Col>
+                                    ))
+                                ) : (
+                                    <p>Không có đánh giá nào.</p>
+                                )}
+                            </Row>
+                        </div>
 
                     </>
                 ) : (
                     <span>Không tìm thấy POD nào.</span>
                 )}
-
-
-                {/*
-                [Store] (Id, Name, Address, Contact, Status)
-                [Pod] (Id, Name, Image, Description, Rating, Status, TypeId, StoreId)
-                [Type] (Id, Name, Capacity)
-                [Utility] (Id, Name, Image, Description)
-                [Slot] (Id, Name, StartTime, EndTime, Price, Status, PodId)
-                [Booking] (Id, Date, Status, Feedback, PodId, UserId)
-                */}
 
                 {IsPopupOpen && date && SlotId && (
                     <div id='popupConfirm' className='overlay'>
@@ -619,7 +659,7 @@ export default function BookingPodDetailContent() {
                     </div>
                 )}
 
-                {IsModalOpen && (
+                {/* {IsModalOpen && (
                     <Modal show={IsModalOpen} onHide={() => setIsModalOpen(false)} size='xl'>
                         <Modal.Header closeButton>
                             <Modal.Title>{Picture.name}</Modal.Title>
@@ -636,7 +676,7 @@ export default function BookingPodDetailContent() {
                             </img>
                         </Modal.Body>
                     </Modal>
-                )}
+                )} */}
 
             </div>
         </div>

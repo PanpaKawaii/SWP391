@@ -110,7 +110,7 @@ export default function UserInformation() {
 
         } catch (error) {
             setError(error);
-            console.log('Đổi thông tin thất bại:', error);
+            alert('Đổi thông tin thất bại');
             setLoading(false);
         }
     }
@@ -194,7 +194,7 @@ export default function UserInformation() {
 
         } catch (error) {
             setError(error);
-            console.log('Đổi mật khẩu thất bại:', error);
+            alert('Đổi mật khẩu thất bại');
             setLoading(false);
         }
     }

@@ -32,29 +32,31 @@ export default function PaymentStatus() {
         // setPaymentInfo(paymentData);
 
         const messageParam = urlParams.get('message');
-        // Bỏ 4 ký tự cuối của chuỗi
-        const trimmedMessage = messageParam ? messageParam : '';
-        setMessage(trimmedMessage);
+        setMessage(messageParam);
     }, []);
 
     return (
         <div className='payment-status'>
             <div className='payment-status-content'>
-                <Card className='payment-status-card'>
-
-                    {/* {message &&
-                        <h1 style={{ color: decodeURIComponent(message) === 'Thanh toán thành công' ? '#28a745' : '#dc3545' }}><b>{decodeURIComponent(message)}</b></h1>
-                    } */}
+                <Card className='payment-status-card'
+                    style={{
+                        boxShadow: message && decodeURIComponent(message) === 'Thanh toán thành công' ? '5px 5px 10px 0 #28a74550' : '5px 5px 10px 0 #dc354550',
+                        color: message && decodeURIComponent(message) === 'Thanh toán thành công' ? '#28a745' : '#dc3545'
+                    }}>
 
                     {message &&
                         (decodeURIComponent(message) === 'Thanh toán thành công' ?
                             <>
-                                <h1 style={{ color: '#28a745' }}><b>{decodeURIComponent(message)}</b></h1>
-                                <p>Ngày thanh toán: {new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString().slice(0, 19)}</p>
-                                <p>Phương thức thanh toán: Thanh toán qua VNPay</p>
+                                <h1><b>{decodeURIComponent(message)}</b></h1>
+                                <i className='fa-solid fa-circle-check icon-check'></i>
+                                {/* <p><b>Ngày thanh toán:</b> {new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString().slice(0, 19)}</p> */}
+                                {/* <p><b>Phương thức thanh toán:</b> Thanh toán qua VNPay</p> */}
                             </>
                             :
-                            <h1 style={{ color: '#dc3545' }}><b>{decodeURIComponent(message)}</b></h1>
+                            <>
+                                <h1><b>{decodeURIComponent(message)}</b></h1>
+                                <i className='fa-solid fa-circle-xmark icon-xmark'></i>
+                            </>
                         )
                     }
 

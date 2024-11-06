@@ -39,12 +39,6 @@ export default function Footer() {
                     <h3><b>InnoSpace</b></h3>
                     <p>InnoSpace là hệ thống quản lý và đặt chỗ làm việc cá nhân, giúp người dùng dễ dàng tìm kiếm và đặt chỗ theo nhu cầu.</p>
                 </div>
-                <div className='footer-solution'>
-                    <h3><b>Giải pháp</b></h3>
-                    {TYPEs && TYPEs.map((type) => (
-                        <p key={type.id}>{type.name} {type.capacity} Người</p>
-                    ))}
-                </div>
                 <div className='footer-location'>
                     <h3><b>Địa chỉ</b></h3>
                     <p>info@innospace.com.vn</p>
@@ -53,6 +47,12 @@ export default function Footer() {
                             <p>+84{store.contact.substring(1)}</p>
                             <p>{store.address}</p>
                         </div>
+                    ))}
+                </div>
+                <div className='footer-solution'>
+                    <h3><b>Giải pháp</b></h3>
+                    {TYPEs && TYPEs.map((type) => (
+                        <p key={type.id}>{type.name} {type.capacity} Người</p>
                     ))}
                 </div>
             </div>

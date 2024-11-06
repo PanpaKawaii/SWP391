@@ -42,15 +42,17 @@
                 top: 100%;
             }
 
-            .user-info {
+            .user-information {
                 margin: 0 10px;
+                background-color: #feecd9;
+                align-items: end;
                 text-align: end;
 
-                .username {
+                .user-name {
                     font-weight: bold;
                 }
 
-                .role {
+                .user-role {
                     color: #6c757d;
                 }
             }

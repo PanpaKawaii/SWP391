@@ -12,6 +12,8 @@ import single1 from '../../assets/PODs/single1.jpg'
 
 export default function BookingStoreDetailContent() {
 
+    const navigate = useNavigate();
+
     const [STOREs, setSTOREs] = useState(null);
     const [PODs, setPODs] = useState(null);
     const [BOOKINGs, setBOOKINGs] = useState(null);
@@ -57,11 +59,6 @@ export default function BookingStoreDetailContent() {
         return obj.id == StoreId.Id;
     }) : null;
 
-    const navigate = useNavigate();
-    if (Store && Store.status !== 'Đang hoạt động') {
-        navigate('/booking/store')
-    }
-
     // Lấy đánh giá của STORE dựa trên đánh giá của các Booking
     const getStoreBookingRating = (storeId) => {
         const podsOfStore = PODs ? PODs.filter(pod => pod.storeId == storeId) : [];
@@ -70,6 +67,10 @@ export default function BookingStoreDetailContent() {
         const rating = filteredBooking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
         return (rating / filteredBooking.length).toFixed(1);
     };
+
+    if (Store && Store.status !== 'Đang hoạt động') {
+        navigate('/booking/store')
+    }
 
 
     if (loading) return (
@@ -82,7 +83,18 @@ export default function BookingStoreDetailContent() {
     if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Error: {error.message}</div>;
 
     return (
-        <div className='POD-booking-store-detail'>
+        <div className='user-booking-store-detail' style={{ position: 'relative' }}>
+
+            <div className='back-button' style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                <Link to='/booking/store'>
+                    <i className='fa-solid fa-arrow-left' style={{ color: '#fdbc7f', fontSize: '40px' }}></i>
+                </Link>
+            </div>
+
+            {/* <div className='back-button' style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                <i className='fa-solid fa-arrow-left' style={{ color: '#fdbc7f', fontSize: '40px', cursor: 'pointer' }} onClick={() => navigate(-1)}></i>
+            </div> */}
+
             {Store ? (
                 <div>
                     <div className='store-detail-container'>
