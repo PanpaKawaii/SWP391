@@ -395,9 +395,6 @@ function Product() {
           </Form.Item>
         </Form>
       </Modal>
-      <Button className="add-button" onClick={fetchProductData}>
-        <ReloadOutlined />
-      </Button>
     </div>
   );
 }

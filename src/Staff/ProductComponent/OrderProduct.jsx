@@ -12,11 +12,7 @@ import {
 } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarAlt,
-  faMoneyBillWave,
-  faBoxOpen,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 const { Option } = Select;
@@ -25,10 +21,13 @@ const OrderProduct = () => {
   const apiOrderProduct = "https://localhost:7166/api/BookingOrder";
   const apiProduct = "https://localhost:7166/api/Product";
   const apiBooking = "https://localhost:7166/api/Booking";
+  const apiPayment = "https://localhost:7166/api/Payment";
+
   const [form] = Form.useForm();
   const [products, setProducts] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [nextBookingOrderId, setNextBookingOrderId] = useState(null);
+  const [nextPaymentId, setNextPaymentId] = useState(0);
   const navigate = useNavigate();
 
   const fetchBookingData = async () => {
@@ -52,13 +51,30 @@ const OrderProduct = () => {
 
   const fetchNextBookingOrderId = async () => {
     try {
-      const response = await axios.get(apiOrderProduct);
-      const bookingOrders = response.data;
-      const maxId = Math.max(...bookingOrders.map((order) => order.id), 0);
-      setNextBookingOrderId(maxId + 1);
+      // Fetch cả hai ID song song
+      const [bookingOrderResponse, paymentResponse] = await Promise.all([
+        axios.get(apiOrderProduct),
+        axios.get(apiPayment),
+      ]);
+
+      // Xử lý BookingOrder ID
+      const bookingOrders = bookingOrderResponse.data;
+      const maxBookingOrderId = Math.max(
+        ...bookingOrders.map((order) => order.id),
+        0
+      );
+      setNextBookingOrderId(maxBookingOrderId + 1);
+
+      // Xử lý Payment ID
+      const payments = paymentResponse.data;
+      const maxPaymentId = Math.max(
+        ...payments.map((payment) => payment.id),
+        0
+      );
+      setNextPaymentId(maxPaymentId + 1);
     } catch (error) {
-      console.error("Lỗi khi lấy ID BookingOrder tiếp theo:", error);
-      message.error("Không thể lấy ID BookingOrder tiếp theo");
+      console.error("Lỗi khi lấy ID BookingOrder và Payment tiếp theo:", error);
+      message.error("Không thể lấy ID BookingOrder và Payment tiếp theo");
     }
   };
 
@@ -70,7 +86,13 @@ const OrderProduct = () => {
 
   const submitBookingOrder = async (values) => {
     try {
-      // Kiểm tra trạng thái của booking
+      // Validate the amount
+      if (!values.amount || values.amount <= 0) {
+        message.error("Số tiền thanh toán không hợp lệ");
+        return;
+      }
+
+      // Validate the booking
       const booking = bookings.find((b) => b.id === values.bookingId);
       if (!booking || booking.status !== "Đang diễn ra") {
         message.error(
@@ -79,22 +101,59 @@ const OrderProduct = () => {
         return;
       }
 
+      // Tạo BookingOrder
       const bookingOrder = {
         ...values,
         id: nextBookingOrderId,
         date: values.date.format("YYYY-MM-DD"),
       };
+
+      // Gửi request tạo BookingOrder
       await axios.post(apiOrderProduct, bookingOrder);
       message.success("Đã thêm BookingOrder thành công!");
+
+      // Tạo Payment với format đúng và ID mới
+      const payment = {
+        id: nextPaymentId,
+        method: "Chuyển khoản",
+        amount: values.amount,
+        date: new Date(values.date).toISOString(),
+        status: "Đã thanh toán",
+        bookingId: values.bookingId,
+      };
+
+      // Gửi request tạo Payment với xử lý lỗi chi tiết hơn
+      try {
+        const response = await axios.post(apiPayment, payment);
+        if (response.status === 200 || response.status === 201) {
+          message.success("Đã tạo thanh toán thành công!");
+        }
+      } catch (paymentError) {
+        console.error("Lỗi khi tạo Payment:", paymentError);
+        if (paymentError.response) {
+          console.error("Server error details:", paymentError.response.data);
+          message.error(
+            `Lỗi thanh toán: ${
+              paymentError.response.data.message ||
+              "Có lỗi xảy ra khi tạo thanh toán"
+            }`
+          );
+        } else {
+          message.error("Không thể kết nối đến server thanh toán");
+        }
+        return;
+      }
+
+      // Chỉ chuyển hướng và reset form nếu cả hai operation đều thành công
       navigate("/history");
       form.resetFields();
-      fetchNextBookingOrderId(); // Cập nhật ID cho lần thêm tiếp theo
+      // Fetch lại ID cho lần tiếp theo
+      fetchNextBookingOrderId();
     } catch (error) {
       console.error("Lỗi khi thêm BookingOrder:", error);
       message.error("Có lỗi xảy ra khi thêm BookingOrder");
     }
   };
-
   const handleProductChange = (value) => {
     const selectedProduct = products.find((p) => p.id === value);
     if (selectedProduct) {
@@ -120,9 +179,11 @@ const OrderProduct = () => {
   };
 
   // Hàm để vô hiệu hóa các ngày không phải là hôm nay
-  const disabledDate = (current) => {
-    return current && current < moment().startOf("day"); // Chỉ cho phép chọn ngày hôm nay
+  const disabledDate = (currentDay) => {
+    const today = moment().startOf("day");
+    return currentDay && currentDay.valueOf() !== today.valueOf();
   };
+  const initialDate = moment().startOf("day");
 
   return (
     <div
@@ -191,18 +252,18 @@ const OrderProduct = () => {
               ))}
           </Select>
         </Form.Item>
-        <Form.Item name="date" label="Ngày" rules={[{ required: true }]}>
+
+        <Form.Item
+          name="date"
+          label="Ngày"
+          initialValue={initialDate}
+          rules={[{ required: true }]}
+        >
           <DatePicker style={{ width: "100%" }} disabledDate={disabledDate} />
         </Form.Item>
 
-        <Form.Item
-          name="status"
-          label="Trạng thái"
-          rules={[{ required: true }]}
-        >
-          <Select>
-            <Option value="Đã thanh toán">Đã thanh toán</Option>
-          </Select>
+        <Form.Item name="status" label="Trạng thái" hidden>
+          <Input value="Đã thanh toán"></Input>
         </Form.Item>
         <Form.Item name="amount" label="Tổng tiền">
           <InputNumber

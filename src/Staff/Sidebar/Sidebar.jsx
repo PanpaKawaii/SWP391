@@ -40,7 +40,7 @@ const Sidebar = () => {
             </Link>
           </div>
 
-          <Link
+          {/* <Link
             to="/order"
             style={{
               display: "flex",
@@ -51,7 +51,7 @@ const Sidebar = () => {
               <FontAwesomeIcon className="icon" icon={faFileClipboard} />
               Cộng điểm cho người dùng
             </span>
-          </Link>
+          </Link> */}
           <Link
             to="/booking-order"
             style={{
