@@ -13,6 +13,7 @@ import {
   Popconfirm,
   Form,
   message,
+  Tabs,
 } from "antd"; // Nhập các component từ Ant Design
 import {
   SearchOutlined,
@@ -29,7 +30,6 @@ import isBetween from "dayjs/plugin/isBetween"; // Nhập plugin isBetween để
 dayjs.extend(isBetween); // Kích hoạt plugin isBetween cho dayjs
 
 const { Title } = Typography; // Destructuring Title từ Typography
-const { RangePicker } = DatePicker; // Destructuring RangePicker từ DatePicker
 
 const OrderHistory = () => {
   // Khai báo các biến trạng thái để lưu trữ dữ liệu
@@ -43,8 +43,7 @@ const OrderHistory = () => {
   const [searchTerm, setSearchTerm] = useState(""); // Thuật ngữ tìm kiếm
   const [selectedBooking, setSelectedBooking] = useState(null); // Đặt chỗ được chọn
   const [isModalVisible, setIsModalVisible] = useState(false); // Trạng thái hiển thị modal
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false); // Trạng thái hiển thị modal chỉnh sửa
-  const [editingOrder, setEditingOrder] = useState(null); // Đơn hàng đang chỉnh sửa
+
 
   const apiUser = "https://localhost:7166/api/User"; // Địa chỉ API cho người dùng
   const apiBooking = "https://localhost:7166/api/Booking"; // Địa chỉ API cho đặt chỗ
@@ -170,8 +169,6 @@ const OrderHistory = () => {
     fetchPodData();
   }, []);
 
-  // useEffect để tính doanh thu khi ngày bắt đầu, ngày kết thúc hoặc dữ liệu thanh toán, đặt chỗ thay đổi
-
 
   // Nếu không có dữ liệu, hiển thị thông báo đang tải
   if (
@@ -188,49 +185,13 @@ const OrderHistory = () => {
     );
   }
 
-  // Hàm mở modal chỉnh sửa đơn hàng
-  const handleOpenEditOrderProductModal = (record) => {
-    setEditingOrder(record); // Lưu đơn hàng đang chỉnh sửa
-    setIsEditModalVisible(true); // Hiển thị modal chỉnh sửa
-  };
 
-  // Hàm đóng modal chỉnh sửa
-  const handleCloseEditModal = () => {
-    setIsEditModalVisible(false); // Ẩn modal chỉnh sửa
-    setEditingOrder(null); // Đặt lại đơn hàng đang chỉnh sửa
-  };
 
-  // Hàm xử lý chỉnh sửa đơn hàng
-  const handleEditOrderProduct = async (values) => {
-    try {
-      const response = await axios.put(`${apiOrder}/${editingOrder.id}`, {
-        ...editingOrder,
-        ...values,
-        date: dayjs(values.date).format(), // Định dạng ngày
-      });
-      if (response.status === 200) {
-        message.success("Cập nhật đơn hàng thành công"); // Hiển thị thông báo thành công
-        fetchOrderData(); // Lấy lại dữ liệu đơn hàng
-        handleCloseEditModal(); // Đóng modal chỉnh sửa
-      }
-    } catch (error) {
-      console.error("Lỗi khi cập nhật đơn hàng:", error); // Log lỗi nếu có
-      message.error("Cập nhật đơn hàng thất bại"); // Hiển thị thông báo lỗi
-    }
-  };
 
-  // Hàm xử lý xóa đơn hàng
-  const handleDeleteOrderProduct = async (id) => {
-    try {
-      const response = await axios.delete(`${apiOrder}/${id}`); // Gửi yêu cầu xóa đơn hàng
-      message.success("Xóa đơn hàng thành công"); // Hiển thị thông báo thành công
-      setIsModalVisible(false); // Ẩn modal
-      fetchOrderData(); // Lấy lại dữ liệu đơn hàng
-    } catch (error) {
-      console.error("Lỗi khi xóa đơn hàng:", error); // Log lỗi nếu có
-      message.error("Xóa đơn hàng thất bại"); // Hiển thị thông báo lỗi
-    }
-  };
+ 
+
+
+
 
   // Hàm lấy thông tin slot dựa trên bookingId
   const getSlotInfo = (bookingId) => {
@@ -269,40 +230,7 @@ const OrderHistory = () => {
     setSelectedBooking(null); // Đặt lại đặt chỗ được chọn
   };
 
-  // Hàm cập nhật thông tin thanh toán
-  const handleUpdatePayment = async () => {
-    const totalAmount =
-      (paymentData.find((payment) => payment.bookingId === selectedBooking.id)
-        ?.amount || 0) +
-      (selectedBooking.bookingOrders?.reduce(
-        (total, order) => total + order.amount,
-        0
-      ) || 0);
 
-    const paymentToUpdate = paymentData.find(
-      (payment) => payment.bookingId === selectedBooking.id
-    );
-
-    if (!paymentToUpdate) {
-      message.error("Không tìm thấy thông tin thanh toán"); // Hiển thị thông báo lỗi nếu không tìm thấy thông tin thanh toán
-      return;
-    }
-
-    try {
-      const response = await axios.put(`${apiPayment}/${paymentToUpdate.id}`, {
-        ...paymentToUpdate,
-        amount: totalAmount, // Cập nhật tổng số tiền
-        date: dayjs().format(), // Định dạng ngày
-      });
-
-      message.success("Cập nhật thanh toán thành công"); // Hiển thị thông báo thành công
-      fetchPaymentData(); // Lấy lại dữ liệu thanh toán
-      handleCloseModal(); // Đóng modal
-    } catch (error) {
-      console.error("Lỗi khi cập nhật thanh toán:", error); // Log lỗi nếu có
-      message.error("Cập nhật thanh toán thất bại"); // Hiển thị thông báo lỗi
-    }
-  };
 
   // Hàm định dạng tiền tệ
   const formatCurrency = (amount) => {
@@ -457,185 +385,148 @@ const OrderHistory = () => {
 
   // Nội dung modal chi tiết đặt chỗ
   const modalContent = selectedBooking ? (
-    <div>
-      <Card title="Thông tin đặt chỗ" style={{ marginBottom: 10 }}>
-        <Table
-          dataSource={[selectedBooking]} // Dữ liệu cho bảng
-          columns={[
-            {
-              title: "Ngày đặt",
-              dataIndex: "date",
-              key: "date",
-              render: (date) => formatDate(date), // Định dạng ngày
-            },
-            {
-              title: "Pod",
-              key: "pod",
-              render: (_, record) => {
-                const pod = podData.find((p) => p.id === record.podId);
-                return pod ? `${record.podId} - ${pod.name}` : "Không xác định"; // Hiển thị thông tin pod
+    <Tabs defaultActiveKey="1">
+      <Tabs.TabPane tab="Thông tin đặt chỗ" key="1">
+        <Card style={{ marginBottom: 10 }}>
+          <Table
+            dataSource={[selectedBooking]} // Dữ liệu cho bảng
+            columns={[
+              {
+                title: "Ngày đặt",
+                dataIndex: "date",
+                key: "date",
+                render: (date) => formatDate(date), // Định dạng ngày
               },
-            },
-            {
-              title: "Slot",
-              key: "slot",
-              render: (_, record) => {
-                const slotInfo = getSlotInfo(record.id);
-                return slotInfo ? slotInfo.name : "N/A"; // Hiển thị thông tin slot
+              {
+                title: "Pod",
+                key: "pod",
+                render: (_, record) => {
+                  const pod = podData.find((p) => p.id === record.podId);
+                  return pod ? `${record.podId} - ${pod.name}` : "Không xác định"; // Hiển thị thông tin pod
+                },
               },
-            },
-            {
-              title: "Trạng thái",
-              dataIndex: "status",
-              key: "status",
-              render: (status) => renderOrderStatus(status), // Hiển thị trạng thái đơn hàng
-            },
-            {
-              title: "Phương thức thanh toán",
-              key: "paymentMethod",
-              render: (_, record) => {
-                const payment = paymentData.find(
-                  (p) => p.bookingId === record.id
-                );
-                return payment ? payment.method : "Không có thông tin"; // Hiển thị phương thức thanh toán
+              {
+                title: "Slot",
+                key: "slot",
+                render: (_, record) => {
+                  const slotInfo = getSlotInfo(record.id);
+                  return slotInfo ? slotInfo.name : "N/A"; // Hiển thị thông tin slot
+                },
               },
-            },
+              {
+                title: "Trạng thái",
+                dataIndex: "status",
+                key: "status",
+                render: (status) => renderOrderStatus(status), // Hiển thị trạng thái đơn hàng
+              },
+              {
+                title: "Phương thức thanh toán",
+                key: "paymentMethod",
+                render: (_, record) => {
+                  const payment = paymentData.find(
+                    (p) => p.bookingId === record.id
+                  );
+                  return payment ? payment.method : "Không có thông tin"; // Hiển thị phương thức thanh toán
+                },
+              },
+              {
+                title: "Feedback",
+                dataIndex: "feedback",
+                key: "feedback",
+                render: (feedback) => feedback || "Chưa có feedback", // Hiển thị feedback
+              },
+            ]}
+            pagination={false} // Tắt phân trang
+            bordered // Bỏ viền
+          />
+        </Card>
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="Đặt kèm" key="2">
+        <Card >
+          <Table
+            dataSource={selectedBooking.bookingOrders} // Dữ liệu cho bảng đơn hàng
+            columns={orderColumns} // Cột dữ liệu cho bảng đơn hàng
+            pagination={false} // Tắt phân trang
+            bordered // Bỏ viền
+            rowKey="id" // Khóa cho hàng
+          />
+        </Card>
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="Thông tin khách hàng" key="3">
+        <Card style={{ marginBottom: 10, marginTop: 10 }}>
+          <p>
+            <strong>Tên khách hàng:</strong>{" "}
+            {userData.find((user) => user.id === selectedBooking.userId)?.name} 
+          </p>
+          <p>
+            <strong>Email:</strong>{" "}
+            {userData.find((user) => user.id === selectedBooking.userId)?.email} 
+          </p>
+          <p>
+            <strong>Số điện thoại:</strong>{" "}
             {
-              title: "Feedback",
-              dataIndex: "feedback",
-              key: "feedback",
-              render: (feedback) => feedback || "Chưa có feedback", // Hiển thị feedback
-            },
-          ]}
-          pagination={false} // Tắt phân trang
-          bordered // Bỏ viền
-        />
-      </Card>
-      <Card title="Order thêm">
-        <Table
-          dataSource={selectedBooking.bookingOrders} // Dữ liệu cho bảng đơn hàng
-          columns={orderColumns} // Cột dữ liệu cho bảng đơn hàng
-          pagination={false} // Tắt phân trang
-          bordered // Bỏ viền
-          rowKey="id" // Khóa cho hàng
-        />
-      </Card>
-      <Card
-        title="Thông tin khách hàng"
-        style={{ marginBottom: 10, marginTop: 10 }}
-      >
-        <p>
-          <strong>Tên khách hàng:</strong>{" "}
-          {userData.find((user) => user.id === selectedBooking.userId)?.name} 
-        </p>
-        <p>
-          <strong>Email:</strong>{" "}
-          {userData.find((user) => user.id === selectedBooking.userId)?.email} 
-        </p>
-        <p>
-          <strong>Số điện thoại:</strong>{" "}
-          {
-            userData.find((user) => user.id === selectedBooking.userId)
-              ?.phoneNumber // Hiển thị số điện thoại khách hàng
-          }
-        </p>
-        <p>
-          <strong>Điểm tích lũy:</strong>{" "}
-          {formatNumber(
-            userData.find((user) => user.id === selectedBooking.userId)?.point // Hiển thị điểm tích lũy
-          )}
-        </p>
-      </Card>
-      <Card>
-        <p>
-          <strong>Tổng số tiền sản phẩm:</strong>{" "}
-          {formatCurrency(
-            selectedBooking.bookingOrders?.reduce(
-              (total, order) => total + order.amount,
-              0
-            ) || 0 // Tính tổng số tiền sản phẩm
-          )}
-        </p>
-        <p>
-          <strong>Số tiền thanh toán cho POD: </strong>{" "}
-          {formatCurrency(
-            paymentData.find(
-              (payment) => payment.bookingId === selectedBooking.id
-            )?.amount || 0 // Hiển thị số tiền thanh toán cho POD
-          )}
-        </p>
-        <p>
-          <strong>Tổng số tiền phải thanh toán:</strong>{" "}
-          {formatCurrency(
-            (paymentData.find(
-              (payment) => payment.bookingId === selectedBooking.id
-            )?.amount || 0) +
-              (selectedBooking.bookingOrders?.reduce(
+              userData.find((user) => user.id === selectedBooking.userId)
+                ?.phoneNumber // Hiển thị số điện thoại khách hàng
+            }
+          </p>
+          <p>
+            <strong>Điểm tích lũy:</strong>{" "}
+            {formatNumber(
+              userData.find((user) => user.id === selectedBooking.userId)?.point // Hiển thị điểm tích lũy
+            )}
+          </p>
+        </Card>
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="Thông tin thanh toán" key="4">
+        <Card>
+          <p>
+            <strong>Tổng số tiền sản phẩm:</strong>{" "}
+            {formatCurrency(
+              selectedBooking.bookingOrders?.reduce(
                 (total, order) => total + order.amount,
                 0
-              ) || 0) // Tính tổng số tiền phải thanh toán
-          )}
-        </p>
-        <p>
-          <strong>Số tiền đã thanh toán:</strong>{" "}
-          {formatCurrency(
-            (paymentData.find(
-              (payment) => payment.bookingId === selectedBooking.id
-            )?.amount || 0) +
-            (selectedBooking.bookingOrders?.reduce(
-              (total, order) => 
-                order.status === "Đã thanh toán" ? total + order.amount : total,
-              0
-            ) || 0) // Tính số tiền đã thanh toán
-          )}
-        </p>
-      
-        {/* <Button type="primary" onClick={handleUpdatePayment}>
-          Cập nhật thanh toán
-        </Button> */}
-      </Card>
-    </div>
+              ) || 0 // Tính tổng số tiền sản phẩm
+            )}
+          </p>
+          <p>
+            <strong>Số tiền thanh toán cho POD: </strong>{" "}
+            {formatCurrency(
+              paymentData.find(
+                (payment) => payment.bookingId === selectedBooking.id
+              )?.amount || 0 // Hiển thị số tiền thanh toán cho POD
+            )}
+          </p>
+          <p>
+            <strong>Tổng số tiền phải thanh toán:</strong>{" "}
+            {formatCurrency(
+              (paymentData.find(
+                (payment) => payment.bookingId === selectedBooking.id
+              )?.amount || 0) +
+                (selectedBooking.bookingOrders?.reduce(
+                  (total, order) => total + order.amount,
+                  0
+                ) || 0) // Tính tổng số tiền phải thanh toán
+            )}
+          </p>
+          <p>
+            <strong>Số tiền đã thanh toán:</strong>{" "}
+            {formatCurrency(
+              (paymentData.find(
+                (payment) => payment.bookingId === selectedBooking.id
+              )?.amount || 0) +
+              (selectedBooking.bookingOrders?.reduce(
+                (total, order) => 
+                  order.status === "Đã thanh toán" ? total + order.amount : total,
+                0
+              ) || 0) // Tính số tiền đã thanh toán
+            )}
+          </p>
+        </Card>
+      </Tabs.TabPane>
+    </Tabs>
   ) : null;
 
  
-
-  // Nội dung modal chỉnh sửa đơn hàng
-  const editModalContent = (
-    <Modal
-      title="Chỉnh sửa đơn hàng"
-      visible={isEditModalVisible} // Trạng thái hiển thị modal
-      onCancel={handleCloseEditModal} // Hàm đóng modal
-      footer={null} // Không có footer
-    >
-      {editingOrder && (
-        <Form
-          initialValues={{
-            ...editingOrder,
-            date: dayjs(editingOrder.date), // Định dạng ngày
-          }}
-          onFinish={handleEditOrderProduct} // Hàm xử lý khi gửi form
-        >
-          <Form.Item name="amount" label="Số tiền">
-            <Input type="number" /> // Input cho số tiền
-          </Form.Item>
-          <Form.Item name="quantity" label="Số lượng">
-            <Input type="number" min={1} /> // Input cho số lượng
-          </Form.Item>
-          <Form.Item name="status" label="Trạng thái">
-            <Input /> // Input cho trạng thái
-          </Form.Item>
-          <Form.Item name="date" label="Ngày">
-            <DatePicker /> // DatePicker cho ngày
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Cập nhật // Nút cập nhật
-            </Button>
-          </Form.Item>
-        </Form>
-      )}
-    </Modal>
-  );
 
   // Hàm trả về giao diện chính của component
   return (
@@ -660,7 +551,7 @@ const OrderHistory = () => {
           prefix={<SearchOutlined />} // Biểu tượng tìm kiếm
         />
         <Table
-          dataSource={bookingData} // Dữ liệu cho bảng đặt chỗ
+          dataSource={bookingData.sort((a, b) => b.id - a.id)} // Dữ liệu cho bảng đặt chỗ
           columns={userColumns} // Cột dữ liệu cho bảng đặt chỗ
           rowKey="id" // Khóa cho hàng
           pagination={{ pageSize: 5 }} // Cài đặt phân trang
@@ -691,7 +582,7 @@ const OrderHistory = () => {
         >
           {modalContent} 
         </Modal>
-        {editModalContent} 
+        
       </div>
     </div>
   );
