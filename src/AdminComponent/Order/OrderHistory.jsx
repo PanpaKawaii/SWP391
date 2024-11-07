@@ -385,145 +385,161 @@ const OrderHistory = () => {
 
   // Nội dung modal chi tiết đặt chỗ
   const modalContent = selectedBooking ? (
-    <Tabs defaultActiveKey="1">
-      <Tabs.TabPane tab="Thông tin đặt chỗ" key="1">
-        <Card style={{ marginBottom: 10 }}>
-          <Table
-            dataSource={[selectedBooking]} // Dữ liệu cho bảng
-            columns={[
-              {
-                title: "Ngày đặt",
-                dataIndex: "date",
-                key: "date",
-                render: (date) => formatDate(date), // Định dạng ngày
-              },
-              {
-                title: "Pod",
-                key: "pod",
-                render: (_, record) => {
-                  const pod = podData.find((p) => p.id === record.podId);
-                  return pod ? `${record.podId} - ${pod.name}` : "Không xác định"; // Hiển thị thông tin pod
+    <Tabs defaultActiveKey="1" items={[
+      {
+        key: "1",
+        label: "Thông tin đặt chỗ",
+        children: (
+          <Card style={{ marginBottom: 10 }}>
+            <Table
+              dataSource={[selectedBooking]} // Dữ liệu cho bảng
+              columns={[
+                {
+                  title: "Ngày đặt",
+                  dataIndex: "date",
+                  key: "date",
+                  render: (date) => formatDate(date), // Định dạng ngày
                 },
-              },
-              {
-                title: "Slot",
-                key: "slot",
-                render: (_, record) => {
-                  const slotInfo = getSlotInfo(record.id);
-                  return slotInfo ? slotInfo.name : "N/A"; // Hiển thị thông tin slot
+                {
+                  title: "Pod",
+                  key: "pod",
+                  render: (_, record) => {
+                    const pod = podData.find((p) => p.id === record.podId);
+                    return pod ? `${record.podId} - ${pod.name}` : "Không xác định"; // Hiển thị thông tin pod
+                  },
                 },
-              },
-              {
-                title: "Trạng thái",
-                dataIndex: "status",
-                key: "status",
-                render: (status) => renderOrderStatus(status), // Hiển thị trạng thái đơn hàng
-              },
-              {
-                title: "Phương thức thanh toán",
-                key: "paymentMethod",
-                render: (_, record) => {
-                  const payment = paymentData.find(
-                    (p) => p.bookingId === record.id
-                  );
-                  return payment ? payment.method : "Không có thông tin"; // Hiển thị phương thức thanh toán
+                {
+                  title: "Slot",
+                  key: "slot",
+                  render: (_, record) => {
+                    const slotInfo = getSlotInfo(record.id);
+                    return slotInfo ? slotInfo.name : "N/A"; // Hiển thị thông tin slot
+                  },
                 },
-              },
+                {
+                  title: "Trạng thái",
+                  dataIndex: "status",
+                  key: "status",
+                  render: (status) => renderOrderStatus(status), // Hiển thị trạng thái đơn hàng
+                },
+                {
+                  title: "Phương thức thanh toán",
+                  key: "paymentMethod",
+                  render: (_, record) => {
+                    const payment = paymentData.find(
+                      (p) => p.bookingId === record.id
+                    );
+                    return payment ? payment.method : "Không có thông tin"; // Hiển thị phương thức thanh toán
+                  },
+                },
+                {
+                  title: "Feedback",
+                  dataIndex: "feedback",
+                  key: "feedback",
+                  render: (feedback) => feedback || "Chưa có feedback", // Hiển thị feedback
+                },
+              ]}
+              pagination={false} // Tắt phân trang
+              bordered // Bỏ viền
+            />
+          </Card>
+        ),
+      },
+      {
+        key: "2",
+        label: "Đặt kèm",
+        children: (
+          <Card>
+            <Table
+              dataSource={selectedBooking.bookingOrders} // Dữ liệu cho bảng đơn hàng
+              columns={orderColumns} // Cột dữ liệu cho bảng đơn hàng
+              pagination={false} // Tắt phân trang
+              bordered // Bỏ viền
+              rowKey="id" // Khóa cho hàng
+            />
+          </Card>
+        ),
+      },
+      {
+        key: "3",
+        label: "Thông tin khách hàng",
+        children: (
+          <Card style={{ marginBottom: 10, marginTop: 10 }}>
+            <p>
+              <strong>Tên khách hàng:</strong>{" "}
+              {userData.find((user) => user.id === selectedBooking.userId)?.name} 
+            </p>
+            <p>
+              <strong>Email:</strong>{" "}
+              {userData.find((user) => user.id === selectedBooking.userId)?.email} 
+            </p>
+            <p>
+              <strong>Số điện thoại:</strong>{" "}
               {
-                title: "Feedback",
-                dataIndex: "feedback",
-                key: "feedback",
-                render: (feedback) => feedback || "Chưa có feedback", // Hiển thị feedback
-              },
-            ]}
-            pagination={false} // Tắt phân trang
-            bordered // Bỏ viền
-          />
-        </Card>
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="Đặt kèm" key="2">
-        <Card >
-          <Table
-            dataSource={selectedBooking.bookingOrders} // Dữ liệu cho bảng đơn hàng
-            columns={orderColumns} // Cột dữ liệu cho bảng đơn hàng
-            pagination={false} // Tắt phân trang
-            bordered // Bỏ viền
-            rowKey="id" // Khóa cho hàng
-          />
-        </Card>
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="Thông tin khách hàng" key="3">
-        <Card style={{ marginBottom: 10, marginTop: 10 }}>
-          <p>
-            <strong>Tên khách hàng:</strong>{" "}
-            {userData.find((user) => user.id === selectedBooking.userId)?.name} 
-          </p>
-          <p>
-            <strong>Email:</strong>{" "}
-            {userData.find((user) => user.id === selectedBooking.userId)?.email} 
-          </p>
-          <p>
-            <strong>Số điện thoại:</strong>{" "}
-            {
-              userData.find((user) => user.id === selectedBooking.userId)
-                ?.phoneNumber // Hiển thị số điện thoại khách hàng
-            }
-          </p>
-          <p>
-            <strong>Điểm tích lũy:</strong>{" "}
-            {formatNumber(
-              userData.find((user) => user.id === selectedBooking.userId)?.point // Hiển thị điểm tích lũy
-            )}
-          </p>
-        </Card>
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="Thông tin thanh toán" key="4">
-        <Card>
-          <p>
-            <strong>Tổng số tiền sản phẩm:</strong>{" "}
-            {formatCurrency(
-              selectedBooking.bookingOrders?.reduce(
-                (total, order) => total + order.amount,
-                0
-              ) || 0 // Tính tổng số tiền sản phẩm
-            )}
-          </p>
-          <p>
-            <strong>Số tiền thanh toán cho POD: </strong>{" "}
-            {formatCurrency(
-              paymentData.find(
-                (payment) => payment.bookingId === selectedBooking.id
-              )?.amount || 0 // Hiển thị số tiền thanh toán cho POD
-            )}
-          </p>
-          <p>
-            <strong>Tổng số tiền phải thanh toán:</strong>{" "}
-            {formatCurrency(
-              (paymentData.find(
-                (payment) => payment.bookingId === selectedBooking.id
-              )?.amount || 0) +
-                (selectedBooking.bookingOrders?.reduce(
+                userData.find((user) => user.id === selectedBooking.userId)
+                  ?.phoneNumber // Hiển thị số điện thoại khách hàng
+              }
+            </p>
+            <p>
+              <strong>Điểm tích lũy:</strong>{" "}
+              {formatNumber(
+                userData.find((user) => user.id === selectedBooking.userId)?.point // Hiển thị điểm tích lũy
+              )}
+            </p>
+          </Card>
+        ),
+      },
+      {
+        key: "4",
+        label: "Thông tin thanh toán",
+        children: (
+          <Card>
+            <p>
+              <strong>Tổng số tiền sản phẩm:</strong>{" "}
+              {formatCurrency(
+                selectedBooking.bookingOrders?.reduce(
                   (total, order) => total + order.amount,
                   0
-                ) || 0) // Tính tổng số tiền phải thanh toán
-            )}
-          </p>
-          <p>
-            <strong>Số tiền đã thanh toán:</strong>{" "}
-            {formatCurrency(
-              (paymentData.find(
-                (payment) => payment.bookingId === selectedBooking.id
-              )?.amount || 0) +
-              (selectedBooking.bookingOrders?.reduce(
-                (total, order) => 
-                  order.status === "Đã thanh toán" ? total + order.amount : total,
-                0
-              ) || 0) // Tính số tiền đã thanh toán
-            )}
-          </p>
-        </Card>
-      </Tabs.TabPane>
-    </Tabs>
+                ) || 0 // Tính tổng số tiền sản phẩm
+              )}
+            </p>
+            <p>
+              <strong>Số tiền thanh toán cho POD: </strong>{" "}
+              {formatCurrency(
+                paymentData.find(
+                  (payment) => payment.bookingId === selectedBooking.id
+                )?.amount || 0 // Hiển thị số tiền thanh toán cho POD
+              )}
+            </p>
+            <p>
+              <strong>Tổng số tiền phải thanh toán:</strong>{" "}
+              {formatCurrency(
+                (paymentData.find(
+                  (payment) => payment.bookingId === selectedBooking.id
+                )?.amount || 0) +
+                  (selectedBooking.bookingOrders?.reduce(
+                    (total, order) => total + order.amount,
+                    0
+                  ) || 0) // Tính tổng số tiền phải thanh toán
+              )}
+            </p>
+            <p>
+              <strong>Số tiền đã thanh toán:</strong>{" "}
+              {formatCurrency(
+                (paymentData.find(
+                  (payment) => payment.bookingId === selectedBooking.id
+                )?.amount || 0) +
+                (selectedBooking.bookingOrders?.reduce(
+                  (total, order) => 
+                    order.status === "Đã thanh toán" ? total + order.amount : total,
+                    0
+                  ) || 0) // Tính số tiền đã thanh toán
+              )}
+            </p>
+          </Card>
+        ),
+      },
+    ]} />
   ) : null;
 
  
