@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import api from "../api/axios";
+import React, { useEffect, useState } from "react"; // Nhập React và các hook
+import axios from "axios"; // Nhập axios để thực hiện các yêu cầu HTTP
 import {
   Table,
   Card,
@@ -14,7 +13,7 @@ import {
   Popconfirm,
   Form,
   message,
-} from "antd";
+} from "antd"; // Nhập các component từ Ant Design
 import {
   SearchOutlined,
   EyeOutlined,
@@ -24,138 +23,143 @@ import {
   EyeTwoTone,
   EyeInvisibleTwoTone,
   ReloadOutlined,
-} from "@ant-design/icons";
-import dayjs from "dayjs";
-import isBetween from "dayjs/plugin/isBetween";
-dayjs.extend(isBetween);
+} from "@ant-design/icons"; // Nhập các biểu tượng từ Ant Design
+import dayjs from "dayjs"; // Nhập dayjs để xử lý ngày tháng
+import isBetween from "dayjs/plugin/isBetween"; // Nhập plugin isBetween để kiểm tra khoảng thời gian
+dayjs.extend(isBetween); // Kích hoạt plugin isBetween cho dayjs
 
-const { Title } = Typography;
-const { RangePicker } = DatePicker;
+const { Title } = Typography; // Destructuring Title từ Typography
+const { RangePicker } = DatePicker; // Destructuring RangePicker từ DatePicker
 
 const OrderHistory = () => {
-  const [userData, setUserData] = useState([]);
-  const [bookingData, setBookingData] = useState([]);
-  const [paymentData, setPaymentData] = useState([]);
-  const [productData, setProductData] = useState([]);
-  const [orderData, setOrderData] = useState([]);
-  const [slotData, setSlotData] = useState([]);
-  const [podData, setPodData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedBooking, setSelectedBooking] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [editingOrder, setEditingOrder] = useState(null);
+  // Khai báo các biến trạng thái để lưu trữ dữ liệu
+  const [userData, setUserData] = useState([]); // Dữ liệu người dùng
+  const [bookingData, setBookingData] = useState([]); // Dữ liệu đặt chỗ
+  const [paymentData, setPaymentData] = useState([]); // Dữ liệu thanh toán
+  const [productData, setProductData] = useState([]); // Dữ liệu sản phẩm
+  const [orderData, setOrderData] = useState([]); // Dữ liệu đơn hàng
+  const [slotData, setSlotData] = useState([]); // Dữ liệu slot
+  const [podData, setPodData] = useState([]); // Dữ liệu pod
+  const [searchTerm, setSearchTerm] = useState(""); // Thuật ngữ tìm kiếm
+  const [selectedBooking, setSelectedBooking] = useState(null); // Đặt chỗ được chọn
+  const [isModalVisible, setIsModalVisible] = useState(false); // Trạng thái hiển thị modal
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false); // Trạng thái hiển thị modal chỉnh sửa
+  const [editingOrder, setEditingOrder] = useState(null); // Đơn hàng đang chỉnh sửa
 
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [revenueData, setRevenueData] = useState([]);
-  const [showRevenue, setShowRevenue] = useState(false);
-  const apiBase = "https://localhost:7166/api";
-  const apiUser = "https://localhost:7166/api/User";
-  const apiBooking = "https://localhost:7166/api/Booking";
-  const apiPayment = "https://localhost:7166/api/Payment";
-  const apiOrder = "https://localhost:7166/api/BookingOrder";
-  const apiProduct = "https://localhost:7166/api/Product";
-  const apiSlot = "https://localhost:7166/api/Slot";
-  const apiPod = "https://localhost:7166/api/Pod";
+  const apiUser = "https://localhost:7166/api/User"; // Địa chỉ API cho người dùng
+  const apiBooking = "https://localhost:7166/api/Booking"; // Địa chỉ API cho đặt chỗ
+  const apiPayment = "https://localhost:7166/api/Payment"; // Địa chỉ API cho thanh toán
+  const apiOrder = "https://localhost:7166/api/BookingOrder"; // Địa chỉ API cho đơn hàng
+  const apiProduct = "https://localhost:7166/api/Product"; // Địa chỉ API cho sản phẩm
+  const apiSlot = "https://localhost:7166/api/Slot"; // Địa chỉ API cho slot
+  const apiPod = "https://localhost:7166/api/Pod"; // Địa chỉ API cho pod
 
+  // Hàm để lấy dữ liệu người dùng
   const fetchUserData = async () => {
     try {
       const token = localStorage.getItem("token"); // Lấy token từ localStorage
-        const response = await api.get(apiUser, {
+      const response = await axios.get(apiUser, {
         headers: {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
-      setUserData(response.data.filter((user) => user.role === "User"));
+      setUserData(response.data.filter((user) => user.role === "User")); // Lưu dữ liệu người dùng có vai trò là "User"
     } catch (error) {
-      console.error("Failed to fetch user data:", error);
+      console.error("Failed to fetch user data:", error); // Log lỗi nếu có
     }
   };
+
+  // Hàm để lấy dữ liệu đặt chỗ
   const fetchBookingData = async () => {
     try {
       const token = localStorage.getItem("token"); // Lấy token từ localStorage
-      const response = await api.get(apiBooking, {
+      const response = await axios.get(apiBooking, {
         headers: {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
-      setBookingData(response.data);
+      setBookingData(response.data); // Lưu dữ liệu đặt chỗ
     } catch (error) {
-      console.error("Failed to fetch booking data:", error);
+      console.error("Failed to fetch booking data:", error); // Log lỗi nếu có
     }
   };
 
+  // Hàm để lấy dữ liệu đơn hàng
   const fetchOrderData = async () => {
     try {
       const token = localStorage.getItem("token"); // Lấy token từ localStorage
-      const response = await api.get(apiOrder, {
+      const response = await axios.get(apiOrder, {
         headers: {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
-      setOrderData(response.data);
+      setOrderData(response.data); // Lưu dữ liệu đơn hàng
     } catch (error) {
-      console.error("Failed to fetch order data:", error);
+      console.error("Failed to fetch order data:", error); // Log lỗi nếu có
     }
   };
 
+  // Hàm để lấy dữ liệu sản phẩm
   const fetchProductData = async () => {
     try {
-        const token = localStorage.getItem("token"); // Lấy token từ localStorage
-      const response = await api.get(apiProduct, {
+      const token = localStorage.getItem("token"); // Lấy token từ localStorage
+      const response = await axios.get(apiProduct, {
         headers: {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
-      setProductData(response.data);
+      setProductData(response.data); // Lưu dữ liệu sản phẩm
     } catch (error) {
-      console.error("Failed to fetch product data:", error);
+      console.error("Failed to fetch product data:", error); // Log lỗi nếu có
     }
   };
 
+  // Hàm để lấy dữ liệu thanh toán
   const fetchPaymentData = async () => {
     try {
       const token = localStorage.getItem("token"); // Lấy token từ localStorage
-      const response = await api.get(apiPayment, {
+      const response = await axios.get(apiPayment, {
         headers: {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
-      setPaymentData(response.data);
+      setPaymentData(response.data); // Lưu dữ liệu thanh toán
     } catch (error) {
-      console.error("Failed to fetch payment data:", error);
+      console.error("Failed to fetch payment data:", error); // Log lỗi nếu có
     }
   };
 
+  // Hàm để lấy dữ liệu pod
   const fetchPodData = async () => {
     try {
       const token = localStorage.getItem("token"); // Lấy token từ localStorage
-      const response = await api.get(apiPod, {
+      const response = await axios.get(apiPod, {
         headers: {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
-      setPodData(response.data);
+      setPodData(response.data); // Lưu dữ liệu pod
     } catch (error) {
-      console.error("Failed to fetch pod data:", error);
+      console.error("Failed to fetch pod data:", error); // Log lỗi nếu có
     }
   };
 
+  // Hàm để lấy dữ liệu slot
   const fetchSlotData = async () => {
     try {
       const token = localStorage.getItem("token"); // Lấy token từ localStorage
-      const response = await api.get(apiSlot, {
+      const response = await axios.get(apiSlot, {
         headers: {
           Authorization: `Bearer ${token}`, // Thêm token vào header
         },
       });
-      setSlotData(response.data);
+      setSlotData(response.data); // Lưu dữ liệu slot
     } catch (error) {
-      console.error("Failed to fetch slot data:", error);
+      console.error("Failed to fetch slot data:", error); // Log lỗi nếu có
     }
   };
 
+  // useEffect để gọi các hàm lấy dữ liệu khi component được mount
   useEffect(() => {
     fetchUserData();
     fetchBookingData();
@@ -166,12 +170,10 @@ const OrderHistory = () => {
     fetchPodData();
   }, []);
 
-  useEffect(() => {
-    if (startDate && endDate) {
-      calculateRevenue();
-    }
-  }, [startDate, endDate, paymentData, bookingData]);
+  // useEffect để tính doanh thu khi ngày bắt đầu, ngày kết thúc hoặc dữ liệu thanh toán, đặt chỗ thay đổi
 
+
+  // Nếu không có dữ liệu, hiển thị thông báo đang tải
   if (
     userData.length === 0 &&
     bookingData.length === 0 &&
@@ -186,46 +188,51 @@ const OrderHistory = () => {
     );
   }
 
+  // Hàm mở modal chỉnh sửa đơn hàng
   const handleOpenEditOrderProductModal = (record) => {
-    setEditingOrder(record);
-    setIsEditModalVisible(true);
+    setEditingOrder(record); // Lưu đơn hàng đang chỉnh sửa
+    setIsEditModalVisible(true); // Hiển thị modal chỉnh sửa
   };
 
+  // Hàm đóng modal chỉnh sửa
   const handleCloseEditModal = () => {
-    setIsEditModalVisible(false);
-    setEditingOrder(null);
+    setIsEditModalVisible(false); // Ẩn modal chỉnh sửa
+    setEditingOrder(null); // Đặt lại đơn hàng đang chỉnh sửa
   };
 
+  // Hàm xử lý chỉnh sửa đơn hàng
   const handleEditOrderProduct = async (values) => {
     try {
       const response = await axios.put(`${apiOrder}/${editingOrder.id}`, {
         ...editingOrder,
         ...values,
-        date: dayjs(values.date).format(),
+        date: dayjs(values.date).format(), // Định dạng ngày
       });
       if (response.status === 200) {
-        message.success("Cập nhật đơn hàng thành công");
-        fetchOrderData();
-        handleCloseEditModal();
+        message.success("Cập nhật đơn hàng thành công"); // Hiển thị thông báo thành công
+        fetchOrderData(); // Lấy lại dữ liệu đơn hàng
+        handleCloseEditModal(); // Đóng modal chỉnh sửa
       }
     } catch (error) {
-      console.error("Lỗi khi cập nhật đơn hàng:", error);
-      message.error("Cập nhật đơn hàng thất bại");
+      console.error("Lỗi khi cập nhật đơn hàng:", error); // Log lỗi nếu có
+      message.error("Cập nhật đơn hàng thất bại"); // Hiển thị thông báo lỗi
     }
   };
 
+  // Hàm xử lý xóa đơn hàng
   const handleDeleteOrderProduct = async (id) => {
     try {
-      const response = await axios.delete(`${apiOrder}/${id}`);
-      message.success("Xóa đơn hàng thành công");
-      setIsModalVisible(false);
-      fetchOrderData();
+      const response = await axios.delete(`${apiOrder}/${id}`); // Gửi yêu cầu xóa đơn hàng
+      message.success("Xóa đơn hàng thành công"); // Hiển thị thông báo thành công
+      setIsModalVisible(false); // Ẩn modal
+      fetchOrderData(); // Lấy lại dữ liệu đơn hàng
     } catch (error) {
-      console.error("Lỗi khi xóa đơn hàng:", error);
-      message.error("Xóa đơn hàng thất bại");
+      console.error("Lỗi khi xóa đơn hàng:", error); // Log lỗi nếu có
+      message.error("Xóa đơn hàng thất bại"); // Hiển thị thông báo lỗi
     }
   };
 
+  // Hàm lấy thông tin slot dựa trên bookingId
   const getSlotInfo = (bookingId) => {
     const slot = slotData.find((slot) =>
       slot.bookings.some((booking) => booking.id === bookingId)
@@ -237,29 +244,32 @@ const OrderHistory = () => {
         endTime: slot.endTime,
       };
     }
-    return null;
+    return null; // Nếu không tìm thấy slot, trả về null
   };
 
+  // Lọc người dùng theo số điện thoại
   const filteredUsers = userData.filter((user) =>
     user.phoneNumber.includes(searchTerm)
   );
 
-
-
+  // Hàm xử lý tìm kiếm
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+    setSearchTerm(e.target.value); // Cập nhật thuật ngữ tìm kiếm
   };
 
+  // Hàm xử lý xem chi tiết đặt chỗ
   const handleViewDetails = (booking) => {
-    setSelectedBooking(booking);
-    setIsModalVisible(true);
+    setSelectedBooking(booking); // Lưu đặt chỗ được chọn
+    setIsModalVisible(true); // Hiển thị modal chi tiết
   };
 
+  // Hàm đóng modal chi tiết
   const handleCloseModal = () => {
-    setIsModalVisible(false);
-    setSelectedBooking(null);
+    setIsModalVisible(false); // Ẩn modal
+    setSelectedBooking(null); // Đặt lại đặt chỗ được chọn
   };
 
+  // Hàm cập nhật thông tin thanh toán
   const handleUpdatePayment = async () => {
     const totalAmount =
       (paymentData.find((payment) => payment.bookingId === selectedBooking.id)
@@ -274,73 +284,77 @@ const OrderHistory = () => {
     );
 
     if (!paymentToUpdate) {
-      message.error("Không tìm thấy thông tin thanh toán");
+      message.error("Không tìm thấy thông tin thanh toán"); // Hiển thị thông báo lỗi nếu không tìm thấy thông tin thanh toán
       return;
     }
 
     try {
       const response = await axios.put(`${apiPayment}/${paymentToUpdate.id}`, {
         ...paymentToUpdate,
-        amount: totalAmount,
-        date: dayjs().format(),
+        amount: totalAmount, // Cập nhật tổng số tiền
+        date: dayjs().format(), // Định dạng ngày
       });
 
-      message.success("Cập nhật thanh toán thành công");
-      fetchPaymentData();
-      handleCloseModal();
+      message.success("Cập nhật thanh toán thành công"); // Hiển thị thông báo thành công
+      fetchPaymentData(); // Lấy lại dữ liệu thanh toán
+      handleCloseModal(); // Đóng modal
     } catch (error) {
-      console.error("Lỗi khi cập nhật thanh toán:", error);
-      message.error("Cập nhật thanh toán thất bại");
+      console.error("Lỗi khi cập nhật thanh toán:", error); // Log lỗi nếu có
+      message.error("Cập nhật thanh toán thất bại"); // Hiển thị thông báo lỗi
     }
   };
 
+  // Hàm định dạng tiền tệ
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",
       currency: "VND",
-    }).format(amount);
+    }).format(amount); // Định dạng tiền tệ theo định dạng Việt Nam
   };
 
+  // Hàm định dạng số
   const formatNumber = (number) => {
-    return new Intl.NumberFormat("vi-VN").format(number);
+    return new Intl.NumberFormat("vi-VN").format(number); // Định dạng số theo định dạng Việt Nam
   };
 
+  // Hàm định dạng ngày
   const formatDate = (dateString) => {
-    return dayjs(dateString).format("DD/MM/YYYY");
+    return dayjs(dateString).format("DD/MM/YYYY"); // Định dạng ngày theo định dạng DD/MM/YYYY
   };
 
+  // Hàm hiển thị trạng thái đơn hàng
   const renderOrderStatus = (status) => {
     let color;
     switch (status) {
-      
       case "Chưa diễn ra":
-        color = "gold";
+        color = "gold"; // Màu vàng cho trạng thái "Chưa diễn ra"
         break;
       case "Đang diễn ra":
-        color = "lime";
+        color = "lime"; // Màu xanh lá cho trạng thái "Đang diễn ra"
         break;
       case "Đã kết thúc":
-        color = "red";
+        color = "red"; // Màu đỏ cho trạng thái "Đã kết thúc"
         break;
       case "Đã hủy":
-        color = "orange";
+        color = "orange"; // Màu cam cho trạng thái "Đã hủy"
         break;
       case "Đã hoàn tiền":
-        color = "gray";
+        color = "gray"; // Màu xám cho trạng thái "Đã hoàn tiền"
         break;
       default:
-        color = "cornflowerblue";
+        color = "cornflowerblue"; // Màu mặc định
     }
-    return <Tag color={color}>{status}</Tag>;
+    return <Tag color={color}>{status}</Tag>; // Trả về thẻ Tag với màu sắc tương ứng
   };
 
+  // Cột dữ liệu cho bảng người dùng
   const userColumns = [
     { title: "Booking ID", dataIndex: "id", key: "bookingId", align: "center" },
     {
       title: "Ngày đặt",
       dataIndex: "date",
       key: "date",
-      render: (date) => formatDate(date),
+      render: (date) => formatDate(date), // Định dạng ngày
     },
     {
       title: "Tên",
@@ -348,7 +362,7 @@ const OrderHistory = () => {
       key: "name",
       render: (_, record) => {
         const user = filteredUsers.find((u) => u.id === record.userId);
-        return user ? user.name : "Không xác định";
+        return user ? user.name : "Không xác định"; // Trả về tên người dùng hoặc "Không xác định"
       },
     },
     {
@@ -357,7 +371,7 @@ const OrderHistory = () => {
       align: "center",
       render: (_, record) => {
         const user = filteredUsers.find((u) => u.id === record.userId);
-        return user ? user.phoneNumber : "Không xác định";
+        return user ? user.phoneNumber : "Không xác định"; // Trả về số điện thoại hoặc "Không xác định"
       },
     },
     {
@@ -366,8 +380,8 @@ const OrderHistory = () => {
       render: (_, record) => {
         const slotInfo = getSlotInfo(record.id);
         return slotInfo
-          ? `${slotInfo.name} (${slotInfo.startTime}:00 - ${slotInfo.endTime}:00)`
-          : "Không có thông tin";
+          ? `${slotInfo.name} (${slotInfo.startTime}:00 - ${slotInfo.endTime}:00)` // Hiển thị thông tin slot
+          : "Không có thông tin"; // Nếu không có thông tin slot
       },
     },
     {
@@ -380,16 +394,16 @@ const OrderHistory = () => {
       ],
       onFilter: (value, record) => {
         const user = filteredUsers.find((u) => u.id === record.userId);
-        return user ? user.type === value : false;
+        return user ? user.type === value : false; // Lọc theo loại tài khoản
       },
       render: (_, record) => {
         const user = filteredUsers.find((u) => u.id === record.userId);
         return user ? (
           <Tag color={user.type === "VIP" ? "#FFD700" : "cornflowerblue"}>
-            {user.type}
+            {user.type} 
           </Tag>
         ) : (
-          "Không xác định"
+          "Không xác định" // Nếu không xác định
         );
       },
     },
@@ -405,7 +419,7 @@ const OrderHistory = () => {
       render: (_, record) => (
         <Button
           icon={<EyeOutlined />}
-          onClick={() => handleViewDetails(record)}
+          onClick={() => handleViewDetails(record)} // Xem chi tiết đặt chỗ
         >
           Xem
         </Button>
@@ -413,6 +427,7 @@ const OrderHistory = () => {
     },
   ];
 
+  // Cột dữ liệu cho bảng đơn hàng
   const orderColumns = [
     { title: "OrderId", dataIndex: "id", key: "orderId" },
     { title: "BookingId", dataIndex: "bookingId", key: "bookingId" },
@@ -420,7 +435,7 @@ const OrderHistory = () => {
       title: "Ngày đặt",
       dataIndex: "date",
       key: "date",
-      render: (date) => formatDate(date),
+      render: (date) => formatDate(date), // Định dạng ngày
     },
     { title: "ProductId", dataIndex: "productId", key: "productId" },
     {
@@ -428,7 +443,7 @@ const OrderHistory = () => {
       key: "productName",
       render: (_, record) => {
         const product = productData.find((p) => p.id === record.productId);
-        return product ? product.name : "Không xác định";
+        return product ? product.name : "Không xác định"; // Trả về tên sản phẩm hoặc "Không xác định"
       },
     },
     { title: "Số lượng", dataIndex: "quantity", key: "quantity" },
@@ -436,28 +451,29 @@ const OrderHistory = () => {
       title: "Tổng tiền",
       dataIndex: "amount",
       key: "amount",
-      render: (amount) => formatCurrency(amount),
+      render: (amount) => formatCurrency(amount), // Định dạng tiền tệ
     },
   ];
 
+  // Nội dung modal chi tiết đặt chỗ
   const modalContent = selectedBooking ? (
     <div>
       <Card title="Thông tin đặt chỗ" style={{ marginBottom: 10 }}>
         <Table
-          dataSource={[selectedBooking]}
+          dataSource={[selectedBooking]} // Dữ liệu cho bảng
           columns={[
             {
               title: "Ngày đặt",
               dataIndex: "date",
               key: "date",
-              render: (date) => formatDate(date),
+              render: (date) => formatDate(date), // Định dạng ngày
             },
             {
               title: "Pod",
               key: "pod",
               render: (_, record) => {
                 const pod = podData.find((p) => p.id === record.podId);
-                return pod ? `${record.podId} - ${pod.name}` : "Không xác định";
+                return pod ? `${record.podId} - ${pod.name}` : "Không xác định"; // Hiển thị thông tin pod
               },
             },
             {
@@ -465,14 +481,14 @@ const OrderHistory = () => {
               key: "slot",
               render: (_, record) => {
                 const slotInfo = getSlotInfo(record.id);
-                return slotInfo ? slotInfo.name : "N/A";
+                return slotInfo ? slotInfo.name : "N/A"; // Hiển thị thông tin slot
               },
             },
             {
               title: "Trạng thái",
               dataIndex: "status",
               key: "status",
-              render: (status) => renderOrderStatus(status),
+              render: (status) => renderOrderStatus(status), // Hiển thị trạng thái đơn hàng
             },
             {
               title: "Phương thức thanh toán",
@@ -481,27 +497,27 @@ const OrderHistory = () => {
                 const payment = paymentData.find(
                   (p) => p.bookingId === record.id
                 );
-                return payment ? payment.method : "Không có thông tin";
+                return payment ? payment.method : "Không có thông tin"; // Hiển thị phương thức thanh toán
               },
             },
             {
               title: "Feedback",
               dataIndex: "feedback",
               key: "feedback",
-              render: (feedback) => feedback || "Chưa có feedback",
+              render: (feedback) => feedback || "Chưa có feedback", // Hiển thị feedback
             },
           ]}
-          pagination={false}
-          bordered
+          pagination={false} // Tắt phân trang
+          bordered // Bỏ viền
         />
       </Card>
       <Card title="Order thêm">
         <Table
-          dataSource={selectedBooking.bookingOrders}
-          columns={orderColumns}
-          pagination={false}
-          bordered
-          rowKey="id"
+          dataSource={selectedBooking.bookingOrders} // Dữ liệu cho bảng đơn hàng
+          columns={orderColumns} // Cột dữ liệu cho bảng đơn hàng
+          pagination={false} // Tắt phân trang
+          bordered // Bỏ viền
+          rowKey="id" // Khóa cho hàng
         />
       </Card>
       <Card
@@ -510,23 +526,23 @@ const OrderHistory = () => {
       >
         <p>
           <strong>Tên khách hàng:</strong>{" "}
-          {userData.find((user) => user.id === selectedBooking.userId)?.name}
+          {userData.find((user) => user.id === selectedBooking.userId)?.name} 
         </p>
         <p>
           <strong>Email:</strong>{" "}
-          {userData.find((user) => user.id === selectedBooking.userId)?.email}
+          {userData.find((user) => user.id === selectedBooking.userId)?.email} 
         </p>
         <p>
           <strong>Số điện thoại:</strong>{" "}
           {
             userData.find((user) => user.id === selectedBooking.userId)
-              ?.phoneNumber
+              ?.phoneNumber // Hiển thị số điện thoại khách hàng
           }
         </p>
         <p>
           <strong>Điểm tích lũy:</strong>{" "}
           {formatNumber(
-            userData.find((user) => user.id === selectedBooking.userId)?.point
+            userData.find((user) => user.id === selectedBooking.userId)?.point // Hiển thị điểm tích lũy
           )}
         </p>
       </Card>
@@ -537,7 +553,7 @@ const OrderHistory = () => {
             selectedBooking.bookingOrders?.reduce(
               (total, order) => total + order.amount,
               0
-            ) || 0
+            ) || 0 // Tính tổng số tiền sản phẩm
           )}
         </p>
         <p>
@@ -545,7 +561,7 @@ const OrderHistory = () => {
           {formatCurrency(
             paymentData.find(
               (payment) => payment.bookingId === selectedBooking.id
-            )?.amount || 0
+            )?.amount || 0 // Hiển thị số tiền thanh toán cho POD
           )}
         </p>
         <p>
@@ -557,7 +573,7 @@ const OrderHistory = () => {
               (selectedBooking.bookingOrders?.reduce(
                 (total, order) => total + order.amount,
                 0
-              ) || 0)
+              ) || 0) // Tính tổng số tiền phải thanh toán
           )}
         </p>
         <p>
@@ -570,7 +586,7 @@ const OrderHistory = () => {
               (total, order) => 
                 order.status === "Đã thanh toán" ? total + order.amount : total,
               0
-            ) || 0)
+            ) || 0) // Tính số tiền đã thanh toán
           )}
         </p>
       
@@ -581,124 +597,39 @@ const OrderHistory = () => {
     </div>
   ) : null;
 
-  const calculateRevenue = () => {
-    console.log("Calculating revenue...");
-    console.log("Start date:", startDate);
-    console.log("End date:", endDate);
-    console.log("Payment data:", paymentData);
-    console.log("Booking data:", bookingData);
+ 
 
-    if (!startDate || !endDate) {
-      message.warning("Vui lòng chọn khoảng thời gian");
-      return;
-    }
-
-
-
-    const dailyRevenue = {};
-
-    paymentData.forEach((payment) => {
-      const paymentDate = dayjs(payment.date);
-      if (paymentDate.isBetween(startDate, endDate, null, "[]")) {
-        // Chỉ tính doanh thu cho các payment liên quan đến booking đã xác nhận
-        const relatedBooking = confirmedBookings.find(
-          (booking) => booking.id === payment.bookingId
-        );
-        if (relatedBooking) {
-          const date = paymentDate.format("YYYY-MM-DD");
-          dailyRevenue[date] = (dailyRevenue[date] || 0) + payment.amount;
-        }
-      }
-    });
-
-    confirmedBookings.forEach((booking) => {
-      const bookingDate = dayjs(booking.date);
-      if (bookingDate.isBetween(startDate, endDate, null, "[]")) {
-        booking.bookingOrders
-          .filter((order) => order.status === "Đã thanh toán")
-          .forEach((order) => {
-            const orderDate = bookingDate.format("YYYY-MM-DD");
-            dailyRevenue[orderDate] =
-              (dailyRevenue[orderDate] || 0) + order.amount;
-          });
-      }
-    });
-
-    setRevenueData(
-      Object.entries(dailyRevenue).map(([date, amount]) => ({ date, amount }))
-    );
-
-    setShowRevenue(true);
-  };
-
-  const renderRevenueTable = () => {
-    const columns = [
-      {
-        title: "Ngày",
-        dataIndex: "date",
-        key: "date",
-        render: (date) => formatDate(date),
-      },
-      {
-        title: "Doanh thu ",
-        dataIndex: "amount",
-        key: "amount",
-        render: (amount) => formatCurrency(amount),
-      },
-    ];
-
-    return (
-      <Table
-        dataSource={revenueData}
-        columns={columns}
-        pagination={false}
-        bordered
-        summary={(pageData) => {
-          const total = pageData.reduce((sum, { amount }) => sum + amount, 0);
-          return (
-            <Table.Summary.Row>
-              <Table.Summary.Cell>
-                <strong>Tổng cộng</strong>
-              </Table.Summary.Cell>
-              <Table.Summary.Cell>
-                <strong>{formatCurrency(total)}</strong>
-              </Table.Summary.Cell>
-            </Table.Summary.Row>
-          );
-        }}
-      />
-    );
-  };
+  // Nội dung modal chỉnh sửa đơn hàng
   const editModalContent = (
     <Modal
       title="Chỉnh sửa đơn hàng"
-      visible={isEditModalVisible}
-      onCancel={handleCloseEditModal}
-      footer={null}
+      visible={isEditModalVisible} // Trạng thái hiển thị modal
+      onCancel={handleCloseEditModal} // Hàm đóng modal
+      footer={null} // Không có footer
     >
       {editingOrder && (
         <Form
           initialValues={{
             ...editingOrder,
-            date: dayjs(editingOrder.date),
+            date: dayjs(editingOrder.date), // Định dạng ngày
           }}
-          onFinish={handleEditOrderProduct}
+          onFinish={handleEditOrderProduct} // Hàm xử lý khi gửi form
         >
           <Form.Item name="amount" label="Số tiền">
-            <Input type="number" />
+            <Input type="number" /> // Input cho số tiền
           </Form.Item>
           <Form.Item name="quantity" label="Số lượng">
-            <Input type="number" min={1} />
+            <Input type="number" min={1} /> // Input cho số lượng
           </Form.Item>
           <Form.Item name="status" label="Trạng thái">
-            <Input />
+            <Input /> // Input cho trạng thái
           </Form.Item>
           <Form.Item name="date" label="Ngày">
-            <DatePicker />
+            <DatePicker /> // DatePicker cho ngày
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Cập nhật
+              Cập nhật // Nút cập nhật
             </Button>
           </Form.Item>
         </Form>
@@ -706,96 +637,64 @@ const OrderHistory = () => {
     </Modal>
   );
 
-  // const handleDateChange = (dates) => {
-  //   setStartDate(dates ? dates[0] : null);
-  //   setEndDate(dates ? dates[1] : null);
-  // };
-
-  // const handleRefresh = () => {
-  //   fetchPaymentData();
-  //   fetchBookingData();
-  //   if (startDate && endDate) {
-  //     calculateRevenue();
-  //   }
-  // };
-
+  // Hàm trả về giao diện chính của component
   return (
     <div className="admin-order-container">
-    <div className="user-manage">
-      <Title
-        style={{
-          textAlign: "center",
-          fontFamily: "Arial",
-          fontSize: 30,
-        }}
-        level={2}
-      >
-        Lịch sử đơn hàng
-      </Title>
+      <div className="user-manage">
+        <Title
+          style={{
+            textAlign: "center",
+            fontFamily: "Arial",
+            fontSize: 30,
+          }}
+          level={2}
+        >
+          Lịch sử đơn hàng 
+        </Title>
 
-      <Input
-        placeholder="Tìm kiếm theo số điện thoại "
-        value={searchTerm}
-        onChange={handleSearch}
-        style={{ marginBottom: 20, height: "36px" }}
-        prefix={<SearchOutlined />}
-      />
-      <Table
-        dataSource={bookingData}
-        columns={userColumns}
-        rowKey="id"
-        pagination={{ pageSize: 5 }}
-        bordered
-      />
-      {/* <Card title="Thống kê doanh thu" style={{ marginBottom: 20 }}>
-        <Space direction="vertical" size="middle" style={{ display: "flex" }}>
-          <RangePicker onChange={handleDateChange} />
-          <Space>
-            <Button onClick={calculateRevenue}>
-              <EyeTwoTone />
-              Xem
-            </Button>
-            {showRevenue && (
-              <Button onClick={() => setShowRevenue(false)}>
-                <EyeInvisibleTwoTone />
-                Ẩn
-              </Button>
-            )}
-            <Button onClick={handleRefresh} icon={<ReloadOutlined />}>
-              Làm mới dữ liệu
-            </Button>
-          </Space>
-          {showRevenue && revenueData.length > 0 && renderRevenueTable()}
-        </Space>
-      </Card> */}
-      <Modal
-        title={
-          <div
-            style={{
-              textAlign: "center",
-              fontWeight: "bold",
-              borderBottom: "1px solid black",
-              paddingBottom: "4px",
-            }}
-          >
-            Chi tiết đơn hàng
-          </div>
-        }
-        visible={isModalVisible}
-        onCancel={handleCloseModal}
-        footer={[
-          <Button key="close" onClick={handleCloseModal}>
-            Đóng
-          </Button>,
-        ]}
-        width={1000}
-      >
-        {modalContent}
-      </Modal>
-      {editModalContent}
-    </div>
+        <Input
+          placeholder="Tìm kiếm theo số điện thoại " // Placeholder cho ô tìm kiếm
+          value={searchTerm} // Giá trị ô tìm kiếm
+          onChange={handleSearch} // Hàm xử lý khi thay đổi ô tìm kiếm
+          style={{ marginBottom: 20, height: "36px" }}
+          prefix={<SearchOutlined />} // Biểu tượng tìm kiếm
+        />
+        <Table
+          dataSource={bookingData} // Dữ liệu cho bảng đặt chỗ
+          columns={userColumns} // Cột dữ liệu cho bảng đặt chỗ
+          rowKey="id" // Khóa cho hàng
+          pagination={{ pageSize: 5 }} // Cài đặt phân trang
+          bordered // Bỏ viền
+        />
+        
+        <Modal
+          title={
+            <div
+              style={{
+                textAlign: "center",
+                fontWeight: "bold",
+                borderBottom: "1px solid black",
+                paddingBottom: "4px",
+              }}
+            >
+              Chi tiết đơn hàng 
+            </div>
+          }
+          visible={isModalVisible} // Trạng thái hiển thị modal
+          onCancel={handleCloseModal} // Hàm đóng modal
+          footer={[
+            <Button key="close" onClick={handleCloseModal}>
+              Đóng 
+            </Button>,
+          ]}
+          width={1000} // Độ rộng modal
+        >
+          {modalContent} 
+        </Modal>
+        {editModalContent} 
+      </div>
     </div>
   );
 };
 
-export default OrderHistory;
+export default OrderHistory; // Xuất component

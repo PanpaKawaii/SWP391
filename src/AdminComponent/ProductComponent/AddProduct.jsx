@@ -65,7 +65,7 @@ import {
   
         const response = await axios.post(apiProduct, productData);
         message.success(`Sản phẩm được thêm thành công với id: ${response.data.id}`);
-        navigate("/products"); // Redirect to products list after adding
+        navigate("/product"); // Redirect to products list after adding
       } catch (error) {
         console.error("Chi tiết lỗi:", error.response?.data);
         message.error(`Lỗi: ${error.response?.data?.message || error.message}`);
