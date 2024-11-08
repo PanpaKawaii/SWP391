@@ -86,6 +86,14 @@ body {
                         }
                     }
 
+                    .error-message {
+                        color: #dc3545;
+                    }
+
+                    .success-message {
+                        color: #28a745;
+                    }
+
                     .change-information-button {
                         margin: 0;
                         display: flex;

@@ -23,6 +23,8 @@ export default function UserInformation() {
     const [ChangeAvatarError, setChangeAvatarError] = useState(null);
     const [ChangePasswordError, setChangePasswordError] = useState(null);
     const [ChangeConfirmPasswordError, setChangeConfirmPasswordError] = useState(null);
+    const [ChangeInformationSuccess, setChangeInformationSuccess] = useState(null);
+    const [ChangePasswordSuccess, setChangePasswordSuccess] = useState(null);
 
     useEffect(() => {
         if (id) {
@@ -105,24 +107,28 @@ export default function UserInformation() {
             if (!response.ok) throw new Error('Network response was not ok');
             // const data = await response.json();
             setLoading(false);
-            alert('Đổi thông tin thành công');
+            setChangeInformationSuccess('Thay đổi thông tin thành công');
             setUSER(changeData);
 
         } catch (error) {
             setError(error);
-            alert('Đổi thông tin thất bại');
+            alert('Thay đổi thông tin thất bại');
             setLoading(false);
         }
     }
     const handleChangeInformation = (e) => {
         e.preventDefault();
         setError(null);
+        setChangeInformationSuccess(null);
+
         setChangeFullNameError(null);
         setChangePhoneNumberError(null);
         setChangeAvatarError(null);
         ChangeInformation(e.target.formName.value, e.target.formPhoneNumber.value, e.target.formAvatar.value);
     }
     const handleResetChangeInformation = () => {
+        setChangeInformationSuccess(null);
+
         setChangeFullNameError(null);
         setChangePhoneNumberError(null);
         setChangeAvatarError(null);
@@ -152,12 +158,12 @@ export default function UserInformation() {
             return;
         }
         if (OldPassword != USER.password) {
-            console.error('Wrong confirm password');
+            console.error('Wrong old password');
             setChangePasswordError('Mật khẩu cũ không khớp');
             return;
         }
         if (ChangePassword != ChangeConfirm) {
-            console.error('Wrong confirm password');
+            console.error('Wrong password confirmation');
             setChangeConfirmPasswordError('Mật khẩu xác nhận không khớp');
             return;
         }
@@ -189,23 +195,27 @@ export default function UserInformation() {
             if (!response.ok) throw new Error('Network response was not ok');
             // const data = await response.json();
             setLoading(false);
-            alert('Đổi mật khẩu thành công');
+            setChangePasswordSuccess('Thay đổi mật khẩu thành công');
             setUSER(changeData);
 
         } catch (error) {
             setError(error);
-            alert('Đổi mật khẩu thất bại');
+            alert('Thay đổi mật khẩu thất bại');
             setLoading(false);
         }
     }
     const handleChangePassword = (e) => {
         e.preventDefault();
         setError(null);
+        setChangePasswordSuccess(null);
+
         setChangePasswordError(null);
         setChangeConfirmPasswordError(null);
         ChangePassword(e.target.formOldPassword.value, e.target.formNewPassword.value, e.target.formConfirmNewPassword.value);
     }
     const handleResetChangePassword = () => {
+        setChangePasswordSuccess(null);
+
         setChangePasswordError(null);
         setChangeConfirmPasswordError(null);
     }
@@ -267,13 +277,13 @@ export default function UserInformation() {
                                 </InputGroup>
                             </Form.Group>
 
-                            {ChangeFullNameError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangeFullNameError}</span>}
-                            {ChangePhoneNumberError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangePhoneNumberError}</span>}
-                            {ChangeAvatarError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangeAvatarError}</span>}
+                            {ChangeFullNameError && <span className='error-message'>{ChangeFullNameError}</span>}
+                            {ChangePhoneNumberError && <span className='error-message'>{ChangePhoneNumberError}</span>}
+                            {ChangeAvatarError && <span className='error-message'>{ChangeAvatarError}</span>}
+                            {ChangeInformationSuccess && <span className='success-message'>{ChangeInformationSuccess}</span>}
 
                             <div className='change-information-button'>
-                                {/* <Button type='submit' className='btn' onClick={() => confirm('Bạn chắc chắn muốn đổi thông tin?')}>ĐỔI THÔNG TIN</Button> */}
-                                <Button type='submit' className='btn'>ĐỔI THÔNG TIN</Button>
+                                <Button type='submit' className='btn'>THAY ĐỔI THÔNG TIN</Button>
                                 <Button type='reset' className='btn btn-reset' onClick={handleResetChangeInformation}>ĐẶT LẠI</Button>
                             </div>
                         </Form>
@@ -303,26 +313,18 @@ export default function UserInformation() {
                                 </InputGroup>
                             </Form.Group>
 
-                            {ChangePasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangePasswordError}</span>}
-                            {ChangeConfirmPasswordError && <span className='error-message' style={{ color: '#dc3545' }}>{ChangeConfirmPasswordError}</span>}
+                            {ChangePasswordError && <span className='error-message'>{ChangePasswordError}</span>}
+                            {ChangeConfirmPasswordError && <span className='error-message'>{ChangeConfirmPasswordError}</span>}
+                            {ChangePasswordSuccess && <span className='success-message'>{ChangePasswordSuccess}</span>}
 
                             <div className='change-information-button'>
-                                {/* <Button type='submit' className='btn' onClick={() => confirm('Bạn chắc chắn muốn đổi mật khẩu?')}>ĐỔI MẬT KHẨU</Button> */}
-                                <Button type='submit' className='btn'>ĐỔI MẬT KHẨU</Button>
+                                <Button type='submit' className='btn'>THAY ĐỔI MẬT KHẨU</Button>
                                 <Button type='reset' className='btn btn-reset' onClick={handleResetChangePassword}>ĐẶT LẠI</Button>
                             </div>
                         </Form>
                     </div>
-
-                    {/* <div className='form-input'>
-                        <input id='OldPassword' type='password' placeholder='Mật khẩu cũ' required />
-                        <input id='NewPassword' type='password' placeholder='Mật khẩu mới' required />
-                        <input id='ConfirmNewPassword' type='password' placeholder='Xác nhận mật khẩu mới' required />
-                    </div>
-                    <div className='change-information-button'>
-                        <Button type='submit' className='btn' onClick={ChangeInformation}>ĐỔI MẬT KHẨU</Button>
-                    </div> */}
                 </section>
+
             </div>
         </div>
     )
