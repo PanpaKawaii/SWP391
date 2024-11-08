@@ -63,10 +63,10 @@ function App() {
 
   const { id, token, role, isLogIn } = UserAuth();
 
-  console.log('id: ', id)
-  console.log('token: ', token)
-  console.log('role: ', role)
-  console.log('isLogIn: ', isLogIn)
+  console.log('id:', id)
+  console.log('token:', token)
+  console.log('role:', role)
+  console.log('isLogIn:', isLogIn)
 
   // const navigate = useNavigate();
   // useEffect(() => {

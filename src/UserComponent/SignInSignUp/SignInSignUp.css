@@ -114,6 +114,14 @@ body {
                         }
                     }
 
+                    .error-message {
+                        color: #dc3545;
+                    }
+
+                    .success-message {
+                        color: #28a745;
+                    }
+
                     a.forget-link {
                         color: #ffc107;
                         display: flex;

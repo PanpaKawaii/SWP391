@@ -50,7 +50,9 @@ export default function SignInSignUp() {
         inputs.forEach(function (input) {
             input.value = '';
         });
+        setSuccessSignUp(null);
         setErrorSignUp(null);
+        setAcceptError(null);
         setSignUpEmailError(null);
         setSignUpFullNameError(null);
         setSignUpPhoneNumberError(null);
@@ -77,6 +79,7 @@ export default function SignInSignUp() {
     const [loading, setLoading] = useState(true);
     const [errorSignIn, setErrorSignIn] = useState(null);
     const [errorSignUp, setErrorSignUp] = useState(null);
+    const [successSignUp, setSuccessSignUp] = useState(null);
     const [AcceptError, setAcceptError] = useState(null);
 
     const Login = async (SignInEmail, SignInPassword) => {
@@ -185,7 +188,7 @@ export default function SignInSignUp() {
             return;
         }
         if (SignUpPassword != SignUpConfirm) {
-            console.error('Wrong confirm password');
+            console.error('Wrong password confirmation');
             setSignUpConfirmError('Mật khẩu xác nhận không khớp');
             return;
         }
@@ -237,8 +240,9 @@ export default function SignInSignUp() {
             setLoading(false);
 
             if (data.role && data.role === 'User') {
-                alert('Đăng kí thành công');
-                moveImageBack();
+                // alert('Đăng kí thành công');
+                setSuccessSignUp('Đăng kí thành công!');
+                // moveImageBack();
             }
         } catch (error) {
             setErrorSignUp(error);
@@ -260,6 +264,7 @@ export default function SignInSignUp() {
 
     const handleSubmitSignUp = (e) => {
         e.preventDefault();
+        setSuccessSignUp(null);
         setErrorSignUp(null);
         setAcceptError(null);
         setSignUpEmailError(null);
@@ -350,9 +355,9 @@ export default function SignInSignUp() {
                                 <Form.Control className='input' type='password' placeholder='Mật khẩu đăng nhập' style={{ border: (SignInPasswordError || errorSignIn) && '1px solid #dc3545', }} />
                             </Form.Group>
                             <a href='#' className='forget-link'><b>Quên mật khẩu?</b></a>
-                            {SignInEmailError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignInEmailError}</span>)}
-                            {SignInPasswordError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignInPasswordError}</span>)}
-                            {errorSignIn && (<span className='error-message' style={{ color: '#dc3545' }}>Đăng nhập thất bại</span>)}
+                            {SignInEmailError && (<span className='error-message'>{SignInEmailError}</span>)}
+                            {SignInPasswordError && (<span className='error-message'>{SignInPasswordError}</span>)}
+                            {errorSignIn && (<span className='error-message'>Đăng nhập thất bại</span>)}
                             <div className='btn-box'>
                                 <Button type='submit' className='btn' id='btn-signin'>ĐĂNG NHẬP</Button>
                                 <Button type='reset' className='btn' id='btn-reset-signin' onClick={resetInputsBox1}>XÓA</Button>
@@ -395,13 +400,14 @@ export default function SignInSignUp() {
                                 </Form.Group>
                             </div>
 
-                            {SignUpEmailError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignUpEmailError}</span>)}
-                            {SignUpFullNameError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignUpFullNameError}</span>)}
-                            {SignUpPhoneNumberError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignUpPhoneNumberError}</span>)}
-                            {SignUpPasswordError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignUpPasswordError}</span>)}
-                            {SignUpConfirmError && (<span className='error-message' style={{ color: '#dc3545' }}>{SignUpConfirmError}</span>)}
-                            {AcceptError && (<span className='error-message' style={{ color: '#dc3545' }}>{AcceptError}</span>)}
-                            {errorSignUp && (<span className='error-message' style={{ color: '#dc3545' }}>Đăng kí thất bại</span>)}
+                            {SignUpEmailError && (<span className='error-message'>{SignUpEmailError}</span>)}
+                            {SignUpFullNameError && (<span className='error-message'>{SignUpFullNameError}</span>)}
+                            {SignUpPhoneNumberError && (<span className='error-message'>{SignUpPhoneNumberError}</span>)}
+                            {SignUpPasswordError && (<span className='error-message'>{SignUpPasswordError}</span>)}
+                            {SignUpConfirmError && (<span className='error-message'>{SignUpConfirmError}</span>)}
+                            {AcceptError && (<span className='error-message'>{AcceptError}</span>)}
+                            {errorSignUp && (<span className='error-message'>Đăng kí thất bại</span>)}
+                            {successSignUp && (<span className='success-message'>{successSignUp}</span>)}
                             <div className='btn-box'>
                                 <Button type='submit' className='btn' id='btn-signup'>ĐĂNG KÍ</Button>
                                 <Button type='reset' className='btn' id='btn-reset-signup' onClick={resetInputsBox2}>XÓA</Button>
