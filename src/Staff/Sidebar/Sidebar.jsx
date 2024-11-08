@@ -6,10 +6,8 @@ import {
   faSquare,
   faUser,
   faSignOutAlt,
-  faFileClipboard,
   faFileInvoiceDollar,
   faMugHot,
-  faCommentDollar,
   faList,
   faBurger,
 } from "@fortawesome/free-solid-svg-icons";

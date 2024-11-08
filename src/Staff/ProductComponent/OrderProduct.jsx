@@ -84,6 +84,29 @@ const OrderProduct = () => {
     fetchNextBookingOrderId();
   }, []);
 
+  const validateQuantity = (rule, value) => {
+    const productId = form.getFieldValue("productId");
+    const selectedProduct = products.find((p) => p.id === productId);
+
+    if (selectedProduct && value > selectedProduct.stock) {
+      return Promise.reject(
+        new Error(
+          `Số lượng không được lớn hơn số lượng có sẵn trong kho. Hiện tại có ${selectedProduct.stock} sản phẩm.`
+        )
+      );
+    }
+
+    return Promise.resolve();
+  };
+  // điều chỉnh giá theo số lượng
+  const handleQuantityChange = (value) => {
+    const productId = form.getFieldValue("productId");
+    const selectedProduct = products.find((p) => p.id === productId);
+    if (selectedProduct) {
+      form.setFieldsValue({ amount: selectedProduct.price * value });
+    }
+  };
+
   const submitBookingOrder = async (values) => {
     try {
       // Validate the amount
@@ -144,6 +167,13 @@ const OrderProduct = () => {
         return;
       }
 
+      // Cập nhật stock của sản phẩm
+      const updatedStock = selectedProduct.stock - values.quantity;
+      await axios.put(`${apiProduct}/${selectedProduct.id}`, {
+        ...selectedProduct,
+        stock: updatedStock,
+      });
+
       // Chỉ chuyển hướng và reset form nếu cả hai operation đều thành công
       navigate("/history");
       form.resetFields();
@@ -159,15 +189,6 @@ const OrderProduct = () => {
     if (selectedProduct) {
       const quantity = form.getFieldValue("quantity") || 1;
       form.setFieldsValue({ amount: selectedProduct.price * quantity });
-    }
-  };
-
-  // điều chỉnh giá theo số lượng
-  const handleQuantityChange = (value) => {
-    const productId = form.getFieldValue("productId");
-    const selectedProduct = products.find((p) => p.id === productId);
-    if (selectedProduct) {
-      form.setFieldsValue({ amount: selectedProduct.price * value });
     }
   };
 
@@ -217,17 +238,24 @@ const OrderProduct = () => {
           rules={[{ required: true }]}
         >
           <Select onChange={handleProductChange}>
-            {products.map((product) => (
-              <Option key={product.id} value={product.id}>
-                {product.name} - {formatCurrency(product.price)}
-              </Option>
-            ))}
+            {products
+              .filter(
+                (product) => product.status !== "Đã hết" && product.stock > 0
+              ) // Lọc sản phẩm
+              .map((product) => (
+                <Option key={product.id} value={product.id}>
+                  {product.name} - {formatCurrency(product.price)}
+                </Option>
+              ))}
           </Select>
         </Form.Item>
         <Form.Item
           name="quantity"
           label="Số lượng"
-          rules={[{ required: true }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập số lượng" },
+            { validator: validateQuantity }, // Sử dụng hàm xác thực
+          ]}
         >
           <InputNumber
             min={1}
