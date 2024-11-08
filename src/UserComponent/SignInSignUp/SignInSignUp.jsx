@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
+import { UserAuth } from '../../Context/AuthContext'
 import './SignInSignUp.css';
 
 import SignInImage from '../../BackgroundImage/24.jpg';
@@ -57,6 +59,9 @@ export default function SignInSignUp() {
     };
 
 
+    const navigate = useNavigate();
+    const { login } = UserAuth();
+
     const [SignInEmailError, setSignInEmailError] = useState(null);
     const [SignInPasswordError, setSignInPasswordError] = useState(null);
 
@@ -110,16 +115,24 @@ export default function SignInSignUp() {
             localStorage.setItem('UserId', data.id);
             localStorage.removeItem('UserRole');
             localStorage.setItem('UserRole', data.role);
-
+            localStorage.removeItem('isLogIn');
+            localStorage.setItem('isLogIn', 'true');
+            login();
             if (data.role && data.role === 'User') {
-                window.location.href = 'http://localhost:5173/user/information';
+                navigate('/user/information');
+            } else {
+                navigate('/');
             }
-            if (data.role && data.role === 'Staff') {
-                window.location.href = 'http://localhost:5173';
-            }
-            if (data.role && data.role === 'Admin') {
-                window.location.href = 'http://localhost:5173';
-            }
+
+            // if (data.role && data.role === 'User') {
+            //     window.location.href = 'http://localhost:5173/user/information';
+            // }
+            // if (data.role && data.role === 'Staff') {
+            //     window.location.href = 'http://localhost:5173';
+            // }
+            // if (data.role && data.role === 'Admin') {
+            //     window.location.href = 'http://localhost:5173';
+            // }
         } catch (error) {
             setErrorSignIn(error);
             setLoading(false);

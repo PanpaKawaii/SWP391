@@ -1,3 +1,6 @@
+import { useEffect, useContext } from 'react';
+import { UserAuth } from './Context/AuthContext'
+import { useNavigate } from 'react-router-dom';
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'materialize-css/dist/css/materialize.min.css';
@@ -58,7 +61,19 @@ import AdminAddProduct from "./AdminComponent/ProductComponent/AddProduct.jsx";
 function App() {
   const UserRole = localStorage.getItem('UserRole');
 
-  if (UserRole === null) {
+  const { id, token, role, isLogIn } = UserAuth();
+
+  console.log('id', id)
+  console.log('token', token)
+  console.log('role', role)
+  console.log('isLogIn', isLogIn)
+
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   navigate('/')
+  // }, [])
+
+  if (role === null) {
     return (
       <>
         <ScrollToTop />
@@ -84,7 +99,7 @@ function App() {
       </>
     );
   }
-  else if (UserRole === 'User') {
+  else if (role === 'User') {
     return (
       <>
         <div className='user-container'>
@@ -110,8 +125,6 @@ function App() {
                 <Route path='/user/booking/:Id' element={<UserBookingDetail />} />
 
                 <Route path='/paymentstatus/?' element={<PaymentStatus />} />
-
-                <Route path='/signinsignup' element={<SignInSignUp />} />
               </Routes>
               <Footer />
             </div>
@@ -142,7 +155,7 @@ function App() {
       </>
     );
   }
-  else if (UserRole === 'Staff') {
+  else if (role === 'Staff') {
     return (
       <>
         <div className="main-container">
@@ -174,7 +187,7 @@ function App() {
       </>
     );
   }
-  else if (UserRole === 'Admin') {
+  else if (role === 'Admin') {
     return (
       <div className="admin-container">
         <AdminSidebar className="sidebar" /> {/* Giữ nguyên Sidebar */}

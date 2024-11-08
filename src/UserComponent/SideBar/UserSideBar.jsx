@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserAuth } from '../../Context/AuthContext'
 import './UserSideBar.css';
 
 export default function SideBar() {
@@ -12,6 +13,8 @@ export default function SideBar() {
     };
 
 
+    const navigate = useNavigate();
+    const { logout } = UserAuth();
 
     const [id, setId] = useState(null);
     const UserId = localStorage.getItem('UserId');
@@ -24,7 +27,11 @@ export default function SideBar() {
         localStorage.removeItem('token')
         localStorage.removeItem('UserId')
         localStorage.removeItem('UserRole')
+        localStorage.removeItem('isLogIn');
+        localStorage.setItem('isLogIn', 'false');
         console.log('Loged out')
+        logout();
+        // navigate('/signinsignup');
         window.location.href = 'http://localhost:5173/signinsignup';
     }
 
