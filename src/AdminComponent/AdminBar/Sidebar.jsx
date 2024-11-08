@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
+import { UserAuth } from '../../Context/AuthContext'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons"; // Import icon
 
@@ -34,12 +35,15 @@ const Sidebar = () => {
     setIsAccountDropdownOpen(!isAccountDropdownOpen);
   };
 
+  const { logout } = UserAuth();
   const handleLogout = () => {
-      localStorage.removeItem('token')
-      localStorage.removeItem('UserId')
-      localStorage.removeItem('UserRole')
-      console.log('Loged out')
-      window.location.href = 'http://localhost:5173/signinsignup';
+    localStorage.removeItem('token')
+    localStorage.removeItem('UserId')
+    localStorage.removeItem('UserRole')
+    localStorage.removeItem('isLogIn');
+    localStorage.setItem('isLogIn', 'false');
+    logout();
+    window.location.href = 'http://localhost:5173/signinsignup';
   }
 
   return (

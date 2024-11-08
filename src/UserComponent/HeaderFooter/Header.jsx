@@ -1,11 +1,14 @@
 import React from 'react'
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { UserAuth } from '../../Context/AuthContext'
 import './Header.css';
 
 import InnoSpace from '../../BackgroundImage/InnoSpace.png';
 
 export default function Header() {
+
+    const { logout } = UserAuth();
 
     const [id, setId] = useState(null);
     const UserId = localStorage.getItem('UserId');
@@ -44,7 +47,9 @@ export default function Header() {
         localStorage.removeItem('token')
         localStorage.removeItem('UserId')
         localStorage.removeItem('UserRole')
-        console.log('Loged out')
+        localStorage.removeItem('isLogIn');
+        localStorage.setItem('isLogIn', 'false');
+        logout();
         window.location.href = 'http://localhost:5173/signinsignup';
     }
 

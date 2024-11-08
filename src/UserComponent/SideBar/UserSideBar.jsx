@@ -29,9 +29,7 @@ export default function SideBar() {
         localStorage.removeItem('UserRole')
         localStorage.removeItem('isLogIn');
         localStorage.setItem('isLogIn', 'false');
-        console.log('Loged out')
         logout();
-        // navigate('/signinsignup');
         window.location.href = 'http://localhost:5173/signinsignup';
     }
 
