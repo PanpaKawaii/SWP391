@@ -197,22 +197,25 @@ export default function UserBookingDetail() {
 
     const [rating, setRating] = useState(0);
     const [feedback, setFeedback] = useState('');
+    const [feedbackSuccess, setFeedbackSuccess] = useState(null);
+    const [feedbackError, setFeedbackError] = useState(null);
     useEffect(() => {
         setRating(thisBOOKING ? thisBOOKING.rating : 0);
         setFeedback(thisBOOKING ? thisBOOKING.feedback : '');
     }, [thisBOOKING]);
     const handleSubmitFeedback = (e) => {
         e.preventDefault();
+        setFeedbackSuccess(null);
+        setFeedbackError(null);
         console.log('Rating:', rating);
         console.log('Feedback submitted:', feedback);
+        if (rating === 0) {
+            setFeedbackError('Vui lòng đánh giá sao từ 1 đến 5');
+            return;
+        }
         SubmitFeedback(rating, feedback);
     }
     const SubmitFeedback = async (SubmitRating, SubmitFeedback) => {
-
-        if (SubmitRating === 0) {
-            alert('Vui lòng đánh giá điểm số từ 1 đến 5');
-            return;
-        }
 
         const changeData = {
             id: thisBOOKING.id,
@@ -238,8 +241,9 @@ export default function UserBookingDetail() {
 
             if (!response.ok) throw new Error('Network response was not ok');
             // const data = await response.json();
+            if (SubmitRating == 0) setFeedbackSuccess('Gỡ đánh giá thành công!')
+            if (SubmitRating !== 0) setFeedbackSuccess('Đánh giá thành công!')
             setLoading(false);
-            alert('Đánh giá thành công');
             setRefresh(refresh + 1);
         } catch (error) {
             setError(error);
@@ -248,10 +252,11 @@ export default function UserBookingDetail() {
         }
     }
 
+    const [confirmPopup, setConfirmPopup] = useState(false);
     const handleUpdateBooking = (status) => {
-        if (confirm('Bạn có chắc chắn muốn cập nhật trạng thái đơn đặt phòng không?')) {
-            UpdateBooking(status);
-        }
+        // if (confirm('Bạn có chắc chắn muốn cập nhật trạng thái đơn đặt phòng không?')) {
+        UpdateBooking(status);
+        // }
     }
     const UpdateBooking = async (status) => {
 
@@ -280,7 +285,6 @@ export default function UserBookingDetail() {
             if (!response.ok) throw new Error('Network response was not ok');
             // const data = await response.json();
             setLoading(false);
-            alert('Cập nhật trạng thái thành công');
             setRefresh(refresh + 1);
         } catch (error) {
             setError(error);
@@ -335,7 +339,8 @@ export default function UserBookingDetail() {
                         })()}
                         {thisBOOKING.status && (thisBOOKING.status === 'Chưa diễn ra' || thisBOOKING.status === 'Đang diễn ra') && (
                             <DropdownButton id='dropdown-basic-button' title=''>
-                                <Dropdown.Item onClick={() => handleUpdateBooking('Đã hủy')}>Hủy đơn đặt phòng</Dropdown.Item>
+                                {/* <Dropdown.Item onClick={() => handleUpdateBooking('Đã hủy')}>Hủy đơn đặt phòng</Dropdown.Item> */}
+                                <Dropdown.Item href='#popupConfirm' onClick={() => { setConfirmPopup(true) }}>Hủy đơn đặt phòng</Dropdown.Item>
                                 {/* {thisBOOKING.status === 'Đang diễn ra' &&
                                     <Dropdown.Item onClick={() => handleUpdateBooking('Đã kết thúc')}>Xác nhận kết thúc</Dropdown.Item>
                                 } */}
@@ -343,6 +348,20 @@ export default function UserBookingDetail() {
                         )}
                     </div>
                 </div>
+
+                {confirmPopup && (
+                    <div id='popupConfirm' className='overlay'>
+                        <div className='popup'>
+                            <div className='confirm-information'>
+                                <h3><b>Bạn chắc chắn muốn hủy đơn đặt phòng này chứ?</b></h3>
+                                <div className='confirm-button'>
+                                    <Button href='#' className='btn btn-cancel' onClick={() => { setConfirmPopup(false); handleUpdateBooking('Đã hủy') }} >XÁC NHẬN</Button>
+                                    <Button href='#' className='btn btn-nocancel' onClick={() => setConfirmPopup(false)}>KHÔNG HỦY</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 <Row className='booking-row'>
                     <Col xxl={12} className='booking-col'>
@@ -437,7 +456,7 @@ export default function UserBookingDetail() {
                             <h1><b>THÔNG TIN THANH TOÁN</b></h1>
                             <Row className='booking-row'>
                                 <Col xxl={12} className='booking-col col-1'>
-                                    <div className='bookingorder-card-body'>
+                                    <div className='payment-card-body booking-payment'>
                                         <div className='card-detail'>
                                             <div>
                                                 <h2><b>{thisPOD.name}</b></h2>
@@ -467,7 +486,7 @@ export default function UserBookingDetail() {
                                 {filteredBOOKINGORDERs &&
                                     filteredBOOKINGORDERs.map((bookingOrder, index) => (
                                         <Col key={index} xxl={12} className='booking-col col-2'>
-                                            <div className='bookingorder-card-body'>
+                                            <div className='payment-card-body order-payment'>
                                                 <div className='card-detail'>
                                                     <div>
                                                         <h2><b>{getProductName(bookingOrder.productId)}</b></h2>
@@ -545,13 +564,26 @@ export default function UserBookingDetail() {
                                 </div>
 
                                 <Button type='submit' className='btn btn-feedback'>GỬI</Button>
+                                <Button className='btn btn-clear'
+                                    onClick={() => {
+                                        setRating(0);
+                                        setFeedback('');
+                                        setFeedbackSuccess(null);
+                                        setFeedbackError(null);
+                                        SubmitFeedback(0, '')
+                                    }}>
+                                    GỠ ĐÁNH GIÁ
+                                </Button>
+
+                                {feedbackError && <span style={{ color: '#dc3545' }}>{feedbackError}</span>}
+                                {feedbackSuccess && <span style={{ color: '#28a745' }}>{feedbackSuccess}</span>}
 
                             </Form>
                         </div>
                     ) : <div></div>}
 
                     <div className='rebook-button-container'>
-                        <Link to={`/booking/pod/${thisPOD.id}`} className='link-item'><Button className='rebook-button'>ĐẶT LẠI</Button></Link>
+                        <Link to={`/booking/pod/${thisPOD.id}`} className='link-item'><Button className='rebook-button'>ĐẶT LẠI POD</Button></Link>
                     </div>
                 </div>
             </div>

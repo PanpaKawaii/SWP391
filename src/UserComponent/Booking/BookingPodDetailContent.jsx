@@ -546,7 +546,7 @@ export default function BookingPodDetailContent() {
                                                         </Form.Control>
                                                     </Form.Group>
 
-                                                    <h2><b>Tổng: {Amount.toLocaleString('vi-VN')}đ</b></h2>
+                                                    <h2><b>Tổng: <span style={{ color: '#ee4f2e' }}>{Amount.toLocaleString('vi-VN')}đ</span></b></h2>
                                                     {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length !== 0 && <p style={{ color: '#ff0000' }}>Slot không khả dụng</p>}
                                                     {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length === 0 &&
                                                         SlotId.length > 0 &&
@@ -638,7 +638,7 @@ export default function BookingPodDetailContent() {
                                 </Row>
 
                                 <div className='button-confirm-amount'>
-                                    <h2><b>Tổng: <span>{Amount.toLocaleString('vi-VN')}đ</span></b></h2>
+                                    <h2><b>Tổng: <span style={{ color: '#ee4f2e' }}>{Amount.toLocaleString('vi-VN')}đ</span></b></h2>
                                     {!Confirm ?
                                         <Button type='submit' className='btn' onClick={handleConfirm}>XÁC NHẬN</Button>
                                         :

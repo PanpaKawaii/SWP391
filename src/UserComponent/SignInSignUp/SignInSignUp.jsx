@@ -240,7 +240,6 @@ export default function SignInSignUp() {
             setLoading(false);
 
             if (data.role && data.role === 'User') {
-                // alert('Đăng kí thành công');
                 setSuccessSignUp('Đăng kí thành công!');
                 // moveImageBack();
             }
