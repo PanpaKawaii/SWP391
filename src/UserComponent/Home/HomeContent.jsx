@@ -135,7 +135,7 @@ export default function HomeContent() {
 
                     <Form.Group controlId='formStore' className='form-group'>
                         <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
-                            <option value=''>[Cửa hàng]</option>
+                            <option value=''>[Chi nhánh]</option>
                             {STOREs && STOREs.map(store => (
                                 <option key={store.id} value={store.id}>{store.name}</option>
                             ))}

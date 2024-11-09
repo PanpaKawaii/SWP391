@@ -194,7 +194,7 @@ export default function BookingPodContent() {
                         (<div className='search-title'><h1><b>POD có sẵn:</b></h1></div>) : (
                             <Form.Group controlId='formStore' className='form-group'>
                                 <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
-                                    <option value=''>[Cửa hàng]</option>
+                                    <option value=''>[Chi nhánh]</option>
                                     {STOREs && STOREs.map(store => (
                                         <option key={store.id} value={store.id}>{store.name}</option>
                                     ))}
@@ -238,7 +238,7 @@ export default function BookingPodContent() {
                             <th>Ảnh</th>
                             <th>Tên</th>
                             <th>Loại</th>
-                            <th>Cửa hàng</th>
+                            <th>Chi nhánh</th>
                             <th>Nội thất</th>
                             <th>Chi tiết</th>
                         </tr>

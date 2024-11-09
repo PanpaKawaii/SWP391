@@ -93,7 +93,7 @@ export default function BookingStoreContent() {
 
                     <Form.Group controlId='formStore' className='form-group'>
                         <Form.Control as='select' value={selectedStore} onChange={(e) => setSelectedStore(e.target.value)}>
-                            <option value=''>[Cửa hàng]</option>
+                            <option value=''>[Chi nhánh]</option>
                             {STOREs && STOREs.map(store => (
                                 <option key={store.id} value={store.name}>{store.name}</option>
                             ))}
@@ -101,7 +101,7 @@ export default function BookingStoreContent() {
                     </Form.Group>
 
                     <Form.Group controlId='formName' className='form-group form-input'>
-                        <Form.Control className='input' type='text' placeholder='Tên cửa hàng' value={storeName} onChange={(e) => setStoreName(e.target.value)} />
+                        <Form.Control className='input' type='text' placeholder='Tên chi nhánh' value={storeName} onChange={(e) => setStoreName(e.target.value)} />
                     </Form.Group>
 
                     <Button type='reset' className='btn' onClick={handleReset}>ĐẶT LẠI BỘ LỌC</Button>
@@ -171,7 +171,7 @@ export default function BookingStoreContent() {
                             </Col>
                         ))
                     ) : (
-                        <span>Không tìm thấy cửa hàng nào.</span>
+                        <span>Không tìm thấy chi nhánh nào.</span>
                     )}
                 </Row>
             </div>

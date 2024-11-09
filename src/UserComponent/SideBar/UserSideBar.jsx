@@ -44,7 +44,7 @@ export default function SideBar() {
 
                     <Link to='/'><i className='fa-solid fa-house icon'></i> Trang chủ</Link>
                     <Link to='/about'><i className='fa-solid fa-circle-info icon'></i> Giới thiệu</Link>
-                    <Link to='/booking/store'><i className='fa-solid fa-house-flag icon'></i> Cửa hàng</Link>
+                    <Link to='/booking/store'><i className='fa-solid fa-house-flag icon'></i> Chi nhánh</Link>
                     <Link to='/booking/pod'><i className='fa-solid fa-list icon'></i> Đặt chỗ</Link>
                     <Link to='/contact'><i className='fa-regular fa-address-card icon'></i> Liên hệ</Link>
                     <Link to='/paymentstatus/'><i className='fa-solid fa-money-bill icon'></i> Thanh toán</Link>

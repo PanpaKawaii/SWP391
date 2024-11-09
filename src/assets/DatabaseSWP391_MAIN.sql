@@ -336,7 +336,7 @@ INSERT INTO [User] (Id, Email, Password, Name, Image, Role, Type, PhoneNumber, P
 (3, 'lequanghai@gmail.com', 'User003', N'Lê Quang Hải', N'https://i.pinimg.com/236x/02/d9/91/02d9916c89e52fd62db4820a90de89bf.jpg', 'User', 'VIP', N'0912345678', 10500, N'Khách hàng ưu tiên'),
 (4, 'phamthanhdat@gmail.com', 'User004', N'Phạm Thành Đạt', N'https://i.pinimg.com/236x/8d/0d/90/8d0d90d7e668af83b89d9ae6611ed4da.jpg', 'User', 'Regular', N'0934567890', 7000, N'Khách hàng tiềm năng'),
 (5, 'hoangvanchuong@gmail.com', 'User005', N'Hoàng Văn Chương', N'https://i.pinimg.com/236x/ea/ec/e7/eaece79e363b7689a0b306f7b68573e4.jpg', 'User', 'VIP', N'0945678901', 12000, N'Khách hàng ưu tiên'),
-(6, 'vothituyet@gmail.com', 'User006', N'Võ Thị Tuyết', N'https://i.pinimg.com/736x/63/3a/20/633a20dd72ccfac027dc45fc595c3b52.jpg', 'User', 'Regular', N'0956789012', 5500, N'Khách hàng cũ'),
+(6, 'vothituyet@gmail.com', 'User006', N'Võ Thị Tuyết', N'https://i.pinimg.com/736x/63/3a/20/633a20dd72ccfac027dc45fc595c3b52.jpg', 'User', 'Regular', N'0956789012', 5500, N'Khách hàng tiềm năng'),
 (7, 'nguyenhuugiang@gmail.com', 'User007', N'Nguyễn Hữu Giang', N'https://i.pinimg.com/236x/a8/40/e5/a840e5f8e0d2df36926baf2e5f886205.jpg', 'User', 'VIP', N'0967890123', 12500, N'Khách hàng ưu tiên'),
 (8, 'dothanhha@gmail.com', 'User008', N'Đỗ Thanh Hà', N'https://i.pinimg.com/236x/19/f4/6c/19f46c0682d66bafded22dd4f8c5e1c5.jpg', 'User', 'Regular', N'0978901234', 1000, N'Khách hàng mới'),
 

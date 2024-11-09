@@ -519,14 +519,14 @@ export default function UserBookingDetail() {
                             </div>
                         </div>
                     </Tab>
-                    <Tab eventKey='store' title='Cửa hàng'>
+                    <Tab eventKey='store' title='Chi nhánh'>
                         <div className='tab-content store-tab'>
-                            <h1><b>THÔNG TIN CỬA HÀNG</b></h1>
+                            <h1><b>THÔNG TIN CHI NHÁNH</b></h1>
                             <div className='store-card'>
                                 <img src={thisSTORE.image} alt={thisSTORE.name} />
                                 <div className='store-card-body'>
-                                    <h5><b>ID cửa hàng:</b> {thisSTORE.id}</h5>
-                                    <h5><b>Tên cửa hàng:</b> {thisSTORE.name}</h5>
+                                    <h5><b>ID chi nhánh:</b> {thisSTORE.id}</h5>
+                                    <h5><b>Tên chi nhánh:</b> {thisSTORE.name}</h5>
                                     <h5><b>Địa chỉ:</b> {thisSTORE.address}</h5>
                                     <h5><b>Số điện thoại:</b> {thisSTORE.contact}</h5>
                                 </div>
