@@ -235,7 +235,7 @@ export default function POD() {
       width: 200,
       render: (id, record) => (
         <div>
-          <button className="one-button"
+          <button className="pod-button"
             onClick={() => {
               setIsModalVisible(true);
               form.setFieldsValue(record);
@@ -250,22 +250,22 @@ export default function POD() {
 
   return (
     <>
-      <div className="admin-pod-management-container">
-        <div className="title-store">
+      <div className="admin-pod-container">
+        <div className="title-pod">
           <h1>Quản lí POD</h1>
           <Button
             type="primary"
-            style={{ marginRight: "10px" }}
+            
           >
-            <Link to="/addpod">Thêm POD</Link>
+            <Link style={{ color: "#FAFBFB", textDecoration: "none" }} to="/addpod">Thêm POD</Link>
           </Button>
         </div>
         <div style={{ overflowX: "auto" }}>
           <Table
             columns={columns}
-            dataSource={podData}
+            dataSource={podData.sort((a, b) => b.id - a.id)}
             rowKey="id"
-            pagination={{ pageSize: 5 }}
+            pagination={{ pageSize: 4 }}
             size="small"
             bordered
           />

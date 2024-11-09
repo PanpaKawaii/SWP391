@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"; // Nhập React và các hook
+import "./Order.css"
 import axios from "axios"; // Nhập axios để thực hiện các yêu cầu HTTP
 import {
   Table,
@@ -250,24 +251,24 @@ const OrderHistory = () => {
     return dayjs(dateString).format("DD/MM/YYYY"); // Định dạng ngày theo định dạng DD/MM/YYYY
   };
 
-  // Hàm hiển thị trạng thái đơn hàng
+  // Hàm hiển thị trạng thái đơn hàng với màu đặc trưng
   const renderOrderStatus = (status) => {
     let color;
     switch (status) {
       case "Chưa diễn ra":
-        color = "gold"; // Màu vàng cho trạng thái "Chưa diễn ra"
+        color = "gold"; 
         break;
       case "Đang diễn ra":
-        color = "lime"; // Màu xanh lá cho trạng thái "Đang diễn ra"
+        color = "lime"; 
         break;
       case "Đã kết thúc":
-        color = "red"; // Màu đỏ cho trạng thái "Đã kết thúc"
+        color = "red"; 
         break;
       case "Đã hủy":
-        color = "orange"; // Màu cam cho trạng thái "Đã hủy"
+        color = "orange"; 
         break;
       case "Đã hoàn tiền":
-        color = "gray"; // Màu xám cho trạng thái "Đã hoàn tiền"
+        color = "gray"; 
         break;
       default:
         color = "cornflowerblue"; // Màu mặc định
@@ -275,7 +276,7 @@ const OrderHistory = () => {
     return <Tag color={color}>{status}</Tag>; // Trả về thẻ Tag với màu sắc tương ứng
   };
 
-  // Cột dữ liệu cho bảng người dùng
+  // Cột dữ liệu cho bảng người dùng ở component chính
   const userColumns = [
     { title: "Booking ID", dataIndex: "id", key: "bookingId", align: "center" },
     {

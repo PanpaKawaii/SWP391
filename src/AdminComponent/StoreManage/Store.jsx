@@ -90,54 +90,28 @@ export default function Store() {
   return (
     <div className="admin-store-container">
       <div className="title-store">
-        <h1
-          style={{
-            marginLeft: "1rem",
-            alignItems: "center",
-            fontFamily: "Arial",
-          }}
-        >
-          Cửa hàng
+        <h1>
+          Quản lý cửa hàng
         </h1>
-        <Button
-          style={{
-            marginRight: "10px",
-            backgroundColor: "whiteblue",
-            borderColor: "#9da5ac",
-            borderRadius: "10px",
-            boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <Link style={{ color: "#FAFBFB" }} to="/addstore">
+        <Button>
+          <Link style={{ color: "#FAFBFB", textDecoration: "none" }} to="/addstore">
             Thêm cửa hàng
           </Link>
         </Button>
       </div>
       <div
-        className="container"
-        style={{
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          marginTop: "0",
-          backgroundColor: "#F5F5F5",
-          borderRadius: "10px",
-          border: "1px solid #9da5ac",
-        }}
+       
+       
       >
-        <div className="row" style={{ padding: "1rem", width: "100%" }}>
-          {stores.map((store) => (
-            <div className="col-md-6" key={store.id}>
+        <div className="row"  >
+          {stores.sort((a, b) => b.id - a.id).map((store) => (
+            <div className="col-md-4" key={store.id}>
               <div className="card store-card">
                 <img
                   src={store.image}
                   alt="Store 1"
                   className="store-img card-img-top"
-                  style={{
-                    width: "100%",
-                    height: "360px", // Điều chỉnh chiều cao theo ý muốn
-                    objectFit: "cover", // Đảm bảo hình ảnh lấp đầy không gian mà không bị méo
-                    borderTopLeftRadius: "10px",
-                    borderTopRightRadius: "10px",
-                  }}
+                  
                 />
                 <div className="card-body">
                   <h5 className="card-title">{store.name}</h5>

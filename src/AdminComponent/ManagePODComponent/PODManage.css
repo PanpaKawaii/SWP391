@@ -1,4 +1,44 @@
-.admin-pod-management-container{
+.admin-pod-container{
+
+    max-width: 100%;
+    margin: 20px;
+
+    .title-pod {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .pod-button {
+        background-color: transparent;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+    form {
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+     
+    }
+    label {
+        display: block; 
+        margin-bottom: 5px; 
+        font-weight: bold; 
+    }
+    .admin-add-pod-button{
+        margin-top: 10px;
+        width: 100%;
+    }
+
+
+}
+
+
+/* .admin-pod-container{
 
 .add-button{
     color: black;
@@ -10,17 +50,17 @@
 .pod-card{
     max-width: 30rem;
     height: auto;
-    display: flex; /* Allows the card to expand with its content */
-    flex-direction: column; /* Ensures content is stacked vertically */
-    padding: 1rem; /* Adds space inside the card */
-    margin: 1rem; /* Adds space outside the card */
+    display: flex; 
+    flex-direction: column; 
+    padding: 1rem; 
+    margin: 1rem; 
     border: none;
 }
 
 .pod-img{
     height: 15rem;
     width: 10rem;
-    object-fit: cover; /* Cắt ảnh để phù hợp với kích thước */
+    object-fit: cover; 
     object-position: center;
     display: block;
 }
@@ -38,12 +78,9 @@ div.card-body{
     align-items: center;
 }
 
-
-
 .pod-manage {
     margin: 15px 15px;
     font-family: "Poppins", sans-serif;
-
 }
 .admin-content-body{
     padding: 20px 20px;
@@ -76,4 +113,4 @@ div.card-body{
             width: 10rem;
         }
     }
-}
+} */

@@ -68,6 +68,7 @@ export default function AddPod() {
 
     // Kiểm tra các trường nhập liệu
     const missingFields = [];
+    
     if (!name) {
       missingFields.push("Tên");
       inputRefs.name.current.focus(); // Tập trung vào trường đầu tiên còn trống
@@ -100,11 +101,8 @@ export default function AddPod() {
     // Nếu có trường nào bị thiếu, hiển thị thông báo
     if (missingFields.length > 0) {
       message.error(`Vui lòng nhập: ${missingFields.join(", ")}`); // Thông báo lỗi
-      return; // Dừng lại nếu có trường thiếu
+      return; // Dừng lại nếu có trường chưa được nhập
     }
-
-    
-
     const newPod = {
       id: maxId + 1,
       name: name,
@@ -144,6 +142,7 @@ export default function AddPod() {
   };
 
   return (
+    <div className="admin-pod-container">
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formStore">
         <Form.Label>Cửa hàng</Form.Label>
@@ -258,9 +257,10 @@ export default function AddPod() {
         )}
       </Form.Group>
 
-      <Button  variant="primary" type="submit">
+      <Button className="admin-add-pod-button" variant="primary" type="submit">
         Thêm POD
       </Button>
     </Form>
+    </div>
   );
 }

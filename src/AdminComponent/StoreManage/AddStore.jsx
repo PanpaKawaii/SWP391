@@ -3,8 +3,7 @@ import "./style.css";
 import api from "../api/axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
+
 import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd";
 
@@ -15,7 +14,7 @@ export default function AddStore() {
   const [image, setImage] = useState("");
   const [status, setStatus] = useState(false);
   const [maxId, setmaxId] = useState(0);
-  
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const nameRef = useRef(null);
@@ -71,18 +70,18 @@ export default function AddStore() {
     }
     const newStore = {
       id: maxId + 1,
-      name: "Test Store",
-      address: "123 Test St",
-      contact: "123456789",
-      image: "https://i.pinimg.com/564x/34/32/07/343207752d6e8ab0ef1a7baec5aef621.jpg",
-      status: "Đang hoạt động",
+      name: name,
+      address: address,
+      contact: contact,
+      image: image,
+      status: status ? "Đang hoạt động" : "Dừng hoạt động",
     };
     try {
       console.log(newStore);
       console.log("Giá trị của image:", image);
       const response = await api.post("/Store", newStore);
-      console.log("Store added successfully:", response.data);
-      message.success("Store added successfully!");
+      console.log("Cửa hàng đã được thêm thành công:", response.data);
+      message.success("Cửa hàng đã được thêm thành công!");
       setName("");
       setAddress("");
       setContact("");
@@ -90,15 +89,20 @@ export default function AddStore() {
       setStatus(false);
       navigate("/store");
     } catch (error) {
-      console.error("Error adding Store:", error);
+        console.error("Lỗi khi thêm cửa hàng:", error);
+        message.error("Không thể thêm cửa hàng. Vui lòng thử lại.");
       if (error.response) {
         console.error("Dữ liệu phản hồi:", error.response.data);
+        message.error("Không thể thêm cửa hàng. Vui lòng thử lại.");
+      } else {
+        message.error("Có lỗi xảy ra. Vui lòng thử lại.");
       }
     }
   };
 
   return (
     <div className="admin-store-container">
+      {/* <h1>Thêm cửa hàng</h1> */}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formName">
           <Form.Label>Tên</Form.Label>
@@ -156,15 +160,14 @@ export default function AddStore() {
             {errorMessage}
           </div>
         )}
-
-        <Button
+        <div className="back-button">
+        <Button 
           style={{ marginTop: "10px", marginLeft: "5px" }}
           variant="primary"
           type="submit"
         >
-          <Link style={{ color: "#FAFBFB" }} to="/store">
-            <FontAwesomeIcon className="icon" icon={faArrowAltCircleLeft} /> Trở
-            về
+          <Link style={{ color: "#FAFBFB", textDecoration: "none" }} to="/store">
+            Trở về
           </Link>
         </Button>
         <Button
@@ -174,6 +177,7 @@ export default function AddStore() {
         >
           Thêm
         </Button>
+        </div>
       </Form>
     </div>
   );
