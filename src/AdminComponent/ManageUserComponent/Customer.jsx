@@ -303,8 +303,16 @@ const Customer = () => {
 
   return (
     <div className="admin-manage-user-container">
-      <div className="one-user">
-        <h1 style={{ fontFamily: "Arial" }}>Tài khoản khách hàng</h1>
+      <div >
+        <div className="title-user">
+        <h1>Tài khoản khách hàng</h1>
+        <p>
+          <strong>
+            <UserOutlined /> Tổng số người dùng:
+          </strong>{" "}
+          {totalUsers}
+        </p>
+        </div>
         <Modal
           show={showBookingModal}
           onHide={() => setShowBookingModal(false)}
@@ -371,12 +379,7 @@ const Customer = () => {
           style={{ marginBottom: 16 }}
           prefix={<SearchOutlined />}
         />
-        <p>
-          <strong>
-            <UserOutlined /> Tổng số người dùng:
-          </strong>{" "}
-          {totalUsers}
-        </p>
+        
         <Table
           dataSource={filteredUserData}
           columns={columns}

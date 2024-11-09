@@ -14,6 +14,7 @@ import {
 } from "@ant-design/icons";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
+import "./UserManage.css";
 
 const Staff = () => {
   const [staffData, setStaffData] = useState([]);
@@ -194,12 +195,13 @@ const Staff = () => {
 
   return (
     <div className="admin-manage-user-container">
-    <div className="user-manage">
-      <div className="title-store">
+      <div className="title-user">
         <h1>Tài khoản nhân viên</h1>
-        <Button onClick={handleAdd}>
-          <FontAwesomeIcon icon={faUserPlus} />
-        </Button>
+        <Link to="/addStaff">
+          <Button>
+            Thêm nhân viên
+          </Button>
+        </Link>
       </div>
       <Table
         dataSource={staffData}
@@ -282,8 +284,7 @@ const Staff = () => {
             <Button variant="primary">Lưu thay đổi</Button>
           </Popconfirm>
         </Modal.Footer>
-        </Modal>
-      </div>
+      </Modal>
     </div>
   );
 };

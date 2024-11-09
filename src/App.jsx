@@ -49,10 +49,10 @@ import AdminReport from "./AdminComponent/ManageReportComponent/ReportManage.jsx
 import AdminStore from "./AdminComponent/StoreManage/Store.jsx";
 import AdminAddStore from "./AdminComponent/StoreManage/AddStore.jsx";
 import AdminStaff from "./AdminComponent/ManageUserComponent/Staff.jsx";
+import AdminAddStaff from "./AdminComponent/ManageUserComponent/AddStaff.jsx";
 // import Manager from "../AdminComponent/ManageUserComponent/Manager.jsx";
 import AdminCustomer from "./AdminComponent/ManageUserComponent/Customer.jsx";
 import AdminAddPOD from "./AdminComponent/ManagePODComponent/AddPOD.jsx";
-import AdminAddStaff from "./AdminComponent/ManageUserComponent/AddStaff.jsx";
 import AdminProduct from "./AdminComponent/ProductComponent/Product.jsx";
 // import Order from "../AdminComponent/Order/Order.jsx";
 import AdminOrderHistory from "./AdminComponent/Order/OrderHistory.jsx";
@@ -205,7 +205,7 @@ function App() {
               {/* <Route path="/manager" element={<Manager />}></Route> */}
               <Route path="/customer" element={<AdminCustomer />}></Route>
               <Route path="/addpod" element={<AdminAddPOD />}></Route>
-              <Route path="/addstaff" element={<AdminAddStaff />}></Route>
+              <Route path="/addStaff" element={<AdminAddStaff />}></Route>
               <Route path="/product" element={<AdminProduct />}></Route>
               <Route path="/history" element={<AdminOrderHistory />}></Route>
               {/* <Route path="/order" element={<Order />}></Route> */}

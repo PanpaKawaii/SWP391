@@ -14,8 +14,6 @@ import React, { useEffect, useState } from "react";
 import {
   DeleteFilled,
   EditFilled,
-  PlusCircleFilled,
-  ReloadOutlined,
   StarFilled,
   LoadingOutlined,
 } from "@ant-design/icons";
@@ -278,20 +276,14 @@ function Product() {
 
   return (
     <div className="admin-product-container"
-      style={{
-        padding: "20px",
-        borderRadius: "10px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
-        backgroundColor: "#F5F5F5",
-      }}
+      
     >
-      <div className="title-store">
+      <div className="title-product">
         <h1 >
-          Các sản phẩm kèm
+          Quản lí sản phẩm
         </h1>
         <Link to="/addproduct">
           <Button type="primary" >
-            <PlusCircleFilled />
             Thêm sản phẩm mới
           </Button>
         </Link>

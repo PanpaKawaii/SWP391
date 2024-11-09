@@ -125,7 +125,7 @@ const AddStaff = () => {
   };
 
   return (
-    <div className="admin-add-staff-container">
+    <>
       <Form onSubmit={handleAddStaff}>
         <Form.Group controlId="formName">
           <Form.Label>Tên</Form.Label>
@@ -157,7 +157,7 @@ const AddStaff = () => {
             ref={inputRefs.phoneNumber}
           />
         </Form.Group>
-        <Form.Group controlId="formType">
+        {/* <Form.Group controlId="formType">
           <Form.Label>Loại tài khoản</Form.Label>
           <Form.Control
             type="text"
@@ -175,7 +175,7 @@ const AddStaff = () => {
             value={point}
             onChange={(e) => setPoint(e.target.value)}
           />
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group controlId="formPassword">
           <Form.Label>Mật khẩu</Form.Label>
           <Form.Control
@@ -210,7 +210,7 @@ const AddStaff = () => {
           Thêm Nhân Viên
         </Button>
       </Form>
-    </div>
+    </>
   );
 };
 
