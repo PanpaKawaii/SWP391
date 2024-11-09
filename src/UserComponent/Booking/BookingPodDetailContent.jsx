@@ -127,14 +127,13 @@ export default function BookingPodDetailContent() {
 
     // Những Slot được chọn từ AvailableSLOTs
     const selectedSlots = AvailableSLOTs ? AvailableSLOTs.filter(slot => SlotId.includes(slot.id)) : [];
-
     // Những Booking có cùng Date được chọn (Không bao gồm Booking đã hủy)
     const bookingsHaveTheSameDate = BOOKINGs ? BOOKINGs.filter(booking =>
         booking.date.substring(0, 10) === date && booking.status !== 'Đã hủy'
     ).map(booking => booking.id) : [];
-
     // Những Slot có cùng Date và giống Slot được chọn
     const getSlotsHaveTheSameDateAndSlot = selectedSlots ? selectedSlots.filter(slot => (slot.bookings).some(booking => bookingsHaveTheSameDate.includes(booking.id))) : [];
+
 
     // Những Slot có cùng Date
     const uniqueSlotsHaveTheSameDate = AvailableSLOTs ? AvailableSLOTs.filter(slot => (slot.bookings).some(booking => bookingsHaveTheSameDate.includes(booking.id))) : [];
@@ -148,14 +147,11 @@ export default function BookingPodDetailContent() {
         const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
         return (rating / booking.length).toFixed(1);
     };
-
-
     // Lấy Feedback của Booking
     const FeedbackBooking = BOOKINGs ? BOOKINGs.filter(booking =>
         // booking.podId == Pod?.id && booking.feedback !== null && booking.feedback !== ''
         booking.podId == Pod?.id && booking.rating !== null && booking.rating > 0
     ) : [];
-
     // Lấy tên người dùng của Booking
     const getUserNameBooking = (userId) => {
         const user = USERS ? USERS.find(user => user.id === userId) : null;
@@ -170,7 +166,7 @@ export default function BookingPodDetailContent() {
     useEffect(() => {
         setBookingsHaveTheSameDateAndSlot(getSlotsHaveTheSameDateAndSlot)
         console.log('selectedSlots: ', selectedSlots)
-        console.log('selectableSlotsssssssssssssssssssssssssssssssssssssss: ', unbookedAvailableSLOTs)
+        console.log('selectableSlots: ', unbookedAvailableSLOTs)
         console.log('SameDate: ', bookingsHaveTheSameDate)
         console.log('SameDateSlot: ', getSlotsHaveTheSameDateAndSlot)
         console.log('currentDate: ', new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString())
@@ -225,8 +221,8 @@ export default function BookingPodDetailContent() {
         const paymentMethodData = {
             id: MaxPaymentID + 1,
             orderId: MaxBookingID + 1,
-            fullname: 'NGUYEN VAN A',
-            description: 'Thanh toán qua VNPay cho Booking có Id: ' + MaxBookingID + 1,
+            fullname: USER.name,
+            description: 'Thanh toán qua VNPay cho Booking có ID: ' + MaxBookingID + 1,
             amount: Amount,
             status: 'Chưa thanh toán',
             method: 'Thanh toán qua VNPay',
@@ -474,41 +470,35 @@ export default function BookingPodDetailContent() {
                                                     {date &&
                                                         <Form.Group controlId='BookingSlot' className='form-group'>
                                                             <Row className='row'>
-                                                                {unbookedAvailableSLOTs.map((slot, index) => (
-                                                                    // {AvailableSLOTs.map((slot, index) => (
+                                                                {/* {unbookedAvailableSLOTs.map((slot, index) => ( */}
+                                                                {AvailableSLOTs.map((slot, index) => (
                                                                     <Col key={index} xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className='col'>
                                                                         <div
                                                                             onClick={() => {
                                                                                 const selectedSlot = AvailableSLOTs.find(s => s.id === slot.id);
-                                                                                setAmount(prevAmount => prevAmount + (selectedSlot.price * (selectedSlot.selected ? 1 : -1)));
-                                                                                selectedSlot.selected = !selectedSlot.selected; // Toggle selection
-                                                                                console.log(selectedSlot.selected ? `Selected: ${slot.id}` : `Deselected: ${slot.id}`);
-                                                                                setSlotId(prevSlotId => {
-                                                                                    const isSelected = prevSlotId.includes(slot.id);
-                                                                                    if (isSelected) {
-                                                                                        return prevSlotId.filter(id => id !== slot.id); // Remove if already selected
-                                                                                    } else {
-                                                                                        return [...prevSlotId, slot.id]; // Add if not selected
-                                                                                    }
-                                                                                });
+                                                                                if (unbookedAvailableSLOTs.some(s => s.id === slot.id)) {//
+                                                                                    setAmount(prevAmount => prevAmount + (selectedSlot.price * (selectedSlot.selected ? 1 : -1)));
+                                                                                    selectedSlot.selected = !selectedSlot.selected; // Toggle selection
+                                                                                    console.log(selectedSlot.selected ? `Selected: ${slot.id}` : `Deselected: ${slot.id}`);
+                                                                                    setSlotId(prevSlotId => {
+                                                                                        const isSelected = prevSlotId.includes(slot.id);
+                                                                                        if (isSelected) {
+                                                                                            return prevSlotId.filter(id => id !== slot.id); // Remove if already selected
+                                                                                        } else {
+                                                                                            return [...prevSlotId, slot.id]; // Add if not selected
+                                                                                        }
+                                                                                    });
+                                                                                }//
                                                                             }}
-                                                                            // style={{
-                                                                            //     cursor: 'pointer',
-                                                                            //     backgroundColor: slot.selected ? '#d3f9d8' : '#ffffff',
-                                                                            //     // backgroundColor: bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '#fad7d9' : '#ffffff',
-                                                                            //     padding: '5px',
-                                                                            //     margin: '5px',
-                                                                            //     border: slot.selected ? '1px solid #28a745' : '1px solid #cccccc',
-                                                                            //     // border: bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '1px solid #ff0000' : '1px solid #cccccc',
-                                                                            //     borderRadius: '5px'
-                                                                            // }}
                                                                             style={{
                                                                                 cursor: 'pointer',
+                                                                                color: unbookedAvailableSLOTs.some(s => s.id === slot.id) ? '#000000' : '#cccccc',
                                                                                 backgroundColor: slot.selected ? (bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '#fad7d9' : '#d3f9d8') : '#ffffff',
                                                                                 padding: '5px',
                                                                                 margin: '5px',
-                                                                                border: slot.selected ? (bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '1px solid #ff0000' : '1px solid #28a745') : '1px solid #cccccc',
-                                                                                borderRadius: '5px'
+                                                                                border: slot.selected ? (bookingsHaveTheSameDateAndSlot.some(slotId => slotId.id == slot.id) ? '1px solid #dc3545' : '1px solid #28a745') : '1px solid #cccccc',
+                                                                                borderRadius: '5px',
+                                                                                textAlign: 'center'
                                                                             }}
                                                                         >
                                                                             {`[${slot.name}] ${slot.startTime}:00 - ${slot.endTime}:00`}
@@ -552,7 +542,7 @@ export default function BookingPodDetailContent() {
                                                     </Form.Group>
 
                                                     <h2><b>Tổng: <span style={{ color: '#ee4f2e' }}>{Amount.toLocaleString('vi-VN')}đ</span></b></h2>
-                                                    <h2><b>Tổng 2: <span style={{ color: '#ee4f2e' }}>{(SlotId.length * AvailableSLOTs[0].price).toLocaleString('vi-VN')}đ</span></b></h2>
+                                                    {/* <h2><b>Tổng 2: <span style={{ color: '#ee4f2e' }}>{(SlotId.length * AvailableSLOTs[0].price).toLocaleString('vi-VN')}đ</span></b></h2> */}
                                                     {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length !== 0 && <p style={{ color: '#ff0000' }}>Slot không khả dụng</p>}
                                                     {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length === 0 &&
                                                         SlotId.length > 0 &&

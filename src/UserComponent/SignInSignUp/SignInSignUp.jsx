@@ -356,7 +356,7 @@ export default function SignInSignUp() {
                             <a href='#' className='forget-link'><b>Quên mật khẩu?</b></a>
                             {SignInEmailError && (<span className='error-message'>{SignInEmailError}</span>)}
                             {SignInPasswordError && (<span className='error-message'>{SignInPasswordError}</span>)}
-                            {errorSignIn && (<span className='error-message'>Đăng nhập thất bại</span>)}
+                            {errorSignIn && (<span className='error-message'>Tài khoản hoặc mật khẩu không chính xác</span>)}
                             <div className='btn-box'>
                                 <Button type='submit' className='btn' id='btn-signin'>ĐĂNG NHẬP</Button>
                                 <Button type='reset' className='btn' id='btn-reset-signin' onClick={resetInputsBox1}>XÓA</Button>
