@@ -359,14 +359,12 @@ const OrderHistory = () => {
   // Cột dữ liệu cho bảng đơn hàng
   const orderColumns = [
     { title: "OrderId", dataIndex: "id", key: "orderId" },
-    { title: "BookingId", dataIndex: "bookingId", key: "bookingId" },
     {
       title: "Ngày đặt",
       dataIndex: "date",
       key: "date",
       render: (date) => formatDate(date), // Định dạng ngày
     },
-    { title: "ProductId", dataIndex: "productId", key: "productId" },
     {
       title: "Tên sản phẩm",
       key: "productName",
@@ -442,6 +440,7 @@ const OrderHistory = () => {
               ]}
               pagination={false} // Tắt phân trang
               bordered // Bỏ viền
+              rowKey="id" // Ensure each row has a unique key
             />
           </Card>
         ),
@@ -557,7 +556,7 @@ const OrderHistory = () => {
           }}
           level={2}
         >
-          Lịch sử đơn hàng 
+          Quản lí đơn hàng 
         </Title>
 
         <Input

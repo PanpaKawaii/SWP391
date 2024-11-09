@@ -4,6 +4,44 @@
         display: flex;
         justify-content: space-between;
     }
+
+    .back-button{
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .add-product-container {
+        border-radius: 10px;
+        justify-content: center;
+        display: flex;
+        max-width: 40%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+        margin: auto;
+    }
+    .add-product-title {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    .add-product-form {
+        padding: 20px;
+        margin: 0 auto;
+    }
+
+    .add-product-button {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .ant-form-item-label {
+        display: block;
+        margin-bottom: 8px;
+    }
 }
 
 /* .admin-product-container {

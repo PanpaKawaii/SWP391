@@ -5,7 +5,7 @@ import api from "../api/axios";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
-
+import "./UserManage.css";
 const AddStaff = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -126,6 +126,7 @@ const AddStaff = () => {
 
   return (
     <>
+    <div className="admin-manage-user-container">
       <Form onSubmit={handleAddStaff}>
         <Form.Group controlId="formName">
           <Form.Label>Tên</Form.Label>
@@ -157,25 +158,7 @@ const AddStaff = () => {
             ref={inputRefs.phoneNumber}
           />
         </Form.Group>
-        {/* <Form.Group controlId="formType">
-          <Form.Label>Loại tài khoản</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Nhập loại tài khoản"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            ref={inputRefs.type}
-          />
-        </Form.Group>
-        <Form.Group controlId="formPoint">
-          <Form.Label>Điểm thưởng</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Nhập điểm thưởng"
-            value={point}
-            onChange={(e) => setPoint(e.target.value)}
-          />
-        </Form.Group> */}
+       
         <Form.Group controlId="formPassword">
           <Form.Label>Mật khẩu</Form.Label>
           <Form.Control
@@ -206,10 +189,11 @@ const AddStaff = () => {
             ref={inputRefs.description}
           />
         </Form.Group>
-        <Button variant="primary" type="submit" style={{ marginTop: "20px" }}>
+        <Button variant="primary" type="submit" className="admin-add-user-button">
           Thêm Nhân Viên
         </Button>
       </Form>
+    </div>
     </>
   );
 };

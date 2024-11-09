@@ -204,9 +204,9 @@ const Staff = () => {
         </Link>
       </div>
       <Table
-        dataSource={staffData}
+        dataSource={staffData.sort((a, b) => b.id - a.id)}
         columns={columns}
-        rowKey="id"
+        rowKey="id" // Ensure each row has a unique key
         pagination={{ pageSize: 10 }}
         bordered
         style={{ backgroundColor: "#FAFBFB" }}

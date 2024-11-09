@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 export default function AddPod() {
   const [stores, setStores] = useState([]);
   const [types, setTypes] = useState([]);
@@ -256,10 +256,20 @@ export default function AddPod() {
           </div>
         )}
       </Form.Group>
-
-      <Button className="admin-add-pod-button" variant="primary" type="submit">
+      <div className="back-button">
+      <Button 
+          
+          variant="primary"
+          type="submit"
+        >
+          <Link style={{ color: "#FAFBFB", textDecoration: "none" }} to="/pod">
+            Trở về
+          </Link>
+        </Button>
+      <Button  variant="primary" type="submit">
         Thêm POD
       </Button>
+      </div>
     </Form>
     </div>
   );

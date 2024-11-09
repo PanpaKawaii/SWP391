@@ -246,7 +246,7 @@ function Product() {
       sorter: (a, b) => a.rating - b.rating,
     },
     {
-      title: "Actions",
+      title: "Chỉnh sửa",
       key: "actions",
       align: "center",
       render: (text, record) => (
@@ -259,16 +259,7 @@ function Product() {
             <EditFilled />
           </button>
 
-          <Popconfirm
-            title="Are you sure to delete this product?"
-            onConfirm={() => handleDelete(record.id)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <button className="one-button" >
-              <DeleteFilled />
-            </button>
-          </Popconfirm>
+          
         </div>
       ),
     },
@@ -290,7 +281,7 @@ function Product() {
       </div>
       <br />
       <Table
-        dataSource={product}
+        dataSource={product.sort((a, b) => b.id - a.id)}
         columns={columns}
         bordered
         rowKey="id"

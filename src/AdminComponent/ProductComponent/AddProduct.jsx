@@ -1,86 +1,89 @@
 import {
-    Button,
-    Form,
-    Input,
-    InputNumber,
-    message,
-    Select,
-  } from "antd";
-  import React, { useState, useEffect } from "react";
-  import { PlusCircleFilled } from "@ant-design/icons";
-  import axios from "axios";
   
-  import { useNavigate } from "react-router-dom";
-  
-  import './Product.css';
-  
-  function AddProduct() {
-    const apiProduct = "https://localhost:7166/api/Product";
-    const apiStore = "https://localhost:7166/api/Store";
-    const apiCategory = "https://localhost:7166/api/Category";
-    const [formVariable] = Form.useForm();
-    const [store, setStore] = useState([]);
-    const [category, setCategory] = useState([]);
-    const [submitting, setSubmitting] = useState(false);
-    const [maxProductId, setMaxProductId] = useState(0);
-    const navigate = useNavigate();
-    const fetchStoreData = async () => {
-        const response = await axios.get(apiStore);
-        setStore(response.data);
-    };
-    const fetchCategoryData = async () => {
-        const response = await axios.get(apiCategory);
-        setCategory(response.data);
-    };
-    const fetchMaxProductId = async () => {
-        try {
-            const response = await axios.get(apiProduct);
-            const products = response.data;
-            const maxId = Math.max(...products.map((p) => p.id), 0);
-            setMaxProductId(maxId);
-        } catch (error) {
-            console.error("Failed to fetch products:", error);
-            message.error("Không thể tải dữ liệu sản phẩm");
+  Form,
+  Input,
+  InputNumber,
+  message,
+  Select,
+} from "antd";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
+
+import './Product.css';
+
+function AddProduct() {
+  const apiProduct = "https://localhost:7166/api/Product";
+  const apiStore = "https://localhost:7166/api/Store";
+  const apiCategory = "https://localhost:7166/api/Category";
+  const [formVariable] = Form.useForm();
+  const [store, setStore] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [maxProductId, setMaxProductId] = useState(0);
+  const navigate = useNavigate();
+  const fetchStoreData = async () => {
+    const response = await axios.get(apiStore);
+    setStore(response.data);
+  };
+  const fetchCategoryData = async () => {
+    const response = await axios.get(apiCategory);
+    setCategory(response.data);
+  };
+  const fetchMaxProductId = async () => {
+    try {
+      const response = await axios.get(apiProduct);
+      const products = response.data;
+      const maxId = Math.max(...products.map((p) => p.id), 0);
+      setMaxProductId(maxId);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+      message.error("Không thể tải dữ liệu sản phẩm");
+    }
+  };
+
+  useEffect(() => {
+    fetchStoreData();
+    fetchCategoryData();
+    fetchMaxProductId();
+  }, []);
+
+  const handleSubmitValue = async (values) => {
+    try {
+      setSubmitting(true);
+      const productData = { ...values };
+      productData.id = maxProductId + 1;
+      productData.price = parseFloat(productData.price.replace(/[^\d]/g, ""));
+
+      productData.rating = 5;
+
+      ["stock", "rating", "storeId", "categoryId"].forEach((field) => {
+        if (productData[field]) {
+          productData[field] = Number(productData[field]);
         }
-    };
-    
-    useEffect(() => {
-        fetchStoreData();
-        fetchCategoryData();
-        fetchMaxProductId();
-    }, []);
-  
-    const handleSubmitValue = async (values) => {
-      try {
-        setSubmitting(true);
-        const productData = { ...values };
-        productData.id = maxProductId + 1;
-        productData.price = parseFloat(productData.price.replace(/[^\d]/g, ""));
-  
-        ["stock", "rating", "storeId", "categoryId"].forEach((field) => {
-          if (productData[field]) {
-            productData[field] = Number(productData[field]);
-          }
-        });
-  
-        const response = await axios.post(apiProduct, productData);
-        message.success(`Sản phẩm được thêm thành công với id: ${response.data.id}`);
-        navigate("/product"); // Redirect to products list after adding
-      } catch (error) {
-        console.error("Chi tiết lỗi:", error.response?.data);
-        message.error(`Lỗi: ${error.response?.data?.message || error.message}`);
-      } finally {
-        setSubmitting(false);
-      }
-    };
-  
-    return (
-      <div className="admin-product-container">
+      });
+
+      const response = await axios.post(apiProduct, productData);
+      message.success(`Sản phẩm được thêm thành công với id: ${response.data.id}`);
+      navigate("/product"); // Redirect to products list after adding
+    } catch (error) {
+      console.error("Chi tiết lỗi:", error.response?.data);
+      message.error(`Lỗi: ${error.response?.data?.message || error.message}`);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="admin-product-container">
       <div className="add-product-container">
         <Form
           form={formVariable}
           onFinish={handleSubmitValue}
           className="add-product-form"
+          initialValues={{ rating: 5 }}
         >
           <Form.Item
             name="name"
@@ -110,13 +113,7 @@ import {
           >
             <InputNumber min={0} style={{ width: "100%" }} />
           </Form.Item>
-          <Form.Item
-            name="rating"
-            label="Đánh giá"
-            rules={[{ required: true, message: "Vui lòng nhập đánh giá sản phẩm" }]}
-          >
-            <InputNumber min={0} max={5} step={1} />
-          </Form.Item>
+
           <Form.Item
             name="storeId"
             label="Cơ sở"
@@ -144,15 +141,25 @@ import {
             </Select>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={submitting} className="add-product-button">
-              <PlusCircleFilled />
-              Thêm sản phẩm
-            </Button>
+            <div className="back-button">
+              <Button
+                
+                variant="primary"
+                type="submit"
+              >
+                <Link style={{ color: "#FAFBFB", textDecoration: "none" }} to="/product">
+                  Trở về
+                </Link>
+              </Button>
+              <Button type="primary" htmlType="submit" loading={submitting} >
+                Thêm sản phẩm
+              </Button>
+            </div>
           </Form.Item>
         </Form>
       </div>
-      </div>
-    );
-  }
-  
-  export default AddProduct;
+    </div>
+  );
+}
+
+export default AddProduct;

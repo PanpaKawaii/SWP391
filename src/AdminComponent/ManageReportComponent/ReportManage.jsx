@@ -36,7 +36,12 @@ export default function ReportManage() {
 
   const fetchData = async (endpoint, setState) => {
     try {
-      const response = await api.get(endpoint);
+      const token = localStorage.getItem('token');
+      const response = await api.get(endpoint, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       setState(response.data);
       if (endpoint === "User") {
         setUserCount(calculateUserCount(response.data));
@@ -60,6 +65,8 @@ export default function ReportManage() {
     if (users.length > 0) {
       const count = users.filter((user) => user.role === "User").length;
       setUserCount(count);
+    } else {
+      setUserCount(0);
     }
   }, [users]);
 
