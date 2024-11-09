@@ -133,8 +133,14 @@ export default function BookingPodDetailContent() {
         booking.date.substring(0, 10) === date && booking.status !== 'Đã hủy'
     ).map(booking => booking.id) : [];
 
-    // Những Booking có cùng Date và cùng Slot được chọn
-    const getBookingsHaveTheSameDateAndSlot = selectedSlots ? selectedSlots.filter(slot => (slot.bookings).some(booking => bookingsHaveTheSameDate.includes(booking.id))) : [];
+    // Những Slot có cùng Date và giống Slot được chọn
+    const getSlotsHaveTheSameDateAndSlot = selectedSlots ? selectedSlots.filter(slot => (slot.bookings).some(booking => bookingsHaveTheSameDate.includes(booking.id))) : [];
+
+    // Những Slot có cùng Date
+    const uniqueSlotsHaveTheSameDate = AvailableSLOTs ? AvailableSLOTs.filter(slot => (slot.bookings).some(booking => bookingsHaveTheSameDate.includes(booking.id))) : [];
+    // Những Slot có thể chọn
+    const unbookedAvailableSLOTs = AvailableSLOTs ? AvailableSLOTs.filter(slot => !uniqueSlotsHaveTheSameDate.some(noslot => noslot.id === slot.id)) : [];
+
 
     // Lấy đánh giá của POD dựa trên đánh giá của các Booking
     const getPodBookingRating = (podId) => {
@@ -142,6 +148,7 @@ export default function BookingPodDetailContent() {
         const rating = booking.map(booking => booking.rating).reduce((sum, rating) => sum + rating, 0);
         return (rating / booking.length).toFixed(1);
     };
+
 
     // Lấy Feedback của Booking
     const FeedbackBooking = BOOKINGs ? BOOKINGs.filter(booking =>
@@ -161,13 +168,13 @@ export default function BookingPodDetailContent() {
     };
 
     useEffect(() => {
-        setBookingsHaveTheSameDateAndSlot(getBookingsHaveTheSameDateAndSlot)
+        setBookingsHaveTheSameDateAndSlot(getSlotsHaveTheSameDateAndSlot)
         console.log('selectedSlots: ', selectedSlots)
+        console.log('selectableSlotsssssssssssssssssssssssssssssssssssssss: ', unbookedAvailableSLOTs)
         console.log('SameDate: ', bookingsHaveTheSameDate)
-        console.log('SameDateSlot: ', getBookingsHaveTheSameDateAndSlot)
-        console.log('currentDate: ', new Date().toISOString())
-        console.log('select date: ', new Date(currentDate.getTime()).toISOString().substring(0, 10))
-        console.log('select+ date: ', new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString().substring(0, 10))
+        console.log('SameDateSlot: ', getSlotsHaveTheSameDateAndSlot)
+        console.log('currentDate: ', new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString())
+        console.log('selectDate (+7): ', new Date(new Date(date).getTime() + 7 * 60 * 60 * 1000).toISOString())
     }, [SlotId]);
 
 
@@ -385,9 +392,6 @@ export default function BookingPodDetailContent() {
                                         <img src={utility.image} alt={utility.name}></img>
                                     </div>
                                 ))}
-                                {/* <div className='image-detail-2-item'>
-                                    <img src={imageUTILITIes.find(image => image.id === Pod.id)?.image} alt={Pod.name}></img>
-                                </div> */}
                             </div>
                         </div>
 
@@ -457,7 +461,6 @@ export default function BookingPodDetailContent() {
                                                 <>
                                                     {SlotId.length === 0 ? (
                                                         <Form.Group controlId='BookingDate' className='form-group'>
-                                                            {/* <Form.Label>Ngày nhận phòng</Form.Label> */}
                                                             <Form.Control className='input' type='date' value={date} onChange={(e) => {
                                                                 const selectedDate = e.target.value;
                                                                 setDate(selectedDate);
@@ -471,7 +474,8 @@ export default function BookingPodDetailContent() {
                                                     {date &&
                                                         <Form.Group controlId='BookingSlot' className='form-group'>
                                                             <Row className='row'>
-                                                                {AvailableSLOTs.map((slot, index) => (
+                                                                {unbookedAvailableSLOTs.map((slot, index) => (
+                                                                    // {AvailableSLOTs.map((slot, index) => (
                                                                     <Col key={index} xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} className='col'>
                                                                         <div
                                                                             onClick={() => {
@@ -511,6 +515,7 @@ export default function BookingPodDetailContent() {
                                                                         </div>
                                                                     </Col>
                                                                 ))}
+                                                                {unbookedAvailableSLOTs && unbookedAvailableSLOTs.length == 0 && <p>Không còn slot trống.</p>}
                                                             </Row>
                                                         </Form.Group>
                                                     }
@@ -547,6 +552,7 @@ export default function BookingPodDetailContent() {
                                                     </Form.Group>
 
                                                     <h2><b>Tổng: <span style={{ color: '#ee4f2e' }}>{Amount.toLocaleString('vi-VN')}đ</span></b></h2>
+                                                    <h2><b>Tổng 2: <span style={{ color: '#ee4f2e' }}>{(SlotId.length * AvailableSLOTs[0].price).toLocaleString('vi-VN')}đ</span></b></h2>
                                                     {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length !== 0 && <p style={{ color: '#ff0000' }}>Slot không khả dụng</p>}
                                                     {bookingsHaveTheSameDateAndSlot && bookingsHaveTheSameDateAndSlot.length === 0 &&
                                                         SlotId.length > 0 &&
@@ -660,22 +666,22 @@ export default function BookingPodDetailContent() {
                 )}
 
                 {/* {IsModalOpen && (
-                    <Modal show={IsModalOpen} onHide={() => setIsModalOpen(false)} size='xl'>
-                        <Modal.Header closeButton>
-                            <Modal.Title>{Picture.name}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <img src={Picture.image} alt={Picture.name}
-                                style={{
-                                    width: '100%',
-                                    height: '700px',
-                                    objectFit: 'cover',
-                                    borderRadius: '10px',
-                                    border: '1px solid #cccccc'
-                                }}>
-                            </img>
-                        </Modal.Body>
-                    </Modal>
+                    <>
+                        <div id='modal' className='overlay'>
+                            <div className='popup'>
+                                <h1>{Picture.name}</h1>
+                                <img src={Picture.image} alt={Picture.name}
+                                    style={{
+                                        width: '100%',
+                                        height: '700px',
+                                        objectFit: 'cover',
+                                        borderRadius: '10px',
+                                        border: '1px solid #cccccc'
+                                    }}>
+                                </img>
+                            </div>
+                        </div>
+                    </>
                 )} */}
 
             </div>
