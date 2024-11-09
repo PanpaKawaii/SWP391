@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import "./style.css";
 import api from "../api/axios";
 import { message, Popconfirm, Checkbox } from "antd";
-
+import "./style.css";
 export default function Store() {
   const [stores, setStores] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -76,26 +76,17 @@ export default function Store() {
     setEditingStore({ ...editingStore, status: isChecked ? "Đang hoạt động" : "Dừng hoạt động" });
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await api.delete(`Store/${id}`);
-      fetchStores(); // Refresh the stores list
-      message.success("Xoá thành công");
-    } catch (err) {
-      console.log(err);
-      message.error("Có lỗi xảy ra khi xóa");
-    }
-  };
+
 
   return (
     <div className="admin-store-container">
       <div className="title-store">
         <h1>
-          Quản lý cửa hàng
+          Quản lý chi nhánh
         </h1>
         <Button>
           <Link style={{ color: "#FAFBFB", textDecoration: "none" }} to="/addstore">
-            Thêm cửa hàng
+              Thêm chi nhánh
           </Link>
         </Button>
       </div>
@@ -129,21 +120,9 @@ export default function Store() {
                   </p>
 
                   <Card.Footer className="d-flex justify-content-between">
-                    <button className="one-button" onClick={() => handleEdit(store)}>
+                    <button className="admin-edit-button" onClick={() => handleEdit(store)}>
                       <FontAwesomeIcon icon={faEdit} />
                     </button>
-
-                    <Popconfirm
-                      title="Xác nhận xóa"
-                      description="Bạn có chắc chắn muốn xóa cửa hàng này?"
-                      onConfirm={() => handleDelete(store.id)}
-                      okText="Xóa"
-                      cancelText="Hủy"
-                    >
-                      <button className="one-button">
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                    </Popconfirm>
                   </Card.Footer>
                 </div>
               </div>
@@ -154,12 +133,12 @@ export default function Store() {
 
       <Modal show={showEditModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Chỉnh sửa cửa hàng</Modal.Title>
+          <Modal.Title>Chỉnh sửa chi nhánh</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
-              <Form.Label>Tên cửa hàng</Form.Label>
+              <Form.Label>Tên chi nhánh</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
@@ -213,7 +192,7 @@ export default function Store() {
               okText="Lưu"
               cancelText="Hủy"
             >
-              <Button variant="primary">Lưu thay đổi</Button>
+              <Button className="admin-edit-button" variant="primary">Lưu thay đổi</Button>
             </Popconfirm>
           </Form>
         </Modal.Body>

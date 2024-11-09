@@ -25,7 +25,6 @@ export default function POD() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
   const [types, setTypes] = useState([]);
-  const [podSelected, setPodSelected] = useState(false); // Trạng thái để theo dõi việc chọn POD
 
   const fetchPODData = async () => {
     try {
@@ -60,16 +59,16 @@ export default function POD() {
   const handleEdit = async (values) => {
     try {
       setLoading(true);
-      const podId = form.getFieldValue("id"); // Lấy ID từ form
-      const isNewPod = !podId; // Kiểm tra xem có phải là POD mới không
+      const podId = form.getFieldValue("id"); // Get ID from form
+      const isNewPod = !podId; // Check if it's a new POD
 
-      // Nếu là POD mới, tìm maxId và gán ID mới
+      // If it's a new POD, find maxId and assign a new ID
       const newPodId = isNewPod ? Math.max(...podData.map(pod => pod.id), 0) + 1 : podId;
 
       const podData = {
-        id: newPodId, // Sử dụng ID mới
+        id: newPodId, // Use new ID
         name: values.name,
-        image: values.image || "string",
+        image: values.image , // Include image URL
         description: values.description,
         rating: values.rating,
         status: values.status,
@@ -78,12 +77,12 @@ export default function POD() {
         utilityId: values.utilityId ? [values.utilityId] : [0],
       };
 
-      // Gọi API để thêm hoặc cập nhật POD
+      // Call API to add or update POD
       if (isNewPod) {
-        await api.post("Pod", podData); // Sử dụng POST để thêm POD mới
+        await api.post("Pod", podData); // Use POST to add new POD
         message.success("Thông tin POD được thêm thành công");
       } else {
-        await api.put(`Pod/${podId}`, podData); // Sử dụng PUT để cập nhật POD
+        await api.put(`Pod/${podId}`, podData); // Use PUT to update POD
         message.success("Thông tin POD được cập nhật thành công");
       }
 
@@ -255,7 +254,6 @@ export default function POD() {
           <h1>Quản lí POD</h1>
           <Button
             type="primary"
-            
           >
             <Link style={{ color: "#FAFBFB", textDecoration: "none" }} to="/addpod">Thêm POD</Link>
           </Button>
@@ -299,27 +297,34 @@ export default function POD() {
               <Input />
             </Form.Item>
             <Form.Item
+              name="image" // New input for image
+              label="Hình ảnh"
+              rules={[{ required: true, message: "Vui lòng nhập URL hình ảnh" }]}
+            >
+              <Input placeholder="Nhập URL hình ảnh" />
+            </Form.Item>
+            <Form.Item
               name="description"
               label="Mô tả"
               rules={[{ required: true, message: "Vui lòng nhập mô tả POD" }]}
             >
               <Input.TextArea />
             </Form.Item>
-            <Form.Item
+            {/* <Form.Item
               name="rating"
               label="Đánh giá"
               rules={[{ required: true, message: "Vui lòng nhập đánh giá" }]}
             >
               <InputNumber min={1} max={5} step={1} />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item
               name="status"
               label="Trạng thái"
               rules={[{ required: true, message: "Vui lòng chọn trạng thái" }]}
             >
               <Select>
-                <Select.Option value="Còn trống">Còn trống</Select.Option>
-                <Select.Option value="Đang sử dụng">Đang sử dụng</Select.Option>
+                <Select.Option value="Đang hoạt động">Đang hoạt động</Select.Option>
+                <Select.Option value="Dừng hoạt động">Dừng hoạt động</Select.Option>
               </Select>
             </Form.Item>
             <Form.Item
@@ -348,23 +353,11 @@ export default function POD() {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item
-              name="utilityId"
-              label="Tiện ích"
-              rules={[{ required: true, message: "Vui lòng chọn tiện ích" }]}
-            >
-              <Select>
-                {utilityData.map((utility) => (
-                  <Select.Option key={utility.id} value={utility.id}>
-                    {utility.name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
+            
             <Form.Item>
-              <button type="primary" htmlType="submit" loading={loading}>
+              <Button className="admin-edit-button" type="primary" htmlType="submit" loading={loading}>
                 Lưu thay đổi
-              </button>
+              </Button>
             </Form.Item>
           </Form>
         </Modal>

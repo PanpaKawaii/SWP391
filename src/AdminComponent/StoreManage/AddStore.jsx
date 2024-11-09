@@ -80,8 +80,8 @@ export default function AddStore() {
       console.log(newStore);
       console.log("Giá trị của image:", image);
       const response = await api.post("/Store", newStore);
-      console.log("Cửa hàng đã được thêm thành công:", response.data);
-      message.success("Cửa hàng đã được thêm thành công!");
+      console.log("Chi nhánh đã được thêm thành công:", response.data);
+      message.success("Chi nhánh đã được thêm thành công!");
       setName("");
       setAddress("");
       setContact("");
@@ -89,11 +89,11 @@ export default function AddStore() {
       setStatus(false);
       navigate("/store");
     } catch (error) {
-        console.error("Lỗi khi thêm cửa hàng:", error);
-        message.error("Không thể thêm cửa hàng. Vui lòng thử lại.");
+        console.error("Lỗi khi thêm chi nhánh:", error);
+        message.error("Không thể thêm chi nhánh. Vui lòng thử lại.");
       if (error.response) {
         console.error("Dữ liệu phản hồi:", error.response.data);
-        message.error("Không thể thêm cửa hàng. Vui lòng thử lại.");
+        message.error("Không thể thêm chi nhánh. Vui lòng thử lại.");
       } else {
         message.error("Có lỗi xảy ra. Vui lòng thử lại.");
       }
@@ -105,7 +105,7 @@ export default function AddStore() {
       {/* <h1>Thêm cửa hàng</h1> */}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formName">
-          <Form.Label>Tên</Form.Label>
+          <Form.Label>Tên chi nhánh</Form.Label>
           <Form.Control
             type="text"
             placeholder="Nhập tên"
@@ -162,7 +162,7 @@ export default function AddStore() {
         )}
         <div className="back-button">
         <Button 
-          style={{ marginTop: "10px", marginLeft: "5px" }}
+          
           variant="primary"
           type="submit"
         >
@@ -171,7 +171,7 @@ export default function AddStore() {
           </Link>
         </Button>
         <Button
-          style={{ marginTop: "10px", marginLeft: "20px" }}
+          
           variant="primary"
           type="submit"
         >

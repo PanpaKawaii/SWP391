@@ -9,6 +9,7 @@ import {
   Modal,
   Select,
   Tag,
+  Checkbox,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import {
@@ -88,14 +89,11 @@ function Product() {
   const handleOpenModal = (record) => {
     setShowModal(true);
     setEditingProduct(record);
-    if (record) {
-      formVariable.setFieldsValue({
-        ...record,
-        price: formatInputPrice(record.price),
-      });
-    } else {
-      formVariable.resetFields();
-    }
+    formVariable.setFieldsValue({
+      ...record,
+      price: formatInputPrice(record.price),
+      status: record.stock > 0,
+    });
   };
 
   // Định dạng giá tiền cho hiển thị trong bảng
@@ -146,12 +144,7 @@ function Product() {
       if (editingProduct) {
         await axios.put(`${apiProduct}/${editingProduct.id}`, productData);
         message.success("Sản phẩm được cập nhật thành công");
-      } else {
-        const response = await axios.post(apiProduct, productData);
-        message.success(
-          `Sản phẩm được thêm thành công với id: ${response.data.id}`
-        );
-      }
+      } 
       fetchProductData();
       handleHideModal();
     } catch (error) {
@@ -162,16 +155,7 @@ function Product() {
     }
   };
 
-  const handleDelete = async (productId) => {
-    try {
-      await axios.delete(`${apiProduct}/${productId}`);
-      message.success("Sản phẩm đã được xóa thành công");
-      fetchProductData();
-    } catch (error) {
-      console.error("Error deleting product:", error);
-      message.error("Xóa sản phẩm thất bại");
-    }
-  };
+
 
   const columns = [
     {
@@ -249,7 +233,7 @@ function Product() {
       title: "Chỉnh sửa",
       key: "actions",
       align: "center",
-      render: (text, record) => (
+      render: (record) => (
         <div>
           <button className="one-button"
 
@@ -294,10 +278,14 @@ function Product() {
       />
 
       <Modal
-        title={editingProduct ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm mới"}
+        title={"Chỉnh sửa sản phẩm" }
         open={showModal}
-        onCancel={handleHideModal}
-        onOk={() => formVariable.submit()}
+        onCancel={() => {
+          setShowModal(false);
+          formVariable.resetFields();
+        }}
+        footer={null}
+
         confirmLoading={submitting}
         width={470}
       >
@@ -335,23 +323,28 @@ function Product() {
             <Input.TextArea />
           </Form.Item>
           <Form.Item
+            name="status"
+            valuePropName="checked"
+          >
+            <Checkbox
+              onChange={(e) => {
+                const checked = e.target.checked;
+                if (!checked) {
+                  formVariable.setFieldsValue({ stock: 0 });
+                }
+              }}
+            >
+              Vẫn còn
+            </Checkbox>
+          </Form.Item>
+          <Form.Item
             name="stock"
             label="Kho"
-            rules={[
-              { required: true, message: "Vui lòng nhập số lượng trong kho" },
-            ]}
+            rules={[{ required: true, message: "Vui lòng nhập số lượng trong kho" }]}
           >
             <InputNumber min={0} style={{ width: "100%" }} />
           </Form.Item>
-          <Form.Item
-            name="rating"
-            label="Đánh giá"
-            rules={[
-              { required: true, message: "Vui lòng nhập đánh giá sản phẩm" },
-            ]}
-          >
-            <InputNumber min={0} max={5} step={1} />
-          </Form.Item>
+          
 
           <Form.Item
             name="storeId"
@@ -379,6 +372,11 @@ function Product() {
               ))}
             </Select>
           </Form.Item>
+          <Form.Item>
+            <Button className="admin-edit-button" type="primary" htmlType="submit" loading={submitting}>
+                Lưu thay đổi
+            </Button>
+        </Form.Item>
         </Form>
       </Modal>
     </div>

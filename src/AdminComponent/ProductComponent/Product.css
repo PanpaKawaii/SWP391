@@ -42,6 +42,12 @@
         display: block;
         margin-bottom: 8px;
     }
+    .one-button{
+        background-color: transparent;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
 }
 
 /* .admin-product-container {
