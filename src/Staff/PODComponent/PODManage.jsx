@@ -8,7 +8,6 @@ import {
   Form,
   Input,
   Select,
-  Tag,
   InputNumber,
 } from "antd";
 import axios from "axios";
@@ -16,7 +15,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faStar } from "@fortawesome/free-solid-svg-icons";
 import { ReloadOutlined, LoadingOutlined } from "@ant-design/icons";
 import "./PODManage.css";
-import des from "../ManagerImage/POD.jpg";
 
 export default function PODManage() {
   const [podData, setPodData] = useState([]);
@@ -25,9 +23,13 @@ export default function PODManage() {
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
+  const [selectedStoreId, setSelectedStoreId] = useState(null);
+  const [storePods, setStorePods] = useState([]);
+
   const apiPod = "https://localhost:7166/api/Pod";
   const apiStore = "https://localhost:7166/api/Store";
   const apiUtility = "https://localhost:7166/api/Utility";
+
   const fetchPODData = async () => {
     try {
       const response = await axios.get(apiPod);
@@ -37,6 +39,7 @@ export default function PODManage() {
       message.error("Không thể tải dữ liệu POD");
     }
   };
+
   const fetchStoreData = async () => {
     try {
       const response = await axios.get(apiStore);
@@ -46,6 +49,7 @@ export default function PODManage() {
       message.error("Không thể tải dữ liệu Store");
     }
   };
+
   const fetchUtilityData = async () => {
     try {
       const response = await axios.get(apiUtility);
@@ -55,16 +59,17 @@ export default function PODManage() {
       message.error("Không thể tải dữ liệu Utility");
     }
   };
-  const handleDelete = async (podId) => {
-    try {
-      await axios.delete(`${apiPod}/${podId}`);
-      message.success("Xoá thành công");
-      fetchPODData();
-    } catch (error) {
-      console.error("Error deleting POD:", error);
-      message.error("Xoá không thành công");
-    }
-  };
+
+  // const handleDelete = async (podId) => {
+  //   try {
+  //     await axios.delete(`${apiPod}/${podId}`);
+  //     message.success("Xoá thành công");
+  //     fetchPODData();
+  //   } catch (error) {
+  //     console.error("Error deleting POD:", error);
+  //     message.error("Xoá không thành công");
+  //   }
+  // };
 
   const handleEdit = async (values) => {
     try {
@@ -79,7 +84,7 @@ export default function PODManage() {
         status: values.status,
         typeId: values.typeId,
         storeId: values.storeId,
-        utilityId: values.utilityId ? [values.utilityId] : [0], // Chuyển đổi thành mảng với giá trị mặc định là [0]
+        utilityId: values.utilityId ? [values.utilityId] : [0],
       };
       const response = await axios.put(`${apiPod}/${podId}`, podData);
       message.success("Thông tin POD được cập nhật thành công");
@@ -93,24 +98,98 @@ export default function PODManage() {
     }
   };
 
+  const handleViewPodRegardingToStore = (storeId) => {
+    setSelectedStoreId(storeId);
+    const pods = podData.filter((pod) => pod.storeId === storeId);
+    setStorePods(pods);
+  };
+
   useEffect(() => {
     fetchPODData();
     fetchStoreData();
     fetchUtilityData();
   }, []);
 
-  if (
-    podData.length === 0 &&
-    storeData.length === 0 &&
-    utilityData.length === 0
-  ) {
-    return (
-      <p>
-        Loading... <LoadingOutlined />
-      </p>
-    );
-  }
-  const columns = [
+  const storeColumns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      align: "center",
+      hidden: true,
+    },
+    {
+      title: "Tên",
+      dataIndex: "name",
+      key: "name",
+      align: "center",
+    },
+    {
+      title: "Địa chỉ",
+      dataIndex: "address",
+      key: "address",
+      align: "center",
+    },
+    {
+      title: "Hình ảnh",
+      dataIndex: "image",
+      key: "image",
+      render: (image) => (
+        <img
+          src={image || "https://placehold.co/100x100"}
+          alt="Store"
+          style={{
+            width: 100,
+            height: 100,
+            objectFit: "cover",
+            borderRadius: "8px",
+          }}
+        />
+      ),
+      align: "center",
+    },
+    {
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
+      align: "center",
+      filters: [
+        { text: "Còn trống", value: "Còn trống" },
+        { text: "Đang sử dụng", value: "Đang sử dụng" },
+      ],
+      onFilter: (value, record) => record.status.includes(value),
+      render: (status) => (
+        <span
+          style={{
+            color: status === "Đang hoạt động" ? "#64A587" : "#fb8b24 ",
+            fontSize: "15px",
+            fontStyle: "italic",
+            fontWeight: "500",
+          }}
+        >
+          {status}
+        </span>
+      ),
+    },
+    {
+      title: "Liên hệ",
+      dataIndex: "contact",
+      key: "contact",
+      align: "center",
+    },
+    {
+      title: "Chi tiết",
+      key: "actions",
+      align: "center",
+      render: (_, record) => (
+        <Button onClick={() => handleViewPodRegardingToStore(record.id)}>
+          Chi tiết
+        </Button>
+      ),
+    },
+  ];
+
+  const podColumns = [
     {
       title: "Hình ảnh",
       dataIndex: "image", // Thêm dataIndex
@@ -181,10 +260,6 @@ export default function PODManage() {
         text: store.name,
         value: store.id, // Sử dụng store.id làm value
       })),
-      onFilter: (value, record) => {
-        // So sánh storeId của record với value (store.id) từ filter
-        return record.storeId === value;
-      },
       render: (storeId) => {
         const store = storeData.find((store) => store.id === storeId);
         return store ? store.name : "Không có dữ liệu";
@@ -282,13 +357,13 @@ export default function PODManage() {
       <h1 style={{ textAlign: "center", fontFamily: "Arial", fontSize: 30 }}>
         Quản lí POD
       </h1>
+
       <Table
-        columns={columns}
-        dataSource={podData}
+        columns={storeColumns}
+        dataSource={storeData}
         rowKey="id"
         pagination={{ pageSize: 4 }}
         bordered
-        scroll={{ x: 1000 }}
         style={{
           boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
           padding: "20px 20px 0px 20px",
@@ -297,6 +372,24 @@ export default function PODManage() {
           border: "1px solid #E0E0E0",
         }}
       />
+
+      <Modal
+        title={
+          <div style={{ textAlign: "center" }}>Chi tiết POD của Cửa hàng</div>
+        } // Căn giữa tiêu đề
+        visible={selectedStoreId !== null}
+        onCancel={() => setSelectedStoreId(null)}
+        footer={null}
+        width={1200}
+      >
+        <Table
+          columns={podColumns}
+          dataSource={storePods}
+          rowKey="id"
+          pagination={{ pageSize: 4 }}
+          bordered
+        />
+      </Modal>
 
       <Modal
         title="Chỉnh sửa POD"
@@ -313,7 +406,7 @@ export default function PODManage() {
             <Input />
           </Form.Item>
           <Form.Item name="image" label="Hình ảnh">
-            <Input readOnly /> {/* Thêm readOnly để không cho chỉnh sửa */}
+            <Input readOnly />
           </Form.Item>
           <Form.Item
             name="name"
@@ -322,7 +415,6 @@ export default function PODManage() {
           >
             <Input readOnly />
           </Form.Item>
-
           <Form.Item
             name="description"
             label="Mô tả"

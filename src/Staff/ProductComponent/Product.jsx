@@ -8,18 +8,20 @@ import {
   Table,
   Modal,
   Select,
+  Tabs,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   DeleteFilled,
   EditFilled,
   PlusCircleFilled,
-  ReloadOutlined,
   StarFilled,
   LoadingOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
 import "./Product.css";
+
+const { TabPane } = Tabs;
 
 function Product() {
   const apiProduct = "https://localhost:7166/api/Product";
@@ -33,6 +35,7 @@ function Product() {
   const [submitting, setSubmitting] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [maxProductId, setMaxProductId] = useState(0);
+  const [activeCategory, setActiveCategory] = useState(null); // State để lưu danh mục đang hoạt động
 
   const fetchProductData = async () => {
     try {
@@ -43,14 +46,18 @@ function Product() {
       setStore(storeResponse.data);
       const productsWithCategory = productResponse.data.map((product) => ({
         ...product,
+        // lấy lại hết dữ liệu của product
         categoryName:
-          categoryResponse.data.find((cat) => cat.id === product.categoryId)
-            ?.name || "Không xác định",
+          categoryResponse.data.find(
+            (category) => category.id === product.categoryId
+          )?.name || "Không xác định",
+
         categoryStatus:
           product.stock === 0
             ? "Đã hết"
-            : categoryResponse.data.find((cat) => cat.id === product.categoryId)
-                ?.status || "Không xác định",
+            : categoryResponse.data.find(
+                (category) => category.id === product.categoryId
+              )?.status || "Không xác định",
       }));
 
       setProduct(productsWithCategory);
@@ -99,7 +106,7 @@ function Product() {
   const formatInputPrice = (price) => {
     return new Intl.NumberFormat("vi-VN").format(price);
   };
-
+  // xủ lý giá tiền theo số lượng
   const handlePriceChange = (e) => {
     const value = e.target.value.replace(/\D/g, "");
     formVariable.setFieldsValue({
@@ -174,13 +181,11 @@ function Product() {
       title: "Tên",
       dataIndex: "name",
       key: "name",
-      align: "center",
     },
     {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
-      align: "center",
     },
     {
       title: "Giá",
@@ -300,18 +305,25 @@ function Product() {
         </Button>
       </div>
       <br />
-      <Table
-        dataSource={product}
-        columns={columns}
-        bordered
-        rowKey="id"
-        pagination={{ pageSize: 5 }}
-        style={{
-          // border: "1px solid grey",
-          borderRadius: "10px",
-          // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-        }}
-      />
+      <Tabs
+        defaultActiveKey={category.length > 0 ? category[0].name : ""}
+        onChange={setActiveCategory}
+      >
+        {category.map((cat) => (
+          <TabPane tab={cat.name} key={cat.name}>
+            <Table
+              dataSource={product.filter((p) => p.categoryName === cat.name)} // Lọc sản phẩm theo danh mục
+              columns={columns}
+              bordered
+              rowKey="id"
+              pagination={{ pageSize: 5 }}
+              style={{
+                borderRadius: "10px",
+              }}
+            />
+          </TabPane>
+        ))}
+      </Tabs>
 
       <Modal
         title={editingProduct ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm mới"}
