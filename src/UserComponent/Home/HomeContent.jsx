@@ -189,7 +189,7 @@ export default function HomeContent() {
                 <div className='shortcut-booking-store'>
                     <h1><b>CƠ SỞ THỊNH HÀNH!</b></h1>
                     <Row className='image-row'>
-                        {STOREs && STOREs.map(store => (
+                        {STOREs && STOREs.filter(store => store.status === 'Đang hoạt động').map(store => (
                             <Col lg={12} xl={6} xxl={5} key={store.id} className='image-col'>
                                 <Card className='image-card'>
                                     {/* <Link to={`booking/store/${store.id}`}><img src={imageSTOREs.find(image => image.id === store.id)?.image} alt={store.name} /></Link> */}

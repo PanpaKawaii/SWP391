@@ -153,18 +153,11 @@ export default function BookingStoreContent() {
                                                     </p>
                                                 ) : null
                                             }
-                                            {/* <div className='active-button'>
-                                                {store.status === 'Đang hoạt động' ?
-                                                    <Link to={`${store.id}`}><Button className='btn'>CHI TIẾT</Button></Link>
-                                                    :
-                                                    <Button className='btn'>CHI TIẾT</Button>
-                                                }
-                                            </div> */}
                                         </div>
                                         {store.status === 'Đang hoạt động' ?
                                             <Link to={`${store.id}`}><Button className='btn'>CHI TIẾT</Button></Link>
                                             :
-                                            <Button className='btn'>CHI TIẾT</Button>
+                                            <Link to={''}><Button className='btn'>CHI TIẾT</Button></Link>
                                         }
                                     </Card.Body>
                                 </Card>
