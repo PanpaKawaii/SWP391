@@ -124,11 +124,11 @@ const OrderProduct = () => {
         return;
       }
 
-      // Tạo BookingOrder
       const bookingOrder = {
         ...values,
         id: nextBookingOrderId,
         date: values.date.format("YYYY-MM-DD"),
+        status: "Đã thanh toán", // Thiết lập trạng thái cho BookingOrder
       };
 
       // Gửi request tạo BookingOrder
@@ -141,33 +141,18 @@ const OrderProduct = () => {
         method: "Chuyển khoản",
         amount: values.amount,
         date: new Date(values.date).toISOString(),
-        status: "Đã thanh toán",
+        status: "Đã thanh toán", // Đảm bảo status được thiết lập
         bookingId: values.bookingId,
       };
 
       // Gửi request tạo Payment với xử lý lỗi chi tiết hơn
-      try {
-        const response = await axios.post(apiPayment, payment);
-        if (response.status === 200 || response.status === 201) {
-          message.success("Đã tạo thanh toán thành công!");
-        }
-      } catch (paymentError) {
-        console.error("Lỗi khi tạo Payment:", paymentError);
-        if (paymentError.response) {
-          console.error("Server error details:", paymentError.response.data);
-          message.error(
-            `Lỗi thanh toán: ${
-              paymentError.response.data.message ||
-              "Có lỗi xảy ra khi tạo thanh toán"
-            }`
-          );
-        } else {
-          message.error("Không thể kết nối đến server thanh toán");
-        }
-        return;
+      const paymentResponse = await axios.post(apiPayment, payment);
+      if (paymentResponse.status === 200 || paymentResponse.status === 201) {
+        message.success("Đã tạo thanh toán thành công!");
       }
 
       // Cập nhật stock của sản phẩm
+      const selectedProduct = products.find((p) => p.id === values.productId);
       const updatedStock = selectedProduct.stock - values.quantity;
       await axios.put(`${apiProduct}/${selectedProduct.id}`, {
         ...selectedProduct,
