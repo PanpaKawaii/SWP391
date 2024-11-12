@@ -290,7 +290,7 @@ const OrderHistory = () => {
       message.error("Có lỗi xảy ra khi hoàn tiền");
     }
   };
-  const renderStatusOptions = (currentStatus) => {
+  const renderBookingStatusOption = (currentStatus) => {
     // Các option mặc định cho trạng thái "Chưa diễn ra"
     if (currentStatus === "Chưa diễn ra") {
       return [
@@ -298,7 +298,7 @@ const OrderHistory = () => {
         { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
       ];
     }
-    if (currentStatus === "Đã hủy") {
+    if (currentStatus === "Đã hủy" || currentStatus === "Đã hoàn tiền") {
       return [];
     }
     // Các option cho trạng thái "Đang diễn ra"
@@ -317,6 +317,19 @@ const OrderHistory = () => {
     ];
   };
 
+  const renderPaymentStatusOption = (currentStatus) => {
+    // Các option mặc định cho trạng thái "Chưa diễn ra"
+    if (currentStatus === "Chưa thanh toán") {
+      return [
+        { value: "Đã thanh toán", label: "Đã thanh toán" },
+        { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
+      ];
+    }
+    if (currentStatus === "Đã hoàn tiền") {
+      return [];
+    }
+  };
+
   // Filtering and handlers
   const filteredUsers = userData.filter((user) =>
     user.phoneNumber.includes(searchTerm)
@@ -333,10 +346,42 @@ const OrderHistory = () => {
         return;
       }
 
+      // Cập nhật trạng thái booking
       await axios.put(`${apiBooking}/${bookingId}`, {
         ...booking,
         status: newStatus,
       });
+
+      // Nếu trạng thái mới là "Đã hoàn tiền" và booking đã kết thúc
+      if (newStatus === "Đã hoàn tiền" && booking.status === "Đã kết thúc") {
+        const orders = orderData.filter(
+          (order) => order.bookingId === bookingId
+        );
+        for (const order of orders) {
+          if (order.categoryName === "Đồ chơi") {
+            // Tăng lại số lượng (stock) của sản phẩm tương ứng
+            const product = productData.find((p) => p.id === order.productId);
+            if (product) {
+              const updatedProduct = {
+                ...product,
+                stock: product.stock + order.quantity, // Tăng stock
+              };
+              await axios.put(`${apiProduct}/${product.id}`, updatedProduct); // Cập nhật sản phẩm
+            }
+          }
+        }
+      }
+
+      // Nếu trạng thái mới là "Đã hoàn tiền", cập nhật trạng thái payment tương ứng
+      if (newStatus === "Đã hoàn tiền") {
+        const payment = paymentData.find((p) => p.bookingId === bookingId);
+        if (payment) {
+          await axios.put(`${apiPayment}/${payment.id}`, {
+            ...payment,
+            status: "Đã hoàn tiền",
+          });
+        }
+      }
 
       message.success("Cập nhật trạng thái thành công");
       await fetchBookingData();
@@ -622,11 +667,16 @@ const OrderHistory = () => {
                         handleUpdateBookingStatus(record.id, value)
                       }
                     >
-                      {renderStatusOptions(record.status).map((option) => (
-                        <Select.Option key={option.value} value={option.value}>
-                          {option.label}
-                        </Select.Option>
-                      ))}
+                      {renderBookingStatusOption(record.status).map(
+                        (option) => (
+                          <Select.Option
+                            key={option.value}
+                            value={option.value}
+                          >
+                            {option.label}
+                          </Select.Option>
+                        )
+                      )}
                     </Select>
                   </Space>
                 ),
@@ -729,15 +779,16 @@ const OrderHistory = () => {
                           handleUpdatePaymentStatus(payment.id, value)
                         }
                       >
-                        <Select.Option value="Đã thanh toán">
-                          Đã thanh toán
-                        </Select.Option>
-                        <Select.Option value="Chưa thanh toán">
-                          Chưa thanh toán
-                        </Select.Option>
-                        <Select.Option value="Đã hoàn tiền">
-                          Đã hoàn tiền
-                        </Select.Option>
+                        {renderPaymentStatusOption(payment.status).map(
+                          (option) => (
+                            <Select.Option
+                              key={option.value}
+                              value={option.value}
+                            >
+                              {option.label}
+                            </Select.Option>
+                          )
+                        )}
                       </Select>
                     </Space>
                   ) : (

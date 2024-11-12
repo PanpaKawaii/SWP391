@@ -60,6 +60,18 @@ export default function PODManage() {
     }
   };
 
+  if (
+    podData.length === 0 &&
+    storeData.length === 0 &&
+    utilityData.length === 0
+  ) {
+    return (
+      <p>
+        Loading... <LoadingOutlined />
+      </p>
+    );
+  }
+
   // const handleDelete = async (podId) => {
   //   try {
   //     await axios.delete(`${apiPod}/${podId}`);
