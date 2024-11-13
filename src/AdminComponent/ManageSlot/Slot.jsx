@@ -80,6 +80,10 @@ export default function Slot() {
         console.log('Selected Pod:', selectedPod);
     }, [storeData, podData, slotData, selectedStore, selectedPod]);
 
+    const handleEdit = (record) => {
+      
+    };
+
     const slotColumns = [
         {
             title: 'ID',
@@ -121,6 +125,13 @@ export default function Slot() {
                 return pod ? pod.name : 'Không có tên POD'; // Return the pod name or a default message if not found
             },
         },
+        {
+            title:'Chỉnh sửa',
+            key:'edit',
+            render: ( record) => (
+                <Button type="primary" onClick={() => handleEdit(record)}>Chỉnh sửa</Button>
+            ),
+        }
     ];
 
     const handleSearch = () => {
