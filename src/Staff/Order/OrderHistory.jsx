@@ -92,7 +92,7 @@ const OrderHistory = () => {
 
       // Sắp xếp booking theo ngày mới nhất lên đầu tiên
       const sortedBookings = response.data.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date); // Sắp xếp theo ngày giảm dần
+        return b.id - a.id; // Sắp xếp theo ID giảm dần
       });
 
       setBookingData(sortedBookings); // Cập nhật state với dữ liệu đã sắp xếp
