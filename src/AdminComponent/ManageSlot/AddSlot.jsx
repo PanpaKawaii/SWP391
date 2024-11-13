@@ -40,7 +40,6 @@ export default function AddSlot() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting new slot with podId:", podId);
-
     const newSlot = {
       id: maxId + 1,
       name: slotName,
@@ -55,6 +54,7 @@ export default function AddSlot() {
       const response = await axios.post("https://localhost:7166/api/Slot", newSlot);
       console.log("Response:", response.data);
       message.success("Slot added successfully!");
+      navigate(`/slotdetail/${podId}`);
       setSlotName("");
       setSlotTimeStart("");
       setSlotTimeEnd("");
