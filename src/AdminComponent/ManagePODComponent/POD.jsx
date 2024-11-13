@@ -132,7 +132,7 @@ export default function POD() {
     {
       title: "Hình ảnh",
       key: "image",
-      render: (text, record) => (
+      render: ( record) => (
         <img
           src={record.image}
           alt="POD"
