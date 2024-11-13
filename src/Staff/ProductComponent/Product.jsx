@@ -35,7 +35,6 @@ function Product() {
   const [submitting, setSubmitting] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [maxProductId, setMaxProductId] = useState(0);
-  const [activeCategory, setActiveCategory] = useState(null); // State để lưu danh mục đang hoạt động
 
   const fetchProductData = async () => {
     try {
