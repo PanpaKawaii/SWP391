@@ -305,14 +305,11 @@ function Product() {
         </Button>
       </div>
       <br />
-      <Tabs
-        defaultActiveKey={category.length > 0 ? category[0].name : ""}
-        onChange={setActiveCategory}
-      >
-        {category.map((cat) => (
-          <TabPane tab={cat.name} key={cat.name}>
+      <Tabs defaultActiveKey="1">
+        {store.map((storeItem) => (
+          <TabPane tab={storeItem.name} key={storeItem.id}>
             <Table
-              dataSource={product.filter((p) => p.categoryName === cat.name)} // Lọc sản phẩm theo danh mục
+              dataSource={product.filter((p) => p.storeId === storeItem.id)} // Lọc sản phẩm theo store
               columns={columns}
               bordered
               rowKey="id"

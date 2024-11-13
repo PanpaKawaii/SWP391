@@ -4,7 +4,6 @@ import {
   Table,
   Card,
   Button,
-  Tag,
   Typography,
   Modal,
   Input,
@@ -24,12 +23,11 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-import { Tabs } from "antd";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons"; // Nhập biểu tượng ngôi sao
+import { Tabs } from "antd"; // Nhập Tabs từ antd
 
-const { TabPane } = Tabs;
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 dayjs.extend(isBetween);
@@ -62,8 +60,7 @@ const OrderHistory = () => {
   const fetchUserData = async () => {
     try {
       const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5nbmdvY2hhaXRyaWV1QGdtYWlsLmNvbSIsImp0aSI6ImE5MmUwOTBkLTQ2NmEtNDE2My1hMDQ3LWUyOWNjYjExOGE2OCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiOSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMzMDc1ODUxLCJpc3MiOiJQb2RCb29raW5nIiwiYXVkIjoiUG9kV2ViIn0.SljDy518ZlaoY5hp6kKZvBp3-j5vXItyHQ0H7Y0ik3o";
-      // Thay thế bằng localStorage.getItem()
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5nbmdvY2hhaXRyaWV1QGdtYWlsLmNvbSIsImp0aSI6ImE5MmUwOTBkLTQ2NmEtNDE2My1hMDQ3LWUyOWNjYjExOGE2OCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiOSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMzMDc1ODUxLCJpc3MiOiJQb2RCb29raW5nIiwiYXVkIjoiUG9kV2ViIn0.SljDy518ZlaoY5hp6kKZvBp3-j5vXItyHQ0H7Y0ik3o"; // Thay thế bằng token thực tế của bạn
 
       const response = await axios.get(apiUser, {
         headers: {
@@ -82,7 +79,13 @@ const OrderHistory = () => {
     try {
       const response = await axios.get(apiBooking);
       console.log("Fetched bookings:", response.data);
-      setBookingData(response.data);
+
+      // Sắp xếp booking theo ngày mới nhất lên đầu tiên
+      const sortedBookings = response.data.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date); // Sắp xếp theo ngày giảm dần
+      });
+
+      setBookingData(sortedBookings); // Cập nhật state với dữ liệu đã sắp xếp
     } catch (error) {
       console.error("Failed to fetch booking data:", error);
     }
@@ -212,8 +215,46 @@ const OrderHistory = () => {
   const formatDate = (dateString) => {
     return dayjs(dateString).format("DD/MM/YYYY");
   };
+  const renderStatusOption = (currentStatus) => {
+    // Các option mặc định cho trạng thái "Chưa diễn ra"
+    if (currentStatus === "Chưa diễn ra") {
+      return [
+        { value: "Đang diễn ra", label: "Đang diễn ra" },
+        { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
+      ];
+    }
+    if (currentStatus === "Đã hủy" || currentStatus === "Đã hoàn tiền") {
+      return [];
+    }
+    // Các option cho trạng thái "Đang diễn ra"
+    else if (currentStatus === "Đang diễn ra") {
+      return [
+        { value: "Đã kết thúc", label: "Kết thúc" },
+        { value: "Đã hoàn tiền", label: "Hoàn tiền" },
+      ];
+    }
+    if (currentStatus === "Chưa thanh toán") {
+      return [
+        { value: "Đã thanh toán", label: "Đã thanh toán" },
+        { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
+      ];
+    }
+    if (currentStatus === "Đã thanh toán") {
+      return [{ value: "Đã hoàn tiền", label: "Hoàn tiền" }];
+    }
+    if (currentStatus === "Đã hoàn tiền") {
+      return [];
+    }
+    // Trả về tất cả các option cho các trạng thái khác
+    return [
+      { value: "Đã kết thúc", label: "Đã kết thúc" },
+      { value: "Chưa diễn ra", label: "Chưa diễn ra" },
+      { value: "Đang diễn ra", label: "Đang diễn ra" },
+      { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
+    ];
+  };
 
-  const renderOrderStatus = (status) => {
+  const renderCommonStatus = (status) => {
     let color;
     let backgroundColor;
 
@@ -230,13 +271,21 @@ const OrderHistory = () => {
         color = "white";
         backgroundColor = "#0dcaf0"; // Màu nền xanh dương
         break;
-      case "Đã hủy":
+      case "Đã huỷ":
         color = "white";
         backgroundColor = "#dc3545"; // Màu nền đỏ
         break;
       case "Đã hoàn tiền":
         color = "white";
         backgroundColor = "#fb8b24"; // Màu nền cam
+        break;
+      case "Đã thanh toán":
+        color = "white";
+        backgroundColor = "#28a745";
+        break;
+      case "Chưa thanh toán":
+        color = "white";
+        backgroundColor = "#dc3545";
         break;
       default:
         color = "black"; // Màu chữ mặc định
@@ -258,78 +307,6 @@ const OrderHistory = () => {
       </h4>
     );
   };
-  const handleRefund = async (currentAmount) => {
-    try {
-      // Tính toán số tiền hoàn lại
-      const refundAmount = -currentAmount; // Chuyển đổi thành số âm
-
-      // Tạo đối tượng payment mới
-      const newPayment = {
-        method: "Hoàn tiền", // Hoặc phương thức thanh toán khác nếu cần
-        amount: refundAmount,
-        date: new Date().toISOString(), // Ngày hiện tại
-        status: "Đã hoàn tiền", // Trạng thái hoàn tiền
-        bookingId: selectedBooking.id, // bookingId tương ứng
-        paymentRequest: "Yêu cầu hoàn tiền", // Thêm trường paymentRequest nếu cần
-      };
-
-      // Lấy ID tối đa hiện tại để tạo ID mới
-      const maxId = Math.max(...paymentData.map((p) => p.id), 0);
-      newPayment.id = maxId + 1; // Gán ID mới
-
-      console.log("Gửi yêu cầu Payment:", newPayment); // Log dữ liệu gửi đi
-
-      // Gửi yêu cầu POST để lưu payment mới
-      await axios.post(apiPayment, newPayment);
-      message.success("Hoàn tiền thành công!");
-
-      // Cập nhật lại dữ liệu thanh toán
-      await fetchPaymentData(); // Fetch lại dữ liệu thanh toán
-    } catch (error) {
-      console.error("Lỗi khi hoàn tiền:", error);
-      message.error("Có lỗi xảy ra khi hoàn tiền");
-    }
-  };
-  const renderBookingStatusOption = (currentStatus) => {
-    // Các option mặc định cho trạng thái "Chưa diễn ra"
-    if (currentStatus === "Chưa diễn ra") {
-      return [
-        { value: "Đang diễn ra", label: "Đang diễn ra" },
-        { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
-      ];
-    }
-    if (currentStatus === "Đã hủy" || currentStatus === "Đã hoàn tiền") {
-      return [];
-    }
-    // Các option cho trạng thái "Đang diễn ra"
-    else if (currentStatus === "Đang diễn ra") {
-      return [
-        { value: "Đã kết thúc", label: "Đã kết thúc" },
-        { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
-      ];
-    }
-    // Trả về tất cả các option cho các trạng thái khác
-    return [
-      { value: "Chưa diễn ra", label: "Chưa diễn ra" },
-      { value: "Đang diễn ra", label: "Đang diễn ra" },
-      { value: "Đã kết thúc", label: "Đã kết thúc" },
-      { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
-    ];
-  };
-
-  const renderPaymentStatusOption = (currentStatus) => {
-    // Các option mặc định cho trạng thái "Chưa diễn ra"
-    if (currentStatus === "Chưa thanh toán") {
-      return [
-        { value: "Đã thanh toán", label: "Đã thanh toán" },
-        { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
-      ];
-    }
-    if (currentStatus === "Đã hoàn tiền") {
-      return [];
-    }
-  };
-
   // Filtering and handlers
   const filteredUsers = userData.filter((user) =>
     user.phoneNumber.includes(searchTerm)
@@ -346,42 +323,10 @@ const OrderHistory = () => {
         return;
       }
 
-      // Cập nhật trạng thái booking
       await axios.put(`${apiBooking}/${bookingId}`, {
         ...booking,
         status: newStatus,
       });
-
-      // Nếu trạng thái mới là "Đã hoàn tiền" và booking đã kết thúc
-      if (newStatus === "Đã hoàn tiền" && booking.status === "Đã kết thúc") {
-        const orders = orderData.filter(
-          (order) => order.bookingId === bookingId
-        );
-        for (const order of orders) {
-          if (order.categoryName === "Đồ chơi") {
-            // Tăng lại số lượng (stock) của sản phẩm tương ứng
-            const product = productData.find((p) => p.id === order.productId);
-            if (product) {
-              const updatedProduct = {
-                ...product,
-                stock: product.stock + order.quantity, // Tăng stock
-              };
-              await axios.put(`${apiProduct}/${product.id}`, updatedProduct); // Cập nhật sản phẩm
-            }
-          }
-        }
-      }
-
-      // Nếu trạng thái mới là "Đã hoàn tiền", cập nhật trạng thái payment tương ứng
-      if (newStatus === "Đã hoàn tiền") {
-        const payment = paymentData.find((p) => p.bookingId === bookingId);
-        if (payment) {
-          await axios.put(`${apiPayment}/${payment.id}`, {
-            ...payment,
-            status: "Đã hoàn tiền",
-          });
-        }
-      }
 
       message.success("Cập nhật trạng thái thành công");
       await fetchBookingData();
@@ -430,6 +375,43 @@ const OrderHistory = () => {
     }
   }, [orderData, paymentData, selectedBooking]);
 
+  // Update Payment amount
+  const handleRefund = async (refundAmount) => {
+    if (!selectedBooking) return;
+
+    const payment = paymentData.find(
+      (payment) => payment.bookingId === selectedBooking.id
+    );
+    if (!payment) {
+      message.error("Không tìm thấy thông tin thanh toán");
+      return;
+    }
+
+    try {
+      // Tạo ID mới cho payment
+      const newPaymentId = Math.max(...paymentData.map((p) => p.id)) + 1; // Tìm ID lớn nhất và cộng thêm 1
+
+      // Tạo payment mới với số tiền âm
+      const newPayment = {
+        id: newPaymentId,
+        bookingId: selectedBooking.id,
+        status: "Đã hoàn tiền",
+        amount: -refundAmount, // Sử dụng giá trị amount được truyền vào
+        date: dayjs().format(),
+        method: payment.method, // Giữ nguyên phương thức thanh toán
+      };
+
+      await axios.post(apiPayment, newPayment); // Gửi yêu cầu tạo payment mới
+
+      message.success("Tạo thanh toán mới thành công");
+      await fetchPaymentData(); // Fetch lại dữ liệu thanh toán
+      await fetchBookingData(); // Fetch lại dữ liệu booking
+      calculateRevenue(); // Tính toán lại doanh thu
+    } catch (error) {
+      console.error("Lỗi khi tạo thanh toán mới:", error);
+      message.error("Tạo thanh toán mới thất bại");
+    }
+  };
   // Update trạng thái thanh toán
   const handleUpdatePaymentStatus = async (paymentId, newStatus) => {
     try {
@@ -446,15 +428,14 @@ const OrderHistory = () => {
 
       await fetchPaymentData(); // Fetch lại dữ liệu thanh toán
       await fetchBookingData(); // Fetch lại dữ liệu booking
-      calculateRevenue(); // Tính toán lại doanh thu
       message.success("Cập nhật trạng thái thanh toán thành công");
-      handleCloseModal();
+      calculateRevenue(); // Tính toán lại doanh thu
     } catch (error) {
       console.error("Lỗi khi cập nhật trạng thái thanh toán:", error);
       message.error("Cập nhật trạng thái thanh toán thất bại");
     }
   };
-  // Table Columns
+  // Table main Columns
   const userColumns = [
     {
       title: "Booking ID",
@@ -509,7 +490,16 @@ const OrderHistory = () => {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
-      render: (status) => renderOrderStatus(status), // Sử dụng hàm renderOrderStatus để hiển thị trạng thái
+      align: "center",
+      filters: [
+        { text: "Chưa diễn ra", value: "Chưa diễn ra" },
+        { text: "Đang diễn ra", value: "Đang diễn ra" },
+        { text: "Đã kết thúc", value: "Đã kết thúc" },
+        { text: "Đã hoàn tiền", value: "Đã hoàn tiền" },
+        { text: "Đã hủy", value: "Đã hủy" },
+      ],
+      onFilter: (value, status) => status.status.includes(value),
+      render: (status) => renderCommonStatus(status), // Sử dụng hàm renderOrderStatus để hiển thị trạng thái
     },
     {
       title: "Nhóm tài khoản",
@@ -605,202 +595,262 @@ const OrderHistory = () => {
 
   // Modal Content
   const modalContent = selectedBooking ? (
-    <Tabs defaultActiveKey="1">
-      <TabPane tab="Thông tin đặt chỗ" key="1">
-        <Card title="Thông tin đặt chỗ" style={{ marginBottom: 10 }}>
-          <Table
-            dataSource={[selectedBooking]}
-            columns={[
-              {
-                title: "Ngày đặt",
-                dataIndex: "date",
-                key: "date",
-                render: (date) => formatDate(date),
-              },
-              {
-                title: "Pod",
-                key: "pod",
-                render: (_, record) => {
-                  const pod = podData.find((p) => p.id === record.podId);
-                  return pod ? `Pod ${pod.id}` : "Không xác định";
+    <div>
+      <Card title="Thông tin đặt chỗ" style={{ marginBottom: 10 }}>
+        <Tabs defaultActiveKey="1">
+          <Tabs.TabPane tab="Thông tin đặt chỗ" key="1">
+            <Table
+              dataSource={[selectedBooking]}
+              columns={[
+                {
+                  title: "Ngày đặt",
+                  dataIndex: "date",
+                  key: "date",
+                  render: (date) => formatDate(date),
                 },
-              },
-              {
-                title: "Hình ảnh Pod", // Cột mới cho hình ảnh
-                key: "podImage",
-                render: (_, record) => {
-                  const pod = podData.find((p) => p.id === record.podId);
-                  return pod ? (
-                    <img
-                      src={pod.image} // Giả sử thuộc tính hình ảnh là 'image'
-                      alt={`Pod ${pod.id}`}
-                      style={{ width: "100px", height: "auto" }} // Điều chỉnh kích thước hình ảnh
-                    />
-                  ) : (
-                    "Không có hình ảnh"
-                  );
+                {
+                  title: "Pod",
+                  key: "pod",
+                  render: (_, record) => {
+                    const pod = podData.find((p) => p.id === record.podId);
+                    return pod ? `Pod ${pod.id}` : "Không xác định";
+                  },
                 },
-              },
-              {
-                title: "Slot",
-                key: "slot",
-                render: (_, record) => {
-                  const slot = slotData.find((slot) =>
-                    slot.bookings.some((booking) => booking.id === record.id)
-                  );
-                  return slot
-                    ? `${slot.name} (${slot.startTime}:00 - ${slot.endTime}:00)`
-                    : "Không có thông tin";
+                {
+                  title: "Hình ảnh Pod",
+                  key: "podImage",
+                  render: (_, record) => {
+                    const pod = podData.find((p) => p.id === record.podId);
+                    return pod ? (
+                      <img
+                        src={pod.image}
+                        alt={`Pod ${pod.id}`}
+                        style={{ width: "100px", height: "auto" }}
+                      />
+                    ) : (
+                      "Không có hình ảnh"
+                    );
+                  },
                 },
-              },
-              {
-                title: "Trạng thái",
-                key: "status",
-                align: "center",
-                render: (_, record) => (
-                  <Space>
-                    {renderOrderStatus(record.status)}
-                    <Select
-                      value={record.status}
-                      style={{ width: 150, padding: "5px 5px" }}
-                      onChange={(value) =>
-                        handleUpdateBookingStatus(record.id, value)
-                      }
-                    >
-                      {renderBookingStatusOption(record.status).map(
-                        (option) => (
+                {
+                  title: "Slot",
+                  key: "slot",
+                  render: (_, record) => {
+                    const slots = slotData.filter((slot) =>
+                      slot.bookings.some((booking) => booking.id === record.id)
+                    );
+
+                    return slots.length > 0
+                      ? slots.map((slot) => (
+                          <div key={slot.id}>
+                            {slot.name} ({slot.startTime}:00 - {slot.endTime}
+                            :00)
+                          </div>
+                        ))
+                      : "Không có thông tin";
+                  },
+                },
+                {
+                  title: "Trạng thái",
+                  key: "status",
+                  align: "center",
+                  render: (_, record) => (
+                    <Space>
+                      {renderCommonStatus(record.status)}
+                      <Select
+                        value={record.status}
+                        style={{ width: 150, padding: "5px 5px" }}
+                        onChange={(value) =>
+                          handleUpdateBookingStatus(record.id, value)
+                        }
+                      >
+                        {renderStatusOption(record.status).map((option) => (
                           <Select.Option
                             key={option.value}
                             value={option.value}
                           >
                             {option.label}
                           </Select.Option>
-                        )
-                      )}
-                    </Select>
-                  </Space>
-                ),
-              },
-            ]}
-            pagination={false}
-            bordered
-          />
-        </Card>
-      </TabPane>
-      <TabPane tab="Order Thêm" key="2">
-        <Card title="Order thêm" style={{ marginBottom: 10 }}>
-          <Table
-            dataSource={orderData.filter(
-              (order) => order.bookingId === selectedBooking.id
-            )}
-            columns={orderColumns}
-            pagination={false}
-            bordered
-          />
-        </Card>
-      </TabPane>
-      <TabPane tab="Thông tin thanh toán" key="3">
-        <Card title="Thông tin thanh toán">
-          {(() => {
-            const payment = paymentData.find(
-              (p) => p.bookingId === selectedBooking.id
-            );
-            const orderTotal =
-              orderData
-                .filter((order) => order.bookingId === selectedBooking.id)
-                .reduce((sum, order) => sum + order.amount, 0) || 0;
-            const podAmount = payment ? payment.amount : 0;
-            const totalAmount = orderTotal + podAmount;
-
-            return (
-              <>
-                <p>
-                  <strong>Tổng tiền Order thêm:</strong>{" "}
-                  {formatCurrency(orderTotal)}
-                </p>
-                <p>
-                  <strong>Tiền Pod:</strong> {formatCurrency(podAmount)}
-                </p>
-                <strong>Tổng cộng:</strong>{" "}
-                <span
-                  style={{
-                    color: totalAmount < 0 ? "red" : "black",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {formatCurrency(totalAmount)}
-                </span>
-                <Popconfirm
-                  title="Bạn có chắc chắn muốn hoàn tiền không?"
-                  onConfirm={() => handleRefund(totalAmount)}
-                  okText="Có"
-                  cancelText="Không"
-                >
-                  <Button
-                    type="danger"
-                    style={{
-                      marginLeft: "5px",
-                      backgroundColor: "transparent",
-                      color: "black",
-                    }}
-                  >
-                    <MinusCircleOutlined /> Hoàn tiền
-                  </Button>
-                </Popconfirm>
-                <p style={{ margin: "10px 0" }}>
-                  <strong>Phương thức thanh toán:</strong>{" "}
-                  {payment ? (
-                    <span>{payment.method || "Không xác định"}</span>
-                  ) : (
-                    "Không có thông tin"
-                  )}
-                </p>
-                <p>
-                  <strong>Trạng thái thanh toán:</strong>{" "}
-                  {payment ? (
-                    <Space>
-                      <span
-                        style={{
-                          color:
-                            payment.status === "Đã thanh toán"
-                              ? "seagreen"
-                              : "red",
-                          fontSize: "15px",
-                          fontStyle: "italic",
-                          fontWeight: "500",
-                        }}
-                      >
-                        {payment.status}
-                      </span>
-                      <Select
-                        defaultValue={payment.status}
-                        style={{ width: 150 }}
-                        onChange={(value) =>
-                          handleUpdatePaymentStatus(payment.id, value)
-                        }
-                      >
-                        {renderPaymentStatusOption(payment.status).map(
-                          (option) => (
-                            <Select.Option
-                              key={option.value}
-                              value={option.value}
-                            >
-                              {option.label}
-                            </Select.Option>
-                          )
-                        )}
+                        ))}
                       </Select>
                     </Space>
-                  ) : (
-                    "Không có thông tin"
-                  )}
-                </p>
-              </>
-            );
-          })()}
-        </Card>
-      </TabPane>
-    </Tabs>
+                  ),
+                },
+              ]}
+              pagination={false}
+              bordered
+            />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Order thêm" key="2">
+            <Table
+              dataSource={orderData.filter(
+                (order) => order.bookingId === selectedBooking.id
+              )}
+              columns={orderColumns}
+              pagination={false}
+              bordered
+            />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Thông tin thanh toán" key="3">
+            {/* Nội dung thông tin thanh toán */}
+            {(() => {
+              const payment = paymentData.find(
+                (p) => p.bookingId === selectedBooking.id
+              );
+              // Tính tổng số tiền từ tất cả các payment có bookingId tương ứng
+              const totalAmount =
+                paymentData
+                  .filter((p) => p.bookingId === selectedBooking.id)
+                  .reduce((sum, paymentItem) => sum + paymentItem.amount, 0) ||
+                0;
+              // Kiểm tra xem có payment nào đã hoàn tiền không
+              const hasRefundedPayment = paymentData.some(
+                (p) =>
+                  p.bookingId === selectedBooking.id &&
+                  p.status === "Đã hoàn tiền"
+              );
+
+              const handleProcessRefund = (amount) => {
+                // if (hasRefundedPayment) {
+                //   message.error(
+                //     "Booking này đã có payment được hoàn tiền. Không thể hoàn tiền nữa."
+                //   );
+                //   return;
+                // }
+                handleRefund(amount);
+              };
+
+              return (
+                <>
+                  <div>
+                    <strong>Tổng cộng:</strong>{" "}
+                    <span
+                      style={{
+                        color: totalAmount < 0 ? "red" : "black",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {formatCurrency(totalAmount)}
+                      <Popconfirm
+                        title="Bạn có chắc chắn muốn hoàn tiền cho cả POD và dịch vụ ?"
+                        onConfirm={() => handleProcessRefund(totalAmount)} // Gọi hàm hoàn tiền với số tiền tương ứng
+                        okText="Có"
+                        cancelText="Không"
+                      >
+                        <Button
+                          type="danger"
+                          style={{
+                            marginLeft: "5px",
+                            backgroundColor: "transparent",
+                            color: "black",
+                          }}
+                        >
+                          <MinusCircleOutlined /> Hoàn tiền
+                        </Button>
+                      </Popconfirm>
+                    </span>
+                    <hr></hr>
+                    <strong>Danh sách chi tiết</strong>
+                    {paymentData
+                      .filter((p) => p.bookingId === selectedBooking.id)
+                      .map((paymentItem) => (
+                        <div key={paymentItem.id}>
+                          <p>
+                            <strong>ID : </strong> {paymentItem.id} <br />
+                            <strong>Phương thức : </strong>{" "}
+                            {paymentItem.method || "Không xác định"} <br />
+                            <strong>Số tiền : </strong>{" "}
+                            <span
+                              style={{
+                                color:
+                                  paymentItem.amount < 0 ? "red" : "seagreen",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {formatCurrency(paymentItem.amount)}
+                            </span>{" "}
+                            <Popconfirm
+                              title="Bạn có chắc chắn muốn hoàn tiền không?"
+                              onConfirm={() =>
+                                handleProcessRefund(paymentItem.amount)
+                              } // Gọi hàm hoàn tiền với số tiền tương ứng
+                              okText="Có"
+                              cancelText="Không"
+                            >
+                              <Button
+                                type="danger"
+                                style={{
+                                  marginLeft: "5px",
+                                  backgroundColor: "transparent",
+                                  color: "black",
+                                }}
+                              >
+                                <MinusCircleOutlined /> Hoàn tiền
+                              </Button>
+                            </Popconfirm>
+                            <div
+                              style={{ display: "flex", alignItems: "center" }}
+                            >
+                              <strong style={{ marginRight: "10px" }}>
+                                Trạng thái:
+                              </strong>
+                              <div>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    marginTop: "5px",
+                                  }}
+                                >
+                                  <span style={{ width: "170px" }}>
+                                    {renderCommonStatus(paymentItem.status)}
+                                  </span>
+                                  <span
+                                    style={{
+                                      marginLeft: "10px",
+                                      marginBottom: "5px",
+                                    }}
+                                  >
+                                    <Select
+                                      defaultValue={paymentItem.status} // Sử dụng paymentItem.status
+                                      style={{ width: 150 }}
+                                      onChange={
+                                        (value) =>
+                                          handleUpdatePaymentStatus(
+                                            paymentItem.id,
+                                            value
+                                          ) // Sử dụng paymentItem.id
+                                      }
+                                    >
+                                      {renderStatusOption(
+                                        paymentItem.status
+                                      ).map((option) => (
+                                        <Select.Option
+                                          key={option.value}
+                                          value={option.value}
+                                        >
+                                          {option.label}
+                                        </Select.Option>
+                                      ))}
+                                    </Select>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <strong>Ngày : </strong>{" "}
+                            {formatDate(paymentItem.date)} <br />
+                          </p>
+                          <hr></hr>
+                        </div>
+                      ))}
+                  </div>
+                </>
+              );
+            })()}
+          </Tabs.TabPane>
+        </Tabs>
+      </Card>
+    </div>
   ) : null;
   // Hàm tính toán doanh thu
   const calculateRevenue = () => {

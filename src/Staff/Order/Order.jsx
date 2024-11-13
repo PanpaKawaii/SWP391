@@ -425,7 +425,7 @@ const Order = () => {
       ) : filteredPendingBookings.length === 0 ? (
         <Empty
           image={Empty.PRESENTED_IMAGE_SIMPLE}
-          description={<span>Không tìm thấy kết quả cho "{searchTerm}"</span>}
+          description={<span>Không tìm thấy kết quả cho :{searchTerm}</span>}
         />
       ) : (
         <Table

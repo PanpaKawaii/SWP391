@@ -503,9 +503,7 @@ const Customer = () => {
         pagination={{ pageSize: 4 }}
         bordered
       />
-      <button className="add-button" onClick={fetchUserData}>
-        <ReloadOutlined />
-      </button>
+
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Chỉnh sửa thông tin người dùng</Modal.Title>
@@ -552,11 +550,30 @@ const Customer = () => {
               <Form.Group className="mb-3">
                 <Form.Label>Loại tài khoản</Form.Label>
                 <Form.Control
-                  type="text"
+                  as="select"
                   name="type"
                   value={editedUser.type}
                   onChange={handleInputChange}
-                />
+                >
+                  <option value="VIP">VIP</option>
+                  <option value="Regular">Khách hàng thường</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Mô tả</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="description"
+                  value={editedUser.description}
+                  onChange={handleInputChange}
+                >
+                  <option value="Khách hàng ưu tiên">Khách hàng ưu tiên</option>
+                  <option value="Khách hàng mới">Khách hàng mới</option>
+                  <option value="Khách hàng cũ">Khách hàng cũ</option>
+                  <option value="Khách hàng tiềm năng">
+                    Khách hàng tiềm năng
+                  </option>
+                </Form.Control>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Điểm</Form.Label>
@@ -566,16 +583,6 @@ const Customer = () => {
                   value={editedUser.point}
                   onChange={handleInputChange}
                   step={100}
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Mô tả</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  name="description"
-                  value={editedUser.description}
-                  onChange={handleInputChange}
                 />
               </Form.Group>
             </Form>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Table,
   message,
-  Popconfirm,
   Button,
   Modal,
   Form,
@@ -13,7 +12,7 @@ import {
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faStar } from "@fortawesome/free-solid-svg-icons";
-import { ReloadOutlined, LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 import "./PODManage.css";
 
 export default function PODManage() {
@@ -60,6 +59,23 @@ export default function PODManage() {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await Promise.all([
+          fetchPODData(),
+          fetchStoreData(),
+          fetchUtilityData(),
+        ]);
+      } catch (error) {
+        console.error("Lỗi khi tải dữ liệu:", error);
+        message.error("Có lỗi xảy ra khi tải dữ liệu.");
+      }
+    };
+
+    fetchData();
+  }, []); // Đảm bảo rằng useEffect không bị gọi điều kiện
+
   if (
     podData.length === 0 &&
     storeData.length === 0 &&
@@ -71,17 +87,6 @@ export default function PODManage() {
       </p>
     );
   }
-
-  // const handleDelete = async (podId) => {
-  //   try {
-  //     await axios.delete(`${apiPod}/${podId}`);
-  //     message.success("Xoá thành công");
-  //     fetchPODData();
-  //   } catch (error) {
-  //     console.error("Error deleting POD:", error);
-  //     message.error("Xoá không thành công");
-  //   }
-  // };
 
   const handleEdit = async (values) => {
     try {
@@ -115,12 +120,6 @@ export default function PODManage() {
     const pods = podData.filter((pod) => pod.storeId === storeId);
     setStorePods(pods);
   };
-
-  useEffect(() => {
-    fetchPODData();
-    fetchStoreData();
-    fetchUtilityData();
-  }, []);
 
   const storeColumns = [
     {

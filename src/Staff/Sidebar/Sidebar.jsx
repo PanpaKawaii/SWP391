@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
-import { UserAuth } from '../../Context/AuthContext'
+import { UserAuth } from "../../Context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSquare,
@@ -22,13 +22,13 @@ const Sidebar = () => {
 
   const { logout } = UserAuth();
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('UserId')
-    localStorage.removeItem('UserRole')
-    localStorage.removeItem('isLogIn');
-    localStorage.setItem('isLogIn', 'false');
+    localStorage.removeItem("token");
+    localStorage.removeItem("UserId");
+    localStorage.removeItem("UserRole");
+    localStorage.removeItem("isLogIn");
+    localStorage.setItem("isLogIn", "false");
     logout();
-    window.location.href = 'http://localhost:5173/signinsignup';
+    window.location.href = "http://localhost:5173/signinsignup";
   };
 
   return (
@@ -62,7 +62,7 @@ const Sidebar = () => {
             }}
           >
             <span>
-              <FontAwesomeIcon className="icon" icon={faBurger} /> Order thêm
+              <FontAwesomeIcon className="icon" icon={faBurger} /> Thêm dịch vụ
             </span>
           </Link>
 

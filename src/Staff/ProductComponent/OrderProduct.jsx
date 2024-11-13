@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+
 const { Option } = Select;
 
 const OrderProduct = () => {
@@ -22,14 +23,20 @@ const OrderProduct = () => {
   const apiProduct = "https://localhost:7166/api/Product";
   const apiBooking = "https://localhost:7166/api/Booking";
   const apiPayment = "https://localhost:7166/api/Payment";
+  const apiStore = "https://localhost:7166/api/Store";
+  const apiPod = "https://localhost:7166/api/Pod"; // Giả sử bạn có API cho Pod
 
   const [form] = Form.useForm();
   const [products, setProducts] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [stores, setStores] = useState([]);
+  const [pods, setPods] = useState([]); // State cho Pod
   const [nextBookingOrderId, setNextBookingOrderId] = useState(null);
   const [nextPaymentId, setNextPaymentId] = useState(0);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
 
+  // Fetch dữ liệu từ API
   const fetchBookingData = async () => {
     try {
       const response = await axios.get(apiBooking);
@@ -39,10 +46,32 @@ const OrderProduct = () => {
       message.error("Không thể lấy danh sách booking");
     }
   };
+
+  const fetchStoreData = async () => {
+    try {
+      const response = await axios.get(apiStore);
+      setStores(response.data);
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách store:", error);
+      message.error("Không thể lấy danh sách store");
+    }
+  };
+
+  const fetchPodData = async () => {
+    try {
+      const response = await axios.get(apiPod);
+      setPods(response.data); // Lưu danh sách pod
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách pod:", error);
+      message.error("Không thể lấy danh sách pod");
+    }
+  };
+
   const fetchProducts = async () => {
     try {
       const response = await axios.get(apiProduct);
       setProducts(response.data);
+      setFilteredProducts(response.data); // Khởi tạo danh sách sản phẩm đã lọc
     } catch (error) {
       console.error("Lỗi khi lấy danh sách sản phẩm:", error);
       message.error("Không thể lấy danh sách sản phẩm");
@@ -51,13 +80,11 @@ const OrderProduct = () => {
 
   const fetchNextBookingOrderId = async () => {
     try {
-      // Fetch cả hai ID song song
       const [bookingOrderResponse, paymentResponse] = await Promise.all([
         axios.get(apiOrderProduct),
         axios.get(apiPayment),
       ]);
 
-      // Xử lý BookingOrder ID
       const bookingOrders = bookingOrderResponse.data;
       const maxBookingOrderId = Math.max(
         ...bookingOrders.map((order) => order.id),
@@ -65,7 +92,6 @@ const OrderProduct = () => {
       );
       setNextBookingOrderId(maxBookingOrderId + 1);
 
-      // Xử lý Payment ID
       const payments = paymentResponse.data;
       const maxPaymentId = Math.max(
         ...payments.map((payment) => payment.id),
@@ -82,7 +108,26 @@ const OrderProduct = () => {
     fetchProducts();
     fetchBookingData();
     fetchNextBookingOrderId();
+    fetchStoreData();
+    fetchPodData(); // Fetch pod data
   }, []);
+
+  const handleFilterProductRegardingToStore = (value) => {
+    const selectedBooking = bookings.find((b) => b.id === value);
+    if (selectedBooking) {
+      const podId = selectedBooking.podId; // Lấy podId từ booking đã chọn
+      const selectedPod = pods.find((pod) => pod.id === podId); // Tìm pod tương ứng
+
+      if (selectedPod) {
+        const storeId = selectedPod.storeId; // Lấy storeId từ pod
+        const filtered = products.filter(
+          (product) => product.storeId === storeId // Lọc sản phẩm theo storeId
+        );
+        setFilteredProducts(filtered); // Cập nhật danh sách sản phẩm đã lọc
+        form.setFieldsValue({ productId: undefined }); // Reset sản phẩm đã chọn
+      }
+    }
+  };
 
   const validateQuantity = (rule, value) => {
     const productId = form.getFieldValue("productId");
@@ -98,7 +143,7 @@ const OrderProduct = () => {
 
     return Promise.resolve();
   };
-  // điều chỉnh giá theo số lượng
+
   const handleQuantityChange = (value) => {
     const productId = form.getFieldValue("productId");
     const selectedProduct = products.find((p) => p.id === productId);
@@ -109,13 +154,11 @@ const OrderProduct = () => {
 
   const submitBookingOrder = async (values) => {
     try {
-      // Validate the amount
       if (!values.amount || values.amount <= 0) {
         message.error("Số tiền thanh toán không hợp lệ");
         return;
       }
 
-      // Validate the booking
       const booking = bookings.find((b) => b.id === values.bookingId);
       if (!booking || booking.status !== "Đang diễn ra") {
         message.error(
@@ -162,13 +205,13 @@ const OrderProduct = () => {
       // Chỉ chuyển hướng và reset form nếu cả hai operation đều thành công
       navigate("/history");
       form.resetFields();
-      // Fetch lại ID cho lần tiếp theo
       fetchNextBookingOrderId();
     } catch (error) {
       console.error("Lỗi khi thêm BookingOrder:", error);
       message.error("Có lỗi xảy ra khi thêm BookingOrder");
     }
   };
+
   const handleProductChange = (value) => {
     const selectedProduct = products.find((p) => p.id === value);
     if (selectedProduct) {
@@ -184,11 +227,11 @@ const OrderProduct = () => {
     }).format(value);
   };
 
-  // Hàm để vô hiệu hóa các ngày không phải là hôm nay
   const disabledDate = (currentDay) => {
     const today = moment().startOf("day");
     return currentDay && currentDay.valueOf() !== today.valueOf();
   };
+
   const initialDate = moment().startOf("day");
 
   return (
@@ -218,15 +261,32 @@ const OrderProduct = () => {
           <InputNumber style={{ width: "100%" }} disabled />
         </Form.Item>
         <Form.Item
+          name="bookingId"
+          label="Booking ID"
+          rules={[{ required: true }]}
+        >
+          <Select onChange={handleFilterProductRegardingToStore}>
+            {bookings
+              .filter((booking) => booking.status === "Đang diễn ra")
+              .map((booking) => (
+                <Option key={booking.id} value={booking.id}>
+                  {`Booking ID: ${booking.id} - Ngày: ${moment(
+                    booking.date
+                  ).format("DD/MM/YYYY")}`}
+                </Option>
+              ))}
+          </Select>
+        </Form.Item>
+        <Form.Item
           name="productId"
           label="Sản phẩm"
           rules={[{ required: true }]}
         >
           <Select onChange={handleProductChange}>
-            {products
+            {filteredProducts
               .filter(
                 (product) => product.status !== "Đã hết" && product.stock > 0
-              ) // Lọc sản phẩm
+              )
               .map((product) => (
                 <Option key={product.id} value={product.id}>
                   {product.name} - {formatCurrency(product.price)}
@@ -239,7 +299,7 @@ const OrderProduct = () => {
           label="Số lượng"
           rules={[
             { required: true, message: "Vui lòng nhập số lượng" },
-            { validator: validateQuantity }, // Sử dụng hàm xác thực
+            { validator: validateQuantity },
           ]}
         >
           <InputNumber
@@ -248,24 +308,6 @@ const OrderProduct = () => {
             style={{ width: "100%" }}
           />
         </Form.Item>
-        <Form.Item
-          name="bookingId"
-          label="Booking ID"
-          rules={[{ required: true }]}
-        >
-          <Select>
-            {bookings
-              .filter((booking) => booking.status === "Đang diễn ra") // Lọc các booking có trạng thái "Đang diễn ra"
-              .map((booking) => (
-                <Option key={booking.id} value={booking.id}>
-                  {`Booking ID: ${booking.id} - Ngày: ${moment(
-                    booking.date
-                  ).format("DD/MM/YYYY")}`}
-                </Option>
-              ))}
-          </Select>
-        </Form.Item>
-
         <Form.Item
           name="date"
           label="Ngày"
@@ -276,7 +318,7 @@ const OrderProduct = () => {
         </Form.Item>
 
         <Form.Item name="status" label="Trạng thái" hidden>
-          <Input value="Đã thanh toán"></Input>
+          <Input value="Đã thanh toán" />
         </Form.Item>
         <Form.Item name="amount" label="Tổng tiền">
           <InputNumber
@@ -298,7 +340,7 @@ const OrderProduct = () => {
               icon={<FontAwesomeIcon icon={faBoxOpen} />}
               block
             >
-              Thêm BookingOrder
+              Thêm dịch vụ
             </Button>
           </Popconfirm>
         </Form.Item>
