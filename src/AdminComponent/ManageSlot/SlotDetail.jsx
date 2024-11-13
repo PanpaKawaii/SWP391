@@ -4,14 +4,16 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const SlotDetail = () => {
-  const { podId } = useParams(); // Lấy id từ URL
+  const podId = useParams(); // Lấy id từ URL
   const [slots, setSlots] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchSlots = async () => {
     try {
-      const response = await axios.get(`https://localhost:7166/api/Slot?podId=${podId}`); // Gọi API để lấy slot theo idpod
-      setSlots(response.data.filter(slot => slot.podId === podId)); // Filter slots by podId
+      const response = await axios.get(`https://localhost:7166/api/Slot`); // Gọi API để lấy slot theo idpod
+      setSlots(response.data.filter((slot) => slot.podId == podId.id)); // Filter slots by podId
+      console.log("podId:", podId);
+      console.log(response.data.filter((slot) => slot.podId == podId.id));
     } catch (error) {
       console.error("Failed to fetch slots:", error);
       message.error("Không thể tải dữ liệu slot");
@@ -39,7 +41,7 @@ const SlotDetail = () => {
       dataIndex: "name",
       key: "name",
     },
-    
+
     {
       title: "Trạng thái",
       dataIndex: "status",
@@ -50,10 +52,10 @@ const SlotDetail = () => {
 
   return (
     <div>
-      <h1>Danh sách Slot cho POD ID: {podId}</h1>
+      <h1>Danh sách Slot cho POD ID: {podId.id}</h1>
       <Table
         columns={columns}
-        dataSource={slots.filter(slot => slot.podId === podId)} // Filter slots for the specific pod
+        dataSource={slots.filter((slot) => slot.podId == podId.id)} // Filter slots for the specific pod
         rowKey="id"
         pagination={{ pageSize: 10 }}
       />
@@ -61,4 +63,4 @@ const SlotDetail = () => {
   );
 };
 
-export default SlotDetail; 
+export default SlotDetail;

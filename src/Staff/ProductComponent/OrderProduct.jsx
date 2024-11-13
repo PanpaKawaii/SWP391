@@ -291,21 +291,22 @@ const OrderProduct = () => {
                 const slots = getSlotsForBooking(booking.id);
                 return (
                   <Option key={booking.id} value={booking.id}>
-                    <hr></hr>
-
                     {`Booking ID: ${booking.id} - Ngày: ${moment(
                       booking.date
                     ).format("DD/MM/YYYY")}`}
                     {pod ? ` - Pod: ${pod.name}` : ""}
                     {slots.length > 0 ? (
-                      <div>
-                        {slots.map((slot) => (
-                          <div key={slot.id}>
-                            {slot.name} ({slot.startTime}:00 - {slot.endTime}
+                      <span>
+                        {slots.map((slot, index) => (
+                          <span key={slot.id}>
+                            {" "}
+                            - {slot.name} ({slot.startTime}:00 - {slot.endTime}
                             :00)
-                          </div>
+                            {index < slots.length - 1 ? ", " : ""}{" "}
+                          </span>
                         ))}
-                      </div>
+                        <br></br>
+                      </span>
                     ) : (
                       " - Không có thông tin"
                     )}
