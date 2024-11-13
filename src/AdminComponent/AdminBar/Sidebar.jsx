@@ -132,9 +132,6 @@ const Sidebar = () => {
             <FontAwesomeIcon className="icon" icon={faMugHot} /> Quản lí sản
             phẩm
           </Link>
-          <Link to="/slot">
-            <FontAwesomeIcon className="icon" icon={faClock} /> Quản lí slot
-          </Link>
         </div>
 
         <button

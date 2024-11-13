@@ -1,0 +1,12 @@
+.admin-slot-detail-container{
+    padding: 20px;
+    .admin-slot-title{
+        display: flex;
+        justify-content: space-between;
+    }
+    .slot-button{
+        background-color: transparent;
+        color: black;
+        border: none;
+    }
+}

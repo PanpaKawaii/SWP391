@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Table, message, Spin, Modal, Form, Button, Checkbox } from "antd";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
+import "./style.css";
+import { Tag } from "antd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const SlotDetail = () => {
     const podId = useParams();
@@ -99,24 +103,47 @@ const SlotDetail = () => {
             title: "Trạng thái",
             dataIndex: "status",
             key: "status",
-        },
+            align: "center",
+            render: (status) => {
+              let color;
+              switch (status) {
+                case "Đang hoạt động":
+                  color = "green";
+                  break;
+                case "Dừng hoạt động":
+                  color = "red";
+                  break;
+                default:
+                  color = "default"; // You can set a default color if needed
+              }
+              return (
+                <Tag color={color} >
+                  {status}
+                </Tag>
+              );
+            },
+          },
         {
             title: 'Chỉnh sửa',
             key: 'edit',
             render: (record) => (
-                <Button type="primary" onClick={() => handleEdit(record)}>Chỉnh sửa</Button>
+                <Button className="slot-button" onClick={() => handleEdit(record)}>
+                    <FontAwesomeIcon icon={faEdit} />
+                </Button>
             ),
         },
     ];
 
     return (
-        <div>
-            <h1>Danh sách Slot cho POD ID: {podId.id}</h1>
-            <Button>
+        <div className="admin-slot-detail-container">
+            <div className="admin-slot-title">
+                <h1>Danh sách Slot:</h1>
+                <Button type="primary">
                 <Link style={{ color: "#FAFBFB", textDecoration: "none" }} to={`/addslot/${podId.id}`}>
                     Thêm Slot
                 </Link>
-            </Button>
+                </Button>
+            </div>
             <Table
                 columns={columns}
                 dataSource={slots}
