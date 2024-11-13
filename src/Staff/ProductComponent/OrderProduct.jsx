@@ -25,11 +25,13 @@ const OrderProduct = () => {
   const apiPayment = "https://localhost:7166/api/Payment";
   const apiStore = "https://localhost:7166/api/Store";
   const apiPod = "https://localhost:7166/api/Pod"; // Giả sử bạn có API cho Pod
+  const apiSlot = "https://localhost:7166/api/Slot";
 
   const [form] = Form.useForm();
   const [products, setProducts] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [stores, setStores] = useState([]);
+  const [slot, setSlots] = useState([]);
   const [pods, setPods] = useState([]); // State cho Pod
   const [nextBookingOrderId, setNextBookingOrderId] = useState(null);
   const [nextPaymentId, setNextPaymentId] = useState(0);
@@ -51,6 +53,16 @@ const OrderProduct = () => {
     try {
       const response = await axios.get(apiStore);
       setStores(response.data);
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách store:", error);
+      message.error("Không thể lấy danh sách store");
+    }
+  };
+
+  const fetchSlotData = async () => {
+    try {
+      const response = await axios.get(apiSlot);
+      setSlots(response.data);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách store:", error);
       message.error("Không thể lấy danh sách store");
@@ -268,13 +280,17 @@ const OrderProduct = () => {
           <Select onChange={handleFilterProductRegardingToStore}>
             {bookings
               .filter((booking) => booking.status === "Đang diễn ra")
-              .map((booking) => (
-                <Option key={booking.id} value={booking.id}>
-                  {`Booking ID: ${booking.id} - Ngày: ${moment(
-                    booking.date
-                  ).format("DD/MM/YYYY")}`}
-                </Option>
-              ))}
+              .map((booking) => {
+                const pod = pods.find((p) => p.id === booking.podId); // Tìm pod tương ứng
+                return (
+                  <Option key={booking.id} value={booking.id}>
+                    {`Booking ID: ${booking.id} - Ngày: ${moment(
+                      booking.date
+                    ).format("DD/MM/YYYY")}`}
+                    {pod ? ` - Pod: ${pod.name}` : ""} {/* Hiển thị tên pod */}
+                  </Option>
+                );
+              })}
           </Select>
         </Form.Item>
         <Form.Item

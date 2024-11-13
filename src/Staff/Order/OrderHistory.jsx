@@ -35,6 +35,8 @@ dayjs.extend(isBetween);
 const OrderHistory = () => {
   const [userData, setUserData] = useState([]);
   const [bookingData, setBookingData] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
+
   const [paymentData, setPaymentData] = useState([]);
   const [productData, setProductData] = useState([]);
   const [orderData, setOrderData] = useState([]);
@@ -55,6 +57,7 @@ const OrderHistory = () => {
   const apiProduct = "https://localhost:7166/api/Product";
   const apiSlot = "https://localhost:7166/api/Slot";
   const apiPod = "https://localhost:7166/api/Pod";
+  const apiCategory = "https://localhost:7166/api/Category";
 
   // API calls
   const fetchUserData = async () => {
@@ -74,7 +77,14 @@ const OrderHistory = () => {
       console.error("Failed to fetch user data:", error);
     }
   };
-
+  const fetchCategoryData = async () => {
+    try {
+      const response = await axios.get(apiCategory);
+      setCategoryData(response.data);
+    } catch (error) {
+      console.error("Failed to fetch user data:", error);
+    }
+  };
   const fetchBookingData = async () => {
     try {
       const response = await axios.get(apiBooking);
@@ -149,6 +159,7 @@ const OrderHistory = () => {
     fetchProductData();
     fetchSlotData();
     fetchPodData();
+    fetchCategoryData();
   }, []);
   // Hàm xử lý khi người dùng chọn khoảng thời gian
   const handleDateChange = (dates) => {
@@ -321,6 +332,23 @@ const OrderHistory = () => {
       if (!booking) {
         message.error("Không tìm thấy thông tin đặt chỗ");
         return;
+      }
+
+      // Kiểm tra điều kiện trước khi cập nhật trạng thái
+      if (newStatus === "Đã kết thúc" || newStatus === "Đã hoàn tiền") {
+        // Lặp qua các bookingOrder để cập nhật số lượng sản phẩm
+        for (const order of booking.bookingOrders) {
+          const product = productData.find((p) => p.id === order.productId);
+          const category = categoryData.find(
+            (c) => c.id === product.categoryId
+          );
+
+          // Kiểm tra điều kiện
+          if (product && category && category.name === "Đồ chơi") {
+            product.stock += order.quantity; // Tăng số lượng sản phẩm
+            await axios.put(`${apiProduct}/${product.id}`, product); // Cập nhật sản phẩm
+          }
+        }
       }
 
       await axios.put(`${apiBooking}/${bookingId}`, {
@@ -710,15 +738,15 @@ const OrderHistory = () => {
                   p.status === "Đã hoàn tiền"
               );
 
-              const handleProcessRefund = (amount) => {
-                // if (hasRefundedPayment) {
-                //   message.error(
-                //     "Booking này đã có payment được hoàn tiền. Không thể hoàn tiền nữa."
-                //   );
-                //   return;
-                // }
-                handleRefund(amount);
-              };
+              // const handleProcessRefund = (amount) => {
+              //   // if (hasRefundedPayment) {
+              //   //   message.error(
+              //   //     "Booking này đã có payment được hoàn tiền. Không thể hoàn tiền nữa."
+              //   //   );
+              //   //   return;
+              //   // }
+              //   handleRefund(amount);
+              // };
 
               return (
                 <>
@@ -733,7 +761,7 @@ const OrderHistory = () => {
                       {formatCurrency(totalAmount)}
                       <Popconfirm
                         title="Bạn có chắc chắn muốn hoàn tiền cho cả POD và dịch vụ ?"
-                        onConfirm={() => handleProcessRefund(totalAmount)} // Gọi hàm hoàn tiền với số tiền tương ứng
+                        onConfirm={() => handleRefund(totalAmount)} // Gọi hàm hoàn tiền với số tiền tương ứng
                         okText="Có"
                         cancelText="Không"
                       >
@@ -771,9 +799,7 @@ const OrderHistory = () => {
                             </span>{" "}
                             <Popconfirm
                               title="Bạn có chắc chắn muốn hoàn tiền không?"
-                              onConfirm={() =>
-                                handleProcessRefund(paymentItem.amount)
-                              } // Gọi hàm hoàn tiền với số tiền tương ứng
+                              onConfirm={() => handleRefund(paymentItem.amount)} // Gọi hàm hoàn tiền với số tiền tương ứng
                               okText="Có"
                               cancelText="Không"
                             >
