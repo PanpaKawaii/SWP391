@@ -282,7 +282,7 @@ const OrderHistory = () => {
         color = "white";
         backgroundColor = "#0dcaf0"; // Màu nền xanh dương
         break;
-      case "Đã huỷ":
+      case "Đã hủy":
         color = "white";
         backgroundColor = "#dc3545"; // Màu nền đỏ
         break;
@@ -732,11 +732,11 @@ const OrderHistory = () => {
                   .reduce((sum, paymentItem) => sum + paymentItem.amount, 0) ||
                 0;
               // Kiểm tra xem có payment nào đã hoàn tiền không
-              const hasRefundedPayment = paymentData.some(
-                (p) =>
-                  p.bookingId === selectedBooking.id &&
-                  p.status === "Đã hoàn tiền"
-              );
+              // const hasRefundedPayment = paymentData.some(
+              //   (p) =>
+              //     p.bookingId === selectedBooking.id &&
+              //     p.status === "Đã hoàn tiền"
+              // );
 
               // const handleProcessRefund = (amount) => {
               //   // if (hasRefundedPayment) {

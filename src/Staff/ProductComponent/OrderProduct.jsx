@@ -122,6 +122,7 @@ const OrderProduct = () => {
     fetchNextBookingOrderId();
     fetchStoreData();
     fetchPodData(); // Fetch pod data
+    fetchSlotData();
   }, []);
 
   const handleFilterProductRegardingToStore = (value) => {
@@ -140,7 +141,12 @@ const OrderProduct = () => {
       }
     }
   };
-
+  const getSlotsForBooking = (bookingId) => {
+    const slots = slot.filter((slot) =>
+      slot.bookings.some((booking) => booking.id === bookingId)
+    );
+    return slots;
+  };
   const validateQuantity = (rule, value) => {
     const productId = form.getFieldValue("productId");
     const selectedProduct = products.find((p) => p.id === productId);
@@ -281,13 +287,28 @@ const OrderProduct = () => {
             {bookings
               .filter((booking) => booking.status === "Đang diễn ra")
               .map((booking) => {
-                const pod = pods.find((p) => p.id === booking.podId); // Tìm pod tương ứng
+                const pod = pods.find((p) => p.id === booking.podId);
+                const slots = getSlotsForBooking(booking.id);
                 return (
                   <Option key={booking.id} value={booking.id}>
+                    <hr></hr>
+
                     {`Booking ID: ${booking.id} - Ngày: ${moment(
                       booking.date
                     ).format("DD/MM/YYYY")}`}
-                    {pod ? ` - Pod: ${pod.name}` : ""} {/* Hiển thị tên pod */}
+                    {pod ? ` - Pod: ${pod.name}` : ""}
+                    {slots.length > 0 ? (
+                      <div>
+                        {slots.map((slot) => (
+                          <div key={slot.id}>
+                            {slot.name} ({slot.startTime}:00 - {slot.endTime}
+                            :00)
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      " - Không có thông tin"
+                    )}
                   </Option>
                 );
               })}
