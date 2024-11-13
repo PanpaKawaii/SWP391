@@ -34,11 +34,6 @@ DROP TABLE [Type]
 GO
 DROP TABLE [Category]
 GO
---Booking đã có Rating
---Booking đã có CurrentDate
---Pod còn giữ Rating
---Store đã có Image
---Store đã có Status
 
 CREATE TABLE [Utility] (
 	Id				INT NOT NULL,

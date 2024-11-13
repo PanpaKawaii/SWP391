@@ -181,7 +181,7 @@ export default function UserBooking() {
             thisPayment.method !== 'Thanh toán bằng tiền mặt' &&
             thisBooking.status === 'Chưa diễn ra' &&
             // 15 minutes
-            new Date().getTime() - new Date(thisBooking.currentDate).getTime() > 1 * 60 * 1000
+            new Date().getTime() - new Date(thisBooking.currentDate).getTime() > 15 * 60 * 1000
         ) {
             UpdateBookingStatus(bookingId);
         }
@@ -224,7 +224,7 @@ export default function UserBooking() {
     const calculateTimeLeft = (bookingDate) => {
         const now = new Date().getTime();
         const bookingTime = new Date(bookingDate).getTime();
-        const timeLimit = 1 * 60 * 1000; // 15 minutes in milliseconds
+        const timeLimit = 15 * 60 * 1000; // 15 minutes in milliseconds
         const difference = (bookingTime + timeLimit) - now;
 
         if (difference <= 0) return null;
