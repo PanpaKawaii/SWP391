@@ -257,12 +257,7 @@ const OrderHistory = () => {
       return [];
     }
     // Trả về tất cả các option cho các trạng thái khác
-    return [
-      { value: "Đã kết thúc", label: "Đã kết thúc" },
-      { value: "Chưa diễn ra", label: "Chưa diễn ra" },
-      { value: "Đang diễn ra", label: "Đang diễn ra" },
-      { value: "Đã hoàn tiền", label: "Đã hoàn tiền" },
-    ];
+    return [];
   };
 
   const renderCommonStatus = (status) => {
@@ -722,9 +717,9 @@ const OrderHistory = () => {
           <Tabs.TabPane tab="Thông tin thanh toán" key="3">
             {/* Nội dung thông tin thanh toán */}
             {(() => {
-              const payment = paymentData.find(
-                (p) => p.bookingId === selectedBooking.id
-              );
+              // const payment = paymentData.find(
+              //   (p) => p.bookingId === selectedBooking.id
+              // );
               // Tính tổng số tiền từ tất cả các payment có bookingId tương ứng
               const totalAmount =
                 paymentData
