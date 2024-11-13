@@ -47,7 +47,7 @@ export default function SideBar() {
                     <Link to='/booking/store'><i className='fa-solid fa-house-flag icon'></i> Chi nhánh</Link>
                     <Link to='/booking/pod'><i className='fa-solid fa-list icon'></i> Đặt chỗ</Link>
                     <Link to='/contact'><i className='fa-regular fa-address-card icon'></i> Liên hệ</Link>
-                    <Link to='/paymentstatus/'><i className='fa-solid fa-money-bill icon'></i> Thanh toán</Link>
+                    {/* <Link to='/paymentstatus/'><i className='fa-solid fa-money-bill icon'></i> Thanh toán</Link> */}
 
                     {isNaN(id) ?
                         (<></>)
