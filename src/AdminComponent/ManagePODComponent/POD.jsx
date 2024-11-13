@@ -227,6 +227,16 @@ export default function POD() {
       },
     },
     {
+      title: "Slot",
+      key: "slot",
+      align: "center",
+      render: (text, record) => (
+        <Link to={`/slotdetail/${record.id}`}> {/* Ensure record.id is defined */}
+                  <Button type="link">Chi tiết</Button>
+        </Link>
+      ),
+    },
+    {
       title: "Điều chỉnh",
       key: "id",
       dataIndex: "id",

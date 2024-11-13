@@ -54,6 +54,8 @@ import AdminAddStaff from "./AdminComponent/ManageUserComponent/AddStaff.jsx";
 import AdminCustomer from "./AdminComponent/ManageUserComponent/Customer.jsx";
 import AdminAddPOD from "./AdminComponent/ManagePODComponent/AddPOD.jsx";
 import AdminProduct from "./AdminComponent/ProductComponent/Product.jsx";
+import AdminSlot from "./AdminComponent/ManageSlot/Slot.jsx";
+import AdminSlotDetail from "./AdminComponent/ManageSlot/SlotDetail.jsx";
 // import Order from "../AdminComponent/Order/Order.jsx";
 import AdminOrderHistory from "./AdminComponent/Order/OrderHistory.jsx";
 import AdminAddProduct from "./AdminComponent/ProductComponent/AddProduct.jsx";
@@ -207,6 +209,8 @@ function App() {
               <Route path="/addpod" element={<AdminAddPOD />}></Route>
               <Route path="/addStaff" element={<AdminAddStaff />}></Route>
               <Route path="/product" element={<AdminProduct />}></Route>
+              <Route path="/slot" element={<AdminSlot />}></Route>
+              <Route path="/slotdetail/:id" element={<AdminSlotDetail />}></Route>
               <Route path="/history" element={<AdminOrderHistory />}></Route>
               {/* <Route path="/order" element={<Order />}></Route> */}
               <Route path="/addproduct" element={<AdminAddProduct />}></Route>

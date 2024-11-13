@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { UserAuth } from '../../Context/AuthContext'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons"; // Import icon
-
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 import {
   faSquare,
   faUser,
@@ -131,6 +131,9 @@ const Sidebar = () => {
           <Link to="/product">
             <FontAwesomeIcon className="icon" icon={faMugHot} /> Quản lí sản
             phẩm
+          </Link>
+          <Link to="/slot">
+            <FontAwesomeIcon className="icon" icon={faClock} /> Quản lí slot
           </Link>
         </div>
 
