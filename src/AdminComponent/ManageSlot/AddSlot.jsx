@@ -45,7 +45,7 @@ export default function AddSlot() {
       name: slotName,
       startTime: parseInt(slotTimeStart),
       endTime: parseInt(slotTimeEnd),
-      price: 80000,
+      price: price,
       status: status ? "Đang hoạt động" : "Không hoạt động",
       podId: podId,
     };
