@@ -40,20 +40,43 @@ export default function AddSlot() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting new slot with podId:", podId);
+    
+    // New validation logic
+    const missingFields = [];
+    
+    if (!slotName) {
+        missingFields.push("Tên Slot");
+        slotNameRef.current.focus(); // Focus on the first empty field
+    }
+    if (!slotTimeStart) {
+        missingFields.push("Thời gian bắt đầu");
+        if (missingFields.length === 1) slotTimeStartRef.current.focus(); // Focus on the first empty field
+    }
+    if (!slotTimeEnd) {
+        missingFields.push("Thời gian kết thúc");
+        if (missingFields.length === 1) slotTimeEndRef.current.focus(); // Focus on the first empty field
+    }
+
+    // If there are missing fields, show an error message
+    if (missingFields.length > 0) {
+        message.error(`Vui lòng nhập: ${missingFields.join(", ")}`); // Error message
+        return; // Stop if there are missing fields
+    }
+
     const newSlot = {
-      id: maxId + 1,
-      name: slotName,
-      startTime: parseInt(slotTimeStart),
-      endTime: parseInt(slotTimeEnd),
-      price: price,
-      status: status ? "Đang hoạt động" : "Không hoạt động",
-      podId: podId,
+        id: maxId + 1,
+        name: slotName,
+        startTime: parseInt(slotTimeStart),
+        endTime: parseInt(slotTimeEnd),
+        price: price,
+        status: status ? "Đang hoạt động" : "Không hoạt động",
+        podId: podId,
     };
     console.log("Sending new slot:", newSlot);
     try {
       const response = await axios.post("https://localhost:7166/api/Slot", newSlot);
       console.log("Response:", response.data);
-      message.success("Slot added successfully!");
+      message.success("Slot được thêm thành công!");
       navigate(`/slotdetail/${podId}`);
       setSlotName("");
       setSlotTimeStart("");
@@ -62,13 +85,13 @@ export default function AddSlot() {
     } catch (error) {
       if (error.response) {
         console.error("Error adding slot:", error.response.data);
-        message.error(`Could not add slot: ${error.response.data.message || error.response.data}`);
+        message.error(`Không thể thêm slot: ${error.response.data.message || error.response.data}`);
       } else if (error.request) {
         console.error("No response received:", error.request);
-        message.error("No response from server. Please try again later.");
+        message.error("Không có phản hồi từ server. Vui lòng thử lại sau.");
       } else {
         console.error("Error:", error.message);
-        message.error("An error occurred. Please try again.");
+        message.error("Đã xảy ra lỗi. Vui lòng thử lại.");
       }
     }
   };
