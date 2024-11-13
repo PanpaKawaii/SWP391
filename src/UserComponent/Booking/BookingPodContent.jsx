@@ -266,7 +266,7 @@ export default function BookingPodContent() {
                                                 {/* <span style={{ color: 'gold', fontSize: '1.3em' }}><b>0</b><i className='fa-solid fa-star'></i></span> */}
                                             </>
                                         }
-                                        <p>{getSlotPrice(pod.id).toLocaleString('vi-VN')}đ/slot</p>
+                                        <p>{getSlotPrice(pod.id)?.toLocaleString('vi-VN')}đ/slot</p>
                                     </td>
                                     <td>
                                         {getTypeName(pod.id)}

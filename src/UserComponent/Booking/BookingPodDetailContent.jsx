@@ -449,7 +449,7 @@ export default function BookingPodDetailContent() {
                             <div className='payment-card'>
                                 <Card>
                                     <div className='payment-card-title'>
-                                        <h1><b>{AvailableSLOTs[0].price.toLocaleString('vi-VN')}đ/slot</b></h1>
+                                        <h1><b>{AvailableSLOTs[0]?.price?.toLocaleString('vi-VN')}đ/slot</b></h1>
                                     </div>
                                     <Form className='form-card' onSubmit={handleBooking}>
                                         {id ?
