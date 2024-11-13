@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, message, Spin } from "antd";
+import { Table, message, Spin, Modal } from "antd";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Button } from "antd";
@@ -11,6 +11,8 @@ const SlotDetail = () => {
     const [slots, setSlots] = useState([]);
     const [loading, setLoading] = useState(true);
     console.log("podId:", podId);
+    const [isModalVisible, setIsModalVisible] = useState(false); // State to control modal visibility
+    const [currentSlot, setCurrentSlot] = useState(null); // State to hold the current slot being edited
 
     const fetchSlots = async () => {
         try {
@@ -27,6 +29,28 @@ const SlotDetail = () => {
     useEffect(() => {
         fetchSlots();
     }, [podId]);
+
+    const handleEdit = (record) => {
+        setCurrentSlot(record); // Set the current slot to be edited
+        setIsModalVisible(true); // Show the modal
+    };
+
+    const handleOk = async () => {
+        try {
+            await axios.put(`https://localhost:7166/api/Slot/${currentSlot.id}`, currentSlot); // Call API to update the slot
+            message.success("Cập nhật slot thành công"); // Success message
+            fetchSlots(); // Refresh the slots after updating
+        } catch (error) {
+            console.error("Failed to update slot:", error);
+            message.error("Cập nhật slot thất bại"); // Error message
+        } finally {
+            setIsModalVisible(false); // Close the modal
+        }
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false); // Close the modal
+    };
 
     if (loading) {
         return <Spin />;
@@ -90,6 +114,34 @@ const SlotDetail = () => {
                 rowKey="id"
                 pagination={{ pageSize: 10 }}
             />
+            <Modal
+                title="Chỉnh sửa Slot"
+                visible={isModalVisible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
+                {/* You can add a form here to edit the slot details */}
+                {currentSlot && (
+                    <div>
+                        <p>
+                            Tên: <input type="text" value={currentSlot.name} onChange={(e) => setCurrentSlot({ ...currentSlot, name: e.target.value })} />
+                        </p>
+                        <p>
+                            Thời gian bắt đầu: <input type="starttime" value={currentSlot.startTime} onChange={(e) => setCurrentSlot({ ...currentSlot, startTime: e.target.value })} />
+                        </p>
+                        <p>
+                            Thời gian kết thúc: <input type="endtime" value={currentSlot.endTime} onChange={(e) => setCurrentSlot({ ...currentSlot, endTime: e.target.value })} />
+                        </p>
+                        <p>
+                            Giá: <input type="number" value={currentSlot.price} onChange={(e) => setCurrentSlot({ ...currentSlot, price: e.target.value })} />
+                        </p>
+                        <p>
+                            Trạng thái: <input type="text" value={currentSlot.status} onChange={(e) => setCurrentSlot({ ...currentSlot, status: e.target.value })} />
+                        </p>
+                        {/* Add more fields as necessary */}
+                    </div>
+                )}
+            </Modal>
         </div>
     );
 };
