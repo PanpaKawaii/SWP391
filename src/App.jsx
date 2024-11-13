@@ -56,6 +56,7 @@ import AdminAddPOD from "./AdminComponent/ManagePODComponent/AddPOD.jsx";
 import AdminProduct from "./AdminComponent/ProductComponent/Product.jsx";
 import AdminSlot from "./AdminComponent/ManageSlot/Slot.jsx";
 import AdminSlotDetail from "./AdminComponent/ManageSlot/SlotDetail.jsx";
+import AdminAddSlot from "./AdminComponent/ManageSlot/AddSlot.jsx";
 // import Order from "../AdminComponent/Order/Order.jsx";
 import AdminOrderHistory from "./AdminComponent/Order/OrderHistory.jsx";
 import AdminAddProduct from "./AdminComponent/ProductComponent/AddProduct.jsx";
@@ -211,6 +212,7 @@ function App() {
               <Route path="/product" element={<AdminProduct />}></Route>
               <Route path="/slot" element={<AdminSlot />}></Route>
               <Route path="/slotdetail/:id" element={<AdminSlotDetail />}></Route>
+              <Route path="/addslot/:id" element={<AdminAddSlot />}></Route>
               <Route path="/history" element={<AdminOrderHistory />}></Route>
               {/* <Route path="/order" element={<Order />}></Route> */}
               <Route path="/addproduct" element={<AdminAddProduct />}></Route>

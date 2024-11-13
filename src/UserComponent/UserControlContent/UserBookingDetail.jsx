@@ -176,12 +176,12 @@ export default function UserBookingDetail() {
     };
 
     const getSumBookingAmount = (bookingId) => {
-        const payments = PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId === bookingId) : [];
+        const payments = PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId === bookingId && payment.amount > 0) : [];
         return payments.reduce((sum, payment) => sum + payment.amount, 0);
     };
 
     const getSumSuccessBookingAmount = (bookingId) => {
-        const payments = PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId === bookingId && payment.status === 'Đã thanh toán') : [];
+        const payments = PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId === bookingId && payment.amount > 0 && (payment.status === 'Đã thanh toán' || payment.status === 'Đã hoàn tiền')) : [];
         return payments.reduce((sum, payment) => sum + payment.amount, 0);
     };
 
@@ -473,6 +473,8 @@ export default function UserBookingDetail() {
                                                             return <h4 style={{ color: '#28a745' }}><b>{getBookingPaymentStatus(thisBOOKING.id)}</b></h4>;
                                                         case 'Chưa thanh toán':
                                                             return <h4 style={{ color: '#ffc107' }}><b>{getBookingPaymentStatus(thisBOOKING.id)}</b></h4>;
+                                                        case 'Đã hoàn tiền':
+                                                            return <h4 style={{ color: '#fb8b24' }}><b>{getBookingPaymentStatus(thisBOOKING.id)}</b></h4>;
                                                         default:
                                                             return getBookingPaymentStatus(thisBOOKING.id);
                                                     }
