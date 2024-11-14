@@ -256,7 +256,6 @@ const OrderHistory = () => {
     if (currentStatus === "Đã hoàn tiền") {
       return [];
     }
-    // Trả về tất cả các option cho các trạng thái khác
     return [];
   };
 
@@ -321,6 +320,7 @@ const OrderHistory = () => {
   const filteredBookings = bookingData.filter((booking) =>
     filteredUsers.some((user) => user.id === booking.userId)
   );
+
   const handleUpdateBookingStatus = async (bookingId, newStatus) => {
     try {
       const booking = bookingData.find((b) => b.id === bookingId);
@@ -329,23 +329,39 @@ const OrderHistory = () => {
         return;
       }
 
-      // Kiểm tra điều kiện trước khi cập nhật trạng thái
-      if (newStatus === "Đã kết thúc" || newStatus === "Đã hoàn tiền") {
-        // Lặp qua các bookingOrder để cập nhật số lượng sản phẩm
-        for (const order of booking.bookingOrders) {
-          const product = productData.find((p) => p.id === order.productId);
-          const category = categoryData.find(
-            (c) => c.id === product.categoryId
-          );
-
-          // Kiểm tra điều kiện
-          if (product && category && category.name === "Đồ chơi") {
-            product.stock += order.quantity; // Tăng số lượng sản phẩm
-            await axios.put(`${apiProduct}/${product.id}`, product); // Cập nhật sản phẩm
-          }
-        }
+      // Cập nhật điểm cho người dùng
+      const user = userData.find((user) => user.id === booking.userId);
+      if (!user) {
+        console.error("User not found");
+        return;
       }
 
+      let pointsToAdd = 0; // Khởi tạo biến điểm
+
+      // Sử dụng if-else để xác định số điểm cần thêm
+      if (newStatus === "Đã kết thúc" || newStatus === "Đã hoàn tiền") {
+        pointsToAdd = 100; // Thêm 100 điểm nếu trạng thái là "Đã kết thúc"
+      }
+      // Cập nhật điểm nếu có điểm để thêm
+      if (pointsToAdd > 0) {
+        const updatedUser = {
+          ...user,
+          point: user.point + pointsToAdd,
+        };
+
+        // Thay thế bằng token thực tế của bạn
+        const token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYW5nbmdvY2hhaXRyaWV1QGdtYWlsLmNvbSIsImp0aSI6ImE5MmUwOTBkLTQ2NmEtNDE2My1hMDQ3LWUyOWNjYjExOGE2OCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiOSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMzMDc1ODUxLCJpc3MiOiJQb2RCb29raW5nIiwiYXVkIjoiUG9kV2ViIn0.SljDy518ZlaoY5hp6kKZvBp3-j5vXItyHQ0H7Y0ik3o";
+
+        // Gửi yêu cầu cập nhật người dùng với token
+        await axios.put(`${apiUser}/${updatedUser.id}`, updatedUser, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Thêm token vào header
+          },
+        });
+      }
+
+      // Cập nhật trạng thái booking
       await axios.put(`${apiBooking}/${bookingId}`, {
         ...booking,
         status: newStatus,
@@ -421,7 +437,7 @@ const OrderHistory = () => {
         status: "Đã hoàn tiền",
         amount: -refundAmount, // Sử dụng giá trị amount được truyền vào
         date: dayjs().format(),
-        method: payment.method, // Giữ nguyên phương thức thanh toán
+        method: "Hoàn tiền trực tiếp", // Giữ nguyên phương thức thanh toán
       };
 
       await axios.post(apiPayment, newPayment); // Gửi yêu cầu tạo payment mới
@@ -720,6 +736,7 @@ const OrderHistory = () => {
               // const payment = paymentData.find(
               //   (p) => p.bookingId === selectedBooking.id
               // );
+
               // Tính tổng số tiền từ tất cả các payment có bookingId tương ứng
               const totalAmount =
                 paymentData
