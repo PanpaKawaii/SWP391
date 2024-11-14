@@ -393,7 +393,7 @@ export default function BookingPodDetailContent() {
 
                         <div className='detail-container'>
                             <div className='short-detail'>
-                                <h3><b>{thisSTORE ? `${thisSTORE.name}: ${thisSTORE.address} / Hotline: ${thisSTORE.contact}` : 'Store not found'}</b></h3>
+                                <h3><b>{thisSTORE ? `${thisSTORE.name}: ${thisSTORE.address} / Liên hệ: ${thisSTORE.contact}` : 'Store not found'}</b></h3>
                                 <p>{thisTYPE ? `${thisTYPE.name} / Sức chứa: ${thisTYPE.capacity} người` : 'Type not found'}</p>
 
                                 <div className='favorite'>
