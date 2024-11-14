@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const SlotDetail = () => {
-    const podId = useParams();
+    const podId = useParams();// podId có thể truy cập vào id của pod
     const [slots, setSlots] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -17,7 +17,7 @@ const SlotDetail = () => {
     const fetchSlots = async () => {
         try {
             const response = await axios.get(`https://localhost:7166/api/Slot`);
-            setSlots(response.data.filter((slot) => slot.podId == podId.id));
+            setSlots(response.data.filter((slot) => slot.podId == podId.id)); // lọc ra slot
         } catch (error) {
             console.error("Failed to fetch slots:", error);
             message.error("Không thể tải dữ liệu slot");
@@ -169,10 +169,10 @@ const SlotDetail = () => {
                             <input type="text" name="name" value={currentSlot.name} onChange={handleInputChange} required style={{ width: '100%' }} />
                         </Form.Item>
                         <Form.Item label="Thời gian bắt đầu">
-                            <input type="number" name="startTime" value={currentSlot.startTime} onChange={handleInputChange} required style={{ width: '100%' }} />
+                            <input type="text" name="startTime" value={currentSlot.startTime} onChange={handleInputChange} required style={{ width: '100%' }} />
                         </Form.Item>
                         <Form.Item label="Thời gian kết thúc">
-                            <input type="number" name="endTime" value={currentSlot.endTime} onChange={handleInputChange} required style={{ width: '100%' }} />
+                            <input type="text" name="endTime" value={currentSlot.endTime} onChange={handleInputChange} required style={{ width: '100%' }} />
                         </Form.Item>
                         <Form.Item label="Giá">
                             <input type="number" name="price" value={currentSlot.price} onChange={handleInputChange} required style={{ width: '100%' }} />

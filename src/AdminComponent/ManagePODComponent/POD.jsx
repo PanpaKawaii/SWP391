@@ -59,16 +59,16 @@ export default function POD() {
   const handleEdit = async (values) => {
     try {
       setLoading(true);
-      const podId = form.getFieldValue("id"); // Get ID from form
+      const podId = form.getFieldValue("id"); //lấy id từ form
       const isNewPod = !podId; // Check if it's a new POD
 
-      // If it's a new POD, find maxId and assign a new ID
+      // Nếu là POD mới, tìm maxId và gán ID mới
       const newPodId = isNewPod ? Math.max(...podData.map(pod => pod.id), 0) + 1 : podId;
 
       const podData = {
-        id: newPodId, // Use new ID
+        id: newPodId, 
         name: values.name,
-        image: values.image , // Include image URL
+        image: values.image ,
         description: values.description,
         rating: values.rating,
         status: values.status,
@@ -114,7 +114,8 @@ export default function POD() {
     };
     fetchData();
   }, []);
-
+  
+//Lấy tên loại POD
   const getPodTypeName = (typeId) => {
     const type = types.find((t) => t.id === typeId);
     return type ? type.name : "Không có dữ liệu";
@@ -179,10 +180,9 @@ export default function POD() {
           {rating} <FontAwesomeIcon icon={faStar} style={{ color: "#F2D338" }} />
         </>
       ),
-      sorter: (a, b) => a.rating - b.rating,
     },
     {
-      title: "Cửa hàng",
+      title: "Chi nhánh",
       dataIndex: "storeId",
       key: "storeName",
       align: "center",
@@ -230,8 +230,8 @@ export default function POD() {
       title: "Slot",
       key: "slot",
       align: "center",
-      render: (text, record) => (
-        <Link to={`/slotdetail/${record.id}`}> {/* Ensure record.id is defined */}
+      render: (record) => (
+        <Link to={`/slotdetail/${record.id}`}> {/*lấy theo id của pod*/}
                   <Button type="link">Chi tiết</Button>
         </Link>
       ),
