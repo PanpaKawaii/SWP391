@@ -125,7 +125,7 @@ export default function UserBooking() {
     };
 
     const getSumPayment = (bookingId) => {
-        const payments = PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId === bookingId) : [];
+        const payments = PAYMENTs ? PAYMENTs.filter(payment => payment.bookingId === bookingId && payment.amount > 0) : [];
         const sum = payments.map(payment => payment.amount).reduce((sum, amount) => sum + amount, 0);
         return sum;
     };
