@@ -276,29 +276,7 @@ const Customer = () => {
       render: (point) => formatNumber(point),
       sorter: (a, b) => a.point - b.point,
     },
-    {
-      title: "Thao tác",
-      key: "action",
-      width: 200,
-      align: "center",
-      render: (_, record) => (
-        <>
-          <button className="one-button" onClick={() => handleEdit(record)}>
-            <FontAwesomeIcon icon={faEdit} />
-          </button>{" "}
-          <Popconfirm
-            title="Are you sure to delete this company?"
-            onConfirm={() => handleDelete(record.id)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <button className="one-button">
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
-          </Popconfirm>
-        </>
-      ),
-    },
+    
   ];
 
   return (

@@ -165,11 +165,11 @@ const Staff = () => {
       render: (role) => <Tag color="geekblue-inverse">{role}</Tag>,
     },
     {
-      title: "Điểm thưởng",
-      dataIndex: "point",
-      key: "point",
-      render: (point) => formatNumber(point),
+      title:"Mô tả",
+      dataIndex:"description",
+      key:"description",
     },
+  
     {
       title: "Thao tác",
       key: "action",
@@ -204,7 +204,7 @@ const Staff = () => {
         </Link>
       </div>
       <Table
-        dataSource={staffData.sort((a, b) => b.id - a.id)}
+        dataSource={staffData.sort((a, b) => b.id - a.id).filter(staff => staff.description !== "Vô hiệu hóa")}
         columns={columns}
         rowKey="id" // Ensure each row has a unique key
         pagination={{ pageSize: 10 }}
@@ -267,6 +267,17 @@ const Staff = () => {
                   onChange={handleInputChange}
                   step={100}
                 />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Mô tả</Form.Label>
+                  <Form.Control as="select"
+                    name="description"
+                    value={editedStaff.description}
+                    onChange={handleInputChange}
+                  >
+                  <option value='Quản lý'>Quản lý</option>
+                  <option value='Vô hiệu hóa'>Vô hiệu hóa</option>
+                </Form.Control>
               </Form.Group>
             </Form>
           )}

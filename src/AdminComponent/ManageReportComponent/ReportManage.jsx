@@ -69,18 +69,19 @@ export default function ReportManage() {
       setUserCount(0);
     }
   }, [users]);
-
+  //lấy thông tin POD dựa vào podId của Booking; typeId của POD
   const getPodDetails = (podId) => {
-    const pod = Pod.find((p) => p.id === podId);
-    if (!pod) return { name: "", typeId: "" };
+    const pod = Pod.find((p) => p.id === podId) || {};
     const typeName = type.find((t) => t.id === pod.typeId)?.name || "";
-    return { name: pod.name, typeName };
+    return { name: pod.name || "", typeName };
   };
+  //tính số lượng tài khoản
   const calculateUserCount = (users) => {
     const count = users.filter((user) => user.role === "User").length;
     console.log("User count:", count);
     return count;
   };
+  //lọc và ánh xạ kết quả dựa trên điều kiện đã chọn
   const filterAndMapResults = (
     payments,
     bookings,
@@ -91,23 +92,23 @@ export default function ReportManage() {
   ) => {
     return payments
       .map((payment) => {
-        const bookingEntry = bookings.find((b) => b.id === payment.bookingId);
-        const podId = bookingEntry ? bookingEntry.podId : null;
-        const podDetails = getPodDetails(podId);
-
+        const bookingEntry = bookings.find((b) => b.id === payment.bookingId); //id của booking = bookingId của Payment để lấy thông tin POD
+        const podId = bookingEntry ? bookingEntry.podId : null; //id của POD = podId của Booking
+        const podDetails = getPodDetails(podId); 
+      //tương tự để lấy thông tin dịch vụ đi kèm
         const bookingOrderEntry = bookingOrders.find(
           (bo) => bo.bookingId === payment.bookingId
         );
         const bookingOrderAmount = bookingOrderEntry
           ? bookingOrderEntry.amount
           : 0;
-
+        //lấy thông tin cửa hàng dựa vào id của POD
         const pod = pods.find((p) => p.id === podId);
         const storeId = pod ? pod.storeId : null;
         const storeName = stores.find((s) => s.id === storeId)?.name || "";
-
+        //lọc ngày đặt dựa vào ngày đặt của Payment
         const paymentDate = new Date(payment.date);
-
+        //lọc theo điều kiện đã chọn
         if (
           (selectedStore && storeName !== selectedStore) ||
           (startDate && paymentDate < new Date(startDate)) ||
