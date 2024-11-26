@@ -4,6 +4,7 @@ body {
 
 .minesweeper-container {
     width: 100%;
+    margin: 20px 0 100px;
     text-align: center;
     font-family: 'Quicksand', Arial, sans-serif;
 
@@ -12,6 +13,12 @@ body {
 
         h1 {
             font-size: 54px;
+        }
+
+        h3 {
+            position: absolute;
+            top: 20px;
+            right: 400px;
         }
 
         .btn {
@@ -50,18 +57,6 @@ body {
                     padding: 0;
                     font-weight: bold;
                 }
-            }
-        }
-    }
-
-    @media (min-width: 960px) {
-        .menu {
-            .desktop-menu-item {
-                display: block;
-            }
-
-            .menu-icon {
-                display: none;
             }
         }
     }

@@ -1,27 +1,35 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Table, Row, Col, Button } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import './Minesweeper.css';
 
 export default function Minesweeper() {
 
-    const [GameMode, setGameMode] = useState(99);
+    const [GameMode, setGameMode] = useState({
+        rowCount: 5,
+        colCount: 10,
+        bombNumber: 2,
+        flagNumber: 10,
+    });
+    const [Flag, setFlag] = useState(GameMode.flagNumber);
+    const [HasWon, setHasWon] = useState(false);
     const [Refresh, setRefresh] = useState(0);
 
-    const [GameBoard, setGameBoard] = useState(Array(20).fill(0).map(() =>
-        Array(24).fill(0).map(() => ({ value: 0, isRevealed: false }))
+    const [GameBoard, setGameBoard] = useState(Array(GameMode.rowCount).fill(0).map(() =>
+        Array(GameMode.colCount).fill(0).map(() => ({ value: 0, isRevealed: false, flag: false }))
     ));
 
     useEffect(() => {
         const generateGameBoardBomb = () => {
-            const newGameBoard = Array(20).fill(0).map(() =>
-                Array(24).fill(0).map(() => ({ value: 0, isRevealed: false }))
+            console.log('generateGameBoardBomb');
+            const newGameBoard = Array(GameMode.rowCount).fill(0).map(() =>
+                Array(GameMode.colCount).fill(0).map(() => ({ value: 0, isRevealed: false, flag: false }))
             );
 
             let count = 0;
-            while (count < GameMode) {
-                const row = Math.floor(Math.random() * 20);
-                const col = Math.floor(Math.random() * 24);
+            while (count < GameMode.bombNumber) {
+                const row = Math.floor(Math.random() * GameMode.rowCount);
+                const col = Math.floor(Math.random() * GameMode.colCount);
                 if (newGameBoard[row][col].value !== 9) {
                     newGameBoard[row][col].value = 9;
                     count++;
@@ -29,10 +37,12 @@ export default function Minesweeper() {
             }
 
             setGameBoard(newGameBoard);
+            console.log('generateGameBoardBomb Success');
         };
 
+        setFlag(GameMode.flagNumber);
         generateGameBoardBomb();
-    }, [Refresh]);
+    }, [GameMode, Refresh]);
 
     const checkSurroundingCells = (row, col) => {
         let count = 0;
@@ -41,7 +51,7 @@ export default function Minesweeper() {
             for (let j = -1; j <= 1; j++) {
                 const newRow = row + i;
                 const newCol = col + j;
-                if (newRow >= 0 && newRow < 20 && newCol >= 0 && newCol < 24) {
+                if (newRow >= 0 && newRow < GameMode.rowCount && newCol >= 0 && newCol < GameMode.colCount) {
                     if (GameBoard[newRow][newCol].value === 9) {
                         count++;
                     }
@@ -52,9 +62,30 @@ export default function Minesweeper() {
         return count;
     };
 
+    const checkSurroundingFlags = (row, col) => {
+        console.log('checkSurroundingFlags');
+        let count = 0;
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                const newRow = row + i;
+                const newCol = col + j;
+                if (newRow >= 0 && newRow < GameMode.rowCount && newCol >= 0 && newCol < GameMode.colCount) {
+                    if (GameBoard[newRow][newCol].flag === true) {
+                        count++;
+                    }
+                }
+            }
+        }
+        console.log('checkSurroundingFlags Success');
+        return count;
+    };
+
     const revealCell = (row, col) => {
-        if (GameBoard[row][col].value === 9) revealCellBomb();
-        if (GameBoard[row][col].isRevealed) return;
+        console.log('revealCell');
+        if (GameBoard[row][col].isRevealed) return;//Đã mở rồi thì không mở nữa
+        if (GameBoard[row][col].flag) return;//Đã cắm cờ rồi thì không mở được
+
+        if (GameBoard[row][col].value === 9) revealAllCellBomb();
         const newGameBoard = [...GameBoard];
         newGameBoard[row][col].isRevealed = true;
         setGameBoard(newGameBoard);
@@ -64,15 +95,51 @@ export default function Minesweeper() {
                 for (let j = -1; j <= 1; j++) {
                     const newRow = row + i;
                     const newCol = col + j;
-                    if (newRow >= 0 && newRow < 20 && newCol >= 0 && newCol < 24) {
+                    if (newRow >= 0 && newRow < GameMode.rowCount && newCol >= 0 && newCol < GameMode.colCount) {
                         revealCell(newRow, newCol);
                     }
                 }
             }
         }
+        console.log('revealCell Success');
+        checkWin();
     };
 
-    const revealCellBomb = () => {
+    const revealCellAround = (row, col) => {
+        console.log('revealCellAround');
+        console.log('SurroundingFlags', checkSurroundingFlags(row, col));
+        if (!GameBoard[row][col].isRevealed) return;//Chưa mở thì chưa được doubleClick
+        if (GameBoard[row][col].flag) return;//Đã cắm cờ rồi thì không mở xung quang được
+
+        if (GameBoard[row][col].value === 9) revealAllCellBomb();
+
+        if (checkSurroundingFlags(row, col) == checkSurroundingCells(row, col)) {
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    const newRow = row + i;
+                    const newCol = col + j;
+                    if (newRow >= 0 && newRow < GameMode.rowCount && newCol >= 0 && newCol < GameMode.colCount) {
+                        revealCell(newRow, newCol);
+                    }
+                }
+            }
+        }
+        console.log('revealCellAround Success');
+    };
+
+    const setTheFlag = (row, col) => {
+        console.log('setTheFlag');
+        if (GameBoard[row][col].isRevealed) return;
+        if (Flag === 0) return;
+        const newGameBoard = [...GameBoard];
+        newGameBoard[row][col].flag = !newGameBoard[row][col].flag;
+        newGameBoard[row][col].flag ? setFlag(Flag - 1) : setFlag(Flag + 1);
+        setGameBoard(newGameBoard);
+        console.log('setTheFlag Success');
+    }
+
+    const revealAllCellBomb = () => {
+        console.log('revealAllCellBomb');
         const newGameBoard = [...GameBoard];
         newGameBoard.forEach((row, rowIndex) => {
             row.forEach((cell, colIndex) => {
@@ -82,7 +149,21 @@ export default function Minesweeper() {
             });
         });
         setGameBoard(newGameBoard);
+        console.log('revealAllCellBomb Success');
     };
+
+    const checkWin = () => {
+        GameBoard.forEach((row) => {
+            row.forEach((cell) => {
+                if ((cell.value !== 9 && !cell.isRevealed) || (cell.value === 9 && cell.isRevealed)) {
+                    return;
+                }
+            });
+        });
+        setHasWon(true);
+    }
+
+
 
     const countMines = () => {
         return GameBoard.reduce((acc, row) => {
@@ -95,33 +176,71 @@ export default function Minesweeper() {
     return (
         <div className='minesweeper-container'>
             <div className='header'>
-                <h1><b>Minesweeper {countMines()}</b></h1>
+                <h1><b>Minesweeper</b></h1>
+                <h3><i className='fa-solid fa-flag' style={{ color: 'red' }}></i> <b>{Flag}</b></h3>
                 <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET</Button>
             </div>
 
-            <Table className='no-wrap align-middle table' style={{ '--table-width': 24, '--table-height': 20 }}>
+            <Table className='no-wrap align-middle table' style={{ '--table-width': GameMode.colCount, '--table-height': GameMode.rowCount }}>
                 <tbody>
-                    {[...Array(20)].map((_, index_row) => (
+                    {[...Array(GameMode.rowCount)].map((_, index_row) => (
                         <tr key={index_row}>
-                            {[...Array(24)].map((_, index_col) => (
+                            {[...Array(GameMode.colCount)].map((_, index_col) => (
                                 <td key={index_col}
                                     style={{
-                                        cursor: checkSurroundingCells(index_row, index_col) !== 0 && 'pointer',
+                                        cursor:
+                                            (
+                                                checkSurroundingCells(index_row, index_col) !== 0 ?
+                                                    (GameBoard[index_row][index_col].isRevealed ?
+                                                        'pointer'
+                                                        :
+                                                        'pointer'
+                                                    )
+                                                    :
+                                                    (GameBoard[index_row][index_col].isRevealed ?
+                                                        'default'
+                                                        :
+                                                        'pointer'
+                                                    )
+                                            )
+                                        ,
                                         backgroundColor:
                                             GameBoard[index_row][index_col].isRevealed ?
-                                                (GameBoard[index_row][index_col].value == 9 ? '#dc3545' : '#ffd9a9')
+                                                (GameBoard[index_row][index_col].value !== 9 ?
+                                                    '#ffd9a9'
+                                                    :
+                                                    GameBoard[index_row][index_col].flag ?
+                                                        '#d97720'
+                                                        :
+                                                        '#dc3545')
                                                 :
                                                 ((index_row + index_col) % 2 === 0 ? '#ffcc80' : '#ffab40')
                                     }}
                                     onClick={() => { revealCell(index_row, index_col) }}
+                                    onDoubleClick={() => { revealCellAround(index_row, index_col) }}
+                                    onContextMenu={(e) => {
+                                        e.preventDefault();
+                                        setTheFlag(index_row, index_col)
+                                    }}
                                 >
                                     <span>
                                         {
-                                            checkSurroundingCells(index_row, index_col) !== 0 &&
-                                            GameBoard[index_row][index_col].isRevealed &&
-                                            checkSurroundingCells(index_row, index_col)
+                                            (GameBoard[index_row][index_col].isRevealed ?//Được mở mới hiện số, không thì kiểm tra có cờ không
+                                                (checkSurroundingCells(index_row, index_col) !== 9 ?//In ra số nếu không phải bom
+                                                    (checkSurroundingCells(index_row, index_col) !== 0 &&//Khác 0 mới hiện số
+                                                        checkSurroundingCells(index_row, index_col))
+                                                    :
+                                                    <i className='fa-solid fa-bomb'></i>//In ra quả bom
+                                                )
+                                                :
+                                                (GameBoard[index_row][index_col].flag &&//Nếu được cắm cờ thì hiện cờ
+                                                    <i className='fa-solid fa-flag' style={{ color: 'red' }}></i>)
+                                            )
                                         }
                                     </span>
+                                    {/* <span>
+                                        {checkSurroundingCells(index_row, index_col)}
+                                    </span> */}
                                 </td>
                             ))}
                         </tr>
