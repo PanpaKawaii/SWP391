@@ -9,7 +9,7 @@ export default function Minesweeper() {
         rowCount: 12,
         colCount: 18,
         bombNumber: 40,
-        flagNumber: 4,
+        flagNumber: 40,
     });
     const [Flag, setFlag] = useState(GameMode.flagNumber);
     const [HasWon, setHasWon] = useState(0);
@@ -131,7 +131,7 @@ export default function Minesweeper() {
     const setTheFlag = (row, col) => {
         console.log('setTheFlag');
         if (GameBoard[row][col].isRevealed) return;
-        if (Flag === 0) return;
+        if (GameBoard[row][col].flag === false && Flag === 0) return;
         const newGameBoard = [...GameBoard];
         newGameBoard[row][col].flag = !newGameBoard[row][col].flag;
         newGameBoard[row][col].flag ? setFlag(Flag - 1) : setFlag(Flag + 1);
