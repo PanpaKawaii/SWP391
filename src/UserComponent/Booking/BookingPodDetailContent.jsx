@@ -81,7 +81,7 @@ export default function BookingPodDetailContent() {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     },
                 });
-                if (!userResponse.ok) throw new Error('Network response was not ok');
+                if (!userResponse.ok) throw new Error('Vui lòng đăng nhập để xem chi tiết');
                 const userData = await userResponse.json();
                 setUSER(userData);
 

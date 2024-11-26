@@ -392,7 +392,7 @@ export default function SignInSignUp() {
                             </Form.Group>
 
                             <div className='accept-box'>
-                                <a href='#' className='provision' target='_blank'><b>ĐIỀU KHOẢN</b></a>
+                                <a href='https://docs.google.com/document/d/1gpc5I74B66ldC76mSZsafEXuumeYlhSbV1ocqHCrrR4/edit?tab=t.0' className='provision' target='_blank'><b>ĐIỀU KHOẢN</b></a>
 
                                 <Form.Group controlId='Accept' className='form-group form-check'>
                                     <Form.Check type='checkbox' label='Đồng ý điều khoản' name='Accept' onChange={handleAccept} />
