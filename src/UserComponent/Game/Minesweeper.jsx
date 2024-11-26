@@ -6,13 +6,13 @@ import './Minesweeper.css';
 export default function Minesweeper() {
 
     const [GameMode, setGameMode] = useState({
-        rowCount: 5,
-        colCount: 10,
-        bombNumber: 2,
-        flagNumber: 10,
+        rowCount: 12,
+        colCount: 18,
+        bombNumber: 40,
+        flagNumber: 4,
     });
     const [Flag, setFlag] = useState(GameMode.flagNumber);
-    const [HasWon, setHasWon] = useState(false);
+    const [HasWon, setHasWon] = useState(0);
     const [Refresh, setRefresh] = useState(0);
 
     const [GameBoard, setGameBoard] = useState(Array(GameMode.rowCount).fill(0).map(() =>
@@ -41,6 +41,7 @@ export default function Minesweeper() {
         };
 
         setFlag(GameMode.flagNumber);
+        setHasWon(0);
         generateGameBoardBomb();
     }, [GameMode, Refresh]);
 
@@ -149,18 +150,24 @@ export default function Minesweeper() {
             });
         });
         setGameBoard(newGameBoard);
+        setHasWon(2);
         console.log('revealAllCellBomb Success');
     };
 
     const checkWin = () => {
+        let hasWon = true;
         GameBoard.forEach((row) => {
             row.forEach((cell) => {
                 if ((cell.value !== 9 && !cell.isRevealed) || (cell.value === 9 && cell.isRevealed)) {
+                    hasWon = false;
                     return;
                 }
             });
         });
-        setHasWon(true);
+        if (hasWon) {
+            console.log('You have won the game!');
+            setHasWon(1);
+        }
     }
 
 
@@ -177,6 +184,8 @@ export default function Minesweeper() {
         <div className='minesweeper-container'>
             <div className='header'>
                 <h1><b>Minesweeper</b></h1>
+                {HasWon == 1 && <h2 style={{ color: '#28a745' }}><b>YOU WON!</b></h2>}
+                {HasWon == 2 && <h2 style={{ color: '#dc3435' }}><b>YOU LOST!</b></h2>}
                 <h3><i className='fa-solid fa-flag' style={{ color: 'red' }}></i> <b>{Flag}</b></h3>
                 <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET</Button>
             </div>

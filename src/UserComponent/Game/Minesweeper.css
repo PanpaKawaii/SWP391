@@ -4,6 +4,7 @@ body {
 
 .minesweeper-container {
     width: 100%;
+    min-height: 60vh;
     margin: 20px 0 100px;
     text-align: center;
     font-family: 'Quicksand', Arial, sans-serif;
