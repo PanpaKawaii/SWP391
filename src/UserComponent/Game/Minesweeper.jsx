@@ -6,13 +6,14 @@ import './Minesweeper.css';
 export default function Minesweeper() {
 
     const [GameMode, setGameMode] = useState(99);
+    const [Refresh, setRefresh] = useState(0);
 
     const [GameBoard, setGameBoard] = useState(Array(20).fill(0).map(() =>
         Array(24).fill(0).map(() => ({ value: 0, isRevealed: false }))
     ));
 
     useEffect(() => {
-        const generateGameBoard = () => {
+        const generateGameBoardBomb = () => {
             const newGameBoard = Array(20).fill(0).map(() =>
                 Array(24).fill(0).map(() => ({ value: 0, isRevealed: false }))
             );
@@ -30,8 +31,58 @@ export default function Minesweeper() {
             setGameBoard(newGameBoard);
         };
 
-        generateGameBoard();
-    }, []);
+        generateGameBoardBomb();
+    }, [Refresh]);
+
+    const checkSurroundingCells = (row, col) => {
+        let count = 0;
+        if (GameBoard[row][col].value === 9) return 9;
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                const newRow = row + i;
+                const newCol = col + j;
+                if (newRow >= 0 && newRow < 20 && newCol >= 0 && newCol < 24) {
+                    if (GameBoard[newRow][newCol].value === 9) {
+                        count++;
+                    }
+                }
+            }
+        }
+        GameBoard[row][col].value = count;
+        return count;
+    };
+
+    const revealCell = (row, col) => {
+        if (GameBoard[row][col].value === 9) revealCellBomb();
+        if (GameBoard[row][col].isRevealed) return;
+        const newGameBoard = [...GameBoard];
+        newGameBoard[row][col].isRevealed = true;
+        setGameBoard(newGameBoard);
+
+        if (GameBoard[row][col].value === 0) {
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    const newRow = row + i;
+                    const newCol = col + j;
+                    if (newRow >= 0 && newRow < 20 && newCol >= 0 && newCol < 24) {
+                        revealCell(newRow, newCol);
+                    }
+                }
+            }
+        }
+    };
+
+    const revealCellBomb = () => {
+        const newGameBoard = [...GameBoard];
+        newGameBoard.forEach((row, rowIndex) => {
+            row.forEach((cell, colIndex) => {
+                if (cell.value === 9) {
+                    newGameBoard[rowIndex][colIndex].isRevealed = true;
+                }
+            });
+        });
+        setGameBoard(newGameBoard);
+    };
 
     const countMines = () => {
         return GameBoard.reduce((acc, row) => {
@@ -43,43 +94,33 @@ export default function Minesweeper() {
 
     return (
         <div className='minesweeper-container'>
-            <h1><b>Minesweeper {countMines()}</b></h1>
-            {/* <div className='box'>
-                {[...Array(24)].map((_, index_row) => (
-                    <Row key={index_row} className='cell-row'>
-                        {[...Array(24)].map((_, index_col) => (
-                            <Col key={index_col} className='cell-col'>
-                                {index_row + 1}.
-                                {index_col + 1}
-                            </Col>
-                        ))}
-                    </Row>
-                ))}
-            </div> */}
+            <div className='header'>
+                <h1><b>Minesweeper {countMines()}</b></h1>
+                <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET</Button>
+            </div>
 
             <Table className='no-wrap align-middle table' style={{ '--table-width': 24, '--table-height': 20 }}>
-                <tbody className='list-body'>
+                <tbody>
                     {[...Array(20)].map((_, index_row) => (
-                        <tr key={index_row} className='tr-row'>
+                        <tr key={index_row}>
                             {[...Array(24)].map((_, index_col) => (
                                 <td key={index_col}
-                                    className='td-col'
-                                    onClick={() => {
-                                        const newGameBoard = [...GameBoard];
-                                        newGameBoard[index_row][index_col].isRevealed = true;
-                                        setGameBoard(newGameBoard);
+                                    style={{
+                                        cursor: checkSurroundingCells(index_row, index_col) !== 0 && 'pointer',
+                                        backgroundColor:
+                                            GameBoard[index_row][index_col].isRevealed ?
+                                                (GameBoard[index_row][index_col].value == 9 ? '#dc3545' : '#ffd9a9')
+                                                :
+                                                ((index_row + index_col) % 2 === 0 ? '#ffcc80' : '#ffab40')
                                     }}
-                                    // style={{ backgroundColor: GameBoard[index_row][index_col].isRevealed ? '#ffd9a9' : ((index_row + index_col) % 2 === 0 ? '#ffcc80' : '#ffab40') }}
-                                    style={{ backgroundColor: GameBoard[index_row][index_col].value == 9 ? '#dc3545' : ((index_row + index_col) % 2 === 0 ? '#ffcc80' : '#ffab40') }}
+                                    onClick={() => { revealCell(index_row, index_col) }}
                                 >
-                                    {/* <p>
-                                        {index_row + 1}.
-                                        {index_col + 1}
-                                    </p> */}
-                                    <span style={{
-                                        color: GameBoard[index_row][index_col].isRevealed ? '#28a745' : '#ffc107',
-                                    }}>
-                                        {GameBoard[index_row][index_col].value}
+                                    <span>
+                                        {
+                                            checkSurroundingCells(index_row, index_col) !== 0 &&
+                                            GameBoard[index_row][index_col].isRevealed &&
+                                            checkSurroundingCells(index_row, index_col)
+                                        }
                                     </span>
                                 </td>
                             ))}

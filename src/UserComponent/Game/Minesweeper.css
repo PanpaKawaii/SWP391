@@ -7,47 +7,43 @@ body {
     text-align: center;
     font-family: 'Quicksand', Arial, sans-serif;
 
-    /* .cell-row {
-        margin: 0;
-        padding: 0;
-        background-color: lime;
-        border: 1px solid #000000;
-        width: 720px;
-        height: 30px;
+    .header {
+        position: relative;
 
-        .cell-col {
-            margin: 0;
-            padding: 0;
-            border: 1px solid #000000;
-            width: 30px;
-            height: 30px;
+        h1 {
+            font-size: 54px;
         }
-    } */
 
-    h1 {
-        font-size: 54px;
+        .btn {
+            background-color: #fb8b24;
+            font-weight: bold;
+            border: none;
+            position: absolute;
+            top: 20px;
+            right: 50px;
+        }
+
     }
 
     table {
         display: block;
         justify-self: center;
-        width: calc(var(--table-height) * 40)px;
-        /* height: calc(var(--table-height) * 40)px; */
+        width: calc(var(--table-width) * 35)px;
+        /* height: calc(var(--table-height) * 35)px; */
         border: none !important;
 
         tr {
             margin: 0;
             padding: 0;
-            height: 40px;
+            height: 35px;
             border: none !important;
 
             td {
                 margin: 0;
                 padding: 0;
                 background-color: lime;
-                width: 40px;
+                width: 35px;
                 border: none !important;
-                cursor: pointer;
 
                 span {
                     margin: 0;
