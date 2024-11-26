@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+}
+
+.minesweeper-container {
+    width: 100%;
+    text-align: center;
+    font-family: 'Quicksand', Arial, sans-serif;
+
+    /* .cell-row {
+        margin: 0;
+        padding: 0;
+        background-color: lime;
+        border: 1px solid #000000;
+        width: 720px;
+        height: 30px;
+
+        .cell-col {
+            margin: 0;
+            padding: 0;
+            border: 1px solid #000000;
+            width: 30px;
+            height: 30px;
+        }
+    } */
+
+    h1 {
+        font-size: 54px;
+    }
+
+    table {
+        display: block;
+        justify-self: center;
+        width: calc(var(--table-height) * 40)px;
+        /* height: calc(var(--table-height) * 40)px; */
+        border: none !important;
+
+        tr {
+            margin: 0;
+            padding: 0;
+            height: 40px;
+            border: none !important;
+
+            td {
+                margin: 0;
+                padding: 0;
+                background-color: lime;
+                width: 40px;
+                border: none !important;
+                cursor: pointer;
+
+                span {
+                    margin: 0;
+                    padding: 0;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    @media (min-width: 960px) {
+        .menu {
+            .desktop-menu-item {
+                display: block;
+            }
+
+            .menu-icon {
+                display: none;
+            }
+        }
+    }
+}

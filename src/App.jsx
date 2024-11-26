@@ -15,12 +15,14 @@ import Sidebar from './UserComponent/SideBar/UserSideBar'
 import Header from './UserComponent/HeaderFooter/Header'
 import Footer from './UserComponent/HeaderFooter/Footer'
 import HomeContent from './UserComponent/Home/HomeContent'
-import ContactContent from './UserComponent/Contact/ContactContent'
+import AboutContent from './UserComponent/About/AboutContent'
 import BookingStoreContent from './UserComponent/Booking/BookingStoreContent'
 import BookingStoreDetailContent from './UserComponent/Booking/BookingStoreDetailContent'
 import BookingPodContent from './UserComponent/Booking/BookingPodContent'
 import BookingPodDetailContent from './UserComponent/Booking/BookingPodDetailContent'
-import AboutContent from './UserComponent/About/AboutContent'
+import ContactContent from './UserComponent/Contact/ContactContent'
+import ListGame from './UserComponent/Game/ListGame'
+import Minesweeper from './UserComponent/Game/Minesweeper'
 import UserInformation from './UserComponent/UserControlContent/UserInformation'
 import UserBooking from './UserComponent/UserControlContent/UserBooking'
 import UserBookingDetail from './UserComponent/UserControlContent/UserBookingDetail'
@@ -93,6 +95,9 @@ function App() {
 
               <Route path='/contact' element={<ContactContent />} />
 
+              <Route path='/game' element={<ListGame />} />
+              <Route path='/game/minesweeper' element={<Minesweeper />} />
+
               <Route path='/signinsignup' element={<SignInSignUp />} />
             </Routes>
             <Footer />
@@ -120,6 +125,8 @@ function App() {
                 <Route path='/booking/pod/:Id' element={<BookingPodDetailContent />} />
 
                 <Route path='/contact' element={<ContactContent />} />
+
+                <Route path='/game' element={<ListGame />} />
 
 
                 <Route path='/user/information' element={<UserInformation />} />
