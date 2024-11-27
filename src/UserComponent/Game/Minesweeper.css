@@ -11,27 +11,33 @@ body {
 
     .header {
         h1 {
+            margin: 0 0 20px;
             color: #d97720;
             font-size: 54px;
         }
     }
-
 
     .game-content {
         display: flex;
         justify-content: center;
 
         .game-detail {
-            width: 220px;
+            width: fit-content;
+            height: auto;
             padding: 0 20px;
-            height: 160px;
 
             .support-detail {
                 display: flex;
                 justify-content: center;
 
+                h3 {
+                    width: 90px;
+                    margin: 0 auto;
+                    padding: 0 6px;
+                }
+
                 .btn {
-                    margin: 0 15px;
+                    margin: 0 6px;
                     background-color: #fb8b24;
                     font-weight: bold;
                     border: none;
@@ -46,7 +52,7 @@ body {
             }
 
             .result-detail {
-                margin: 10px 0;
+                padding: 10px 8px;
             }
         }
 
@@ -54,8 +60,8 @@ body {
             display: block;
             justify-self: center;
             width: calc(var(--table-width) * 35)px;
-            /* height: calc(var(--table-height) * 35)px; */
-            border: none !important;
+            border-radius: 10px;
+            overflow: hidden;
 
             tr {
                 margin: 0;
@@ -87,31 +93,12 @@ body {
 
             .game-detail {
                 padding: 0;
-                width: 320px;
                 display: flex;
-                justify-content: space-evenly;
+                justify-content: center;
                 align-items: center;
 
-                .support-detail {
-                    display: flex;
-                    justify-content: space-around;
-
-                    .btn {
-                        background-color: #fb8b24;
-                        font-weight: bold;
-                        border: none;
-                    }
-                }
-
-                .dropdown-toggle {
-                    margin: 10px 0;
-                    background-color: #fdbc7f;
-                    font-weight: bold;
-                    border: none;
-                }
-
-                .result-detail {
-                    margin: 10px 0;
+                .button-detail {
+                    border-right: 1px solid #cccccc;
                 }
             }
         }
@@ -151,7 +138,6 @@ body {
                     }
                 }
             }
-
         }
     }
 
@@ -159,7 +145,6 @@ body {
 
         .header {
             h1 {
-                color: #d97720;
                 font-size: 42px;
             }
         }
@@ -176,7 +161,6 @@ body {
                     }
                 }
             }
-
         }
     }
 }

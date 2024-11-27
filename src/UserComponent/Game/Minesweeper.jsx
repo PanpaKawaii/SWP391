@@ -12,6 +12,7 @@ export default function Minesweeper() {
         flagNumber: 99,
     });
     const [Flag, setFlag] = useState(GameMode.flagNumber);
+    const [Time, setTime] = useState(-1);
     const [HasWon, setHasWon] = useState(0);
     const [Refresh, setRefresh] = useState(0);
 
@@ -41,6 +42,7 @@ export default function Minesweeper() {
         };
 
         setFlag(GameMode.flagNumber);
+        setTime(-1);
         setHasWon(0);
         generateGameBoardBomb();
     }, [GameMode, Refresh]);
@@ -114,6 +116,9 @@ export default function Minesweeper() {
 
     const revealCell = (row, col) => {
         console.log('revealCell');
+
+        if (Time === -1) setTime(0);
+
         if (GameBoard[row][col].isRevealed) return;//Đã mở rồi thì không mở nữa
         if (GameBoard[row][col].flag) return;//Đã cắm cờ rồi thì không mở được
 
@@ -201,6 +206,16 @@ export default function Minesweeper() {
         }
     }
 
+    useEffect(() => {
+        let interval;
+        if (HasWon === 0 && Time !== -1) {
+            interval = setInterval(() => {
+                setTime(Time + 1);
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [Time, HasWon]);
+
 
 
     const countMines = () => {
@@ -218,7 +233,21 @@ export default function Minesweeper() {
             </div>
 
             <div className='game-content'>
-                <Table className='no-wrap align-middle table' style={{ '--table-width': GameMode.colCount, '--table-height': GameMode.rowCount }}>
+                <Table
+                    className='no-wrap align-middle table boardgame'
+                    style={{
+                        '--table-width': GameMode.colCount,
+                        '--table-height': GameMode.rowCount,
+                        border:
+                            HasWon === 1 ?
+                                '4px solid #28a745'
+                                :
+                                (HasWon === 2 ?
+                                    '4px solid #dc3545'
+                                    :
+                                    '4px solid #d97720'
+                                ),
+                    }}>
                     <tbody>
                         {[...Array(GameMode.rowCount)].map((_, index_row) => (
                             <tr key={index_row}>
@@ -286,7 +315,7 @@ export default function Minesweeper() {
                 </Table>
 
                 <div className='game-detail'>
-                    <div>
+                    <div className={Time !== -1 && 'button-detail'}>
                         <div className='support-detail'>
                             <h3><i className='fa-solid fa-flag' style={{ color: 'red' }}></i> <b>{Flag}</b></h3>
                             <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET</Button>
@@ -298,13 +327,14 @@ export default function Minesweeper() {
                                 onClick={() => { changeGameMode('Normal') }}>Normal</Dropdown.Item>
                             <Dropdown.Item style={{ color: '#dc3545', backgroundColor: '#fad7d9', fontWeight: 'bold' }}
                                 onClick={() => { changeGameMode('Hard') }}>Hard</Dropdown.Item>
-                            {/* <Dropdown.Item style={{ color: '#666666', backgroundColor: '#fafafa', fontWeight: 'bold' }}
-                                onClick={() => { changeGameMode('Test') }}>Test</Dropdown.Item> */}
+                            <Dropdown.Item style={{ color: '#666666', backgroundColor: '#fafafa', fontWeight: 'bold' }}
+                                onClick={() => { changeGameMode('Test') }}>Test</Dropdown.Item>
                         </DropdownButton>
                     </div>
                     <div className='result-detail'>
-                        {HasWon == 1 && <h2 style={{ color: '#28a745' }}><b>YOU WON!</b></h2>}
-                        {HasWon == 2 && <h2 style={{ color: '#dc3545' }}><b>YOU LOST!</b></h2>}
+                        {Time !== -1 && <h3>Time: <b>{Time}</b></h3>}
+                        {HasWon === 1 && <h2 style={{ color: '#28a745' }}><b>YOU WON!</b></h2>}
+                        {HasWon === 2 && <h2 style={{ color: '#dc3545' }}><b>YOU LOST!</b></h2>}
                     </div>
                 </div>
             </div>
