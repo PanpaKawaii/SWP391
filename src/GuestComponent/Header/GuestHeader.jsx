@@ -26,6 +26,7 @@ export default function GuestHeader() {
         { text: 'Cửa hàng', path: '/booking/store' },
         { text: 'Đặt chỗ', path: '/booking/pod' },
         { text: 'Liên hệ', path: '/contact' },
+        { text: 'Game', path: '/game' },
         { text: 'Đăng nhập', path: '/signinsignup' },
     ];
 
