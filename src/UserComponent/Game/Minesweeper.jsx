@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Table, Button, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Table, Button, Form, DropdownButton, Dropdown } from 'react-bootstrap';
 import './Minesweeper.css';
 
 export default function Minesweeper() {
@@ -11,6 +11,7 @@ export default function Minesweeper() {
         bombNumber: 99,
         flagNumber: 99,
     });
+    const [SelectedGameMode, setSelectedGameMode] = useState('Hard');
     const [Flag, setFlag] = useState(GameMode.flagNumber);
     const [Time, setTime] = useState(-1);
     const [HasWon, setHasWon] = useState(0);
@@ -234,7 +235,7 @@ export default function Minesweeper() {
 
             <div className='game-content'>
                 <Table
-                    className='no-wrap align-middle table boardgame'
+                    className='no-wrap align-middle table'
                     style={{
                         '--table-width': GameMode.colCount,
                         '--table-height': GameMode.rowCount,
@@ -247,7 +248,8 @@ export default function Minesweeper() {
                                     :
                                     '4px solid #d97720'
                                 ),
-                    }}>
+                    }}
+                >
                     <tbody>
                         {[...Array(GameMode.rowCount)].map((_, index_row) => (
                             <tr key={index_row}>
@@ -255,20 +257,18 @@ export default function Minesweeper() {
                                     <td key={index_col}
                                         style={{
                                             cursor:
-                                                (
-                                                    checkSurroundingCells(index_row, index_col) !== 0 ?
-                                                        (GameBoard[index_row][index_col].isRevealed ?
-                                                            'pointer'
-                                                            :
-                                                            'pointer'
-                                                        )
+                                                checkSurroundingCells(index_row, index_col) !== 0 ?
+                                                    (GameBoard[index_row][index_col].isRevealed ?
+                                                        'pointer'
                                                         :
-                                                        (GameBoard[index_row][index_col].isRevealed ?
-                                                            'default'
-                                                            :
-                                                            'pointer'
-                                                        )
-                                                )
+                                                        'pointer'
+                                                    )
+                                                    :
+                                                    (GameBoard[index_row][index_col].isRevealed ?
+                                                        'default'
+                                                        :
+                                                        'pointer'
+                                                    )
                                             ,
                                             backgroundColor:
                                                 GameBoard[index_row][index_col].isRevealed ?
@@ -278,7 +278,8 @@ export default function Minesweeper() {
                                                         GameBoard[index_row][index_col].flag ?
                                                             '#d97720'
                                                             :
-                                                            '#dc3545')
+                                                            '#dc3545'
+                                                    )
                                                     :
                                                     ((index_row + index_col) % 2 === 0 ? '#ffcc80' : '#ffab40')
                                         }}
@@ -290,23 +291,25 @@ export default function Minesweeper() {
                                         }}
                                     >
                                         <p>
-                                            {
-                                                (GameBoard[index_row][index_col].isRevealed ?//Được mở mới hiện số, không thì kiểm tra có cờ không
-                                                    (checkSurroundingCells(index_row, index_col) !== 9 ?//In ra số nếu không phải bom
-                                                        (checkSurroundingCells(index_row, index_col) !== 0 &&//Khác 0 mới hiện số
-                                                            checkSurroundingCells(index_row, index_col))
-                                                        :
-                                                        <i className='fa-solid fa-bomb'></i>//In ra quả bom
+                                            {(GameBoard[index_row][index_col].isRevealed ?//Được mở mới hiện số, không thì kiểm tra có cờ không
+                                                (checkSurroundingCells(index_row, index_col) !== 9 ?//In ra số nếu không phải bom
+                                                    (checkSurroundingCells(index_row, index_col) !== 0 &&//Khác 0 mới hiện số
+                                                        checkSurroundingCells(index_row, index_col)
                                                     )
                                                     :
-                                                    (GameBoard[index_row][index_col].flag &&//Nếu được cắm cờ thì hiện cờ
-                                                        <i className='fa-solid fa-flag' style={{ color: 'red' }}></i>)
+                                                    <i className='fa-solid fa-bomb'></i>//In ra quả bom
                                                 )
-                                            }
+                                                :
+                                                (GameBoard[index_row][index_col].flag &&//Nếu được cắm cờ thì hiện cờ
+                                                    <i className='fa-solid fa-flag' style={{ color: 'red' }}></i>
+                                                )
+                                            )}
                                         </p>
-                                        {/* <p>
-                                            {checkSurroundingCells(index_row, index_col)}
-                                        </p> */}
+                                        {SelectedGameMode === 'Test' &&
+                                            <p>
+                                                {checkSurroundingCells(index_row, index_col)}
+                                            </p>
+                                        }
                                     </td>
                                 ))}
                             </tr>
@@ -315,12 +318,12 @@ export default function Minesweeper() {
                 </Table>
 
                 <div className='game-detail'>
-                    <div className={Time !== -1 && 'button-detail'}>
-                        <div className='support-detail'>
+                    <div>
+                        <div className='support'>
                             <h3><i className='fa-solid fa-flag' style={{ color: 'red' }}></i> <b>{Flag}</b></h3>
                             <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET</Button>
                         </div>
-                        <DropdownButton id='dropdown-basic-button' title='GAME MODE'>
+                        {/* <DropdownButton id='dropdown-basic-button' title='GAME MODE'>
                             <Dropdown.Item style={{ color: '#28a745', backgroundColor: '#d3f9d8', fontWeight: 'bold' }}
                                 onClick={() => { changeGameMode('Easy') }}>Easy</Dropdown.Item>
                             <Dropdown.Item style={{ color: '#ffc107', backgroundColor: '#fff3cd', fontWeight: 'bold' }}
@@ -329,10 +332,50 @@ export default function Minesweeper() {
                                 onClick={() => { changeGameMode('Hard') }}>Hard</Dropdown.Item>
                             <Dropdown.Item style={{ color: '#666666', backgroundColor: '#fafafa', fontWeight: 'bold' }}
                                 onClick={() => { changeGameMode('Test') }}>Test</Dropdown.Item>
-                        </DropdownButton>
+                        </DropdownButton> */}
+                        <Form.Group controlId='gamemode' className='form-group'>
+                            <Form.Control
+                                as='select'
+                                value={SelectedGameMode}
+                                onChange={(e) => { changeGameMode(e.target.value), setSelectedGameMode(e.target.value) }}
+                                className={
+                                    SelectedGameMode === 'Easy' ?
+                                        'gamemode-option easy-mode'
+                                        :
+                                        (SelectedGameMode === 'Normal' ?
+                                            'gamemode-option normal-mode'
+                                            :
+                                            (SelectedGameMode === 'Hard' ?
+                                                'gamemode-option hard-mode'
+                                                :
+                                                'gamemode-option test-mode'
+                                            )
+                                        )
+                                }
+                            >
+                                <option className='gamemode-option easy-mode' value='Easy'>Easy</option>
+                                <option className='gamemode-option normal-mode' value='Normal'>Normal</option>
+                                <option className='gamemode-option hard-mode' value='Hard'>Hard</option>
+                                <option className='gamemode-option test-mode' value='Test'>Test</option>
+                            </Form.Control>
+                        </Form.Group>
+                        <div className='run-time'>
+                            {Time !== -1 && <h3>Time: <b>{Time}</b></h3>}
+                        </div>
                     </div>
-                    <div className='result-detail'>
-                        {Time !== -1 && <h3>Time: <b>{Time}</b></h3>}
+                    <div className='result-detail'
+                        style={{
+                            border:
+                                HasWon === 1 ?
+                                    '4px solid #28a745'
+                                    :
+                                    (HasWon === 2 ?
+                                        '4px solid #dc3545'
+                                        :
+                                        'none'
+                                    )
+                        }}
+                    >
                         {HasWon === 1 && <h2 style={{ color: '#28a745' }}><b>YOU WON!</b></h2>}
                         {HasWon === 2 && <h2 style={{ color: '#dc3545' }}><b>YOU LOST!</b></h2>}
                     </div>

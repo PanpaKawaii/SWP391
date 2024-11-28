@@ -23,10 +23,11 @@ body {
 
         .game-detail {
             width: fit-content;
+            min-width: 230px;
             height: auto;
             padding: 0 20px;
 
-            .support-detail {
+            .support {
                 display: flex;
                 justify-content: center;
 
@@ -44,15 +45,59 @@ body {
                 }
             }
 
-            .dropdown-toggle {
+            /* .dropdown-toggle {
                 margin: 10px 0;
                 background-color: #fdbc7f;
                 font-weight: bold;
                 border: none;
+            } */
+
+            .form-group {
+                margin: 10px 0;
+
+                .form-control:focus {
+                    box-shadow: 0 0 0 0.25rem rgba(251, 139, 36, 0.25);
+                    box-shadow: none;
+                    border-color: #cccccc;
+                }
+
+                .form-control {
+                    border-color: #cccccc;
+                }
+
+                .gamemode-option {
+                    font-weight: bold;
+                }
+
+                .easy-mode {
+                    color: #28a745;
+                    background-color: #d3f9d8;
+                }
+
+                .normal-mode {
+                    color: #ffc107;
+                    background-color: #fff3cd;
+                }
+
+                .hard-mode {
+                    color: #dc3545;
+                    background-color: #fad7d9;
+                }
+
+                .test-mode {
+                    color: #666666;
+                    background-color: #eeeeee;
+                }
             }
 
             .result-detail {
-                padding: 10px 8px;
+                margin: 0 4px;
+                padding: 5px 4px;
+                border-radius: 8px;
+
+                h2 {
+                    margin: 0;
+                }
             }
         }
 
@@ -96,10 +141,6 @@ body {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-
-                .button-detail {
-                    border-right: 1px solid #cccccc;
-                }
             }
         }
     }
