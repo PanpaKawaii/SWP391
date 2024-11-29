@@ -23,6 +23,7 @@ import BookingPodDetailContent from './UserComponent/Booking/BookingPodDetailCon
 import ContactContent from './UserComponent/Contact/ContactContent'
 import ListGame from './UserComponent/Game/ListGame'
 import Minesweeper from './UserComponent/Game/Minesweeper'
+import WhatIsThePassword from './UserComponent/Game/WhatIsThePassword'
 import UserInformation from './UserComponent/UserControlContent/UserInformation'
 import UserBooking from './UserComponent/UserControlContent/UserBooking'
 import UserBookingDetail from './UserComponent/UserControlContent/UserBookingDetail'
@@ -97,6 +98,7 @@ function App() {
 
               <Route path='/game' element={<ListGame />} />
               <Route path='/game/minesweeper' element={<Minesweeper />} />
+              <Route path='/game/whatisthepassword' element={<WhatIsThePassword />} />
 
               <Route path='/signinsignup' element={<SignInSignUp />} />
             </Routes>
