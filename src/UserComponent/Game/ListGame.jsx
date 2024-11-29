@@ -8,7 +8,7 @@ export default function ListGame() {
             <h1>List Game</h1>
 
             <Link to='/game/minesweeper'><i className='fa-solid fa-bomb'></i>Minesweeper</Link>
-            <Link to='/game/whatisthepassword'><i className='fa-solid fa-bomb'></i>WhatIsThePassword</Link>
+            <Link to='/game/whatisthepassword'><i className='fa-solid fa-code'></i>WhatIsThePassword</Link>
         </div>
     )
 }
