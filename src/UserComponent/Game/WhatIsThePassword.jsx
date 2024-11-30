@@ -8,9 +8,14 @@ export default function WhatIsThePassword() {
     const [Password, setPassword] = useState(0);
     const [Refresh, setRefresh] = useState(0);
 
-    const [GuessedCount, setGuessedCount] = useState(1);
+    const handleSubmitCurrentGuess = (e) => {
+        e.preventDefault();
+        setCurrentGuess(e.target.guessedpassword.value);
+    }
+
+    const [GuessedCount, setGuessedCount] = useState(0);
     const [CurrentGuess, setCurrentGuess] = useState(0);
-    const [GuessedPassword, setGuessedPassword] = useState(Array(10).fill(0).map(() => ({
+    const [GuessedPassword, setGuessedPassword] = useState(Array(11).fill(0).map(() => ({
         index: 0,
         value: 0,
         correctNumber: 0,
@@ -18,31 +23,44 @@ export default function WhatIsThePassword() {
     })));
 
     useEffect(() => {
-        const checkGuessedPassword = (Guessed_Password) => {
-            const index = GuessedCount;
-            const value = Guessed_Password;
-            const correctNumber = 0;
-            const correctPosition = 0;
+        const checkGuessedPassword = (CurrentGuessedPassword) => {
+            console.log('checkGuessedPassword');
+            if (check()) {
+                const index = GuessedCount;
+                const value = CurrentGuessedPassword;
+                const correctNumber = 0;
+                const correctPosition = 0;
 
+                setGuessedPassword(prevState => {
+                    let newState = [...prevState];
+                    newState[index] = {
+                        index: index,
+                        value: value,
+                        correctNumber: correctNumber,
+                        correctPosition: correctPosition
+                    };
+                    return newState;
+                });
+                setGuessedCount(GuessedCount + 1);
+            }
+            console.log('checkGuessedPassword Success');
+        }
 
-            // const newGuessedPassword = [...GuessedPassword];
-            // newGuessedPassword[index].index = GuessedCount;
-            // newGuessedPassword[index].value = Guessed_Password;
-            // newGuessedPassword[index].correctNumber = 0;
-            // newGuessedPassword[index].correctPosition = 0;
-            // setGuessedPassword(newGuessedPassword);
+        const check = () => {
 
-            setGuessedPassword(prevState => {
-                let newState = [...prevState];
-                newState[index] = {
-                    index: index,
-                    value: value,
-                    correctNumber: correctNumber,
-                    correctPosition: correctPosition
-                };
-                return newState;
-            });
-            setGuessedCount(GuessedCount + 1);
+            let index4 = CurrentGuess % 10;
+            let index3 = (Math.floor(CurrentGuess / 10)) % 10;
+            let index2 = (Math.floor(CurrentGuess / 100)) % 10;
+            let index1 = (Math.floor(CurrentGuess / 1000)) % 10;
+
+            if (
+                index1 === index2 || index1 === index3 || index1 === index4 ||
+                index2 === index3 || index2 === index4 ||
+                index3 === index4
+            ) {
+                return false
+            }
+            return true
         }
 
         checkGuessedPassword(CurrentGuess);
@@ -75,21 +93,28 @@ export default function WhatIsThePassword() {
             console.log('generateRandomPassword Success');
         };
 
+        setGuessedCount(0);
+        setCurrentGuess(0)
+        setGuessedPassword(Array(11).fill(0).map(() => ({
+            index: 0,
+            value: 0,
+            correctNumber: 0,
+            correctPosition: 0
+        })));
         generateRandomPassword();
     }, [Refresh]);
 
     return (
         <div className='whatisthepassword-container'>
             <div className='header'>
-                {/* <h1><b>WHAT IS THE PASSWORD?</b></h1> */}
                 <h2><b>WHAT IS THE</b></h2>
                 <h1><b>PASSWORD?</b></h1>
                 <h1><b>{Password}</b></h1>
             </div>
 
-            <Form className='change-information-form'>
+            <Form className='change-information-form' onSubmit={handleSubmitCurrentGuess}>
                 <Form.Group controlId='guessedpassword' className='form-group'>
-                    <Form.Control type='text' placeholder='Enter your password' onChange={(e) => setCurrentGuess(e.target.value)} />
+                    <Form.Control type='text' placeholder='Enter your password' />
                 </Form.Group>
                 <div className='change-information-button'>
                     <Button type='submit' className='btn'>GUESS</Button>
@@ -100,13 +125,12 @@ export default function WhatIsThePassword() {
             <div className='game-content'>
                 <Table className='no-wrap align-middle table'>
                     <tbody>
-                        <tr>
-                            <td>
-                            </td>
-                        </tr>
                         {GuessedPassword.map((guessedpassword, index) => (
                             <tr key={index}>
                                 <td>
+                                    <p>
+                                        {index}
+                                    </p>
                                     <p>
                                         {guessedpassword.index}
                                     </p>
@@ -131,6 +155,7 @@ export default function WhatIsThePassword() {
                         </div>
                     </div>
                     <div className='result-detail'>
+                        Result: NOT YET
                     </div>
                 </div>
             </div>
