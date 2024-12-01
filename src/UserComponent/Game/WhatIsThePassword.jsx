@@ -15,7 +15,7 @@ export default function WhatIsThePassword() {
         e.target.guessedpassword.value = '';
     }
 
-    // const [HasWon, setHasWon] = useState(0);
+    const [HasWon, setHasWon] = useState(false);
     // const [GuessedTime, setGuessedTime] = useState(-1);
     const [GuessedCount, setGuessedCount] = useState(0);
     const [GuessedPassword, setGuessedPassword] = useState(Array(10).fill(0).map(() => ({
@@ -24,6 +24,10 @@ export default function WhatIsThePassword() {
         correctNumber: 0,
         correctPosition: 0
     })));
+
+    const clearInput = () => {
+        setError('');
+    }
 
     const checkInputPassword = (InputPassword) => {
         console.log('checkInputPassword');
@@ -43,6 +47,7 @@ export default function WhatIsThePassword() {
                 };
                 return newState;
             });
+            checkWin(correctNumber, correctPosition);
             setGuessedCount(GuessedCount + 1);
         }
         console.log('checkInputPassword Success');
@@ -68,10 +73,11 @@ export default function WhatIsThePassword() {
         }
         setError('');
         console.log('check true');
-        return true
+        return true;
     }
 
     const checkCorrectNumber = (InputPassword) => {
+        console.log('checkCorrectNumber');
 
         let RandomIndex4 = Password % 10;
         let RandomIndex3 = (Math.floor(Password / 10)) % 10;
@@ -94,10 +100,12 @@ export default function WhatIsThePassword() {
                 CorrectNumber++;
             }
         }
+        console.log('checkCorrectNumber Success');
         return CorrectNumber;
     }
 
     const checkCorrectPosition = (InputPassword) => {
+        console.log('checkCorrectPosition');
 
         let RandomIndex4 = Password % 10;
         let RandomIndex3 = (Math.floor(Password / 10)) % 10;
@@ -114,7 +122,16 @@ export default function WhatIsThePassword() {
         if (InputIndex2 == RandomIndex2) CorrectPosition++;
         if (InputIndex3 == RandomIndex3) CorrectPosition++;
         if (InputIndex4 == RandomIndex4) CorrectPosition++;
+        console.log('checkCorrectPosition Success');
         return CorrectPosition;
+    }
+
+    const checkWin = (correctNumber, correctPosition) => {
+        if (correctNumber === 4 && correctPosition === 4 && GuessedCount <= 10) {
+            console.log('You have won the game!');
+            setHasWon(true);
+        }
+        return;
     }
 
     useEffect(() => {
@@ -145,6 +162,7 @@ export default function WhatIsThePassword() {
         };
 
         setError('');
+        setHasWon(false);
         setGuessedCount(0);
         setGuessedPassword(Array(10).fill(0).map(() => ({
             index: 0,
@@ -160,61 +178,67 @@ export default function WhatIsThePassword() {
             <div className='header'>
                 <h2><b>WHAT IS THE</b></h2>
                 <h1><b>PASSWORD?</b></h1>
-                <h1><b>Password: {Password}</b></h1>
+                {/* <h1><b>Password: {Password}</b></h1> */}
             </div>
-
-            <div>{Error && Error}</div>
 
             <Form className='change-information-form' onSubmit={handleSubmitCurrentGuess}>
                 <Form.Group controlId='guessedpassword' className='form-group'>
-                    <Form.Control type='text' placeholder='Enter your password' />
+                    <Form.Control type='text' placeholder='Enter password' />
                 </Form.Group>
                 <div className='change-information-button'>
-                    <Button type='submit' className='btn'>GUESS</Button>
-                    <Button type='reset' className='btn btn-reset'>ĐẶT LẠI</Button>
+                    <Button type='submit' className='btn'>ENTER</Button>
+                    <Button type='reset' className='btn btn-reset' onClick={clearInput}>CLEAR</Button>
                 </div>
             </Form>
 
+            <div className='error-message'>{Error && Error}</div>
+
             <div className='game-content'>
                 <Table className='no-wrap align-middle table'>
-                    <tbody>
+                    <thead className='list-header'>
                         <tr>
+                            <th>Index</th>
+                            <th>Entered Password</th>
+                            <th>Correct Number</th>
+                            <th>Correct Position</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {/* <tr>
                             <td>
                                 {GuessedPassword.length}
                             </td>
-                        </tr>
-                        {GuessedPassword.map((guessedpassword, index) => (
-                            <tr key={index}>
-                                <td>
-                                    <p>
-                                        {index}
-                                    </p>
-                                    <p>
-                                        {guessedpassword.index}
-                                    </p>
-                                    <p>
+                        </tr> */}
+                        {GuessedPassword
+                            .filter(guessedpassword => guessedpassword.value != '')
+                            .sort((b, a) => a.index - b.index)
+                            .map((guessedpassword, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        {guessedpassword.index + 1}
+                                    </td>
+                                    <td>
                                         {guessedpassword.value}
-                                    </p>
-                                    <p>
+                                    </td>
+                                    <td>
                                         {guessedpassword.correctNumber}
-                                    </p>
-                                    <p>
+                                    </td>
+                                    <td>
                                         {guessedpassword.correctPosition}
-                                    </p>
-                                </td>
-                            </tr>
-                        ))}
+                                    </td>
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </Table>
-                <div className='game-detail'>
-                    <div>
-                        <div className='support'>
-                            <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET GAME</Button>
-                        </div>
-                    </div>
-                    <div className='result-detail'>
-                        Result: NOT YET
-                    </div>
+            </div>
+            <div className='game-detail'>
+                <div>
+                    <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET GAME</Button>
+                </div>
+                <div className='result-detail'>
+                    {HasWon === true && <h2 style={{ color: '#28a745' }}><b>YOU WON!</b></h2>}
+                    {HasWon === false && GuessedCount >= 10 && <h2 style={{ color: '#dc3545' }}><b>YOU LOST!</b></h2>}
                 </div>
             </div>
         </div>
