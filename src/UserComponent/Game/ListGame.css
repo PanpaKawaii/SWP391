@@ -4,6 +4,37 @@ body {
 
 .listgame-container {
     width: 100%;
+    min-height: 80vh;
+    margin: 30px 0 100px;
     text-align: center;
     font-family: 'Quicksand', Arial, sans-serif;
+
+    h1 {
+        margin: 0 0 40px;
+    }
+
+    .listgame {
+        display: flex;
+        justify-content: space-evenly;
+
+        a {
+            color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+
+            img {
+                width: 200px;
+                height: 200px;
+                border: 1px solid #fdbc7f;
+                border-radius: 20px;
+            }
+
+            h3 {
+                margin: 15px 0 0;
+            }
+        }
+    }
 }
