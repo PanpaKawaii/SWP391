@@ -130,6 +130,8 @@ export default function WhatIsThePassword() {
         if (correctNumber === 4 && correctPosition === 4 && GuessedCount <= 10) {
             console.log('You have won the game!');
             setHasWon(true);
+        } else {
+            console.log('You have NOT won yet');
         }
         return;
     }
@@ -178,18 +180,20 @@ export default function WhatIsThePassword() {
             <div className='header'>
                 <h2><b>WHAT IS THE</b></h2>
                 <h1><b>PASSWORD?</b></h1>
-                {/* <h1><b>Password: {Password}</b></h1> */}
+                <h1><b>Password: {Password}</b></h1>
             </div>
 
-            <Form className='change-information-form' onSubmit={handleSubmitCurrentGuess}>
-                <Form.Group controlId='guessedpassword' className='form-group'>
-                    <Form.Control type='text' placeholder='Enter password' />
-                </Form.Group>
-                <div className='change-information-button'>
-                    <Button type='submit' className='btn'>ENTER</Button>
-                    <Button type='reset' className='btn btn-reset' onClick={clearInput}>CLEAR</Button>
-                </div>
-            </Form>
+            {GuessedCount < 10 && HasWon === false &&
+                <Form onSubmit={handleSubmitCurrentGuess}>
+                    <Form.Group controlId='guessedpassword' className='form-group'>
+                        <Form.Control type='text' placeholder='Enter password' />
+                    </Form.Group>
+                    <div className='change-information-button'>
+                        <Button type='submit' className='btn'>ENTER</Button>
+                        <Button type='reset' className='btn btn-reset' onClick={clearInput}>CLEAR</Button>
+                    </div>
+                </Form>
+            }
 
             <div className='error-message'>{Error && Error}</div>
 
@@ -233,9 +237,15 @@ export default function WhatIsThePassword() {
                 </Table>
             </div>
             <div className='game-detail'>
-                <div>
-                    <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET GAME</Button>
-                </div>
+                <Form>
+                    <Form.Label><b><u>Note:</u></b></Form.Label>
+                    <Form.Group controlId='guessedpassword' className='form-group'>
+                        <Form.Control as='textarea' placeholder='Write your note' />
+                    </Form.Group>
+                </Form>
+
+                <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET GAME</Button>
+
                 <div className='result-detail'>
                     {HasWon === true && <h2 style={{ color: '#28a745' }}><b>YOU WON!</b></h2>}
                     {HasWon === false && GuessedCount >= 10 && <h2 style={{ color: '#dc3545' }}><b>YOU LOST!</b></h2>}

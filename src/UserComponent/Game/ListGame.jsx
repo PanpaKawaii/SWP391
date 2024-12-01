@@ -12,11 +12,11 @@ export default function ListGame() {
 
             <div className='listgame'>
                 <Link to='/game/minesweeper'>
-                    <img src={MinesweeperSRC} alt='Minesweeper'></img>
+                    <img src={MinesweeperSRC} alt='minesweeper'></img>
                     <h3><b>Minesweeper</b></h3>
                 </Link>
                 <Link to='/game/whatisthepassword'>
-                    <img src='' alt='Minesweeper'></img>
+                    <img src='' alt='whatisthepassword'></img>
                     <h3><b>What Is The Password?</b></h3>
                 </Link>
             </div>
