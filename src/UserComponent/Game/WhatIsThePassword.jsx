@@ -177,78 +177,78 @@ export default function WhatIsThePassword() {
 
     return (
         <div className='whatisthepassword-container'>
-            <div className='header'>
-                <h2><b>WHAT IS THE</b></h2>
-                <h1><b>PASSWORD?</b></h1>
-                <h1><b>Password: {Password}</b></h1>
-            </div>
+            <div className='whatisthepassword-box'>
+                <div className='header'>
+                    <h2><b>WHAT IS THE</b></h2>
+                    <h1><b>PASSWORD?</b></h1>
+                    {/* <h1><b>Password: {Password}</b></h1> */}
+                </div>
 
-            {GuessedCount < 10 && HasWon === false &&
-                <Form onSubmit={handleSubmitCurrentGuess}>
-                    <Form.Group controlId='guessedpassword' className='form-group'>
-                        <Form.Control type='text' placeholder='Enter password' />
-                    </Form.Group>
-                    <div className='change-information-button'>
+                {GuessedCount < 10 && HasWon === false &&
+                    <Form onSubmit={handleSubmitCurrentGuess}>
+                        <Form.Group controlId='guessedpassword' className='form-group'>
+                            <Form.Control type='text' placeholder='Enter password' />
+                        </Form.Group>
                         <Button type='submit' className='btn'>ENTER</Button>
                         <Button type='reset' className='btn btn-reset' onClick={clearInput}>CLEAR</Button>
-                    </div>
-                </Form>
-            }
+                    </Form>
+                }
 
-            <div className='error-message'>{Error && Error}</div>
+                <div className='error-message'>{Error && Error}</div>
 
-            <div className='game-content'>
-                <Table className='no-wrap align-middle table'>
-                    <thead className='list-header'>
-                        <tr>
-                            <th>Index</th>
-                            <th>Entered Password</th>
-                            <th>Correct Number</th>
-                            <th>Correct Position</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* <tr>
+                <div className='game-content'>
+                    <Table className='no-wrap align-middle table'>
+                        <thead className='list-header'>
+                            <tr>
+                                <th>Index</th>
+                                <th>Entered Password</th>
+                                <th>Correct Number</th>
+                                <th>Correct Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* <tr>
                             <td>
                                 {GuessedPassword.length}
                             </td>
                         </tr> */}
-                        {GuessedPassword
-                            .filter(guessedpassword => guessedpassword.value != '')
-                            .sort((b, a) => a.index - b.index)
-                            .map((guessedpassword, index) => (
-                                <tr key={index}>
-                                    <td>
-                                        {guessedpassword.index + 1}
-                                    </td>
-                                    <td>
-                                        {guessedpassword.value}
-                                    </td>
-                                    <td>
-                                        {guessedpassword.correctNumber}
-                                    </td>
-                                    <td>
-                                        {guessedpassword.correctPosition}
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </Table>
-            </div>
-            <div className='game-detail'>
-                <Form>
-                    <Form.Label><b><u>Note:</u></b></Form.Label>
-                    <Form.Group controlId='guessedpassword' className='form-group'>
-                        <Form.Control as='textarea' placeholder='Write your note' />
-                    </Form.Group>
-                </Form>
+                            {GuessedPassword
+                                .filter(guessedpassword => guessedpassword.value != '')
+                                .sort((b, a) => a.index - b.index)
+                                .map((guessedpassword, index) => (
+                                    <tr key={index}>
+                                        <td>
+                                            {guessedpassword.index + 1}
+                                        </td>
+                                        <td>
+                                            {guessedpassword.value}
+                                        </td>
+                                        <td>
+                                            {guessedpassword.correctNumber}
+                                        </td>
+                                        <td>
+                                            {guessedpassword.correctPosition}
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </Table>
+                </div>
+                <div className='game-detail'>
+                    <Form>
+                        <Form.Label><b><u>Note:</u></b></Form.Label>
+                        <Form.Group controlId='guessedpassword' className='form-group'>
+                            <Form.Control as='textarea' placeholder='Write your note' />
+                        </Form.Group>
+                    </Form>
 
-                <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET GAME</Button>
+                    <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET GAME</Button>
 
-                <div className='result-detail'>
-                    {HasWon === true && <h2 style={{ color: '#28a745' }}><b>YOU WON!</b></h2>}
-                    {HasWon === false && GuessedCount >= 10 && <h2 style={{ color: '#dc3545' }}><b>YOU LOST!</b></h2>}
+                    <div className='result-detail'>
+                        {HasWon === true && <h2 style={{ color: '#28a745' }}><b>YOU WON!</b></h2>}
+                        {HasWon === false && GuessedCount >= 10 && <h2 style={{ color: '#dc3545' }}><b>YOU LOST!</b></h2>}
+                    </div>
                 </div>
             </div>
         </div>
