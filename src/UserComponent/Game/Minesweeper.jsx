@@ -248,6 +248,15 @@ export default function Minesweeper() {
                                     :
                                     '4px solid #d97720'
                                 ),
+                        backgroundColor:
+                            HasWon === 1 ?
+                                '#28a745'
+                                :
+                                (HasWon === 2 ?
+                                    '#dc3545'
+                                    :
+                                    '#d97720'
+                                ),
                     }}
                 >
                     <tbody>
