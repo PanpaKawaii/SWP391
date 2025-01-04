@@ -21,6 +21,7 @@ import BookingStoreDetailContent from './UserComponent/Booking/BookingStoreDetai
 import BookingPodContent from './UserComponent/Booking/BookingPodContent'
 import BookingPodDetailContent from './UserComponent/Booking/BookingPodDetailContent'
 import ContactContent from './UserComponent/Contact/ContactContent'
+import Japanese from './UserComponent/Japanese/Japanese'
 import ListGame from './UserComponent/Game/ListGame'
 import Minesweeper from './UserComponent/Game/Minesweeper'
 import WhatIsThePassword from './UserComponent/Game/WhatIsThePassword'
@@ -95,10 +96,12 @@ function App() {
               <Route path='/booking/pod/:Id' element={<BookingPodDetailContent />} />
 
               <Route path='/contact' element={<ContactContent />} />
-
+              
               <Route path='/game' element={<ListGame />} />
               <Route path='/game/minesweeper' element={<Minesweeper />} />
               <Route path='/game/whatisthepassword' element={<WhatIsThePassword />} />
+
+              <Route path='/japanese' element={<Japanese />} />
 
               <Route path='/signinsignup' element={<SignInSignUp />} />
             </Routes>
