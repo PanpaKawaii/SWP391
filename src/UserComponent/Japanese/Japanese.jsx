@@ -24,7 +24,6 @@ export default function Japanese() {
                             <th>Sino-Vietnamese</th>
                             <th>On</th>
                             <th>Kun</th>
-                            <th>Meaning</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,7 +33,6 @@ export default function Japanese() {
                                 <td style={{ color: kanji_array.SinoVietnamese == 'Unknown' && 'red' }}>{kanji_array.SinoVietnamese}</td>
                                 <td style={{ color: kanji_array.On == 'Unknown' && 'red' }}>{kanji_array.On}</td>
                                 <td style={{ color: kanji_array.Kun == 'Unknown' && 'red' }}>{kanji_array.Kun}</td>
-                                <td style={{ color: kanji_array.Meaning == 'Unknown' && 'red' }}>{kanji_array.Meaning}</td>
                             </tr>
                         ))}
                     </tbody>
