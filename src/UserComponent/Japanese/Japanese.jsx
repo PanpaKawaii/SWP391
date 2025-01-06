@@ -16,7 +16,7 @@ export default function Japanese() {
             </div>
 
             <div className='game-content'>
-                <h2>Japanese Content</h2>
+                <h2>Kanji</h2>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -38,6 +38,7 @@ export default function Japanese() {
                     </tbody>
                 </Table>
 
+                <h2>Kanji Example</h2>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
