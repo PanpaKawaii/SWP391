@@ -64,21 +64,21 @@ export default function SolveTheMaze() {
     ]);
 
     const [Maze4, setMaze4] = useState([
-        [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+        [0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+        [0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0],
+        [0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0],
+        [0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1],
+        [0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0],
+        [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0],
+        [0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0],
+        [0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 3, 0, 1, 0, 0],
+        [1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
+        [0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0],
+        [1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
     ]);
 
     const [Path, setPath] = useState([]);
@@ -110,7 +110,8 @@ export default function SolveTheMaze() {
         setVisitedCells(newVisitedCells);
 
         if (newMaze[row][col] === 3) {
-            console.log('Winnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
+            console.log('Found');
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
             setPath(newPath);
             setFound(true);
             return;
@@ -131,42 +132,6 @@ export default function SolveTheMaze() {
             }
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // const visitCell = (row, col, Path) => {
-    //     const newVisitedCells = [...visitedCells];
-    //     const newMaze = [...Maze];
-    //     if (newMaze[row][col] === 1 || newVisitedCells[row][col] === true) {
-    //         console.log('Refuse');
-    //         return;
-    //     }
-    //     console.log('Done');
-
-    //     const newPath = [...Path, [row, col]];
-    //     console.log('Path: ', newPath);
-
-    //     newVisitedCells[row][col] = true;
-    //     setVisitedCells(newVisitedCells);
-
-    //     if (newMaze[row][col] === 3) {
-    //         console.log('Winnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
-    //         setPath(newPath);
-    //         setFound(true);
-    //         return;
-    //     }
-
-    //     if (newMaze[row][col] !== 1) {
-    //         const directions = [[1, 0], [0, 1], [-1, 0], [0, -1]];
-    //         for (let direction of directions) {
-    //             const newRow = row + direction[0];
-    //             const newCol = col + direction[1];
-    //             if (newRow >= 0 && newRow < Maze.length && newCol >= 0 && newCol < Maze[0].length) {
-    //                 visitCell(newRow, newCol, newPath);
-    //             }
-    //         }
-    //     }
-    // }
 
     return (
         <div className='solvethemaze-container'>
@@ -201,7 +166,7 @@ export default function SolveTheMaze() {
                                         }}
                                         onClick={() => { visitCell(index_row, index_col, Path) }}
                                     >
-                                        <p style={{ fontSize: '10px' }}>{index_row} {index_col}</p>
+                                        <p style={{ fontSize: '10px' }}>{index_row} - {index_col}</p>
                                     </td>
                                 ))}
                             </tr>
@@ -237,7 +202,7 @@ export default function SolveTheMaze() {
                                         }}
                                         onClick={() => { visitCell(index_row, index_col, Path) }}
                                     >
-                                        <p style={{ fontSize: '10px' }}>{index_row} {index_col}</p>
+                                        <p style={{ fontSize: '10px' }}>{index_row} - {index_col}</p>
                                     </td>
                                 ))}
                             </tr>
@@ -261,9 +226,14 @@ export default function SolveTheMaze() {
                     </tbody>
                 </Table> */}
             </div>
-            {Path.map((step, index) => (
-                <span key={index} style={{ border: '1px', borderRadius: '5px', borderColor: '#cccccc' }}>[{step[0]} - {step[1]}] </span>
-            ))}
+            {Path && Path.length != 0 &&
+                <span style={{ fontSize: '20px' }}>
+                    <span style={{ fontWeight: 'bold' }}>Path:</span>
+                    {Path.map((step, index) => (
+                        <span key={index}> [{step[0]} - {step[1]}]</span>
+                    ))}
+                </span>
+            }
         </div>
     )
 }
