@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import './Japanese.css';
 
 import { Kanji } from '../../assets/listJapanese';

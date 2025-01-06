@@ -45,7 +45,7 @@ export default function GuestHeader() {
                     <Link to='/booking/pod' className='desktop-menu-item'><i className='fa-solid fa-list icon'></i> Đặt chỗ</Link>
                     <Link to='/contact' className='desktop-menu-item'><i className='fa-regular fa-address-card icon'></i> Liên hệ</Link>
                     <Link to='/game' className='desktop-menu-item'><i className='fa-solid fa-gamepad icon'></i> Game</Link>
-                    <Link to='/japanese' className='desktop-menu-item'><i className='fa-solid fa-gamepad icon'></i> Japanese</Link>
+                    <Link to='/japanese' className='desktop-menu-item'><i className='fa-solid fa-torii-gate icon'></i> Japanese</Link>
                     <Link to='/signinsignup' className='desktop-menu-item'><i className='fas fa-sign-in-alt icon'></i> Đăng nhập</Link>
 
                     <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleMenu}>

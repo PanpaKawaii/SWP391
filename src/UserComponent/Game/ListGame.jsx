@@ -19,6 +19,10 @@ export default function ListGame() {
                     <img src='' alt='whatisthepassword'></img>
                     <h3><b>What Is The Password?</b></h3>
                 </Link>
+                <Link to='/game/solvethemaze'>
+                    <img src='' alt='solvethemaze'></img>
+                    <h3><b>Solve The Maze</b></h3>
+                </Link>
             </div>
         </div>
     )
