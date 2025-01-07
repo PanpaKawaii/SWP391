@@ -294,8 +294,8 @@ export default function SolveTheMaze() {
                             key={index}
                             className='btn'
                             style={{
-                                backgroundColor: `hsl(${index * 48 % 360}, 100%, 70%)`,
-                                color: `hsl(${index * 48 % 360}, 100%, 30%)`,
+                                backgroundColor: `hsl(${index * 50 % 360}, 100%, 70%)`,
+                                color: `hsl(${index * 50 % 360}, 100%, 30%)`,
                             }}
                             onClick={() => setCurrentMaze(maze)}
                         >
