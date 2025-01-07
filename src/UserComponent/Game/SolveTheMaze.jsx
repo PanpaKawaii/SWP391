@@ -20,10 +20,16 @@ export default function SolveTheMaze() {
         [1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
         [0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0],
         [1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
     ]);
 
     const [Maze1, setMaze1] = useState([
+        [2, 1, 1],
+        [0, 0, 1],
+        [1, 0, 3]
+    ]);
+
+    const [Maze2, setMaze2] = useState([
         [2, 0, 0, 0, 1, 0, 0, 1, 0, 0],
         [1, 1, 1, 0, 1, 0, 1, 1, 0, 1],
         [0, 1, 0, 0, 0, 0, 1, 0, 0, 0],
@@ -36,7 +42,7 @@ export default function SolveTheMaze() {
         [0, 0, 0, 1, 0, 0, 0, 0, 0, 3]
     ]);
 
-    const [Maze2, setMaze2] = useState([
+    const [Maze3, setMaze3] = useState([
         [0, 2, 0, 1, 0, 0, 0, 0, 0, 0],
         [0, 1, 0, 1, 0, 1, 1, 1, 1, 0],
         [0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
@@ -49,7 +55,7 @@ export default function SolveTheMaze() {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 3]
     ]);
 
-    const [Maze3, setMaze3] = useState([
+    const [Maze4, setMaze4] = useState([
         [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
         [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -63,7 +69,7 @@ export default function SolveTheMaze() {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3]
     ]);
 
-    const [Maze4, setMaze4] = useState([
+    const [Maze5, setMaze5] = useState([
         [2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
         [0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0],
         [0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
@@ -78,14 +84,38 @@ export default function SolveTheMaze() {
         [1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
         [0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0],
         [1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
     ]);
 
-    const [Path, setPath] = useState([]);
-
+    const [VisitedCells, setVisitedCells] = useState(Array(Maze.length).fill(0).map(() => Array(Maze[0].length).fill(false)));
     const [Found, setFound] = useState(false);
+    const [Path, setPath] = useState([]);
     const [Refresh, setRefresh] = useState(0);
-    const [visitedCells, setVisitedCells] = useState(Array(Maze.length).fill(0).map(() => Array(Maze[0].length).fill(false)));
+
+    const setCurrentMaze = (MazeNumber) => {
+        let newMaze;
+        switch (MazeNumber) {
+            case 1:
+                newMaze = [...Maze1];
+                break;
+            case 2:
+                newMaze = [...Maze2];
+                break;
+            case 3:
+                newMaze = [...Maze3];
+                break;
+            case 4:
+                newMaze = [...Maze4];
+                break;
+            case 5:
+                newMaze = [...Maze5];
+                break;
+            default:
+                newMaze = [...Maze];
+                break;
+        }
+        setMaze(newMaze);
+    }
 
     useEffect(() => {
         const newVisitedCells = Array(Maze.length).fill(0).map(() => Array(Maze[0].length).fill(false));
@@ -95,13 +125,13 @@ export default function SolveTheMaze() {
     }, [Refresh]);
 
     const visitCell = async (row, col, Path) => {
-        const newVisitedCells = [...visitedCells];
+        const newVisitedCells = [...VisitedCells];
         const newMaze = [...Maze];
         if (newMaze[row][col] === 1 || newVisitedCells[row][col] === true) {
             console.log('Refuse');
             return;
         }
-        console.log('Done');
+        console.log('Activate');
 
         const newPath = [...Path, [row, col]];
         console.log('Path: ', newPath);
@@ -133,6 +163,11 @@ export default function SolveTheMaze() {
         }
     }
 
+    const handleAddingMaze = (e) => {
+        e.preventDefault();
+        setMaze(JSON.parse(e.target.yourmaze.value));
+    }
+
     return (
         <div className='solvethemaze-container'>
             <div className='header'>
@@ -140,6 +175,8 @@ export default function SolveTheMaze() {
             </div>
 
             <div className='solvethemaze-content'>
+
+                <h2><b>Calculating</b></h2>
                 <Table
                     className='no-wrap align-middle table'
                 // style={{ '--table-width': 10, }}
@@ -162,20 +199,19 @@ export default function SolveTheMaze() {
                                                         '#fb8b24'
                                                     )
                                                 ),
-                                            color: visitedCells[index_row][index_col] === true && '#ffffff',
+                                            color: VisitedCells[index_row][index_col] === true && '#ffffff',
                                         }}
                                         onClick={() => { visitCell(index_row, index_col, Path) }}
                                     >
-                                        <p style={{ fontSize: '10px' }}>{index_row} - {index_col}</p>
+                                        <p>{index_row}-{index_col}</p>
                                     </td>
                                 ))}
                             </tr>
                         ))}
                     </tbody>
                 </Table>
-                <Button style={{ margin: '0 20px', height: 'fit-content', fontWeight: 'bold' }} onClick={() => { setRefresh(Refresh + 1) }}>
-                    RESET
-                </Button>
+
+                <h2><b>Final Path</b></h2>
                 <Table
                     className='no-wrap align-middle table'
                 // style={{ '--table-width': 10, }}
@@ -202,7 +238,7 @@ export default function SolveTheMaze() {
                                         }}
                                         onClick={() => { visitCell(index_row, index_col, Path) }}
                                     >
-                                        <p style={{ fontSize: '10px' }}>{index_row} - {index_col}</p>
+                                        <p>{index_row}-{index_col}</p>
                                     </td>
                                 ))}
                             </tr>
@@ -211,10 +247,10 @@ export default function SolveTheMaze() {
                 </Table>
                 {/* <Table
                     className='no-wrap align-middle table'
-                    style={{ '--table-width': visitedCells[0].length, }}
+                    style={{ '--table-width': VisitedCells[0].length, }}
                 >
                     <tbody>
-                        {visitedCells.map((row, index_row) => (
+                        {VisitedCells.map((row, index_row) => (
                             <tr key={index_row}>
                                 {row.map((cell, index_col) => (
                                     <td key={index_col} style={{
@@ -226,14 +262,48 @@ export default function SolveTheMaze() {
                     </tbody>
                 </Table> */}
             </div>
+
             {Path && Path.length != 0 &&
-                <span style={{ fontSize: '20px' }}>
-                    <span style={{ fontWeight: 'bold' }}>Path:</span>
-                    {Path.map((step, index) => (
-                        <span key={index}> [{step[0]} - {step[1]}]</span>
+                <div className='solved-path'>
+                    <div>
+                        <h3><b>Path:</b></h3>
+                        {Path.map((step, index) => (
+                            <span key={index}>{(index % 8 === 0 && index !== 0) ? <br /> : ''}[{step[0]}-{step[1]}] </span>
+                        ))}
+                    </div>
+                    <div>
+                        <h3><b>Count:</b> {Path.length}</h3>
+                    </div>
+                </div>
+            }
+
+            <Form onSubmit={handleAddingMaze}>
+                <Form.Group controlId='yourmaze' className='form-group'>
+                    <Form.Control as='textarea' placeholder='Add your maze' />
+                </Form.Group>
+                <Button type='submit' className='btn'>ADD</Button>
+                <Button type='reset' className='btn btn-reset'>CLEAR</Button>
+                <Button className='btn btn-reset' onClick={() => setRefresh(Refresh + 1)}>RESET</Button>
+            </Form>
+
+            <div className='available-maze'>
+                <h3><b>Available Maze</b></h3>
+                <span>
+                    {[1, 2, 3, 4, 5].map((maze, index) => (
+                        <Button
+                            key={index}
+                            className='btn'
+                            style={{
+                                backgroundColor: `hsl(${index * 48 % 360}, 100%, 70%)`,
+                                color: `hsl(${index * 48 % 360}, 100%, 30%)`,
+                            }}
+                            onClick={() => setCurrentMaze(maze)}
+                        >
+                            Maze {maze}
+                        </Button>
                     ))}
                 </span>
-            }
+            </div>
         </div>
     )
 }
