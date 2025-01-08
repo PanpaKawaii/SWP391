@@ -115,6 +115,10 @@ export default function SolveTheMaze() {
                 break;
         }
         setMaze(newMaze);
+        const newVisitedCells = Array(newMaze.length).fill(0).map(() => Array(newMaze[0].length).fill(false));
+        setVisitedCells(newVisitedCells);
+        setFound(false);
+        setPath([]);
     }
 
     useEffect(() => {
@@ -166,6 +170,10 @@ export default function SolveTheMaze() {
     const handleAddingMaze = (e) => {
         e.preventDefault();
         setMaze(JSON.parse(e.target.yourmaze.value));
+        const newVisitedCells = Array((JSON.parse(e.target.yourmaze.value)).length).fill(0).map(() => Array((JSON.parse(e.target.yourmaze.value))[0].length).fill(false));
+        setVisitedCells(newVisitedCells);
+        setFound(false);
+        setPath([]);
     }
 
     return (
