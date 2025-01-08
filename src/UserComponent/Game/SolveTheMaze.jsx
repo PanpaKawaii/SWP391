@@ -25,8 +25,8 @@ export default function SolveTheMaze() {
 
     const [Maze1, setMaze1] = useState([
         [2, 1, 1],
-        [0, 0, 1],
-        [1, 0, 3]
+        [0, 1, 3],
+        [0, 0, 0]
     ]);
 
     const [Maze2, setMaze2] = useState([
@@ -184,7 +184,7 @@ export default function SolveTheMaze() {
 
             <div className='solvethemaze-content'>
 
-                <h2><b>Calculating</b></h2>
+                <h2><b>Animation Calculating</b></h2>
                 <Table
                     className='no-wrap align-middle table'
                 // style={{ '--table-width': 10, }}
@@ -219,40 +219,45 @@ export default function SolveTheMaze() {
                     </tbody>
                 </Table>
 
-                <h2><b>Final Path</b></h2>
-                <Table
-                    className='no-wrap align-middle table'
-                // style={{ '--table-width': 10, }}
-                >
-                    <tbody>
-                        {Maze.map((row, index_row) => (
-                            <tr key={index_row}>
-                                {row.map((cell, index_col) => (
-                                    <td key={index_col}
-                                        style={{
-                                            backgroundColor: cell === 2 ?
-                                                '#dc3545'
-                                                :
-                                                (cell === 3 ?
-                                                    '#ffc107'
-                                                    :
-                                                    (cell === 0 ?
-                                                        '#28a745'
+                {Found &&
+                    <>
+                        <h2><b>Final Path</b></h2>
+                        <Table
+                            className='no-wrap align-middle table'
+                        // style={{ '--table-width': 10, }}
+                        >
+                            <tbody className='tablebody'>
+                                {Maze.map((row, index_row) => (
+                                    <tr key={index_row}>
+                                        {row.map((cell, index_col) => (
+                                            <td key={index_col}
+                                                style={{
+                                                    backgroundColor: cell === 2 ?
+                                                        '#dc3545'
                                                         :
-                                                        '#fb8b24'
-                                                    )
-                                                ),
-                                            color: Path.some(path => path[0] === index_row && path[1] === index_col) ? '#ffffff' : '',
-                                        }}
-                                        onClick={() => { visitCell(index_row, index_col, Path) }}
-                                    >
-                                        <p>{index_row}-{index_col}</p>
-                                    </td>
+                                                        (cell === 3 ?
+                                                            '#ffc107'
+                                                            :
+                                                            (cell === 0 ?
+                                                                '#28a745'
+                                                                :
+                                                                '#fb8b24'
+                                                            )
+                                                        ),
+                                                    color: Path.some(path => path[0] === index_row && path[1] === index_col) ? '#ffffff' : '',
+                                                }}
+                                                onClick={() => { visitCell(index_row, index_col, Path) }}
+                                            >
+                                                <p>{index_row}-{index_col}</p>
+                                            </td>
+                                        ))}
+                                    </tr>
                                 ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                            </tbody>
+                        </Table>
+                    </>
+                }
+
                 {/* <Table
                     className='no-wrap align-middle table'
                     style={{ '--table-width': VisitedCells[0].length, }}

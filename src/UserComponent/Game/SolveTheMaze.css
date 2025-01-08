@@ -27,6 +27,8 @@ body {
             display: block;
             justify-self: center;
             width: calc(var(--table-width) * 35)px;
+            background-color: #fb8b24;
+            border: 4px solid #fb8b24;
             border-radius: 10px;
             overflow: hidden;
 
@@ -102,9 +104,10 @@ body {
     }
 
     .available-maze {
-        width: 100%;
+        /* width: 100%; */
         min-width: 160px;
         max-width: 540px;
+        margin: 0 10px;
         padding: 10px;
         border-radius: 15px;
         background-image: linear-gradient(135deg, #ff8080, #ffc080, #ffff80, #80ff80, #8080ff, #c080ff, #ff80ff);
