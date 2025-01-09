@@ -189,7 +189,7 @@ export default function SolveTheMaze() {
                     className='no-wrap align-middle table'
                 // style={{ '--table-width': 10, }}
                 >
-                    <tbody>
+                    <tbody style={{ cursor: 'pointer', userSelect: 'none' }}>
                         {Maze.map((row, index_row) => (
                             <tr key={index_row}>
                                 {row.map((cell, index_col) => (
@@ -295,7 +295,7 @@ export default function SolveTheMaze() {
                     <Form.Control as='textarea' placeholder='Add your maze' />
                 </Form.Group>
                 <Button type='submit' className='btn'>ADD</Button>
-                <Button type='reset' className='btn btn-reset'>CLEAR</Button>
+                <Button type='reset' className='btn btn-reset'>CLEAR TEXT</Button>
                 <Button className='btn btn-reset' onClick={() => setRefresh(Refresh + 1)}>RESET</Button>
             </Form>
 

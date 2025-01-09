@@ -16,7 +16,7 @@ export default function WhatIsThePassword() {
     }
 
     const [HasWon, setHasWon] = useState(false);
-    // const [GuessedTime, setGuessedTime] = useState(-1);
+    const [GuessedTime, setGuessedTime] = useState(-1);
     const [GuessedCount, setGuessedCount] = useState(0);
     const [GuessedPassword, setGuessedPassword] = useState(Array(10).fill(0).map(() => ({
         index: 0,
@@ -31,6 +31,7 @@ export default function WhatIsThePassword() {
 
     const checkInputPassword = (InputPassword) => {
         console.log('checkInputPassword');
+        if (GuessedTime === -1) setGuessedTime(0);
         if (checkValidate(InputPassword)) {
             const index = GuessedCount;
             const value = InputPassword;
@@ -165,6 +166,7 @@ export default function WhatIsThePassword() {
 
         setError('');
         setHasWon(false);
+        setGuessedTime(-1);
         setGuessedCount(0);
         setGuessedPassword(Array(10).fill(0).map(() => ({
             index: 0,
@@ -175,6 +177,16 @@ export default function WhatIsThePassword() {
         generateRandomPassword();
     }, [Refresh]);
 
+    useEffect(() => {
+        let interval;
+        if (HasWon === false && GuessedCount < 10 && GuessedTime !== -1) {
+            interval = setInterval(() => {
+                setGuessedTime(GuessedTime + 1);
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [GuessedTime, HasWon]);
+
     return (
         <div className='whatisthepassword-container'>
             <div className='whatisthepassword-box'>
@@ -182,6 +194,30 @@ export default function WhatIsThePassword() {
                     <h2><b>WHAT IS THE</b></h2>
                     <h1><b>PASSWORD?</b></h1>
                     {/* <h1><b>Password: {Password}</b></h1> */}
+                </div>
+
+                <div className='result-detail'>
+                    {
+                        ((HasWon === true) || (HasWon === false && GuessedCount >= 10)) &&
+                        <div className='answer'>
+                            {HasWon === true &&
+                                <>
+                                    <h2 style={{ color: '#28a745' }}><b>YOU WON!</b></h2>
+                                    <h4><b>The answer is: {Password}</b></h4>
+                                </>
+                            }
+                            {HasWon === false && GuessedCount >= 10 &&
+                                <>
+                                    <h2 style={{ color: '#dc3545' }}><b>YOU LOST!</b></h2>
+                                    <h4><b>The answer is: {Password}</b></h4>
+                                </>
+                            }
+                        </div>
+                    }
+
+                    <div className='run-time'>
+                        {GuessedTime !== -1 && <h3>Time: <b>{GuessedTime}</b></h3>}
+                    </div>
                 </div>
 
                 {GuessedCount < 10 && HasWon === false &&
@@ -243,11 +279,9 @@ export default function WhatIsThePassword() {
                         </Form.Group>
                     </Form>
 
-                    <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET GAME</Button>
-
-                    <div className='result-detail'>
-                        {HasWon === true && <h2 style={{ color: '#28a745' }}><b>YOU WON!</b></h2>}
-                        {HasWon === false && GuessedCount >= 10 && <h2 style={{ color: '#dc3545' }}><b>YOU LOST!</b></h2>}
+                    <div className='active-button'>
+                        <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET GAME</Button>
+                        <Button className='btn btn-giveup' onClick={() => { setGuessedCount(10), setGuessedTime(0) }}>GIVE UP (Reveal Password)</Button>
                     </div>
                 </div>
             </div>

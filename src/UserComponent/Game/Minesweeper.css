@@ -107,6 +107,7 @@ body {
             width: calc(var(--table-width) * 35)px;
             border-radius: 10px;
             overflow: hidden;
+            user-select: none;
 
             tr {
                 margin: 0;
