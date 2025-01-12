@@ -184,7 +184,7 @@ export default function SolveTheMaze() {
 
             <div className='solvethemaze-content'>
 
-                <h2><b>Animation Calculating</b></h2>
+                <h2><b>Animation Calculation</b></h2>
                 <Table
                     className='no-wrap align-middle table'
                 // style={{ '--table-width': 10, }}
