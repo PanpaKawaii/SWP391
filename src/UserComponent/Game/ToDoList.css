@@ -90,11 +90,12 @@ body {
                         align-items: center;
 
                         .formcheckbox {
-                            transform: scale(1.6);
                             margin: 0 14px 0 6px;
+                            transform: scale(1.6);
 
                             input {
                                 border-color: #fdbc7f;
+                                cursor: pointer;
                             }
 
                             input:focus {
