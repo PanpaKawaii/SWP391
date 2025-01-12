@@ -21,11 +21,12 @@ import BookingStoreDetailContent from './UserComponent/Booking/BookingStoreDetai
 import BookingPodContent from './UserComponent/Booking/BookingPodContent'
 import BookingPodDetailContent from './UserComponent/Booking/BookingPodDetailContent'
 import ContactContent from './UserComponent/Contact/ContactContent'
-import Japanese from './UserComponent/Japanese/Japanese'
 import ListGame from './UserComponent/Game/ListGame'
 import Minesweeper from './UserComponent/Game/Minesweeper'
-import SolveTheMaze from './UserComponent/Game/SolveTheMaze'
 import WhatIsThePassword from './UserComponent/Game/WhatIsThePassword'
+import SolveTheMaze from './UserComponent/Game/SolveTheMaze'
+import ToDoList from './UserComponent/Game/ToDoList'
+import Japanese from './UserComponent/Japanese/Japanese'
 import UserInformation from './UserComponent/UserControlContent/UserInformation'
 import UserBooking from './UserComponent/UserControlContent/UserBooking'
 import UserBookingDetail from './UserComponent/UserControlContent/UserBookingDetail'
@@ -102,6 +103,7 @@ function App() {
               <Route path='/game/minesweeper' element={<Minesweeper />} />
               <Route path='/game/whatisthepassword' element={<WhatIsThePassword />} />
               <Route path='/game/solvethemaze' element={<SolveTheMaze />} />
+              <Route path='/game/todolist' element={<ToDoList />} />
 
               <Route path='/japanese' element={<Japanese />} />
 

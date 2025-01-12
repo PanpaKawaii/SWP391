@@ -6,6 +6,7 @@ import './ListGame.css';
 import MinesweeperSRC from '../../assets/imageGAMEs/Minesweeper.png';
 import WhatIsThePasswordSRC from '../../assets/imageGAMEs/Minesweeper.png';
 import SolveTheMazeSRC from '../../assets/imageGAMEs/SolveTheMaze.png';
+import ToDoListSRC from '../../assets/imageGAMEs/Minesweeper.png';
 
 export default function ListGame() {
 
@@ -13,7 +14,7 @@ export default function ListGame() {
         { name: 'Minesweeper', src: MinesweeperSRC, link: '/game/minesweeper' },
         { name: 'What Is The Password?', src: '', link: '/game/whatisthepassword' },
         { name: 'Solve The Maze', src: SolveTheMazeSRC, link: '/game/solvethemaze' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
+        { name: 'To Do List', src: '', link: '/game/todolist' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
