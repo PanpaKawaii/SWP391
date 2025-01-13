@@ -2,7 +2,7 @@ body {
     margin: 0;
 }
 
-.minesweeper-container {
+.caro-container {
     width: 100%;
     min-height: 80vh;
     margin: 30px 0 100px;
@@ -98,20 +98,18 @@ body {
             display: block;
             justify-self: center;
             width: calc(var(--table-width) * 35)px;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
 
             tr {
                 margin: 0;
                 padding: 0;
                 height: 35px;
-                border: 1px solid red;
 
                 td {
                     margin: 0;
                     padding: 0;
                     width: 35px;
-                    border: 1px solid red;
 
                     p {
                         margin: 0;

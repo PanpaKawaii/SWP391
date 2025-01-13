@@ -217,26 +217,164 @@ export default function Caro() {
         return () => clearInterval(interval);
     }, [Time, HasWon]);
 
+
+
+
+
+    const [Player, setPlayer] = useState(1);
+    const [LastStep, setLastStep] = useState({
+        row: null,
+        col: null
+    });
+
     const [TicTacToe, setTicTacToe] = useState({
         rowCount: 3,
-        colCount: 3
-    })
+        colCount: 3,
+        constantToWin: 3
+    });
 
     const [PlayTable, setPlayTable] = useState(Array(TicTacToe.rowCount).fill(0).map(() =>
-        Array(GameMode.colCount).fill(0).map(() => ({ value: 0, isRevealed: false, flag: false }))
+        Array(TicTacToe.colCount).fill(0).map(() => ({ value: 0 }))
     ));
 
-    const CheckRow = () => {
+    useEffect(() => {
+        const newPlayTable = Array(TicTacToe.rowCount).fill(0).map(() =>
+            Array(TicTacToe.colCount).fill(0).map(() => ({ value: 0 }))
+        );
+        setPlayTable(newPlayTable);
 
+        setPlayer(1);
+        setLastStep({ row: null, col: null });
+        setHasWon(0);
+    }, [GameMode, Refresh]);
+
+    const MarkCell = (row, col) => {
+        setPlayer(Player === 1 ? 2 : 1);
+        if (PlayTable[row][col].value !== 0) return;
+        const newPlayTable = [...PlayTable];
+        newPlayTable[row][col].value = Player;
+        setPlayTable(newPlayTable);
+        setLastStep({ row, col });
+        CheckRow(row);
+        CheckCol(col);
+        CheckDiagonalDown(row, col);
+        CheckDiagonalUp(row, col);
+    }
+
+    const CheckRow = (row) => {
+        let count = 0;
+        for (let i = 0; i < TicTacToe.colCount; i++) {
+            if (PlayTable[row][i].value === Player) {
+                count++;
+                console.log('count: ', count);
+            }
+            else break;
+        }
+        if (count === TicTacToe.constantToWin) {
+            setHasWon(Player);
+        }
+    }
+
+    const CheckCol = (col) => {
+        let count = 0;
+        for (let i = 0; i < TicTacToe.rowCount; i++) {
+            if (PlayTable[i][col].value === Player) {
+                count++;
+                console.log('count: ', count);
+            }
+            else break;
+        }
+        if (count === TicTacToe.constantToWin) {
+            setHasWon(Player);
+        }
+    }
+
+    const CheckDiagonalDown = (row, col) => {
+        let countUp = 0;
+        for (let i = 0; i <= row && i <= col; i++) {
+            if (PlayTable[row - i][col - i].value === Player) {
+                countUp++;
+                console.log('countUp: ', countUp);
+            } else {
+                console.log('count after: ', countUp);
+                break;
+            }
+        }
+
+        let countDown = 0;
+        for (let i = 0; row + i < TicTacToe.rowCount && col + i < TicTacToe.colCount; i++) {
+            if (PlayTable[row + i][col + i].value === Player) {
+                countDown++;
+                console.log('countUp: ', countDown);
+            } else {
+                console.log('count after: ', countDown);
+                break;
+            }
+        }
+
+        if (countUp + countDown - 1 === TicTacToe.constantToWin) {
+            setHasWon(Player);
+        }
+    }
+
+    const CheckDiagonalUp = (row, col) => {
+        let countUp = 0;
+        for (let i = 0; i <= row && col + i < TicTacToe.colCount; i++) {
+            if (PlayTable[row - i][col + i].value === Player) {
+                countUp++;
+                console.log('countUp: ', countUp);
+            } else {
+                console.log('count after: ', countUp);
+                break;
+            }
+        }
+
+        let countDown = 0;
+        for (let i = 0; row + i < TicTacToe.rowCount && i <= col; i++) {
+            if (PlayTable[row + i][col - i].value === Player) {
+                countDown++;
+                console.log('countUp: ', countDown);
+            } else {
+                console.log('count after: ', countDown);
+                break;
+            }
+        }
+
+        if (countUp + countDown - 1 === TicTacToe.constantToWin) {
+            setHasWon(Player);
+        }
     }
 
     return (
-        <div className='minesweeper-container'>
+        <div className='caro-container'>
+
+            {/* <Table bordered className='no-wrap align-middle table'>
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Content</th>
+                        <th>Date Created</th>
+                        <th>Latest Change</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>NONE</td>
+                        <td>NONE</td>
+                        <td>NONE</td>
+                        <td>NONE</td>
+                        <td>NONE</td>
+                    </tr>
+                </tbody>
+            </Table> */}
+
             <div className='header'>
                 <h1><b>Caro</b></h1>
             </div>
 
             <div className='game-content'>
+
                 <Table bordered
                     className='no-wrap align-middle table'
                     style={{
@@ -244,21 +382,22 @@ export default function Caro() {
                         '--table-height': GameMode.rowCount,
                         border:
                             HasWon === 1 ?
-                                '4px solid #28a745'
+                                '2px solid #fd4755'
                                 :
                                 (HasWon === 2 ?
-                                    '4px solid #dc3545'
+                                    '2px solid #01d0fd'
                                     :
-                                    '4px solid #d97720'
+                                    '2px solid #d97720'
                                 ),
                         backgroundColor:
                             HasWon === 1 ?
-                                '#28a745'
+                                '#fd4755'
                                 :
                                 (HasWon === 2 ?
-                                    '#dc3545'
+                                    '#01d0fd'
                                     :
                                     '#d97720'
+                                    // 'blue'
                                 ),
                     }}
                 >
@@ -266,27 +405,23 @@ export default function Caro() {
                         {[...Array(TicTacToe.rowCount)].map((_, index_row) => (
                             <tr key={index_row}>
                                 {[...Array(TicTacToe.colCount)].map((_, index_col) => (
-                                    <td key={index_col} onClick={() => { revealCell(index_row, index_col) }}>
+                                    <td
+                                        key={index_col}
+                                        style={{ backgroundColor: index_row === LastStep.row && index_col === LastStep.col && '#dddddd' }}
+                                        onClick={() => { MarkCell(index_row, index_col) }}
+                                    >
                                         <p>
-                                            {(GameBoard[index_row][index_col].isRevealed ?//Được mở mới hiện số, không thì kiểm tra có cờ không
-                                                (checkSurroundingCells(index_row, index_col) !== 9 ?//In ra số nếu không phải bom
-                                                    (checkSurroundingCells(index_row, index_col) !== 0 &&//Khác 0 mới hiện số
-                                                        checkSurroundingCells(index_row, index_col)
-                                                    )
-                                                    :
-                                                    <i className='fa-solid fa-bomb'></i>//In ra quả bom
-                                                )
+                                            {PlayTable[index_row][index_col].value === 1 ?
+                                                <i className='fa-solid fa-xmark' style={{ color: '#fd4755' }}></i>
                                                 :
-                                                (GameBoard[index_row][index_col].flag &&//Nếu được cắm cờ thì hiện cờ
-                                                    <i className='fa-solid fa-flag' style={{ color: 'red' }}></i>
+                                                (
+                                                    PlayTable[index_row][index_col].value === 2 ?
+                                                        <i className='fa-regular fa-circle' style={{ color: '#01d0fd' }}></i>
+                                                        :
+                                                        ''
                                                 )
-                                            )}
+                                            }
                                         </p>
-                                        {SelectedGameMode === 'Test' &&
-                                            <p>
-                                                {checkSurroundingCells(index_row, index_col)}
-                                            </p>
-                                        }
                                     </td>
                                 ))}
                             </tr>
