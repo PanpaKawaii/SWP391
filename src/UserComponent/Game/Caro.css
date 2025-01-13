@@ -39,7 +39,7 @@ body {
                     border: none;
                 }
 
-                .btn-remark {
+                .btn-reset {
                     background-color: #fdbc7f;
                 }
             }
@@ -116,6 +116,10 @@ body {
 
                     td {
                         width: 25px;
+
+                        p {
+                            font-size: 11px;
+                        }
                     }
                 }
             }
@@ -134,7 +138,7 @@ body {
                         width: 20px;
 
                         p {
-                            font-size: 10px;
+                            font-size: 9px;
                         }
                     }
                 }
@@ -152,6 +156,10 @@ body {
 
                     td {
                         width: 15px;
+
+                        p {
+                            font-size: 7px;
+                        }
                     }
                 }
             }
