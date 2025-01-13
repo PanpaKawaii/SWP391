@@ -24,6 +24,7 @@ import ContactContent from './UserComponent/Contact/ContactContent'
 import ListGame from './UserComponent/Game/ListGame'
 import Minesweeper from './UserComponent/Game/Minesweeper'
 import WhatIsThePassword from './UserComponent/Game/WhatIsThePassword'
+import Caro from './UserComponent/Game/Caro'
 import SolveTheMaze from './UserComponent/Game/SolveTheMaze'
 import ToDoList from './UserComponent/Game/ToDoList'
 import Japanese from './UserComponent/Japanese/Japanese'
@@ -102,6 +103,7 @@ function App() {
               <Route path='/game' element={<ListGame />} />
               <Route path='/game/minesweeper' element={<Minesweeper />} />
               <Route path='/game/whatisthepassword' element={<WhatIsThePassword />} />
+              <Route path='/game/caro' element={<Caro />} />
               <Route path='/game/solvethemaze' element={<SolveTheMaze />} />
               <Route path='/game/todolist' element={<ToDoList />} />
 

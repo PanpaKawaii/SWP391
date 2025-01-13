@@ -5,6 +5,7 @@ import './ListGame.css';
 
 import MinesweeperSRC from '../../assets/imageGAMEs/Minesweeper.png';
 import WhatIsThePasswordSRC from '../../assets/imageGAMEs/Minesweeper.png';
+import CaroSRC from '../../assets/imageGAMEs/Minesweeper.png';
 import SolveTheMazeSRC from '../../assets/imageGAMEs/SolveTheMaze.png';
 import ToDoListSRC from '../../assets/imageGAMEs/Minesweeper.png';
 
@@ -12,9 +13,10 @@ export default function ListGame() {
 
     const ListGame = [
         { name: 'Minesweeper', src: MinesweeperSRC, link: '/game/minesweeper' },
-        { name: 'What Is The Password?', src: '', link: '/game/whatisthepassword' },
+        { name: 'What Is The Password?', src: '', link: '/game/whatisthepassword' },/////
+        { name: 'Caro', src: '', link: '/game/caro' },/////
         { name: 'Solve The Maze', src: SolveTheMazeSRC, link: '/game/solvethemaze' },
-        { name: 'To Do List', src: '', link: '/game/todolist' },
+        { name: 'To Do List', src: '', link: '/game/todolist' },/////
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
