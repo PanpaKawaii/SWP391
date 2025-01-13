@@ -55,6 +55,7 @@ export default function Caro() {
     const [Player, setPlayer] = useState(1);
     const [HasWon, setHasWon] = useState(0);
     const [Refresh, setRefresh] = useState(0);
+    const [Path, setPath] = useState([]);
     const [LastStep, setLastStep] = useState({
         row: null,
         col: null
@@ -76,11 +77,13 @@ export default function Caro() {
     }, [GameMode, Refresh]);
 
     const MarkCell = (row, col) => {
-        if (PlayTable[row][col].value !== 0) return;
+        if (PlayTable[row][col].value !== 0 || HasWon !== 0) return;
         setPlayer(Player === 1 ? 2 : 1);
         const newPlayTable = [...PlayTable];
         newPlayTable[row][col].value = Player;
         setPlayTable(newPlayTable);
+        const newPath = [...Path, [row, col]];////////////////////////////////////////////////////////
+        setPath(newPath);////////////////////////////////////////////////////////
         setLastStep({ row, col });
         CheckRow(row);
         CheckCol(col);
@@ -261,7 +264,7 @@ export default function Caro() {
                                 {[...Array(GameMode.colCount)].map((_, index_col) => (
                                     <td
                                         key={index_col}
-                                        style={{ backgroundColor: index_row === LastStep.row && index_col === LastStep.col && '#dddddd' }}
+                                        style={{ backgroundColor: index_row === LastStep.row && index_col === LastStep.col && '#eeeeee' }}
                                         onClick={() => { MarkCell(index_row, index_col) }}
                                     >
                                         <p>
