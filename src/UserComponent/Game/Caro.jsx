@@ -7,7 +7,7 @@ export default function Caro() {
 
     const [GameMode, setGameMode] = useState({
         rowCount: 24,
-        colCount: 24,
+        colCount: 20,
         constantToWin: 5
     });
     const [SelectedGameMode, setSelectedGameMode] = useState('LargeMap');
@@ -16,7 +16,7 @@ export default function Caro() {
         const newGameMode = { ...GameMode };
         if (Mode === 'LargeMap') {
             newGameMode.rowCount = 24;
-            newGameMode.colCount = 24;
+            newGameMode.colCount = 20;
             newGameMode.constantToWin = 5;
         } else if (Mode === 'TicTacToe') {
             newGameMode.rowCount = 3;
@@ -35,10 +35,6 @@ export default function Caro() {
         setGameMode(newGameMode);
     }
 
-
-
-
-
     const [TicTacToe, setTicTacToe] = useState({
         rowCount: 3,
         colCount: 3,
@@ -47,9 +43,10 @@ export default function Caro() {
 
     const [LargeMap, setLargeMap] = useState({
         rowCount: 24,
-        colCount: 24,
+        colCount: 20,
         constantToWin: 5
     });
+
 
 
     const [Player, setPlayer] = useState(1);
@@ -72,19 +69,24 @@ export default function Caro() {
         setPlayTable(newPlayTable);
 
         setPlayer(1);
+        setPath([]);
         setLastStep({ row: null, col: null });
         setHasWon(0);
     }, [GameMode, Refresh]);
 
     const MarkCell = (row, col) => {
         if (PlayTable[row][col].value !== 0 || HasWon !== 0) return;
+
         setPlayer(Player === 1 ? 2 : 1);
         const newPlayTable = [...PlayTable];
         newPlayTable[row][col].value = Player;
         setPlayTable(newPlayTable);
-        const newPath = [...Path, [row, col]];////////////////////////////////////////////////////////
-        setPath(newPath);////////////////////////////////////////////////////////
+
+        const newPath = [...Path, [row, col]];
+        setPath(newPath);
         setLastStep({ row, col });
+        console.log(newPath);
+
         CheckRow(row);
         CheckCol(col);
         CheckDiagonalDown(row, col);
@@ -176,11 +178,34 @@ export default function Caro() {
         }
     }
 
+    const RemarkCell = () => {
+        if (Path.length <= 0) {
+            console.log('Path.length <= 0');
+            return;
+        }
+
+        setHasWon(0);
+        setPlayer(Player === 1 ? 2 : 1);
+
+        const lastPath = Path.pop();
+        console.log(lastPath);
+        const newPlayTable = [...PlayTable];
+        newPlayTable[lastPath[0]][lastPath[1]].value = 0;
+        setPlayTable(newPlayTable);
+
+        if (Path.length <= 0) {
+            setLastStep({ row: null, col: null });
+        } else {
+            const nextLastPath = Path[Path.length - 1];
+            setLastStep({ row: nextLastPath[0], col: nextLastPath[1] });
+        }
+    }
+
     return (
         <div className='caro-container'>
 
             <div className='header'>
-                <h1><b>Caro</b></h1>
+                <h1><b>CARO</b></h1>
             </div>
 
             <div className='game-content'>
@@ -189,6 +214,7 @@ export default function Caro() {
                     <div>
                         <div className='support'>
                             <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET</Button>
+                            <Button className='btn btn-remark' onClick={() => RemarkCell()}>REMARK</Button>
                         </div>
                         <Form.Group controlId='gamemode' className='form-group'>
                             <Form.Control
@@ -206,8 +232,8 @@ export default function Caro() {
                                         )
                                 }
                             >
-                                <option className='gamemode-option largemap-mode' value='LargeMap'>Large Map</option>
-                                <option className='gamemode-option tictactoe-mode' value='TicTacToe'>Tic Tac Toe</option>
+                                <option className='gamemode-option' value='LargeMap'>Large Map</option>
+                                <option className='gamemode-option' value='TicTacToe'>Tic Tac Toe</option>
                             </Form.Control>
                         </Form.Group>
                     </div>
@@ -228,10 +254,6 @@ export default function Caro() {
                         {HasWon === 2 && <h2 style={{ color: '#01d0fd' }}><b><i className='fa-regular fa-circle'></i> WON!</b></h2>}
                     </div>
                 </div>
-
-            </div>
-
-            <div className='game-content'>
 
                 <Table bordered
                     className='no-wrap align-middle table'

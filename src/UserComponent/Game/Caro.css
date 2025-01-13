@@ -19,29 +19,28 @@ body {
 
     .game-content {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
 
         .game-detail {
-            width: fit-content;
-            min-width: 230px;
-            height: auto;
-            padding: 0 20px;
+            padding: 0 10px;
+            display: flex;
+            justify-content: center;
+            align-items: start;
 
             .support {
                 display: flex;
                 justify-content: center;
 
-                h3 {
-                    width: 90px;
-                    margin: 0 auto;
-                    padding: 0 6px;
-                }
-
                 .btn {
-                    margin: 0 6px;
+                    margin: 0 5px;
                     background-color: #fb8b24;
                     font-weight: bold;
                     border: none;
+                }
+
+                .btn-remark {
+                    background-color: #fdbc7f;
                 }
             }
 
@@ -61,30 +60,10 @@ body {
                 .gamemode-option {
                     font-weight: bold;
                 }
-
-                .easy-mode {
-                    color: #28a745;
-                    background-color: #d3f9d8;
-                }
-
-                .normal-mode {
-                    color: #ffc107;
-                    background-color: #fff3cd;
-                }
-
-                .hard-mode {
-                    color: #dc3545;
-                    background-color: #fad7d9;
-                }
-
-                .test-mode {
-                    color: #666666;
-                    background-color: #eeeeee;
-                }
             }
 
             .result-detail {
-                margin: 0 4px;
+                margin: 0 0 0 10px;
                 padding: 5px 4px;
                 border-radius: 8px;
 
@@ -123,23 +102,12 @@ body {
         }
     }
 
-    @media screen and (max-width: 992px) {
-        .game-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            .game-detail {
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-    }
-
     @media screen and (max-width: 768px) {
         .game-content {
+            .game-detail {
+                padding: 0;
+            }
+
             table {
                 width: calc(var(--table-width) * 25)px;
 
@@ -175,13 +143,6 @@ body {
     }
 
     @media screen and (max-width: 440px) {
-
-        .header {
-            h1 {
-                font-size: 42px;
-            }
-        }
-
         .game-content {
             table {
                 width: calc(var(--table-width) * 15)px;
