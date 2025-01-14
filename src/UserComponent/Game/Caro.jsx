@@ -305,8 +305,8 @@ export default function Caro() {
                 <div className='game-detail'>
                     <div>
                         <div className='support'>
-                            <Button className='btn' onClick={() => RemarkCell()}>REMARK</Button>
-                            <Button className='btn btn-reset' onClick={() => setRefresh(Refresh + 1)}>RESTART</Button>
+                            <Button className='btn' style={{ backgroundColor: Player === 1 ? '#fd4755' : (Player === 2 ? '#01d0fd' : '') }} onClick={() => RemarkCell()}><i className='fa-solid fa-reply'></i></Button>
+                            <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESTART</Button>
                         </div>
                         <Form.Group controlId='gamemode' className='form-group'>
                             <Form.Control
