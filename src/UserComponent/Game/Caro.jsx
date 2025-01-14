@@ -51,6 +51,7 @@ export default function Caro() {
 
     const [Player, setPlayer] = useState(1);
     const [HasWon, setHasWon] = useState(0);
+    const [ConstantCell, setConstantCell] = useState([]);
     const [Refresh, setRefresh] = useState(0);
     const [Path, setPath] = useState([]);
     const [LastStep, setLastStep] = useState({
@@ -72,6 +73,7 @@ export default function Caro() {
         setPath([]);
         setLastStep({ row: null, col: null });
         setHasWon(0);
+        setConstantCell([]);
     }, [GameMode, Refresh]);
 
     const MarkCell = (row, col) => {
@@ -85,27 +87,34 @@ export default function Caro() {
         const newPath = [...Path, [row, col]];
         setPath(newPath);
         setLastStep({ row, col });
-        console.log(newPath);
+        console.log('Path:', newPath);
 
         CheckRow(row);
         CheckCol(col);
         CheckDiagonalDown(row, col);
         CheckDiagonalUp(row, col);
+        console.log('ConstantCell', ConstantCell);
         console.log('End Check!');
     }
 
     const CheckRow = (row) => {
         let countCol = 0;
         let count = 0;
+        let newConstantCell = [...ConstantCell];
         for (let i = 0; i < GameMode.colCount; i++) {
             if (PlayTable[row][i].value === Player) {
                 count++;
+                newConstantCell = [...newConstantCell, [row, i]];
                 if (count >= countCol) countCol = count;
                 console.log('count col: ', count);
             }
-            else count = 0;
+            else {
+                count = 0;
+            }
         }
         if (countCol >= GameMode.constantToWin) {
+            setConstantCell(newConstantCell);
+            console.log('newConstantCell', newConstantCell);
             setHasWon(Player);
         }
     }
@@ -113,24 +122,33 @@ export default function Caro() {
     const CheckCol = (col) => {
         let countRow = 0;
         let count = 0;
+        let newConstantCell = [...ConstantCell];
         for (let i = 0; i < GameMode.rowCount; i++) {
             if (PlayTable[i][col].value === Player) {
                 count++;
+                newConstantCell = [...newConstantCell, [i, col]];
                 if (count >= countRow) countRow = count;
                 console.log('count row: ', count);
             }
-            else count = 0;
+            else {
+                count = 0;
+            }
         }
         if (countRow >= GameMode.constantToWin) {
+            setConstantCell(newConstantCell);
+            console.log('newConstantCell', newConstantCell);
             setHasWon(Player);
         }
     }
 
     const CheckDiagonalDown = (row, col) => {
+        let newConstantCell = [...ConstantCell];
+
         let countUp = 0;
         for (let i = 0; i <= row && i <= col; i++) {
             if (PlayTable[row - i][col - i].value === Player) {
                 countUp++;
+                newConstantCell = [...newConstantCell, [row - i, col - i]];
                 console.log('countUp: ', countUp);
             } else {
                 break;
@@ -141,6 +159,7 @@ export default function Caro() {
         for (let i = 0; row + i < GameMode.rowCount && col + i < GameMode.colCount; i++) {
             if (PlayTable[row + i][col + i].value === Player) {
                 countDown++;
+                newConstantCell = [...newConstantCell, [row + i, col + i]];
                 console.log('countUp: ', countDown);
             } else {
                 break;
@@ -148,15 +167,20 @@ export default function Caro() {
         }
 
         if (countUp + countDown - 1 >= GameMode.constantToWin) {
+            setConstantCell(newConstantCell);
+            console.log('newConstantCell', newConstantCell);
             setHasWon(Player);
         }
     }
 
     const CheckDiagonalUp = (row, col) => {
+        let newConstantCell = [...ConstantCell];
+
         let countUp = 0;
         for (let i = 0; i <= row && col + i < GameMode.colCount; i++) {
             if (PlayTable[row - i][col + i].value === Player) {
                 countUp++;
+                newConstantCell = [...newConstantCell, [row - i, col + i]];
                 console.log('countUp: ', countUp);
             } else {
                 break;
@@ -167,6 +191,7 @@ export default function Caro() {
         for (let i = 0; row + i < GameMode.rowCount && i <= col; i++) {
             if (PlayTable[row + i][col - i].value === Player) {
                 countDown++;
+                newConstantCell = [...newConstantCell, [row + i, col - i]];
                 console.log('countUp: ', countDown);
             } else {
                 break;
@@ -174,6 +199,8 @@ export default function Caro() {
         }
 
         if (countUp + countDown - 1 >= GameMode.constantToWin) {
+            setConstantCell(newConstantCell);
+            console.log('newConstantCell', newConstantCell);
             setHasWon(Player);
         }
     }
@@ -185,6 +212,7 @@ export default function Caro() {
         }
 
         setHasWon(0);
+        setConstantCell([]);
         setPlayer(Player === 1 ? 2 : 1);
 
         const lastPath = Path.pop();
@@ -214,7 +242,7 @@ export default function Caro() {
                     <div>
                         <div className='support'>
                             <Button className='btn' onClick={() => RemarkCell()}>REMARK</Button>
-                            <Button className='btn btn-reset' onClick={() => setRefresh(Refresh + 1)}>RESET</Button>
+                            <Button className='btn btn-reset' onClick={() => setRefresh(Refresh + 1)}>RESTART</Button>
                         </div>
                         <Form.Group controlId='gamemode' className='form-group'>
                             <Form.Control
@@ -286,7 +314,21 @@ export default function Caro() {
                                 {[...Array(GameMode.colCount)].map((_, index_col) => (
                                     <td
                                         key={index_col}
-                                        style={{ backgroundColor: index_row === LastStep.row && index_col === LastStep.col && '#eeeeee' }}
+                                        style={{
+                                            backgroundColor:
+                                                ConstantCell.some(cell => cell[0] === index_row && cell[1] === index_col) ?
+                                                    (PlayTable[index_row][index_col].value === 1 ?
+                                                        '#ffa2aa'
+                                                        :
+                                                        (PlayTable[index_row][index_col].value === 2 ?
+                                                            '#80e8ff'
+                                                            :
+                                                            'none'
+                                                        )
+                                                    )
+                                                    :
+                                                    ((index_row === LastStep.row && index_col === LastStep.col) && '#eeeeee')
+                                        }}
                                         onClick={() => { MarkCell(index_row, index_col) }}
                                     >
                                         <p>
