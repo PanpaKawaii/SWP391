@@ -89,56 +89,120 @@ export default function Caro() {
         setLastStep({ row, col });
         console.log('Path:', newPath);
 
-        CheckRow(row);
-        CheckCol(col);
+        CheckRow(row, col);
+        CheckCol(row, col);
         CheckDiagonalDown(row, col);
         CheckDiagonalUp(row, col);
         console.log('ConstantCell', ConstantCell);
         console.log('End Check!');
     }
 
-    const CheckRow = (row) => {
-        let countCol = 0;
-        let count = 0;
+    const CheckRow = (row, col) => {
         let newConstantCell = [...ConstantCell];
-        for (let i = 0; i < GameMode.colCount; i++) {
-            if (PlayTable[row][i].value === Player) {
-                count++;
-                newConstantCell = [...newConstantCell, [row, i]];
-                if (count >= countCol) countCol = count;
-                console.log('count col: ', count);
-            }
-            else {
-                count = 0;
+
+        let countLeft = 0;
+        for (let i = 0; i <= col; i++) {
+            if (PlayTable[row][col - i].value === Player) {
+                countLeft++;
+                newConstantCell = [...newConstantCell, [row, col - i]];
+                console.log('countLeft: ', countLeft);
+            } else {
+                break;
             }
         }
-        if (countCol >= GameMode.constantToWin) {
+
+        let countRight = 0;
+        for (let i = 0; col + i < GameMode.colCount; i++) {
+            if (PlayTable[row][col + i].value === Player) {
+                countRight++;
+                newConstantCell = [...newConstantCell, [row, col + i]];
+                console.log('countRight: ', countRight);
+            } else {
+                break;
+            }
+        }
+
+        if (countLeft + countRight - 1 >= GameMode.constantToWin) {
             setConstantCell(newConstantCell);
             console.log('newConstantCell', newConstantCell);
             setHasWon(Player);
         }
+
+        // let countCol = 0;
+        // let count = 0;
+        // let newConstantCell = [...ConstantCell];
+        // for (let i = 0; i < GameMode.colCount; i++) {
+        //     if (PlayTable[row][i].value === Player) {
+        //         count++;
+        //         newConstantCell = [...newConstantCell, [row, i]];
+        //         if (count >= countCol) countCol = count;
+        //         console.log('count col: ', count);
+        //         if (count >= GameMode.constantToWin) break;
+        //     }
+        //     else {
+        //         count = 0;
+        //         newConstantCell = [];
+        //     }
+        // }
+        // if (countCol >= GameMode.constantToWin) {
+        //     setConstantCell(newConstantCell);
+        //     console.log('newConstantCell', newConstantCell);
+        //     setHasWon(Player);
+        // }
     }
 
-    const CheckCol = (col) => {
-        let countRow = 0;
-        let count = 0;
+    const CheckCol = (row, col) => {
         let newConstantCell = [...ConstantCell];
-        for (let i = 0; i < GameMode.rowCount; i++) {
-            if (PlayTable[i][col].value === Player) {
-                count++;
-                newConstantCell = [...newConstantCell, [i, col]];
-                if (count >= countRow) countRow = count;
-                console.log('count row: ', count);
-            }
-            else {
-                count = 0;
+
+        let countUp = 0;
+        for (let i = 0; i <= row; i++) {
+            if (PlayTable[row - i][col].value === Player) {
+                countUp++;
+                newConstantCell = [...newConstantCell, [row - i, col]];
+                console.log('countUp: ', countUp);
+            } else {
+                break;
             }
         }
-        if (countRow >= GameMode.constantToWin) {
+
+        let countDown = 0;
+        for (let i = 0; row + i < GameMode.rowCount; i++) {
+            if (PlayTable[row + i][col].value === Player) {
+                countDown++;
+                newConstantCell = [...newConstantCell, [row + i, col]];
+                console.log('countDown: ', countDown);
+            } else {
+                break;
+            }
+        }
+
+        if (countUp + countDown - 1 >= GameMode.constantToWin) {
             setConstantCell(newConstantCell);
             console.log('newConstantCell', newConstantCell);
             setHasWon(Player);
         }
+
+        // let countRow = 0;
+        // let count = 0;
+        // let newConstantCell = [...ConstantCell];
+        // for (let i = 0; i < GameMode.rowCount; i++) {
+        //     if (PlayTable[i][col].value === Player) {
+        //         count++;
+        //         newConstantCell = [...newConstantCell, [i, col]];
+        //         if (count >= countRow) countRow = count;
+        //         console.log('count row: ', count);
+        //         if (count >= GameMode.constantToWin) break;
+        //     }
+        //     else {
+        //         count = 0;
+        //         newConstantCell = [];
+        //     }
+        // }
+        // if (countRow >= GameMode.constantToWin) {
+        //     setConstantCell(newConstantCell);
+        //     console.log('newConstantCell', newConstantCell);
+        //     setHasWon(Player);
+        // }
     }
 
     const CheckDiagonalDown = (row, col) => {
@@ -329,6 +393,15 @@ export default function Caro() {
                                                     :
                                                     ((index_row === LastStep.row && index_col === LastStep.col) && '#eeeeee')
                                         }}
+                                        className={
+                                            (PlayTable[index_row][index_col].value === 0 && Player === 1) ?
+                                                'PutX'
+                                                :
+                                                (PlayTable[index_row][index_col].value === 0 && Player === 2) ?
+                                                    'PutO'
+                                                    :
+                                                    ''
+                                        }
                                         onClick={() => { MarkCell(index_row, index_col) }}
                                     >
                                         <p>

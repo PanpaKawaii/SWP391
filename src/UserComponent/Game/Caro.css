@@ -86,6 +86,14 @@ body {
                 height: 35px;
                 border: 1px solid #cccccc;
 
+                .PutX:hover {
+                    background-color: #ffa2aa;
+                }
+
+                .PutO:hover {
+                    background-color: #80e8ff;
+                }
+
                 td {
                     margin: 0;
                     padding: 0;
