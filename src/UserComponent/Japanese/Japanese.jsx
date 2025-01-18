@@ -42,7 +42,6 @@ export default function Japanese() {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
-                            <th>Character</th>
                             <th>Word</th>
                             <th>Hiragana</th>
                             <th>Meaning</th>
@@ -51,7 +50,6 @@ export default function Japanese() {
                     <tbody>
                         {KanjiExample.map((example, e) => (
                             <tr key={e}>
-                                <td>{example.Character}</td>
                                 <td>{example.Word}</td>
                                 <td>{example.Hiragana}</td>
                                 <td>{example.Meaning}</td>
