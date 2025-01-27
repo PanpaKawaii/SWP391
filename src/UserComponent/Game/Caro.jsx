@@ -35,18 +35,6 @@ export default function Caro() {
         setGameMode(newGameMode);
     }
 
-    const [TicTacToe, setTicTacToe] = useState({
-        rowCount: 3,
-        colCount: 3,
-        constantToWin: 3
-    });
-
-    const [LargeMap, setLargeMap] = useState({
-        rowCount: 24,
-        colCount: 20,
-        constantToWin: 5
-    });
-
 
 
     const [Player, setPlayer] = useState(1);
