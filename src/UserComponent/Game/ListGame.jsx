@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { Table, Button, Form, Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import './ListGame.css';
 
 import MinesweeperSRC from '../../assets/imageGAMEs/Minesweeper.png';
@@ -16,6 +16,7 @@ export default function ListGame() {
         { name: 'What Is The Password?', src: WhatIsThePasswordSRC, link: '/game/whatisthepassword' },
         { name: 'Caro', src: CaroSRC, link: '/game/caro' },
         { name: 'Solve The Maze', src: SolveTheMazeSRC, link: '/game/solvethemaze' },
+        { name: 'Generate Maze', src: SolveTheMazeSRC, link: '/game/generatemaze' },
         { name: 'To Do List', src: ToDoListSRC, link: '/game/todolist' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
@@ -35,22 +36,6 @@ export default function ListGame() {
     return (
         <div className='listgame-container'>
             <h1><b>List Game</b></h1>
-
-            {/* <div className='listgame'>
-                <Link to='/game/minesweeper'>
-                    <img src={MinesweeperSRC} alt='minesweeper'></img>
-                    <h3><b>Minesweeper</b></h3>
-                </Link>
-                <Link to='/game/whatisthepassword'>
-                    <img src='' alt='whatisthepassword'></img>
-                    <h3><b>What Is The Password?</b></h3>
-                </Link>
-                <Link to='/game/solvethemaze'>
-                    <img src='' alt='solvethemaze'></img>
-                    <h3><b>Solve The Maze</b></h3>
-                </Link>
-            </div> */}
-
             <div className='listgame'>
                 <Row className='image-row'>
                     {ListGame.map((game, index) => (

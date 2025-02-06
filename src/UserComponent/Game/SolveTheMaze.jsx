@@ -258,23 +258,6 @@ export default function SolveTheMaze() {
                         </Table>
                     </>
                 }
-
-                {/* <Table
-                    className='no-wrap align-middle table'
-                    style={{ '--table-width': VisitedCells[0].length, }}
-                >
-                    <tbody>
-                        {VisitedCells.map((row, index_row) => (
-                            <tr key={index_row}>
-                                {row.map((cell, index_col) => (
-                                    <td key={index_col} style={{
-                                        backgroundColor: cell ? '#28a745' : '#ffffff'
-                                    }}><p>{cell ? 'V' : ''}</p></td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table> */}
             </div>
 
             {Path && Path.length != 0 &&
