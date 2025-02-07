@@ -7,8 +7,8 @@ export default function GenerateMaze() {
 
 
 
-    const [MazeWidth, setMazeWidth] = useState(45);
-    const [MazeHeight, setMazeHeight] = useState(45);
+    const [MazeWidth, setMazeWidth] = useState(9);
+    const [MazeHeight, setMazeHeight] = useState(9);
     const [Maze, setMaze] = useState(Array(MazeHeight).fill(1).map(() => Array(MazeWidth).fill(1)));
 
     const [Maze5, setMaze5] = useState([
@@ -30,7 +30,8 @@ export default function GenerateMaze() {
     ]);
 
     const [VisitedCells, setVisitedCells] = useState(Array(Maze.length).fill(0).map(() => Array(Maze[0].length).fill(false)));
-    const [Path, setPath] = useState([]);
+    const [Path, setPath] = useState([[0, 0]]);
+    const [Stack, setStack] = useState([[0, 0]]);
     const [Refresh, setRefresh] = useState(0);
 
     const setCurrentMaze = (MazeNumber) => {
@@ -57,8 +58,38 @@ export default function GenerateMaze() {
         // setPath([]);
     }, [Refresh, MazeWidth, MazeHeight]);
 
-    const generateMaze = () => {
 
+
+    const directions = [[2, 0], [0, 2], [-2, 0], [0, -2]];
+
+    const generateMazeDFS = async (row, col, Path, Stack, Maze, subDirections) => {
+
+        const newMaze = [...Maze];
+
+        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+        await sleep(200);
+
+        let randomDirection = subDirections[Math.floor(Math.random() * subDirections.length)];
+        const newRow = row + randomDirection[0];
+        const newCol = col + randomDirection[1];
+
+        if (newRow >= 0 && newRow < Maze.length && newCol >= 0 && newMaze[newRow][newCol] === 1 && newCol < Maze[0].length && !Stack.includes([newRow, newCol])) {
+            newMaze[row][col] = 0;
+            newMaze[newRow][newCol] = 0;
+            newMaze[(row + newRow) / 2][(col + newCol) / 2] = 0;
+
+            const newPath = [...Path, [newRow, newCol]];
+            const newStack = [...Stack, [newRow, newCol]];
+
+            setMaze(newMaze);
+            const LastElementNewStack = newStack[newStack.length - 1];
+
+            generateMazeDFS(newRow, newCol, newPath, newStack, newMaze, directions);
+            // generateMazeDFS(LastElementNewStack[0], LastElementNewStack[1], newPath, newStack, newMaze);
+            // await generateMazeDFS(newRow, newCol, newPath, newStack, newMaze);
+        } else {
+            generateMazeDFS(row, col, Path, Stack, Maze, directions.filter(dic => dic[0] !== newRow && dic[1] !== newCol));
+        }
     }
 
     const visitCell = async (row, col, Path) => {
@@ -165,6 +196,8 @@ export default function GenerateMaze() {
                 <Button onClick={() => { if (MazeWidth > 0) setMazeWidth(MazeWidth - 1) }} className='btn'>
                     <i className='fa-solid fa-chevron-right'></i> <i className='fa-solid fa-chevron-left'></i>
                 </Button>
+                <Button onClick={() => { if (MazeWidth <= 90) setMazeWidth(MazeWidth + 10) }} className='btn'>+ 10</Button>
+                <Button onClick={() => { if (MazeWidth >= 10) setMazeWidth(MazeWidth - 10) }} className='btn'>- 10</Button>
 
                 <Form.Group controlId='mazeheight' className='form-group'>
                     <Form.Control type='text' min={0} max={100} value={MazeHeight} placeholder='Maze Height' readOnly />
@@ -175,9 +208,12 @@ export default function GenerateMaze() {
                 <Button onClick={() => { if (MazeHeight > 0) setMazeHeight(MazeHeight - 1) }} className='btn'>
                     <i className='fa-solid fa-chevron-down'></i><i className='fa-solid fa-chevron-up'></i>
                 </Button>
+                <Button onClick={() => { if (MazeHeight <= 90) setMazeHeight(MazeHeight + 10) }} className='btn'>+ 10</Button>
+                <Button onClick={() => { if (MazeHeight >= 10) setMazeHeight(MazeHeight - 10) }} className='btn'>- 10</Button>
 
             </Form>
-            <Button onClick={generateMaze()} className='btn'>GENERATE</Button>
+            <Button onClick={() => generateMazeDFS(0, 0, Path, Stack, Maze, directions)} className='btn'>GENERATE</Button>
+            <Button onClick={() => setRefresh(Refresh + 1)} className='btn'>Refresh</Button>
 
             <div className='available-maze'>
                 <h3><b>Available Maze</b></h3>
