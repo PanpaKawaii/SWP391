@@ -4,129 +4,79 @@ import { Table, Button, Form } from 'react-bootstrap';
 import './GenerateMaze.css';
 
 export default function GenerateMaze() {
-
-
-
-    const [MazeWidth, setMazeWidth] = useState(9);
-    const [MazeHeight, setMazeHeight] = useState(9);
+    // const [MazeWidth, setMazeWidth] = useState(7);
+    // const [MazeHeight, setMazeHeight] = useState(7);
+    const [MazeWidth, setMazeWidth] = useState(45);
+    const [MazeHeight, setMazeHeight] = useState(45);
     const [Maze, setMaze] = useState(Array(MazeHeight).fill(1).map(() => Array(MazeWidth).fill(1)));
 
-    const [Maze5, setMaze5] = useState([
-        [2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
-        [0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0],
-        [0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0],
-        [0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1],
-        [0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0],
-        [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0],
-        [0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0],
-        [0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 3, 0, 1, 0, 0],
-        [1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
-        [0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0],
-        [1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
-    ]);
-
-    const [VisitedCells, setVisitedCells] = useState(Array(Maze.length).fill(0).map(() => Array(Maze[0].length).fill(false)));
     const [Path, setPath] = useState([[0, 0]]);
     const [Stack, setStack] = useState([[0, 0]]);
     const [Refresh, setRefresh] = useState(0);
 
-    const setCurrentMaze = (MazeNumber) => {
-        let newMaze;
-        switch (MazeNumber) {
-            case 5:
-                newMaze = [...Maze5];
-                break;
-            default:
-                newMaze = [...Maze];
-                break;
-        }
-        setMaze(newMaze);
-        const newVisitedCells = Array(newMaze.length).fill(0).map(() => Array(newMaze[0].length).fill(false));
-        setVisitedCells(newVisitedCells);
-        setPath([]);
-    }
-
     useEffect(() => {
         const resetMaze = Array(MazeHeight).fill(1).map(() => Array(MazeWidth).fill(1));
         setMaze(resetMaze);
-        // const newVisitedCells = Array(Maze.length).fill(0).map(() => Array(Maze[0].length).fill(false));
-        // setVisitedCells(newVisitedCells);
-        // setPath([]);
+        setPath([[0, 0]]);
+        setStack([[0, 0]]);
     }, [Refresh, MazeWidth, MazeHeight]);
 
 
 
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     const directions = [[2, 0], [0, 2], [-2, 0], [0, -2]];
 
-    const generateMazeDFS = async (row, col, Path, Stack, Maze, subDirections) => {
+    //generateMazeDFS(0, 0, [9, 9], Path)
+    const generateMazeDFS = async (row, col, randomDirection, Path) => {
 
         const newMaze = [...Maze];
 
-        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-        await sleep(200);
+        let newRow = null;
+        let newCol = null;
+        let subDirections = directions;
+        do {
+            console.log('before', subDirections);
+            subDirections = subDirections.filter(dir => !(dir[0] === randomDirection[0] && dir[1] === randomDirection[1]));
+            console.log('subDirections', subDirections);
+            // Khi hết đường đi thì dừng lại
+            if (subDirections.length === 0) return;
+            console.log('pass1');
 
-        let randomDirection = subDirections[Math.floor(Math.random() * subDirections.length)];
-        const newRow = row + randomDirection[0];
-        const newCol = col + randomDirection[1];
+            // Khi chỉ còn 1 lối đi duy nhất là đi tới [0, 0] thì dừng lại
+            // if (newRow === 0 && newCol === 0) return;
+            // if (subDirections.length === 1 && newRow === 0 && newCol === 0) return;
+            if (subDirections[0] === -2 && subDirections[1] === 0 && newRow === 0 && newCol === 0) return;
+            if (subDirections[0] === 0 && subDirections[1] === -2 && newRow === 0 && newCol === 0) return;
+            console.log('pass2');
 
-        if (newRow >= 0 && newRow < Maze.length && newCol >= 0 && newMaze[newRow][newCol] === 1 && newCol < Maze[0].length && !Stack.includes([newRow, newCol])) {
-            newMaze[row][col] = 0;
-            newMaze[newRow][newCol] = 0;
-            newMaze[(row + newRow) / 2][(col + newCol) / 2] = 0;
+            randomDirection = subDirections[Math.floor(Math.random() * subDirections.length)];
+            newRow = row + randomDirection[0];
+            newCol = col + randomDirection[1];
 
-            const newPath = [...Path, [newRow, newCol]];
-            const newStack = [...Stack, [newRow, newCol]];
+            console.log('row', row);
+            console.log('col', col);
+            console.log('randomDirection[0]', randomDirection[0]);
+            console.log('randomDirection[1]', randomDirection[1]);
+            console.log('newRow', newRow);
+            console.log('newCol', newCol);
 
-            setMaze(newMaze);
-            const LastElementNewStack = newStack[newStack.length - 1];
+            console.log('after', subDirections);
+        } while (newRow < 0 || newRow >= Maze.length || newCol < 0 || newCol >= Maze[0].length || newMaze[newRow][newCol] !== 1 || Stack.includes([newRow, newCol]))
 
-            generateMazeDFS(newRow, newCol, newPath, newStack, newMaze, directions);
-            // generateMazeDFS(LastElementNewStack[0], LastElementNewStack[1], newPath, newStack, newMaze);
-            // await generateMazeDFS(newRow, newCol, newPath, newStack, newMaze);
-        } else {
-            generateMazeDFS(row, col, Path, Stack, Maze, directions.filter(dic => dic[0] !== newRow && dic[1] !== newCol));
-        }
-    }
+        await sleep(10);
+        newMaze[row][col] = 0;
+        newMaze[newRow][newCol] = 0;
+        newMaze[(row + newRow) / 2][(col + newCol) / 2] = 0;
+        setMaze(newMaze);
 
-    const visitCell = async (row, col, Path) => {
-        const newVisitedCells = [...VisitedCells];
-        const newMaze = [...Maze];
-        if (newMaze[row][col] === 1 || newVisitedCells[row][col] === true) {
-            console.log('Refuse');
-            return;
-        }
-        console.log('Activate');
+        const newPath = [...Path, [newRow, newCol]];
+        // setPath(newPath);
+        const newStack = [...Stack, [newRow, newCol]];
+        setStack(newStack);
 
-        const newPath = [...Path, [row, col]];
-        console.log('Path: ', newPath);
-
-        newVisitedCells[row][col] = true;
-        setVisitedCells(newVisitedCells);
-
-        if (newMaze[row][col] === 3) {
-            console.log('Found');
-            setPath(newPath);
-            return;
-        }
-
-        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-        await sleep(100);
-
-        if (newMaze[row][col] !== 1) {
-            const directions = [[1, 0], [0, 1], [-1, 0], [0, -1]];
-            for (let direction of directions) {
-                const newRow = row + direction[0];
-                const newCol = col + direction[1];
-                if (newRow >= 0 && newRow < Maze.length && newCol >= 0 && newCol < Maze[0].length) {
-                    visitCell(newRow, newCol, newPath);
-                    // await visitCell(newRow, newCol, newPath);
-                }
-            }
-        }
+        await generateMazeDFS(newRow, newCol, [-randomDirection[0], -randomDirection[1]], newPath);
+        await generateMazeDFS(newRow, newCol, [-randomDirection[0], -randomDirection[1]], newPath);
+        await generateMazeDFS(newRow, newCol, [-randomDirection[0], -randomDirection[1]], newPath);
     }
 
     const handleEditingMaze = (e) => {
@@ -164,9 +114,7 @@ export default function GenerateMaze() {
                                                     )
                                                 ),
                                         }}
-                                        onClick={() => { visitCell(index_row, index_col, Path) }}
                                     >
-                                        {/* <p>{index_row}-{index_col}</p> */}
                                     </td>
                                 ))}
                             </tr>
@@ -191,10 +139,10 @@ export default function GenerateMaze() {
                     <Form.Control type='text' min={0} max={100} value={MazeWidth} placeholder='Maze Width' readOnly />
                 </Form.Group>
                 <Button onClick={() => { if (MazeWidth < 100) setMazeWidth(MazeWidth + 1) }} className='btn'>
-                    <i className='fa-solid fa-chevron-left'></i> <i className='fa-solid fa-chevron-right'></i>
+                    <i className='fa-solid fa-plus'></i>
                 </Button>
                 <Button onClick={() => { if (MazeWidth > 0) setMazeWidth(MazeWidth - 1) }} className='btn'>
-                    <i className='fa-solid fa-chevron-right'></i> <i className='fa-solid fa-chevron-left'></i>
+                    <i className='fa-solid fa-minus'></i>
                 </Button>
                 <Button onClick={() => { if (MazeWidth <= 90) setMazeWidth(MazeWidth + 10) }} className='btn'>+ 10</Button>
                 <Button onClick={() => { if (MazeWidth >= 10) setMazeWidth(MazeWidth - 10) }} className='btn'>- 10</Button>
@@ -203,36 +151,19 @@ export default function GenerateMaze() {
                     <Form.Control type='text' min={0} max={100} value={MazeHeight} placeholder='Maze Height' readOnly />
                 </Form.Group>
                 <Button onClick={() => { if (MazeHeight < 100) setMazeHeight(MazeHeight + 1) }} className='btn'>
-                    <i className='fa-solid fa-chevron-up'></i><i className='fa-solid fa-chevron-down'></i>
+                    <i className='fa-solid fa-plus'></i>
                 </Button>
                 <Button onClick={() => { if (MazeHeight > 0) setMazeHeight(MazeHeight - 1) }} className='btn'>
-                    <i className='fa-solid fa-chevron-down'></i><i className='fa-solid fa-chevron-up'></i>
+                    <i className='fa-solid fa-minus'></i>
                 </Button>
                 <Button onClick={() => { if (MazeHeight <= 90) setMazeHeight(MazeHeight + 10) }} className='btn'>+ 10</Button>
                 <Button onClick={() => { if (MazeHeight >= 10) setMazeHeight(MazeHeight - 10) }} className='btn'>- 10</Button>
 
             </Form>
-            <Button onClick={() => generateMazeDFS(0, 0, Path, Stack, Maze, directions)} className='btn'>GENERATE</Button>
+            <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn'>GENERATE DFS</Button>
             <Button onClick={() => setRefresh(Refresh + 1)} className='btn'>Refresh</Button>
 
-            <div className='available-maze'>
-                <h3><b>Available Maze</b></h3>
-                <span>
-                    {[1, 2, 3, 4, 5].map((maze, index) => (
-                        <Button
-                            key={index}
-                            className='btn'
-                            style={{
-                                backgroundColor: `hsl(${index * 50 % 360}, 100%, 70%)`,
-                                color: `hsl(${index * 50 % 360}, 100%, 30%)`,
-                            }}
-                            onClick={() => setCurrentMaze(maze)}
-                        >
-                            Maze {maze}
-                        </Button>
-                    ))}
-                </span>
-            </div>
+            <pre>{JSON.stringify(Maze, null, 0).replace(/,\n/g, ',').replace(/],/g, '],\n')}</pre>
         </div>
     )
 }
