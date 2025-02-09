@@ -94,60 +94,60 @@ export default function SolveTheMaze() {
     const [Refresh, setRefresh] = useState(0);
 
     const setCurrentMaze = (MazeNumber) => {
-        let newMaze;
+        let NewMaze;
         switch (MazeNumber) {
             case 1:
-                newMaze = [...Maze1];
+                NewMaze = [...Maze1];
                 break;
             case 2:
-                newMaze = [...Maze2];
+                NewMaze = [...Maze2];
                 break;
             case 3:
-                newMaze = [...Maze3];
+                NewMaze = [...Maze3];
                 break;
             case 4:
-                newMaze = [...Maze4];
+                NewMaze = [...Maze4];
                 break;
             case 5:
-                newMaze = [...Maze5];
+                NewMaze = [...Maze5];
                 break;
             default:
-                newMaze = [...Maze];
+                NewMaze = [...Maze];
                 break;
         }
-        setMaze(newMaze);
-        const newVisitedCells = Array(newMaze.length).fill(0).map(() => Array(newMaze[0].length).fill(false));
-        setVisitedCells(newVisitedCells);
+        setMaze(NewMaze);
+        const NewVisitedCells = Array(NewMaze.length).fill(0).map(() => Array(NewMaze[0].length).fill(false));
+        setVisitedCells(NewVisitedCells);
         setFound(false);
         setPath([]);
     }
 
     useEffect(() => {
-        const newVisitedCells = Array(Maze.length).fill(0).map(() => Array(Maze[0].length).fill(false));
-        setVisitedCells(newVisitedCells);
+        const NewVisitedCells = Array(Maze.length).fill(0).map(() => Array(Maze[0].length).fill(false));
+        setVisitedCells(NewVisitedCells);
         setFound(false);
         setPath([]);
     }, [Refresh]);
 
     const visitCell = async (row, col, Path) => {
-        const newVisitedCells = [...VisitedCells];
-        const newMaze = [...Maze];
-        if (newMaze[row][col] === 1 || newVisitedCells[row][col] === true) {
+        const NewVisitedCells = [...VisitedCells];
+        const NewMaze = [...Maze];
+        if (NewMaze[row][col] === 1 || NewVisitedCells[row][col] === true) {
             console.log('Refuse');
             return;
         }
         console.log('Activate');
 
-        const newPath = [...Path, [row, col]];
-        console.log('Path: ', newPath);
+        const NewPath = [...Path, [row, col]];
+        console.log('Path: ', NewPath);
 
-        newVisitedCells[row][col] = true;
-        setVisitedCells(newVisitedCells);
+        NewVisitedCells[row][col] = true;
+        setVisitedCells(NewVisitedCells);
 
-        if (newMaze[row][col] === 3) {
+        if (NewMaze[row][col] === 3) {
             console.log('Found');
             console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-            setPath(newPath);
+            setPath(NewPath);
             setFound(true);
             return;
         }
@@ -155,14 +155,14 @@ export default function SolveTheMaze() {
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         await sleep(100);
 
-        if (newMaze[row][col] !== 1) {
-            const directions = [[1, 0], [0, 1], [-1, 0], [0, -1]];
-            for (let direction of directions) {
-                const newRow = row + direction[0];
-                const newCol = col + direction[1];
-                if (newRow >= 0 && newRow < Maze.length && newCol >= 0 && newCol < Maze[0].length) {
-                    visitCell(newRow, newCol, newPath);
-                    // await visitCell(newRow, newCol, newPath);
+        if (NewMaze[row][col] !== 1) {
+            const Directions = [[1, 0], [0, 1], [-1, 0], [0, -1]];
+            for (let Direction of Directions) {
+                const NewRow = row + Direction[0];
+                const NewCol = col + Direction[1];
+                if (NewRow >= 0 && NewRow < Maze.length && NewCol >= 0 && NewCol < Maze[0].length) {
+                    visitCell(NewRow, NewCol, NewPath);
+                    // await visitCell(NewRow, NewCol, NewPath);
                 }
             }
         }
@@ -171,8 +171,8 @@ export default function SolveTheMaze() {
     const handleAddingMaze = (e) => {
         e.preventDefault();
         setMaze(JSON.parse(e.target.yourmaze.value));
-        const newVisitedCells = Array((JSON.parse(e.target.yourmaze.value)).length).fill(0).map(() => Array((JSON.parse(e.target.yourmaze.value))[0].length).fill(false));
-        setVisitedCells(newVisitedCells);
+        const NewVisitedCells = Array((JSON.parse(e.target.yourmaze.value)).length).fill(0).map(() => Array((JSON.parse(e.target.yourmaze.value))[0].length).fill(false));
+        setVisitedCells(NewVisitedCells);
         setFound(false);
         setPath([]);
     }

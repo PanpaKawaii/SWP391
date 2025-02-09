@@ -38,15 +38,15 @@ export default function WhatIsThePassword() {
             const correctNumber = checkCorrectNumber(InputPassword);
             const correctPosition = checkCorrectPosition(InputPassword);
 
-            setGuessedPassword(prevState => {
-                let newState = [...prevState];
-                newState[index] = {
+            setGuessedPassword(PrevState => {
+                let NewState = [...PrevState];
+                NewState[index] = {
                     index: index,
                     value: value,
                     correctNumber: correctNumber,
                     correctPosition: correctPosition
                 };
-                return newState;
+                return NewState;
             });
             checkWin(correctNumber, correctPosition);
             setGuessedCount(GuessedCount + 1);
@@ -158,9 +158,9 @@ export default function WhatIsThePassword() {
                 RandomIndex4 = Math.floor(Math.random() * 10);
             }
 
-            const newPassword = RandomIndex1.toString() + RandomIndex2.toString() + RandomIndex3.toString() + RandomIndex4.toString();
+            const NewPassword = RandomIndex1.toString() + RandomIndex2.toString() + RandomIndex3.toString() + RandomIndex4.toString();
 
-            setPassword(newPassword.toString());
+            setPassword(NewPassword.toString());
             console.log('generateRandomPassword Success');
         };
 
@@ -178,13 +178,13 @@ export default function WhatIsThePassword() {
     }, [Refresh]);
 
     useEffect(() => {
-        let interval;
+        let Interval;
         if (HasWon === false && GuessedCount < 10 && GuessedTime !== -1) {
-            interval = setInterval(() => {
+            Interval = setInterval(() => {
                 setGuessedTime(GuessedTime + 1);
             }, 1000);
         }
-        return () => clearInterval(interval);
+        return () => clearInterval(Interval);
     }, [GuessedTime, HasWon]);
 
     return (
@@ -274,7 +274,7 @@ export default function WhatIsThePassword() {
                 <div className='game-detail'>
                     <Form>
                         <Form.Label><b><u>Note:</u></b></Form.Label>
-                        <Form.Group controlId='guessedpassword' className='form-group'>
+                        <Form.Group controlId='notedpassword' className='form-group'>
                             <Form.Control as='textarea' placeholder='Write your note' />
                         </Form.Group>
                     </Form>

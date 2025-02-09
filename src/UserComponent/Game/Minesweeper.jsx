@@ -24,7 +24,7 @@ export default function Minesweeper() {
     useEffect(() => {
         const generateGameBoardBomb = () => {
             console.log('generateGameBoardBomb');
-            const newGameBoard = Array(GameMode.rowCount).fill(0).map(() =>
+            const NewGameBoard = Array(GameMode.rowCount).fill(0).map(() =>
                 Array(GameMode.colCount).fill(0).map(() => ({ value: 0, isRevealed: false, flag: false }))
             );
 
@@ -32,13 +32,13 @@ export default function Minesweeper() {
             while (count < GameMode.bombNumber) {
                 const row = Math.floor(Math.random() * GameMode.rowCount);
                 const col = Math.floor(Math.random() * GameMode.colCount);
-                if (newGameBoard[row][col].value !== 9) {
-                    newGameBoard[row][col].value = 9;
+                if (NewGameBoard[row][col].value !== 9) {
+                    NewGameBoard[row][col].value = 9;
                     count++;
                 }
             }
 
-            setGameBoard(newGameBoard);
+            setGameBoard(NewGameBoard);
             console.log('generateGameBoardBomb Success');
         };
 
@@ -49,34 +49,34 @@ export default function Minesweeper() {
     }, [GameMode, Refresh]);
 
     const changeGameMode = (Mode) => {
-        const newGameMode = { ...GameMode };
+        const NewGameMode = { ...GameMode };
         if (Mode === 'Easy') {
-            newGameMode.rowCount = 12;
-            newGameMode.colCount = 8;
-            newGameMode.bombNumber = 14;
-            newGameMode.flagNumber = 14;
+            NewGameMode.rowCount = 12;
+            NewGameMode.colCount = 8;
+            NewGameMode.bombNumber = 14;
+            NewGameMode.flagNumber = 14;
         } else if (Mode === 'Normal') {
-            newGameMode.rowCount = 18;
-            newGameMode.colCount = 14;
-            newGameMode.bombNumber = 40;
-            newGameMode.flagNumber = 40;
+            NewGameMode.rowCount = 18;
+            NewGameMode.colCount = 14;
+            NewGameMode.bombNumber = 40;
+            NewGameMode.flagNumber = 40;
         } else if (Mode === 'Hard') {
-            newGameMode.rowCount = 24;
-            newGameMode.colCount = 20;
-            newGameMode.bombNumber = 99;
-            newGameMode.flagNumber = 99;
+            NewGameMode.rowCount = 24;
+            NewGameMode.colCount = 20;
+            NewGameMode.bombNumber = 99;
+            NewGameMode.flagNumber = 99;
         } else {
-            newGameMode.rowCount = 10;
-            newGameMode.colCount = 10;
-            newGameMode.bombNumber = 12;
-            newGameMode.flagNumber = 12;
+            NewGameMode.rowCount = 10;
+            NewGameMode.colCount = 10;
+            NewGameMode.bombNumber = 12;
+            NewGameMode.flagNumber = 12;
         }
-        console.log('Set Game Mode', newGameMode.bombNumber);
-        const newGameBoard = Array(newGameMode.rowCount).fill(0).map(() =>
-            Array(newGameMode.colCount).fill(0).map(() => ({ value: 0, isRevealed: false, flag: false }))
+        console.log('Set Game Mode', NewGameMode.bombNumber);
+        const NewGameBoard = Array(NewGameMode.rowCount).fill(0).map(() =>
+            Array(NewGameMode.colCount).fill(0).map(() => ({ value: 0, isRevealed: false, flag: false }))
         );
-        setGameBoard(newGameBoard);
-        setGameMode(newGameMode);
+        setGameBoard(NewGameBoard);
+        setGameMode(NewGameMode);
     }
 
     const checkSurroundingCells = (row, col) => {
@@ -84,10 +84,10 @@ export default function Minesweeper() {
         if (GameBoard[row][col].value === 9) return 9;
         for (let i = -1; i <= 1; i++) {
             for (let j = -1; j <= 1; j++) {
-                const newRow = row + i;
-                const newCol = col + j;
-                if (newRow >= 0 && newRow < GameMode.rowCount && newCol >= 0 && newCol < GameMode.colCount) {
-                    if (GameBoard[newRow][newCol].value === 9) {
+                const NewRow = row + i;
+                const NewCol = col + j;
+                if (NewRow >= 0 && NewRow < GameMode.rowCount && NewCol >= 0 && NewCol < GameMode.colCount) {
+                    if (GameBoard[NewRow][NewCol].value === 9) {
                         count++;
                     }
                 }
@@ -102,10 +102,10 @@ export default function Minesweeper() {
         let count = 0;
         for (let i = -1; i <= 1; i++) {
             for (let j = -1; j <= 1; j++) {
-                const newRow = row + i;
-                const newCol = col + j;
-                if (newRow >= 0 && newRow < GameMode.rowCount && newCol >= 0 && newCol < GameMode.colCount) {
-                    if (GameBoard[newRow][newCol].flag === true) {
+                const NewRow = row + i;
+                const NewCol = col + j;
+                if (NewRow >= 0 && NewRow < GameMode.rowCount && NewCol >= 0 && NewCol < GameMode.colCount) {
+                    if (GameBoard[NewRow][NewCol].flag === true) {
                         count++;
                     }
                 }
@@ -124,17 +124,17 @@ export default function Minesweeper() {
         if (GameBoard[row][col].flag) return;//Đã cắm cờ rồi thì không mở được
 
         if (GameBoard[row][col].value === 9) revealAllCellBomb();
-        const newGameBoard = [...GameBoard];
-        newGameBoard[row][col].isRevealed = true;
-        setGameBoard(newGameBoard);
+        const NewGameBoard = [...GameBoard];
+        NewGameBoard[row][col].isRevealed = true;
+        setGameBoard(NewGameBoard);
 
         if (GameBoard[row][col].value === 0) {
             for (let i = -1; i <= 1; i++) {
                 for (let j = -1; j <= 1; j++) {
-                    const newRow = row + i;
-                    const newCol = col + j;
-                    if (newRow >= 0 && newRow < GameMode.rowCount && newCol >= 0 && newCol < GameMode.colCount) {
-                        revealCell(newRow, newCol);
+                    const NewRow = row + i;
+                    const NewCol = col + j;
+                    if (NewRow >= 0 && NewRow < GameMode.rowCount && NewCol >= 0 && NewCol < GameMode.colCount) {
+                        revealCell(NewRow, NewCol);
                     }
                 }
             }
@@ -146,18 +146,18 @@ export default function Minesweeper() {
     const revealCellAround = (row, col) => {
         console.log('revealCellAround');
         console.log('SurroundingFlags', checkSurroundingFlags(row, col));
-        if (!GameBoard[row][col].isRevealed) return;//Chưa mở thì chưa được doubleClick
-        if (GameBoard[row][col].flag) return;//Đã cắm cờ rồi thì không mở xung quang được
+        if (!GameBoard[row][col].isRevealed) return;// Chưa mở thì chưa được doubleClick
+        if (GameBoard[row][col].flag) return;// Đã cắm cờ rồi thì không mở xung quang được
 
         if (GameBoard[row][col].value === 9) revealAllCellBomb();
 
         if (checkSurroundingFlags(row, col) == checkSurroundingCells(row, col)) {
             for (let i = -1; i <= 1; i++) {
                 for (let j = -1; j <= 1; j++) {
-                    const newRow = row + i;
-                    const newCol = col + j;
-                    if (newRow >= 0 && newRow < GameMode.rowCount && newCol >= 0 && newCol < GameMode.colCount) {
-                        revealCell(newRow, newCol);
+                    const NewRow = row + i;
+                    const NewCol = col + j;
+                    if (NewRow >= 0 && NewRow < GameMode.rowCount && NewCol >= 0 && NewCol < GameMode.colCount) {
+                        revealCell(NewRow, NewCol);
                     }
                 }
             }
@@ -169,24 +169,24 @@ export default function Minesweeper() {
         console.log('setTheFlag');
         if (GameBoard[row][col].isRevealed) return;
         if (GameBoard[row][col].flag === false && Flag === 0) return;
-        const newGameBoard = [...GameBoard];
-        newGameBoard[row][col].flag = !newGameBoard[row][col].flag;
-        newGameBoard[row][col].flag ? setFlag(Flag - 1) : setFlag(Flag + 1);
-        setGameBoard(newGameBoard);
+        const NewGameBoard = [...GameBoard];
+        NewGameBoard[row][col].flag = !NewGameBoard[row][col].flag;
+        NewGameBoard[row][col].flag ? setFlag(Flag - 1) : setFlag(Flag + 1);
+        setGameBoard(NewGameBoard);
         console.log('setTheFlag Success');
     }
 
     const revealAllCellBomb = () => {
         console.log('revealAllCellBomb');
-        const newGameBoard = [...GameBoard];
-        newGameBoard.forEach((row, rowIndex) => {
-            row.forEach((cell, colIndex) => {
+        const NewGameBoard = [...GameBoard];
+        NewGameBoard.forEach((row, RowIndex) => {
+            row.forEach((cell, ColIndex) => {
                 if (cell.value === 9) {
-                    newGameBoard[rowIndex][colIndex].isRevealed = true;
+                    NewGameBoard[RowIndex][ColIndex].isRevealed = true;
                 }
             });
         });
-        setGameBoard(newGameBoard);
+        setGameBoard(NewGameBoard);
         setHasWon(2);
         console.log('revealAllCellBomb Success');
     };
@@ -208,13 +208,13 @@ export default function Minesweeper() {
     }
 
     useEffect(() => {
-        let interval;
+        let Interval;
         if (HasWon === 0 && Time !== -1) {
-            interval = setInterval(() => {
+            Interval = setInterval(() => {
                 setTime(Time + 1);
             }, 1000);
         }
-        return () => clearInterval(interval);
+        return () => clearInterval(Interval);
     }, [Time, HasWon]);
 
 

@@ -15,68 +15,71 @@ export default function GenerateMaze() {
     const [Refresh, setRefresh] = useState(0);
 
     useEffect(() => {
-        const resetMaze = Array(MazeHeight).fill(1).map(() => Array(MazeWidth).fill(1));
-        setMaze(resetMaze);
+        const ResetMaze = Array(MazeHeight).fill(1).map(() => Array(MazeWidth).fill(1));
+        setMaze(ResetMaze);
         setPath([[0, 0]]);
         setStack([[0, 0]]);
     }, [Refresh, MazeWidth, MazeHeight]);
 
 
 
-    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-    const directions = [[2, 0], [0, 2], [-2, 0], [0, -2]];
 
     //generateMazeDFS(0, 0, [9, 9], Path)
-    const generateMazeDFS = async (row, col, randomDirection, Path) => {
+    const generateMazeDFS = async (row, col, RandomDirection, Path) => {
 
-        const newMaze = [...Maze];
+        const NewMaze = [...Maze];
 
-        let newRow = null;
-        let newCol = null;
-        let subDirections = directions;
+        let NewRow = null;
+        let NewCol = null;
+        const Directions = [[2, 0], [0, 2], [-2, 0], [0, -2]];
+        let SubDirections = Directions;
+
         do {
-            console.log('before', subDirections);
-            subDirections = subDirections.filter(dir => !(dir[0] === randomDirection[0] && dir[1] === randomDirection[1]));
-            console.log('subDirections', subDirections);
-            // Khi hết đường đi thì dừng lại
-            if (subDirections.length === 0) return;
-            console.log('pass1');
+            // console.log('before', SubDirections);
+            SubDirections = SubDirections.filter(dir => !(dir[0] === RandomDirection[0] && dir[1] === RandomDirection[1]));
+            // console.log('SubDirections', SubDirections);
+
+
+            if (SubDirections.length === 0) return;// Khi hết đường đi thì dừng lại
+            // console.log('pass1');
 
             // Khi chỉ còn 1 lối đi duy nhất là đi tới [0, 0] thì dừng lại
-            // if (newRow === 0 && newCol === 0) return;
-            // if (subDirections.length === 1 && newRow === 0 && newCol === 0) return;
-            if (subDirections[0] === -2 && subDirections[1] === 0 && newRow === 0 && newCol === 0) return;
-            if (subDirections[0] === 0 && subDirections[1] === -2 && newRow === 0 && newCol === 0) return;
-            console.log('pass2');
+            // if (NewRow === 0 && NewCol === 0) return;
+            // if (SubDirections.length === 1 && NewRow === 0 && NewCol === 0) return;
+            if (SubDirections[0] === -2 && SubDirections[1] === 0 && NewRow === 0 && NewCol === 0) return;
+            if (SubDirections[0] === 0 && SubDirections[1] === -2 && NewRow === 0 && NewCol === 0) return;
+            // console.log('pass2');
 
-            randomDirection = subDirections[Math.floor(Math.random() * subDirections.length)];
-            newRow = row + randomDirection[0];
-            newCol = col + randomDirection[1];
+            RandomDirection = SubDirections[Math.floor(Math.random() * SubDirections.length)];
+            NewRow = row + RandomDirection[0];
+            NewCol = col + RandomDirection[1];
 
-            console.log('row', row);
-            console.log('col', col);
-            console.log('randomDirection[0]', randomDirection[0]);
-            console.log('randomDirection[1]', randomDirection[1]);
-            console.log('newRow', newRow);
-            console.log('newCol', newCol);
+            // console.log('row', row);
+            // console.log('col', col);
+            // console.log('RandomDirection[0]', RandomDirection[0]);
+            // console.log('RandomDirection[1]', RandomDirection[1]);
+            // console.log('NewRow', NewRow);
+            // console.log('NewCol', NewCol);
 
-            console.log('after', subDirections);
-        } while (newRow < 0 || newRow >= Maze.length || newCol < 0 || newCol >= Maze[0].length || newMaze[newRow][newCol] !== 1 || Stack.includes([newRow, newCol]))
+            // console.log('after', SubDirections);
+        } while (NewRow < 0 || NewRow >= Maze.length || NewCol < 0 || NewCol >= Maze[0].length || NewMaze[NewRow][NewCol] !== 1 || Stack.includes([NewRow, NewCol]))
 
+        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         await sleep(10);
-        newMaze[row][col] = 0;
-        newMaze[newRow][newCol] = 0;
-        newMaze[(row + newRow) / 2][(col + newCol) / 2] = 0;
-        setMaze(newMaze);
 
-        const newPath = [...Path, [newRow, newCol]];
+        NewMaze[row][col] = 0;
+        NewMaze[NewRow][NewCol] = 0;
+        NewMaze[(row + NewRow) / 2][(col + NewCol) / 2] = 0;
+        setMaze(NewMaze);
+
+        const newPath = [...Path, [NewRow, NewCol]];
         // setPath(newPath);
-        const newStack = [...Stack, [newRow, newCol]];
+        const newStack = [...Stack, [NewRow, NewCol]];
         setStack(newStack);
 
-        await generateMazeDFS(newRow, newCol, [-randomDirection[0], -randomDirection[1]], newPath);
-        await generateMazeDFS(newRow, newCol, [-randomDirection[0], -randomDirection[1]], newPath);
-        await generateMazeDFS(newRow, newCol, [-randomDirection[0], -randomDirection[1]], newPath);
+        await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]], newPath);
+        await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]], newPath);
+        await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]], newPath);
     }
 
     const handleEditingMaze = (e) => {
@@ -124,33 +127,39 @@ export default function GenerateMaze() {
             </div>
 
             <Form>
-                <Form.Group controlId='mazewidth' className='form-group'>
-                    <Form.Control type='text' min={0} max={100} value={MazeWidth} placeholder='Maze Width' readOnly />
-                </Form.Group>
-                <Button onClick={() => { if (MazeWidth < 100) setMazeWidth(MazeWidth + 1) }} className='btn'>
-                    <i className='fa-solid fa-plus'></i>
-                </Button>
-                <Button onClick={() => { if (MazeWidth > 0) setMazeWidth(MazeWidth - 1) }} className='btn'>
-                    <i className='fa-solid fa-minus'></i>
-                </Button>
-                <Button onClick={() => { if (MazeWidth <= 90) setMazeWidth(MazeWidth + 10) }} className='btn'>+ 10</Button>
-                <Button onClick={() => { if (MazeWidth >= 10) setMazeWidth(MazeWidth - 10) }} className='btn'>- 10</Button>
+                <div className='width-height-control'>
+                    <Button onClick={() => { if (MazeWidth >= 10) setMazeWidth(MazeWidth - 10) }} className='btn'>- 10</Button>
+                    <Button onClick={() => { if (MazeWidth > 0) setMazeWidth(MazeWidth - 1) }} className='btn'>
+                        <i className='fa-solid fa-minus'></i>
+                    </Button>
+                    <Form.Group controlId='mazewidth' className='form-group'>
+                        <Form.Control type='text' min={0} max={100} value={MazeWidth} placeholder='Maze Width' readOnly />
+                    </Form.Group>
+                    <Button onClick={() => { if (MazeWidth < 100) setMazeWidth(MazeWidth + 1) }} className='btn'>
+                        <i className='fa-solid fa-plus'></i>
+                    </Button>
+                    <Button onClick={() => { if (MazeWidth <= 90) setMazeWidth(MazeWidth + 10) }} className='btn'>+ 10</Button>
+                </div>
 
-                <Form.Group controlId='mazeheight' className='form-group'>
-                    <Form.Control type='text' min={0} max={100} value={MazeHeight} placeholder='Maze Height' readOnly />
-                </Form.Group>
-                <Button onClick={() => { if (MazeHeight < 100) setMazeHeight(MazeHeight + 1) }} className='btn'>
-                    <i className='fa-solid fa-plus'></i>
-                </Button>
-                <Button onClick={() => { if (MazeHeight > 0) setMazeHeight(MazeHeight - 1) }} className='btn'>
-                    <i className='fa-solid fa-minus'></i>
-                </Button>
-                <Button onClick={() => { if (MazeHeight <= 90) setMazeHeight(MazeHeight + 10) }} className='btn'>+ 10</Button>
-                <Button onClick={() => { if (MazeHeight >= 10) setMazeHeight(MazeHeight - 10) }} className='btn'>- 10</Button>
-
+                <div className='width-height-control'>
+                    <Button onClick={() => { if (MazeHeight >= 10) setMazeHeight(MazeHeight - 10) }} className='btn'>- 10</Button>
+                    <Button onClick={() => { if (MazeHeight > 0) setMazeHeight(MazeHeight - 1) }} className='btn'>
+                        <i className='fa-solid fa-minus'></i>
+                    </Button>
+                    <Form.Group controlId='mazeheight' className='form-group'>
+                        <Form.Control type='text' min={0} max={100} value={MazeHeight} placeholder='Maze Height' readOnly />
+                    </Form.Group>
+                    <Button onClick={() => { if (MazeHeight < 100) setMazeHeight(MazeHeight + 1) }} className='btn'>
+                        <i className='fa-solid fa-plus'></i>
+                    </Button>
+                    <Button onClick={() => { if (MazeHeight <= 90) setMazeHeight(MazeHeight + 10) }} className='btn'>+ 10</Button>
+                </div>
             </Form>
-            <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn'>GENERATE DFS</Button>
-            <Button onClick={() => setRefresh(Refresh + 1)} className='btn'>Refresh</Button>
+            <Button onClick={() => setRefresh(Refresh + 1)} className='btn btn-reset'>Refresh</Button>
+            <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn btn-generate'>GENERATE DFS</Button>
+            <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn btn-generate'>GENERATE PRIM</Button>
+            <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn btn-generate'>GENERATE KRUSKAL</Button>
+            <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn btn-generate'>GENERATE ELLER</Button>
 
             <pre>{JSON.stringify(Maze, null, 0).replace(/,\n/g, ',').replace(/],/g, '],\n')}</pre>
         </div>
