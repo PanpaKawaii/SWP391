@@ -123,17 +123,6 @@ export default function GenerateMaze() {
                 </Table>
             </div>
 
-            {Path && Path.length != 0 &&
-                <div className='solved-path'>
-                    <div>
-                        <h3><b>JSON</b></h3>
-                        {Path.map((step, index) => (
-                            <span key={index}>{(index % 8 === 0 && index !== 0) ? <br /> : ''}[{step[0]}-{step[1]}] </span>
-                        ))}
-                    </div>
-                </div>
-            }
-
             <Form>
                 <Form.Group controlId='mazewidth' className='form-group'>
                     <Form.Control type='text' min={0} max={100} value={MazeWidth} placeholder='Maze Width' readOnly />
