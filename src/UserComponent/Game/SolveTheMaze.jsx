@@ -153,7 +153,7 @@ export default function SolveTheMaze() {
         }
 
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-        await sleep(100);
+        await sleep(50);
 
         if (NewMaze[row][col] !== 1) {
             const Directions = [[1, 0], [0, 1], [-1, 0], [0, -1]];

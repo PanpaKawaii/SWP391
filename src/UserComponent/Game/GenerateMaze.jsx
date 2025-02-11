@@ -11,20 +11,20 @@ export default function GenerateMaze() {
     const [Maze, setMaze] = useState(Array(MazeHeight).fill(1).map(() => Array(MazeWidth).fill(1)));
 
     const [Path, setPath] = useState([[0, 0]]);
-    const [Stack, setStack] = useState([[0, 0]]);
+    const [Stack, setStack] = useState([]);
     const [Refresh, setRefresh] = useState(0);
 
     useEffect(() => {
         const ResetMaze = Array(MazeHeight).fill(1).map(() => Array(MazeWidth).fill(1));
         setMaze(ResetMaze);
         setPath([[0, 0]]);
-        setStack([[0, 0]]);
+        setStack([]);
     }, [Refresh, MazeWidth, MazeHeight]);
 
 
 
 
-    //generateMazeDFS(0, 0, [9, 9], Path)
+    //generateMazeDFS(0, 0, [0, 0], Path)
     const generateMazeDFS = async (row, col, RandomDirection, Path) => {
 
         const NewMaze = [...Maze];
@@ -62,7 +62,7 @@ export default function GenerateMaze() {
             // console.log('NewCol', NewCol);
 
             // console.log('after', SubDirections);
-        } while (NewRow < 0 || NewRow >= Maze.length || NewCol < 0 || NewCol >= Maze[0].length || NewMaze[NewRow][NewCol] !== 1 || Stack.includes([NewRow, NewCol]))
+        } while (NewRow < 0 || NewRow >= Maze.length || NewCol < 0 || NewCol >= Maze[0].length || NewMaze[NewRow][NewCol] !== 1)
 
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         await sleep(10);
@@ -74,12 +74,65 @@ export default function GenerateMaze() {
 
         const newPath = [...Path, [NewRow, NewCol]];
         // setPath(newPath);
-        const newStack = [...Stack, [NewRow, NewCol]];
-        setStack(newStack);
 
         await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]], newPath);
         await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]], newPath);
         await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]], newPath);
+    }
+
+    //generateMazePRIM(0, 0, Stack)
+    const generateMazePRIM = async (row, col, Stack) => {
+
+        //Đánh dấu ô đầu tiên được chọn
+        //Đưa các ô có thế đi xung quanh nó vào Stack (Không được trùng)
+        //Random phần tử trong Stack
+        //Kiểm tra xem ô đó đã đi chưa?
+        //Đánh dấu ô được chọn
+
+        const NewMaze = [...Maze];
+
+        let NewRow = null;
+        let NewCol = null;
+
+        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+        await sleep(10);
+
+        NewMaze[row][col] = 0;
+
+        const Directions = [[2, 0], [0, 2], [-2, 0], [0, -2]];
+
+        //Loại bỏ những cạnh "có thể đi tới ô này"
+        for (let Direction of Directions) {
+            const NewRow = row + Direction[0];
+            const NewCol = col + Direction[1];
+            if (NewRow >= 0 && NewRow < Maze.length && NewCol >= 0 && NewCol < Maze[0].length && NewMaze[NewRow][NewCol] !== 1) {
+                Stack = Stack.filter(stack => !(stack[0] === NewRow && stack[1] === NewCol && stack[2] === row && stack[3] === col))
+            }
+        }
+
+        //Thêm những cạnh mà "ô này có thể đi tới" vào Stack
+        for (let Direction of Directions) {
+            const NewRow = row + Direction[0];
+            const NewCol = col + Direction[1];
+            if (NewRow >= 0 && NewRow < Maze.length && NewCol >= 0 && NewCol < Maze[0].length && NewMaze[NewRow][NewCol] === 1) {
+                Stack = [...Stack, [row, col, NewRow, NewCol]];
+            }
+        }
+
+        if (Stack.length === 0) return;
+
+        //Chọn bất kỳ một ô "có thể đi tới" để tiếp tục
+        let NextCell = Stack[Math.floor(Math.random() * Stack.length)];
+        row = NextCell[0];
+        col = NextCell[1];
+        NewRow = NextCell[2];
+        NewCol = NextCell[3];
+
+        NewMaze[NewRow][NewCol] = 0;
+        NewMaze[(row + NewRow) / 2][(col + NewCol) / 2] = 0;
+        setMaze(NewMaze);
+
+        await generateMazePRIM(NewRow, NewCol, Stack);
     }
 
     const handleEditingMaze = (e) => {
@@ -157,7 +210,7 @@ export default function GenerateMaze() {
             </Form>
             <Button onClick={() => setRefresh(Refresh + 1)} className='btn btn-reset'>Refresh</Button>
             <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn btn-generate'>GENERATE DFS</Button>
-            <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn btn-generate'>GENERATE PRIM</Button>
+            <Button onClick={() => generateMazePRIM(0, 0, Stack)} className='btn btn-generate'>GENERATE PRIM</Button>
             <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn btn-generate'>GENERATE KRUSKAL</Button>
             <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn btn-generate'>GENERATE ELLER</Button>
 

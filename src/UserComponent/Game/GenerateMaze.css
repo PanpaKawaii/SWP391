@@ -94,7 +94,7 @@ body {
     }
 
     @media screen and (max-width: 768px) {
-        .solvethemaze-content {
+        .generatemaze-content {
             table {
                 width: calc(var(--table-width) * 25)px;
 
@@ -103,10 +103,6 @@ body {
 
                     td {
                         width: 25px;
-
-                        p {
-                            font-size: 8px;
-                        }
                     }
                 }
             }
@@ -114,7 +110,7 @@ body {
     }
 
     @media screen and (max-width: 576px) {
-        .solvethemaze-content {
+        .generatemaze-content {
             table {
                 width: calc(var(--table-width) * 20)px;
 
@@ -123,18 +119,8 @@ body {
 
                     td {
                         width: 20px;
-
-                        p {
-                            font-size: 6.6px;
-                        }
                     }
                 }
-            }
-        }
-
-        .solved-path {
-            span {
-                font-size: 14px;
             }
         }
     }
@@ -147,19 +133,15 @@ body {
             }
         }
 
-        .solvethemaze-content {
+        .generatemaze-content {
             table {
                 width: calc(var(--table-width) * 15)px;
 
                 tr {
-                    height: 15px;
+                    height: 5px;
 
                     td {
-                        width: 15px;
-
-                        p {
-                            font-size: 5px;
-                        }
+                        width: 5px;
                     }
                 }
             }
