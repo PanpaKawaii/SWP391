@@ -17,15 +17,14 @@ export default function GenerateMaze() {
     useEffect(() => {
         const ResetMaze = Array(MazeHeight).fill(1).map(() => Array(MazeWidth).fill(1));
         setMaze(ResetMaze);
-        setPath([[0, 0]]);
+        setPath([]);
         setStack([]);
     }, [Refresh, MazeWidth, MazeHeight]);
 
 
 
-
-    //generateMazeDFS(0, 0, [0, 0], Path)
-    const generateMazeDFS = async (row, col, RandomDirection, Path) => {
+    //generateMazeDFS(0, 0, [0, 0])
+    const generateMazeDFS = async (row, col, RandomDirection) => {
 
         const NewMaze = [...Maze];
 
@@ -35,33 +34,13 @@ export default function GenerateMaze() {
         let SubDirections = Directions;
 
         do {
-            // console.log('before', SubDirections);
             SubDirections = SubDirections.filter(dir => !(dir[0] === RandomDirection[0] && dir[1] === RandomDirection[1]));
-            // console.log('SubDirections', SubDirections);
-
-
-            if (SubDirections.length === 0) return;// Khi hết đường đi thì dừng lại
-            // console.log('pass1');
-
-            // Khi chỉ còn 1 lối đi duy nhất là đi tới [0, 0] thì dừng lại
-            // if (NewRow === 0 && NewCol === 0) return;
-            // if (SubDirections.length === 1 && NewRow === 0 && NewCol === 0) return;
-            if (SubDirections[0] === -2 && SubDirections[1] === 0 && NewRow === 0 && NewCol === 0) return;
-            if (SubDirections[0] === 0 && SubDirections[1] === -2 && NewRow === 0 && NewCol === 0) return;
-            // console.log('pass2');
+            // Khi hết đường đi thì dừng lại
+            if (SubDirections.length === 0) return;
 
             RandomDirection = SubDirections[Math.floor(Math.random() * SubDirections.length)];
             NewRow = row + RandomDirection[0];
             NewCol = col + RandomDirection[1];
-
-            // console.log('row', row);
-            // console.log('col', col);
-            // console.log('RandomDirection[0]', RandomDirection[0]);
-            // console.log('RandomDirection[1]', RandomDirection[1]);
-            // console.log('NewRow', NewRow);
-            // console.log('NewCol', NewCol);
-
-            // console.log('after', SubDirections);
         } while (NewRow < 0 || NewRow >= Maze.length || NewCol < 0 || NewCol >= Maze[0].length || NewMaze[NewRow][NewCol] !== 1)
 
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -72,22 +51,20 @@ export default function GenerateMaze() {
         NewMaze[(row + NewRow) / 2][(col + NewCol) / 2] = 0;
         setMaze(NewMaze);
 
-        const newPath = [...Path, [NewRow, NewCol]];
-        // setPath(newPath);
+        await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]]);
+        await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]]);
+        await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]]);
 
-        await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]], newPath);
-        await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]], newPath);
-        await generateMazeDFS(NewRow, NewCol, [-RandomDirection[0], -RandomDirection[1]], newPath);
+        console.log('generateMazeDFS success');
     }
 
-    //generateMazePRIM(0, 0, Stack)
+    //generateMazePRIM(0, 0, [])
     const generateMazePRIM = async (row, col, Stack) => {
 
         //Đánh dấu ô đầu tiên được chọn
-        //Đưa các ô có thế đi xung quanh nó vào Stack (Không được trùng)
+        //Đưa các cạnh (Vector) có thế đi xung quanh nó vào Stack
         //Random phần tử trong Stack
-        //Kiểm tra xem ô đó đã đi chưa?
-        //Đánh dấu ô được chọn
+        //Đánh dấu ô được chọn và tiếp tục
 
         const NewMaze = [...Maze];
 
@@ -133,6 +110,60 @@ export default function GenerateMaze() {
         setMaze(NewMaze);
 
         await generateMazePRIM(NewRow, NewCol, Stack);
+
+        console.log('generateMazePRIM success');
+    }
+
+    //generateMazeKRUSKAL([])
+    const generateMazeKRUSKAL = (Stack) => {
+
+        //Chọn ra 2 tọa độ bất kỳ
+        //Kiểm tra xem chúng có kết nối với nhau chưa
+        //Nếu chưa thì kết nối, nếu rồi thì return
+
+        let NewMaze = Maze.map((row, index_row) => row.map((cell, index_col) => index_row * row.length + index_col + 4));
+
+        for (let i = 0; i < Maze.length; i = i + 2) {
+            for (let j = 0; j < Maze[i].length; j = j + 2) {
+                if (j + 2 < Maze[i].length) Stack = [...Stack, [i, j, i, j + 2]];
+                if (i + 2 < Maze.length) Stack = [...Stack, [i, j, i + 2, j]];
+            }
+        }
+
+        const growRandomEdge = async (NewMaze, Stack, BecomeZero) => {
+
+            if (Stack.length === 0) {
+                setMaze(NewMaze.map(row => row.map(cell => BecomeZero.some(becomeZero => becomeZero[0] === cell) ? 0 : 1)));
+                return;
+            }
+
+            let RandomEdge = Stack[Math.floor(Math.random() * Stack.length)];
+            if (NewMaze[RandomEdge[0]][RandomEdge[1]] !== NewMaze[RandomEdge[2]][RandomEdge[3]]) {
+                const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+                await sleep(10);
+                // NewMaze[RandomEdge[0]][RandomEdge[1]] = 0;
+                // NewMaze[RandomEdge[2]][RandomEdge[3]] = 0;
+                // NewMaze[RandomEdge[2]][RandomEdge[3]] = NewMaze[RandomEdge[0]][RandomEdge[1]];
+                NewMaze = NewMaze.map(row => row.map(cell => cell === NewMaze[RandomEdge[2]][RandomEdge[3]] ? NewMaze[RandomEdge[0]][RandomEdge[1]] : cell));
+                NewMaze[(RandomEdge[0] + RandomEdge[2]) / 2][(RandomEdge[1] + RandomEdge[3]) / 2] = NewMaze[RandomEdge[0]][RandomEdge[1]];
+
+                BecomeZero = [...BecomeZero, [NewMaze[RandomEdge[0]][RandomEdge[1]]]];
+                setMaze(NewMaze.map(row => row.map(cell => BecomeZero.some(becomeZero => becomeZero[0] === cell) ? 0 : cell)));
+            }
+
+            Stack = Stack.filter(stack => stack !== RandomEdge);
+
+            await growRandomEdge(NewMaze, Stack, BecomeZero);
+        }
+
+        growRandomEdge(NewMaze, Stack, []);
+
+        console.log('generateMazeKRUSKAL success');
+    }
+
+    //generateMazeELLER([])
+    const generateMazeELLER = (Stack) => {
+        
     }
 
     const handleEditingMaze = (e) => {
@@ -171,6 +202,7 @@ export default function GenerateMaze() {
                                                 ),
                                         }}
                                     >
+                                        {/* <p>{Maze[index_row][index_col]}</p> */}
                                     </td>
                                 ))}
                             </tr>
@@ -209,10 +241,10 @@ export default function GenerateMaze() {
                 </div>
             </Form>
             <Button onClick={() => setRefresh(Refresh + 1)} className='btn btn-reset'>Refresh</Button>
-            <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn btn-generate'>GENERATE DFS</Button>
-            <Button onClick={() => generateMazePRIM(0, 0, Stack)} className='btn btn-generate'>GENERATE PRIM</Button>
-            <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn btn-generate'>GENERATE KRUSKAL</Button>
-            <Button onClick={() => generateMazeDFS(0, 0, [0, 0], Path)} className='btn btn-generate'>GENERATE ELLER</Button>
+            <Button onClick={() => generateMazeDFS(0, 0, [0, 0])} className='btn btn-generate'>GENERATE DFS</Button>
+            <Button onClick={() => generateMazePRIM(0, 0, [])} className='btn btn-generate'>GENERATE PRIM</Button>
+            <Button onClick={() => generateMazeKRUSKAL([])} className='btn btn-generate'>GENERATE KRUSKAL</Button>
+            <Button onClick={() => generateMazeELLER([])} className='btn btn-generate'>GENERATE ELLER</Button>
 
             <pre>{JSON.stringify(Maze, null, 0).replace(/,\n/g, ',').replace(/],/g, '],\n')}</pre>
         </div>
