@@ -163,7 +163,7 @@ export default function GenerateMaze() {
 
     //generateMazeELLER([])
     const generateMazeELLER = (Stack) => {
-        
+
     }
 
     const handleEditingMaze = (e) => {
@@ -182,7 +182,7 @@ export default function GenerateMaze() {
                     className='no-wrap align-middle table'
                 // style={{ '--table-width': 10, }}
                 >
-                    <tbody style={{ cursor: 'pointer', userSelect: 'none' }}>
+                    <tbody>
                         {Maze.map((row, index_row) => (
                             <tr key={index_row}>
                                 {row.map((cell, index_col) => (
@@ -240,11 +240,11 @@ export default function GenerateMaze() {
                     <Button onClick={() => { if (MazeHeight <= 90) setMazeHeight(MazeHeight + 10) }} className='btn'>+ 10</Button>
                 </div>
             </Form>
-            <Button onClick={() => setRefresh(Refresh + 1)} className='btn btn-reset'>Refresh</Button>
             <Button onClick={() => generateMazeDFS(0, 0, [0, 0])} className='btn btn-generate'>GENERATE DFS</Button>
             <Button onClick={() => generateMazePRIM(0, 0, [])} className='btn btn-generate'>GENERATE PRIM</Button>
             <Button onClick={() => generateMazeKRUSKAL([])} className='btn btn-generate'>GENERATE KRUSKAL</Button>
             <Button onClick={() => generateMazeELLER([])} className='btn btn-generate'>GENERATE ELLER</Button>
+            <Button onClick={() => setRefresh(Refresh + 1)} className='btn btn-reset'>Refresh</Button>
 
             <pre>{JSON.stringify(Maze, null, 0).replace(/,\n/g, ',').replace(/],/g, '],\n')}</pre>
         </div>

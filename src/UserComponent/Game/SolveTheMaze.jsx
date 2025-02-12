@@ -190,7 +190,7 @@ export default function SolveTheMaze() {
                     className='no-wrap align-middle table'
                 // style={{ '--table-width': 10, }}
                 >
-                    <tbody style={{ cursor: 'pointer', userSelect: 'none' }}>
+                    <tbody>
                         {Maze.map((row, index_row) => (
                             <tr key={index_row}>
                                 {row.map((cell, index_col) => (

@@ -27,6 +27,7 @@ import WhatIsThePassword from './UserComponent/Game/WhatIsThePassword'
 import Caro from './UserComponent/Game/Caro'
 import SolveTheMaze from './UserComponent/Game/SolveTheMaze'
 import GenerateMaze from './UserComponent/Game/GenerateMaze'
+import TypePi from './UserComponent/Game/TypePi'
 import ToDoList from './UserComponent/Game/ToDoList'
 import Japanese from './UserComponent/Japanese/Japanese'
 import UserInformation from './UserComponent/UserControlContent/UserInformation'
@@ -107,6 +108,7 @@ function App() {
               <Route path='/game/caro' element={<Caro />} />
               <Route path='/game/solvethemaze' element={<SolveTheMaze />} />
               <Route path='/game/generatemaze' element={<GenerateMaze />} />
+              <Route path='/game/typepi' element={<TypePi />} />
               <Route path='/game/todolist' element={<ToDoList />} />
 
               <Route path='/japanese' element={<Japanese />} />
