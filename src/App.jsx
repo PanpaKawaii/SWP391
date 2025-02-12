@@ -25,6 +25,7 @@ import ListGame from './UserComponent/Game/ListGame'
 import Minesweeper from './UserComponent/Game/Minesweeper'
 import WhatIsThePassword from './UserComponent/Game/WhatIsThePassword'
 import Caro from './UserComponent/Game/Caro'
+import Tetris from './UserComponent/Game/Tetris'
 import SolveTheMaze from './UserComponent/Game/SolveTheMaze'
 import GenerateMaze from './UserComponent/Game/GenerateMaze'
 import TypePi from './UserComponent/Game/TypePi'
@@ -106,6 +107,7 @@ function App() {
               <Route path='/game/minesweeper' element={<Minesweeper />} />
               <Route path='/game/whatisthepassword' element={<WhatIsThePassword />} />
               <Route path='/game/caro' element={<Caro />} />
+              <Route path='/game/tetris' element={<Tetris />} />
               <Route path='/game/solvethemaze' element={<SolveTheMaze />} />
               <Route path='/game/generatemaze' element={<GenerateMaze />} />
               <Route path='/game/typepi' element={<TypePi />} />
