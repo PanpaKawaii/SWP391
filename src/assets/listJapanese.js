@@ -1,20 +1,17 @@
 export const Kanji = [
     { Id: '曜', SinoVietnamese: 'DIỆU', On: 'ヨウ', Kun: 'よう' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
 
     { Id: '魚', SinoVietnamese: 'NGƯ', On: 'ギョ', Kun: 'さかな' },
     { Id: '肉', SinoVietnamese: 'NHỤC', On: '二ク', Kun: 'にく' },
     { Id: '卵', SinoVietnamese: 'NOÃN', On: 'タマゴ', Kun: 'たまご' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
 
-    { Id: '月', SinoVietnamese: 'NGUYỆT', On: 'げつ、がつ', Kun: 'つき' },
+    { Id: '月', SinoVietnamese: 'NGUYỆT', On: 'ゲツ、ガツ', Kun: 'つき' },
     { Id: '火', SinoVietnamese: 'HỎA', On: 'カ', Kun: 'ひ、び' },
     { Id: '水', SinoVietnamese: 'THỦY', On: 'スイ', Kun: 'みず' },
     { Id: '木', SinoVietnamese: 'MỘC', On: 'モク、ボク', Kun: 'き、こ' },
     { Id: '金', SinoVietnamese: 'KIM', On: 'キン、コン', Kun: 'かね、がね' },
     { Id: '土', SinoVietnamese: 'THỔ', On: 'ト、ド', Kun: 'つち' },
     { Id: '日', SinoVietnamese: 'NHẬT', On: 'ニチ、ジツ', Kun: 'ひ、び、か' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
 
     { Id: '大', SinoVietnamese: 'ĐẠI', On: 'ダイ、タイ', Kun: 'おお' },
     { Id: '小', SinoVietnamese: 'TIỂU', On: 'ショウ', Kun: 'ちい、こ、お' },
@@ -23,7 +20,6 @@ export const Kanji = [
     { Id: '時', SinoVietnamese: 'THỜI', On: 'ジ', Kun: 'とき' },
     { Id: '分', SinoVietnamese: 'PHÂN', On: 'フン、プン、ブン、ブ', Kun: 'わ' },
     { Id: '半', SinoVietnamese: 'BÁN', On: 'ハン', Kun: 'なか' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
 
     { Id: '言', SinoVietnamese: 'NGÔN', On: 'ゴン、ゲン', Kun: 'い、こと' },
     { Id: '話', SinoVietnamese: 'THOẠI', On: 'ワ', Kun: 'はな、はなし' },
@@ -31,7 +27,6 @@ export const Kanji = [
     { Id: '見', SinoVietnamese: 'KIẾN', On: 'ケン', Kun: 'み' },
     { Id: '聞', SinoVietnamese: 'VĂN, VẤN', On: 'ブン、モン', Kun: 'き' },
     { Id: '書', SinoVietnamese: 'THƯ', On: 'ショ', Kun: 'か、が' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
 
     { Id: '一', SinoVietnamese: 'NHẤT', On: 'イチ、イツ', Kun: 'ひと' },
     { Id: '二', SinoVietnamese: 'NHỊ', On: '二、ジ', Kun: 'ふた' },
@@ -44,21 +39,20 @@ export const Kanji = [
     { Id: '九', SinoVietnamese: 'CỬU', On: 'キュウ、ク', Kun: 'ここの' },
     { Id: '十', SinoVietnamese: 'THẬP', On: 'ジュウ、ジッ、ジュッ', Kun: 'とお、と' },
     { Id: '年', SinoVietnamese: 'NIÊN', On: 'ネン', Kun: 'とし' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
 
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
-    { Id: 'ExampleKanjiCharacter', SinoVietnamese: 'ExampleKanjiCharacter', On: 'ExampleKanjiCharacter', Kun: 'ExampleKanjiCharacter' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
 ];
 
 export const KanjiExample = [
@@ -69,7 +63,7 @@ export const KanjiExample = [
     { Word: '金曜日', Hiragana: 'きんようび', Meaning: 'Thứ 6' },
     { Word: '土曜日', Hiragana: 'どようび', Meaning: 'Thứ 7' },
     { Word: '日曜日', Hiragana: 'にちようび', Meaning: 'Chủ Nhật' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 
     { Word: '魚', Hiragana: 'さかな', Meaning: 'Con cá' },
     { Word: '人魚', Hiragana: 'にんぎょ', Meaning: 'Người cá' },
@@ -81,7 +75,7 @@ export const KanjiExample = [
 
     { Word: '卵', Hiragana: 'たまご', Meaning: 'Quả trứng' },
     { Word: '卵焼き', Hiragana: 'たまごやき', Meaning: 'Trứng rán' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 
 
 
@@ -113,7 +107,7 @@ export const KanjiExample = [
     { Word: '日曜日', Hiragana: 'にちようび', Meaning: 'Chủ Nhật' },
     { Word: '土日', Hiragana: 'どにち', Meaning: 'Cuối tuần' },
     { Word: '今日', Hiragana: 'きょう', Meaning: 'Hôm nay' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 
     { Word: '大きい', Hiragana: 'おおきい', Meaning: 'To, lớn' },
     { Word: '大学', Hiragana: 'だいがく', Meaning: 'Đại học' },
@@ -158,7 +152,7 @@ export const KanjiExample = [
     { Word: '四時半', Hiragana: 'よじはん', Meaning: '4 giờ rưỡi' },
     { Word: '半分', Hiragana: 'はんぶん', Meaning: '1 nửa' },
     { Word: '半年', Hiragana: 'はんとし', Meaning: 'Nửa năm' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 
     { Word: '言う', Hiragana: 'いう', Meaning: 'Nói' },
     { Word: '言葉', Hiragana: 'ことば', Meaning: 'Từ ngữ' },
@@ -193,16 +187,67 @@ export const KanjiExample = [
     { Word: '辞書', Hiragana: 'じしょ', Meaning: 'Từ điển' },
     { Word: '教科書', Hiragana: 'きょうかしょ', Meaning: 'Sách giáo khoa' },
     { Word: '図書館', Hiragana: 'としょかん', Meaning: 'Thư viện' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
-    { Word: 'ExampleKanjiExample', Hiragana: 'ExampleKanjiExample', Meaning: 'ExampleKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 ];
+
+export const JapaneseVerb = [
+    { Verb: 'ああああああああああああああああ', Group: 'I', Meaning: 'ああああああああああああああ' },
+
+    //「い」ます
+    { Verb: 'いきます', Group: 'I', Meaning: 'Đi' },
+    { Verb: 'あいます', Group: 'I', Meaning: 'Gặp' },
+    { Verb: 'のみます', Group: 'I', Meaning: 'Uống' },
+    { Verb: 'とります', Group: 'I', Meaning: 'Lấy' },
+    { Verb: 'かいます', Group: 'I', Meaning: 'Mua' },
+    { Verb: 'あいます', Group: 'I', Meaning: 'Gặp' },
+    { Verb: 'もちます', Group: 'I', Meaning: 'Cầm nắm' },
+    { Verb: 'まちます', Group: 'I', Meaning: 'Chờ' },
+    { Verb: 'とまります', Group: 'I', Meaning: 'Dừng lại' },
+    { Verb: 'かえります', Group: 'I', Meaning: 'Về' },
+    { Verb: 'よみます', Group: 'I', Meaning: 'Đọc' },
+    { Verb: 'あそびます', Group: 'I', Meaning: 'Đi chơi' },
+    { Verb: 'しにます', Group: 'I', Meaning: 'Chết' },
+    { Verb: 'かきます', Group: 'I', Meaning: 'Viết' },
+    { Verb: 'ききます', Group: 'I', Meaning: 'Nghe' },
+    { Verb: 'およぎます', Group: 'I', Meaning: 'Bơi' },
+    { Verb: 'はなします', Group: 'I', Meaning: 'Nói chuyện' },
+    { Verb: 'わたします', Group: 'I', Meaning: 'Trao' },
+
+
+    //「え」ます、Một âm tiết
+    { Verb: 'たべます', Group: 'II', Meaning: 'Ăn' },
+    { Verb: 'かけます', Group: 'II', Meaning: 'Đeo' },
+    { Verb: 'かけます', Group: 'II', Meaning: 'Gọi' },
+    { Verb: 'あげます', Group: 'II', Meaning: 'Tặng' },
+    { Verb: 'ねます', Group: 'II', Meaning: 'Ngủ' },
+    { Verb: 'みます', Group: 'II', Meaning: 'Nhìn' },
+    { Verb: 'でます', Group: 'II', Meaning: 'Ra ngoài' },
+    { Verb: 'きます', Group: 'II', Meaning: 'Mặc' },
+    { Verb: 'おきます', Group: 'II', Meaning: 'Thức dậy' },
+    { Verb: 'おります', Group: 'II', Meaning: 'Xuống' },
+    { Verb: 'あびます', Group: 'II', Meaning: 'Tắm' },
+    { Verb: 'おちます', Group: 'II', Meaning: 'Rơi' },
+    { Verb: 'できます', Group: 'II', Meaning: 'Có thể' },
+    { Verb: 'しんじます', Group: 'II', Meaning: 'Tin tưởng' },
+    { Verb: 'かります', Group: 'II', Meaning: 'Mượn' },
+    { Verb: 'つぎます', Group: 'II', Meaning: 'あああああああ' },
+
+
+    //N＋します => Danh động từ
+    { Verb: 'きます', Group: 'III', Meaning: 'Đến' },
+    { Verb: 'べんきょうします', Group: 'III', Meaning: 'Học' },
+    { Verb: 'せんたくします', Group: 'III', Meaning: 'Giặt' },
+    { Verb: 'そうじします', Group: 'III', Meaning: 'Làm việc nhà' },
+    { Verb: 'コピーします', Group: 'III', Meaning: 'Sao chép' },
+]

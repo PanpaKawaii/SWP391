@@ -12,13 +12,57 @@ body {
     .header {
         h1 {
             margin: 0 0 20px;
-            color: #d97720;
+            color: #f50057;
             font-size: 54px;
         }
     }
 
     .japanese-content {
+        width: 100%;
+        height: fit-content;
         display: flex;
         justify-content: center;
+
+        .image-row {
+            width: 100%;
+            max-width: 1500px;
+
+            .image-col {
+                display: flex;
+                justify-content: center;
+                align-items: start;
+
+                .kanji-card {
+                    width: 210px;
+                    margin: 0 0 20px;
+                    background-color: #ffecee;
+                    border: 2px solid #f99dbc;
+                    border-radius: 20px;
+                    overflow: hidden;
+                    align-items: center;
+                    text-align: center;
+                    transition: all 0.3s ease;
+                    box-shadow: 0px 0px 5px #f99dbc50;
+
+                    .card-body {
+                        padding: 0;
+
+                        h1 {
+                            margin: 8px 0;
+                            font-size: 144px;
+                        }
+
+                        p {
+                            margin: 0;
+                        }
+                    }
+                }
+
+                .kanji-card:hover {
+                    transform: translateY(-10px);
+                    box-shadow: 0px 5px 10px #f99dbc80;
+                }
+            }
+        }
     }
 }

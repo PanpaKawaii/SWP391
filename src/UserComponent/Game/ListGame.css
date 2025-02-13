@@ -10,7 +10,9 @@ body {
     font-family: 'Quicksand', Arial, sans-serif;
 
     h1 {
-        margin: 0 0 40px;
+        margin: 0 0 20px;
+        color: #d97720;
+        font-size: 54px;
     }
 
     /* .listgame {
