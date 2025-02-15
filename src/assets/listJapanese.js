@@ -40,6 +40,32 @@ export const Kanji = [
     { Id: '十', SinoVietnamese: 'THẬP', On: 'ジュウ、ジッ、ジュッ', Kun: 'とお、と' },
     { Id: '年', SinoVietnamese: 'NIÊN', On: 'ネン', Kun: 'とし' },
 
+    { Id: '東', SinoVietnamese: 'ĐÔNG', On: 'トウ', Kun: 'ひがし' },
+    { Id: '西', SinoVietnamese: 'TÂY', On: 'セイ、サイ、ゼイ', Kun: 'にし' },
+    { Id: '南', SinoVietnamese: 'NAM', On: 'ナン、ナ', Kun: 'みなみ' },
+    { Id: '北', SinoVietnamese: 'BẮC', On: 'ホク、ホッ、ボク', Kun: 'きた' },
+    { Id: '口', SinoVietnamese: 'KHẨU', On: 'コウ、ク', Kun: 'くち、ぐち' },
+
+    { Id: '朝', SinoVietnamese: 'SÁNG', On: 'チョウ', Kun: 'あさ' },
+    { Id: '昼', SinoVietnamese: 'TRÚ', On: 'チュウ', Kun: 'ひる' },
+    { Id: '夜', SinoVietnamese: 'DẠ', On: 'ヤ', Kun: 'よる' },
+    { Id: '晩', SinoVietnamese: 'VÃN', On: 'バン', Kun: 'ばん' },
+    { Id: '勉', SinoVietnamese: 'MIỄN', On: 'ベン', Kun: 'べん' },
+    { Id: '強', SinoVietnamese: 'CƯỜNG', On: 'キョウ', Kun: 'つよ' },
+    { Id: '花', SinoVietnamese: 'HOA', On: 'カ', Kun: 'はな' },
+    { Id: '家', SinoVietnamese: 'GIA', On: 'カ、ケ', Kun: 'いえ' },
+    { Id: '犬', SinoVietnamese: 'KHUYỂN', On: 'ケン', Kun: 'いぬ' },
+    { Id: '猫', SinoVietnamese: 'MIÊU', On: 'ビョウ', Kun: 'ねこ' },
+    { Id: '社', SinoVietnamese: 'XÃ', On: 'シャ', Kun: 'やしろ' },
+    { Id: '事', SinoVietnamese: 'SỰ', On: 'ジ', Kun: 'こと' },
+    { Id: '起', SinoVietnamese: 'KHỞI', On: 'キ', Kun: 'お' },
+    { Id: '寝', SinoVietnamese: 'TẨM', On: 'シン', Kun: 'ね' },
+    { Id: '帰', SinoVietnamese: 'QUY', On: 'キ', Kun: 'かえ' },
+    { Id: '着', SinoVietnamese: 'TRƯỚC', On: 'チャク', Kun: 'き' },
+    { Id: '間', SinoVietnamese: 'GIAN', On: 'カン', Kun: 'あいだ' },
+    { Id: '語', SinoVietnamese: 'NGỮ', On: 'ゴ', Kun: 'かた' },
+    
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
@@ -187,17 +213,22 @@ export const KanjiExample = [
     { Word: '辞書', Hiragana: 'じしょ', Meaning: 'Từ điển' },
     { Word: '教科書', Hiragana: 'きょうかしょ', Meaning: 'Sách giáo khoa' },
     { Word: '図書館', Hiragana: 'としょかん', Meaning: 'Thư viện' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+
+    { Word: '時間', Hiragana: 'じかん', Meaning: 'Thời gian' },
+    { Word: '時計', Hiragana: 'とけい', Meaning: 'Đồng hồ' },
+    { Word: '分かります', Hiragana: 'わかります', Meaning: 'Hiểu, biết' },
+    { Word: '分けます', Hiragana: 'わけます', Meaning: 'Chia, phân chia' },
+    { Word: '五分', Hiragana: 'ごふん', Meaning: '5 phút' },
+    { Word: '十分', Hiragana: 'じっぷん、じゅっぷん', Meaning: '10 phút' },
+    { Word: '十分', Hiragana: 'じゅうぶん', Meaning: 'Đủ rồi' },
+    { Word: '自分', Hiragana: 'じぶん', Meaning: 'Tự mình' },
+    { Word: '一月半ば', Hiragana: 'いちがつなかば', Meaning: 'Giữa tháng 1' },
+    { Word: '四時半', Hiragana: 'よじはん', Meaning: '4 giờ rưỡi' },
+    { Word: '半分', Hiragana: 'はんぶん', Meaning: '1 nửa' },
+    { Word: '半年', Hiragana: 'はんとし', Meaning: 'Nửa năm' },
+
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 ];
 
@@ -234,6 +265,7 @@ export const JapaneseVerb = [
     { Verb: 'みます', Group: 'II', Meaning: 'Nhìn' },
     { Verb: 'でます', Group: 'II', Meaning: 'Ra ngoài' },
     { Verb: 'きます', Group: 'II', Meaning: 'Mặc' },
+
     { Verb: 'おきます', Group: 'II', Meaning: 'Thức dậy' },
     { Verb: 'おります', Group: 'II', Meaning: 'Xuống' },
     { Verb: 'あびます', Group: 'II', Meaning: 'Tắm' },
@@ -241,7 +273,7 @@ export const JapaneseVerb = [
     { Verb: 'できます', Group: 'II', Meaning: 'Có thể' },
     { Verb: 'しんじます', Group: 'II', Meaning: 'Tin tưởng' },
     { Verb: 'かります', Group: 'II', Meaning: 'Mượn' },
-    { Verb: 'つぎます', Group: 'II', Meaning: 'あああああああ' },
+    { Verb: 'つぎます', Group: 'II', Meaning: 'Tiếp tục' },
 
 
     //N＋します => Danh động từ
