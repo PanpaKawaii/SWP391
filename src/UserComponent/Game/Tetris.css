@@ -28,7 +28,8 @@ body {
 
     .game-content {
         display: flex;
-        flex-direction: column;
+        /* flex-direction: column; */
+        justify-content: center;
         align-items: center;
 
         table {
@@ -59,12 +60,14 @@ body {
         }
 
         .control-button {
-            display: flex;
+            .left-right {
+                display: flex;
+            }
 
             .btn {
                 width: 300px;
                 height: 200px;
-                border: 2px solid green;
+                border: 2px solid rgb(0, 13, 128);
             }
         }
     }
