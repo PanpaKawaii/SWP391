@@ -1,8 +1,6 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Table } from 'react-bootstrap';
 import './Tetris.css';
-
 export default function Tetris() {
 
 

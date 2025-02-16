@@ -1,6 +1,5 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form } from 'react-bootstrap';
 import './TypePi.css';
 
 export default function TypePi() {

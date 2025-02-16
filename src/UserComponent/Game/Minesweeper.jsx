@@ -1,6 +1,5 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
-import { Table, Button, Form, DropdownButton, Dropdown } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Table } from 'react-bootstrap';
 import './Minesweeper.css';
 
 export default function Minesweeper() {
@@ -332,16 +331,6 @@ export default function Minesweeper() {
                             <h3><i className='fa-solid fa-flag' style={{ color: 'red' }}></i> <b>{Flag}</b></h3>
                             <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESET</Button>
                         </div>
-                        {/* <DropdownButton id='dropdown-basic-button' title='GAME MODE'>
-                            <Dropdown.Item style={{ color: '#28a745', backgroundColor: '#d3f9d8', fontWeight: 'bold' }}
-                                onClick={() => { changeGameMode('Easy') }}>Easy</Dropdown.Item>
-                            <Dropdown.Item style={{ color: '#ffc107', backgroundColor: '#fff3cd', fontWeight: 'bold' }}
-                                onClick={() => { changeGameMode('Normal') }}>Normal</Dropdown.Item>
-                            <Dropdown.Item style={{ color: '#dc3545', backgroundColor: '#fad7d9', fontWeight: 'bold' }}
-                                onClick={() => { changeGameMode('Hard') }}>Hard</Dropdown.Item>
-                            <Dropdown.Item style={{ color: '#666666', backgroundColor: '#fafafa', fontWeight: 'bold' }}
-                                onClick={() => { changeGameMode('Test') }}>Test</Dropdown.Item>
-                        </DropdownButton> */}
                         <Form.Group controlId='gamemode' className='form-group'>
                             <Form.Control
                                 as='select'

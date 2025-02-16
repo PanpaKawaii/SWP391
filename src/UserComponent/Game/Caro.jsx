@@ -1,6 +1,5 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
-import { Table, Button, Form, DropdownButton, Dropdown } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Table } from 'react-bootstrap';
 import './Caro.css';
 
 export default function Caro() {

@@ -1,13 +1,13 @@
-import React from 'react'
+import React from 'react';
+import { Card, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Row, Col, Card } from 'react-bootstrap';
 import './ListGame.css';
 
-import MinesweeperSRC from '../../assets/imageGAMEs/Minesweeper.png';
-import WhatIsThePasswordSRC from '../../assets/imageGAMEs/WhatIsThePassword.png';
 import CaroSRC from '../../assets/imageGAMEs/Caro.png';
+import MinesweeperSRC from '../../assets/imageGAMEs/Minesweeper.png';
 import SolveTheMazeSRC from '../../assets/imageGAMEs/SolveTheMaze.png';
 import ToDoListSRC from '../../assets/imageGAMEs/ToDoList.png';
+import WhatIsThePasswordSRC from '../../assets/imageGAMEs/WhatIsThePassword.png';
 
 export default function ListGame() {
 
