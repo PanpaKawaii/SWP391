@@ -1,10 +1,8 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
-import { Table, Row, Col, Card } from 'react-bootstrap';
+import React from 'react';
+import { Col, Row, Table } from 'react-bootstrap';
 import './Japanese.css';
 
-import { Kanji } from '../../assets/listJapanese';
-import { KanjiExample } from '../../assets/listJapanese';
+import { Kanji, KanjiExample } from '../../assets/listJapanese';
 
 export default function Japanese() {
 

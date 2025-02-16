@@ -6,8 +6,10 @@ import './Tetris.css';
 export default function Tetris() {
 
 
-    const [GameBoard, setGameBoard] = useState(Array(20).fill(1).map(() => Array(10).fill(1)));
-    const [FallingObject, setFallingObject] = useState(Array(24).fill(0).map(() => Array(10).fill(0)));
+    // const [GameBoard, setGameBoard] = useState(Array(20).fill(0).map(() => Array(10).fill(0)));
+    const [GameBoard, setGameBoard] = useState(Array(20).fill(0).map((_, index) => index === 19 ? Array(10).fill(9) : Array(10).fill(0)));
+    // const [FallingObject, setFallingObject] = useState(Array(24).fill(0).map(() => Array(10).fill(0)));
+
 
     const ColorCheck = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -38,13 +40,13 @@ export default function Tetris() {
 
     const ObjectL1 = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -65,13 +67,13 @@ export default function Tetris() {
 
     const ObjectL2 = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
         [0, 0, 0, 2, 2, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -92,13 +94,13 @@ export default function Tetris() {
 
     const ObjectZ1 = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
         [0, 0, 0, 3, 3, 0, 0, 0, 0, 0],
         [0, 0, 0, 3, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -119,13 +121,13 @@ export default function Tetris() {
 
     const ObjectZ2 = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 4, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 4, 4, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -147,12 +149,12 @@ export default function Tetris() {
     const ObjectT = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 5, 0, 0, 0, 0, 0],
         [0, 0, 0, 5, 5, 5, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -174,12 +176,12 @@ export default function Tetris() {
     const ObjectO = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 6, 6, 0, 0, 0, 0, 0],
         [0, 0, 0, 6, 6, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -199,14 +201,14 @@ export default function Tetris() {
     ]
 
     const ObjectI = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 7, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 7, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 7, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 7, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -224,13 +226,15 @@ export default function Tetris() {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
+    const [FallingObject, setFallingObject] = useState(ObjectL1);
+    var VarFallingObject = ObjectL1;
 
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'ArrowRight') {
-                ClickRight(FallingObject);
+                ClickRight();
             } else if (e.key === 'ArrowLeft') {
-                ClickLeft(FallingObject);
+                ClickLeft();
             }
         };
 
@@ -241,48 +245,108 @@ export default function Tetris() {
         };
     }, []);
 
-    const ClickRight = (FallingObject) => {
-        console.log('Go to right');
-        let NewFallingObject = [...FallingObject];
-        NewFallingObject = FallingObject.map(row => row.map((cell, index) => index < row.length - 1 ? row[index - 1] : 0));
-        console.log('NewFallingObject', NewFallingObject);
-        setFallingObject(FallingObject.map(row => row.map((cell, index) => index < row.length - 1 ? row[index - 1] : 0)));
+    const ClickLeft = () => {
+        console.log('Go to left');
+
+        //Kiểm tra va chạm khối có sẵn
+        for (let row = 0; row < FallingObject.length; row++) {
+            for (let col = 1; col < FallingObject[row].length - 1; col++) {
+                if (FallingObject[row][col] !== 0 && GameBoard[row][col - 1] !== 0) {
+                    return;
+                }
+            }
+        }
+
+        //Kiểm tra va chạm tường hai bên
+        for (let row = 0; row < FallingObject.length; row++) {
+            if (FallingObject[row][0] !== 0) {
+                return;
+            }
+        }
+
+        let NewFallingObject = FallingObject.map(row => row.map((cell, index) => (index >= 0 && row[index + 1] != null) ? row[index + 1] : 0));
+        setFallingObject(NewFallingObject);
+        VarFallingObject = NewFallingObject;
+        console.log('Go to left success');
     }
 
-    const ClickLeft = (FallingObject) => {
-        console.log('Go to left');
-        let NewFallingObject = [...FallingObject];
-        NewFallingObject = FallingObject.map(row => row.map((cell, index) => index > 0 ? row[index + 1] : 0));
-        console.log('NewFallingObject', NewFallingObject);
-        setFallingObject(FallingObject.map(row => row.map((cell, index) => index > 0 ? row[index + 1] : 0)));
+    const ClickRight = () => {
+        console.log('Go to right');
+
+        //Kiểm tra va chạm khối có sẵn
+        for (let row = 0; row < FallingObject.length; row++) {
+            for (let col = 1; col < FallingObject[row].length - 1; col++) {
+                if (FallingObject[row][col] !== 0 && GameBoard[row][col + 1] !== 0) {
+                    return;
+                }
+            }
+        }
+
+        //Kiểm tra va chạm tường hai bên
+        for (let row = 0; row < FallingObject.length; row++) {
+            if (FallingObject[row][FallingObject[row].length - 1] !== 0) {
+                return;
+            }
+        }
+
+        let NewFallingObject = FallingObject.map(row => row.map((cell, index) => (index < row.length && row[index - 1] != null) ? row[index - 1] : 0));
+        setFallingObject(NewFallingObject);
+        VarFallingObject = NewFallingObject;
+        console.log('Go to right success');
     }
+
+    const [Time, setTime] = useState(-1);
+    useEffect(() => {
+        let Interval;
+        Interval = setInterval(() => {
+            setTime(Time + 1);
+        }, 200);
+        return () => clearInterval(Interval);
+    }, [Time]);
+
+    useEffect(() => {
+        for (let row = 3; row < FallingObject.length; row++) {
+            for (let col = 0; col < FallingObject[row].length; col++) {
+                if (FallingObject[row][col] !== 0 && GameBoard[row - 3][col] !== 0) {
+                    console.log('Meet the end');
+                    let NewGameBoard = [...GameBoard];
+                    for (let row = 4; row < FallingObject.length; row++) {
+                        for (let col = 0; col < FallingObject[row].length; col++) {
+                            if (FallingObject[row][col] !== 0) {
+                                NewGameBoard[row - 4][col] = 9;
+                                setGameBoard(NewGameBoard);
+                            }
+                        }
+                    }
+                    const RandomObject = [ObjectL1, ObjectL2, ObjectZ1, ObjectZ2, ObjectT, ObjectO, ObjectI][Math.floor(Math.random() * 7)]
+                    setFallingObject(RandomObject);
+                    return;
+                }
+            }
+        }
+
+        let NewFallingObject = FallingObject.map((row, rowIndex) =>
+            row.map((cell, index) =>
+                (rowIndex > 0 && rowIndex < FallingObject.length) ? FallingObject[rowIndex - 1][index] : 0
+            )
+        );
+
+        VarFallingObject = NewFallingObject;
+        setFallingObject(NewFallingObject);
+        console.log('Interval executed');
+    }, [Time]);
 
     const changeFallingObject = (NewFallingObject) => {
         console.log('New Falling Object ===========', NewFallingObject);
         setFallingObject(NewFallingObject);
         console.log('FallingObject ===========', FallingObject);
-    }
-
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         const updatedGameBoard = GameBoard.map((row, index) => {
-    //             return row.map((cell, index) => index === 0 ? 1 : cell);
-    //         });
-    //         setGameBoard(updatedGameBoard);
-    //         console.log('Interval executed');
-    //     }, 300);
-
-    //     return () => clearInterval(interval);
-    // }, []);
-
-    const handleEditingMaze = (e) => {
-        e.preventDefault();
+        VarFallingObject = NewFallingObject;
     }
 
     return (
         <div className='tetris-container'>
             <div className='header'>
-                <h1><b>Tetris</b></h1>
+                <h1><b>Tetris {Time}</b></h1>
             </div>
 
             <div className='game-content'>
@@ -317,7 +381,11 @@ export default function Tetris() {
                                                                     (FallingObject[index_row + 4][index_col] === 7 ?
                                                                         '#64afff'
                                                                         :
-                                                                        '#064415'
+                                                                        (GameBoard[index_row][index_col] === 9 ?
+                                                                            'lime'
+                                                                            :
+                                                                            '#064415'
+                                                                        )
                                                                     )
                                                                 )
                                                             )
@@ -338,6 +406,11 @@ export default function Tetris() {
                     {[ColorCheck, ObjectL1, ObjectL2, ObjectZ1, ObjectZ2, ObjectT, ObjectO, ObjectI].map((object, index) => (
                         <Button key={index} onClick={() => changeFallingObject(object)}>{`Object${index}`}</Button>
                     ))}
+                </div>
+
+                <div className='control-button'>
+                    <Button className='btn' onClick={() => ClickLeft()}><i className='fa-solid fa-minus'></i></Button>
+                    <Button className='btn' onClick={() => ClickRight()}><i className='fa-solid fa-plus'></i></Button>
                 </div>
 
                 <pre>{JSON.stringify(FallingObject, null, 0).replace(/,\n/g, ',').replace(/],/g, '],\n')}</pre>
