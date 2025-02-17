@@ -30,6 +30,7 @@ import SolveTheMaze from './UserComponent/Game/SolveTheMaze'
 import GenerateMaze from './UserComponent/Game/GenerateMaze'
 import TypePi from './UserComponent/Game/TypePi'
 import ToDoList from './UserComponent/Game/ToDoList'
+import TestApp from './UserComponent/Game/TestApp'
 import Japanese from './UserComponent/Japanese/Japanese'
 import UserInformation from './UserComponent/UserControlContent/UserInformation'
 import UserBooking from './UserComponent/UserControlContent/UserBooking'
@@ -112,6 +113,7 @@ function App() {
               <Route path='/game/generatemaze' element={<GenerateMaze />} />
               <Route path='/game/typepi' element={<TypePi />} />
               <Route path='/game/todolist' element={<ToDoList />} />
+              <Route path='/game/testapp' element={<TestApp />} />
 
               <Route path='/japanese' element={<Japanese />} />
 

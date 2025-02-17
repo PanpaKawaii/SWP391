@@ -1,36 +1,44 @@
-import React, { useState } from 'react';
-import { Form } from 'react-bootstrap';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import User from './TestUser';
 import './TypePi.css';
 
-export default function TypePi() {
+export default function TestApp() {
 
-    var Pi = '3,14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028';
-    const [YourPi, setYourPi] = useState('');
+    const [count, setCount] = useState(0);
 
-    const handleEditingMaze = (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        console.log('App re-render');
+    }, []);
+
+    let BNT;
+    for (let index = 0; index < 1000; index++) {
+        BNT += index;
     }
 
+    const Function = useCallback(() => {
+        console.log('This is a function');
+        let element;
+        for (let index = 0; index < 100; index++) {
+            element += index;
+        }
+        return element;
+    }, []);
+
+    const Array = useMemo(() => [1, 2, 3, 4], []);
+
+    const Object = useCallback(() => ({
+        a: 0,
+        b: true,
+    }), []);
+
     return (
-        <div className='typepi-container'>
-            <div className='header'>
-                <h1><b>Type Pi</b></h1>
-                <h2><b>Length: {YourPi.length}</b></h2>
-                {/* <h2><b>Length (Behind comma): {YourPi.length < 2 ? 0 : YourPi.length - 2}</b></h2> */}
-
-                <h2><b><span style={{ color: Pi.substring(0, YourPi.length).includes(YourPi) ? '#28a745' : '#dc3545', wordWrap: 'break-all' }}>
-                    {YourPi.split('').map((char, index) => (
-                        <span key={index}>{char}{(index % 30 === 29) ? <br /> : ''}</span>
-                    ))}
-                </span></b></h2>
-            </div>
-
-            <Form>
-                {/* <Form.Label><b>Type Pi</b></Form.Label> */}
-                <Form.Group controlId='yourpi' className='form-group'>
-                    <Form.Control as='textarea' value={YourPi} placeholder='Write your Pi' onChange={(e) => setYourPi(e.target.value)} />
-                </Form.Group>
-            </Form>
+        <div>
+            App
+            <Button onClick={() => setCount(prev => prev + 1)}>{count}</Button>
+            {/* <User /> */}
+            {/* <User count={count} /> */}
+            <User BNT={BNT} Array={Array} Function={Function} Object={Object} />
         </div>
     )
 }

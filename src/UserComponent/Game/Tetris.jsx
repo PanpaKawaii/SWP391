@@ -5,7 +5,7 @@ export default function Tetris() {
 
 
     // const [GameBoard, setGameBoard] = useState(Array(20).fill(0).map(() => Array(10).fill(0)));
-    const [GameBoard, setGameBoard] = useState(Array(20).fill(0).map((_, index) => index === 19 ? Array(10).fill(9) : Array(10).fill(0)));
+    const [GameBoard, setGameBoard] = useState(Array(21).fill(0).map((_, index) => index === 20 ? Array(10).fill(9) : Array(10).fill(0)));
     // const [FallingObject, setFallingObject] = useState(Array(24).fill(0).map(() => Array(10).fill(0)));
 
 
@@ -33,6 +33,7 @@ export default function Tetris() {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
 
@@ -41,6 +42,7 @@ export default function Tetris() {
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -87,6 +89,7 @@ export default function Tetris() {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
 
@@ -95,6 +98,7 @@ export default function Tetris() {
         [0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
         [0, 0, 0, 0, 3, 3, 0, 0, 0, 0],
         [0, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -141,6 +145,7 @@ export default function Tetris() {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
 
@@ -149,6 +154,7 @@ export default function Tetris() {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 5, 0, 0, 0, 0],
         [0, 0, 0, 0, 5, 5, 5, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -195,6 +201,7 @@ export default function Tetris() {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
 
@@ -203,6 +210,7 @@ export default function Tetris() {
         [0, 0, 0, 0, 0, 7, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 7, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 7, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -404,7 +412,7 @@ export default function Tetris() {
                 // style={{ '--table-width': 10, }}
                 >
                     <tbody>
-                        {GameBoard.map((row, index_row) => (
+                        {GameBoard.slice(0, -1).map((row, index_row) => (
                             <tr key={index_row}>
                                 {row.map((cell, index_col) => (
                                     <td key={index_col}
