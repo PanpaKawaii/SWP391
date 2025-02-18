@@ -8,7 +8,7 @@ import { Kanji, KanjiExample } from '../../assets/listJapanese';
 export default function JapaneseKanji() {
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const query = searchParams.get('q') || '';
+    const query = searchParams.get('search') || '';
     const [searchQueryKanji, setSearchQueryKanji] = useState(query);
 
     const filteredKanji = Kanji.filter((kanji) =>
@@ -17,7 +17,7 @@ export default function JapaneseKanji() {
     );
 
     useEffect(() => {
-        setSearchParams({ q: searchQueryKanji });
+        setSearchParams({ search: searchQueryKanji });
     }, [searchQueryKanji, setSearchParams]);
 
     const clearInput = () => {

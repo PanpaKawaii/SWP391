@@ -4,9 +4,12 @@ import { Link, Outlet } from 'react-router-dom';
 import './ListGame.css';
 
 import CaroSRC from '../../assets/imageGAMEs/Caro.png';
+import GenerateMaze from '../../assets/imageGAMEs/GenerateMaze.png';
 import MinesweeperSRC from '../../assets/imageGAMEs/Minesweeper.png';
 import SolveTheMazeSRC from '../../assets/imageGAMEs/SolveTheMaze.png';
+import Tetris from '../../assets/imageGAMEs/Tetris.png';
 import ToDoListSRC from '../../assets/imageGAMEs/ToDoList.png';
+import TypePi from '../../assets/imageGAMEs/TypePi.png';
 import WhatIsThePasswordSRC from '../../assets/imageGAMEs/WhatIsThePassword.png';
 
 export default function ListGame() {
@@ -15,10 +18,10 @@ export default function ListGame() {
         { name: 'Minesweeper', src: MinesweeperSRC, link: '/game/minesweeper' },
         { name: 'What Is The Password?', src: WhatIsThePasswordSRC, link: '/game/whatisthepassword' },
         { name: 'Caro', src: CaroSRC, link: '/game/caro' },
-        { name: 'Tetris', src: '', link: '/game/tetris' },
+        { name: 'Tetris', src: Tetris, link: '/game/tetris' },
         { name: 'Solve The Maze', src: SolveTheMazeSRC, link: '/game/solvethemaze' },
-        { name: 'Generate Maze', src: '', link: '/game/generatemaze' },
-        { name: 'Type Pi', src: '', link: '/game/typepi' },
+        { name: 'Generate Maze', src: GenerateMaze, link: '/game/generatemaze' },
+        { name: 'Type Pi', src: TypePi, link: '/game/typepi' },
         { name: 'To Do List', src: ToDoListSRC, link: '/game/todolist' },
         { name: 'Test App', src: '', link: '/game/testapp' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },

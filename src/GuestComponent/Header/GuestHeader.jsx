@@ -19,6 +19,8 @@ export default function GuestHeader() {
         setMenuOpen(!menuOpen);
     };
 
+    console.log('GuestHeader re-render');
+    
     const menuItems = [
         { text: 'Trang chủ', path: '/' },
         { text: 'Giới thiệu', path: '/about' },
@@ -66,6 +68,7 @@ export default function GuestHeader() {
 
                 </List>
             </Drawer>
+
             <Outlet />
         </div>
     );

@@ -8,7 +8,7 @@ import { Verb } from '../../assets/listJapanese';
 export default function JapaneseVerb() {
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const query = searchParams.get('q') || '';
+    const query = searchParams.get('search') || '';
     const Group = searchParams.get('Group') || '';
     const [searchQueryVerb, setSearchQueryVerb] = useState(query);
 
@@ -21,12 +21,12 @@ export default function JapaneseVerb() {
     }
 
     useEffect(() => {
-        setSearchParams({ q: searchQueryVerb, Group });
+        setSearchParams({ search: searchQueryVerb, Group });
     }, [searchQueryVerb, Group, setSearchParams]);
 
     const clearInput = () => {
         setSearchQueryVerb('');
-        setSearchParams({ q: '', Group: '' });
+        setSearchParams({ search: '', Group: '' });
         document.getElementById('searchverb').focus();
     }
 
@@ -52,7 +52,7 @@ export default function JapaneseVerb() {
                         <Form.Control
                             as='select'
                             value={Group}
-                            onChange={(e) => setSearchParams({ q: searchQueryVerb, Group: e.target.value })}
+                            onChange={(e) => setSearchParams({ search: searchQueryVerb, Group: e.target.value })}
                         >
                             <option value=''>Select Group</option>
                             <option value='I'>Group I</option>

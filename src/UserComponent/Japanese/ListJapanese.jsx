@@ -3,11 +3,14 @@ import { Card, Col, Row } from 'react-bootstrap';
 import { Link, Outlet } from 'react-router-dom';
 import './ListJapanese.css';
 
+import Kanji from '../../assets/imageJAPANESE/Kanji.png';
+import Verb from '../../assets/imageJAPANESE/Verb.png';
+
 export default function ListJapanese() {
 
     const ListJapanese = [
-        { name: 'Kanji', src: '', link: '/japanese/kanji' },
-        { name: 'Verb', src: '', link: '/japanese/verb' },
+        { name: 'Kanji', src: Kanji, link: '/japanese/kanji' },
+        { name: 'Verb', src: Verb, link: '/japanese/verb' },
     ];
 
     return (
@@ -31,7 +34,7 @@ export default function ListJapanese() {
                     ))}
                 </Row>
             </div>
-            <hr/>
+            <hr />
             <Outlet />
         </div>
     )
