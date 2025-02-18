@@ -23,16 +23,16 @@ body {
         display: flex;
         justify-content: center;
 
-        .image-row {
+        .japanese-row {
             width: 100%;
             max-width: 1500px;
 
-            .image-col {
+            .japanese-col {
                 display: flex;
                 justify-content: center;
                 align-items: start;
 
-                .kanji-card {
+                .grid-card {
                     width: 210px;
                     margin: 0 0 20px;
                     background-color: #ffecee;
@@ -52,13 +52,22 @@ body {
                             font-size: 144px;
                         }
 
+                        h3 {
+                            margin: 8px 0;
+                        }
+
                         p {
                             margin: 0;
                         }
                     }
                 }
 
-                .kanji-card:hover {
+                .verb-card {
+                    width: 250px;
+                }
+
+
+                .grid-card:hover {
                     transform: translateY(-10px);
                     box-shadow: 0px 5px 10px #f99dbc80;
                 }

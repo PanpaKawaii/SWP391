@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+}
+
+.listjapanese-container {
+    width: 100%;
+    min-height: 80vh;
+    margin: 30px 0 100px;
+    text-align: center;
+    font-family: 'Quicksand', Arial, sans-serif;
+
+    h1 {
+        margin: 0 0 20px;
+        color: #d97720;
+        font-size: 54px;
+    }
+
+    .listjapanese {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+
+        .image-row {
+            width: 100%;
+            max-width: 1500px;
+
+            .image-col {
+                display: flex;
+                justify-content: center;
+                align-items: start;
+
+                a {
+                    color: black;
+                    text-decoration: none;
+
+                    .image-card {
+                        width: 200px;
+                        margin: 0 0 20px;
+                        background-color: #ffffff;
+                        border: none;
+                        border-radius: 20px;
+                        overflow: hidden;
+                        align-items: center;
+                        text-align: center;
+                        transition: all 0.3s ease;
+
+                        .card-body {
+                            padding: 0;
+
+                            img {
+                                width: 200px;
+                                height: 200px;
+                                border: 2px solid #fdbc7f;
+                                border-radius: 20px;
+                                object-fit: cover;
+                                object-position: center;
+                                display: block;
+                            }
+
+                            h4 {
+                                margin: 8px 0;
+                            }
+                        }
+                    }
+
+                    .image-card:hover {
+                        transform: translateY(-10px);
+                    }
+                }
+            }
+        }
+    }
+}

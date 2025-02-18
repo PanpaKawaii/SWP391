@@ -1,8 +1,7 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Drawer, IconButton, List, ListItem, ListItemText, Toolbar, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
 import './GuestHeader.css';
 
 export default function GuestHeader() {
@@ -67,6 +66,7 @@ export default function GuestHeader() {
 
                 </List>
             </Drawer>
+            <Outlet />
         </div>
     );
 }

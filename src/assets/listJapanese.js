@@ -46,6 +46,8 @@ export const Kanji = [
     { Id: '北', SinoVietnamese: 'BẮC', On: 'ホク、ホッ、ボク', Kun: 'きた' },
     { Id: '口', SinoVietnamese: 'KHẨU', On: 'コウ、ク', Kun: 'くち、ぐち' },
 
+    { Id: 'X', SinoVietnamese: 'X', On: 'X', Kun: 'X' },
+
     { Id: '朝', SinoVietnamese: 'SÁNG', On: 'チョウ', Kun: 'あさ' },
     { Id: '昼', SinoVietnamese: 'TRÚ', On: 'チュウ', Kun: 'ひる' },
     { Id: '夜', SinoVietnamese: 'DẠ', On: 'ヤ', Kun: 'よる' },
@@ -64,9 +66,9 @@ export const Kanji = [
     { Id: '着', SinoVietnamese: 'TRƯỚC', On: 'チャク', Kun: 'き' },
     { Id: '間', SinoVietnamese: 'GIAN', On: 'カン', Kun: 'あいだ' },
     { Id: '語', SinoVietnamese: 'NGỮ', On: 'ゴ', Kun: 'かた' },
-    
-    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
-    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: '父', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+    { Id: '母', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
+
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
@@ -89,7 +91,8 @@ export const KanjiExample = [
     { Word: '金曜日', Hiragana: 'きんようび', Meaning: 'Thứ 6' },
     { Word: '土曜日', Hiragana: 'どようび', Meaning: 'Thứ 7' },
     { Word: '日曜日', Hiragana: 'にちようび', Meaning: 'Chủ Nhật' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+
 
     { Word: '魚', Hiragana: 'さかな', Meaning: 'Con cá' },
     { Word: '人魚', Hiragana: 'にんぎょ', Meaning: 'Người cá' },
@@ -101,7 +104,6 @@ export const KanjiExample = [
 
     { Word: '卵', Hiragana: 'たまご', Meaning: 'Quả trứng' },
     { Word: '卵焼き', Hiragana: 'たまごやき', Meaning: 'Trứng rán' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 
 
 
@@ -133,7 +135,8 @@ export const KanjiExample = [
     { Word: '日曜日', Hiragana: 'にちようび', Meaning: 'Chủ Nhật' },
     { Word: '土日', Hiragana: 'どにち', Meaning: 'Cuối tuần' },
     { Word: '今日', Hiragana: 'きょう', Meaning: 'Hôm nay' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+
 
     { Word: '大きい', Hiragana: 'おおきい', Meaning: 'To, lớn' },
     { Word: '大学', Hiragana: 'だいがく', Meaning: 'Đại học' },
@@ -178,7 +181,8 @@ export const KanjiExample = [
     { Word: '四時半', Hiragana: 'よじはん', Meaning: '4 giờ rưỡi' },
     { Word: '半分', Hiragana: 'はんぶん', Meaning: '1 nửa' },
     { Word: '半年', Hiragana: 'はんとし', Meaning: 'Nửa năm' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+
 
     { Word: '言う', Hiragana: 'いう', Meaning: 'Nói' },
     { Word: '言葉', Hiragana: 'ことば', Meaning: 'Từ ngữ' },
@@ -216,24 +220,85 @@ export const KanjiExample = [
 
 
 
-    { Word: '時間', Hiragana: 'じかん', Meaning: 'Thời gian' },
-    { Word: '時計', Hiragana: 'とけい', Meaning: 'Đồng hồ' },
-    { Word: '分かります', Hiragana: 'わかります', Meaning: 'Hiểu, biết' },
-    { Word: '分けます', Hiragana: 'わけます', Meaning: 'Chia, phân chia' },
-    { Word: '五分', Hiragana: 'ごふん', Meaning: '5 phút' },
-    { Word: '十分', Hiragana: 'じっぷん、じゅっぷん', Meaning: '10 phút' },
-    { Word: '十分', Hiragana: 'じゅうぶん', Meaning: 'Đủ rồi' },
-    { Word: '自分', Hiragana: 'じぶん', Meaning: 'Tự mình' },
+    { Word: '一', Hiragana: 'いち', Meaning: 'Số 1' },
+    { Word: '一日', Hiragana: 'ついたち', Meaning: 'Mùng 1' },
+    { Word: '一つ', Hiragana: 'ひとつ', Meaning: '1 cái' },
+    { Word: '一人', Hiragana: 'ひとり', Meaning: '1 người' },
+    { Word: '一日中', Hiragana: 'いちにちじゅう', Meaning: 'Trong 1 ngày' },
     { Word: '一月半ば', Hiragana: 'いちがつなかば', Meaning: 'Giữa tháng 1' },
-    { Word: '四時半', Hiragana: 'よじはん', Meaning: '4 giờ rưỡi' },
-    { Word: '半分', Hiragana: 'はんぶん', Meaning: '1 nửa' },
+
+    { Word: '二', Hiragana: 'に', Meaning: 'Số 2' },
+    { Word: '二日', Hiragana: 'ふつか', Meaning: 'Mùng 2' },
+    { Word: '二つ', Hiragana: 'ふたつ', Meaning: '2 cái' },
+    { Word: '二人', Hiragana: 'ふたり', Meaning: '2 người' },
+
+    { Word: '三', Hiragana: 'さん', Meaning: 'Số 3' },
+    { Word: '三日', Hiragana: 'みっか', Meaning: 'Mùng 3' },
+    { Word: '三つ', Hiragana: 'みっつ', Meaning: '3 cái' },
+    { Word: '三人', Hiragana: 'さんにん', Meaning: '3 người' },
+
+    { Word: '四', Hiragana: 'よん・し', Meaning: 'Số 4' },
+    { Word: '四日', Hiragana: 'よっか', Meaning: 'Mùng 4' },
+    { Word: '四つ', Hiragana: 'よっつ', Meaning: '4 cái' },
+    { Word: '四人', Hiragana: 'よにん', Meaning: '4 người' },
+    { Word: '四季', Hiragana: 'しき', Meaning: '4 mùa' },
+
+    { Word: '五', Hiragana: 'ご', Meaning: 'Số 5' },
+    { Word: '五日', Hiragana: 'いつか', Meaning: 'Mùng 5' },
+    { Word: '五つ', Hiragana: 'いつつ', Meaning: '5 cái' },
+    { Word: '五人', Hiragana: 'ごにん', Meaning: '5 người' },
+
+    { Word: '六', Hiragana: 'ろく', Meaning: 'Số 6' },
+    { Word: '六日', Hiragana: 'むいか', Meaning: 'Mùng 6' },
+    { Word: '六つ', Hiragana: 'むっつ', Meaning: '6 cái' },
+    { Word: '六人', Hiragana: 'ろくにん', Meaning: '6 người' },
+
+    { Word: '七', Hiragana: 'なな・しち', Meaning: 'Số 7' },
+    { Word: '七日', Hiragana: 'なのか', Meaning: 'Mùng 7' },
+    { Word: '七つ', Hiragana: 'ななつ', Meaning: '7 cái' },
+    { Word: '七人', Hiragana: 'ななにん', Meaning: '7 người' },
+
+    { Word: '八', Hiragana: 'はち', Meaning: 'Số 8' },
+    { Word: '八日', Hiragana: 'ようか', Meaning: 'Mùng 8' },
+    { Word: '八つ', Hiragana: 'やっつ', Meaning: '8 cái' },
+    { Word: '八人', Hiragana: 'はちにん', Meaning: '8 người' },
+
+    { Word: '九', Hiragana: 'きゅう・く', Meaning: 'Số 9' },
+    { Word: '九日', Hiragana: 'ここのか', Meaning: 'Mùng 9' },
+    { Word: '九つ', Hiragana: 'ここのつ', Meaning: '9 cái' },
+    { Word: '九人', Hiragana: 'きゅうにん', Meaning: '9 người' },
+
+    { Word: '十', Hiragana: 'じゅう', Meaning: 'Số 10' },
+    { Word: '十日', Hiragana: 'とおか', Meaning: 'Mùng 10' },
+    { Word: '十つ', Hiragana: '。。。', Meaning: '10 cái' },
+    { Word: '十人', Hiragana: '。。。', Meaning: '10 người' },
+    { Word: '十分', Hiragana: 'じゅうぶん', Meaning: 'Đầy đủ' },
+
+    { Word: '今年', Hiragana: 'ことし', Meaning: 'Năm nay' },
     { Word: '半年', Hiragana: 'はんとし', Meaning: 'Nửa năm' },
+    { Word: '一年', Hiragana: 'いちねん', Meaning: '1 năm' },
+
+
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+
+
+
 
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 ];
 
-export const JapaneseVerb = [
-    { Verb: 'ああああああああああああああああ', Group: 'I', Meaning: 'ああああああああああああああ' },
+export const Verb = [
+    { Verb: 'NoVerb', Group: 'I', Meaning: 'NoVerb' },
 
     //「い」ます
     { Verb: 'いきます', Group: 'I', Meaning: 'Đi' },
@@ -282,4 +347,47 @@ export const JapaneseVerb = [
     { Verb: 'せんたくします', Group: 'III', Meaning: 'Giặt' },
     { Verb: 'そうじします', Group: 'III', Meaning: 'Làm việc nhà' },
     { Verb: 'コピーします', Group: 'III', Meaning: 'Sao chép' },
-]
+];
+
+export const Family = [
+    { Word: 'NoKanjiExample', Hiragana: 'そふ', Meaning: 'Ông' },
+    { Word: 'NoKanjiExample', Hiragana: 'そぼ', Meaning: 'Bà' },
+    { Word: 'NoKanjiExample', Hiragana: 'ちち', Meaning: 'Bố' },
+    { Word: 'NoKanjiExample', Hiragana: 'はは', Meaning: 'Mẹ' },
+    { Word: 'NoKanjiExample', Hiragana: 'おば', Meaning: 'Cô' },
+    { Word: 'NoKanjiExample', Hiragana: 'おじ', Meaning: 'Chú' },
+    { Word: 'NoKanjiExample', Hiragana: 'あに', Meaning: 'Anh trai' },
+    { Word: 'NoKanjiExample', Hiragana: 'あね', Meaning: 'Chị gái' },
+    { Word: 'NoKanjiExample', Hiragana: 'おとうと', Meaning: 'Em trai' },
+    { Word: 'NoKanjiExample', Hiragana: 'いもうと', Meaning: 'Em gái' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'おじいさん', Meaning: 'Ông người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'おばあさん', Meaning: 'Bà người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'おとうさん', Meaning: 'Bố người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'おかあさん', Meaning: 'Mẹ người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'おばさん', Meaning: 'Cô người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'おじさん', Meaning: 'Chú người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'おにいさん', Meaning: 'Anh trai người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'おねえさん', Meaning: 'Chị gái người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'おとうとさん', Meaning: 'Em trai người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'いもうとさん', Meaning: 'Em gái người khác' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'おっと', Meaning: 'Chồng' },
+    { Word: 'NoKanjiExample', Hiragana: 'つま', Meaning: 'Vợ' },
+    { Word: 'NoKanjiExample', Hiragana: 'むすこ', Meaning: 'Con trai' },
+    { Word: 'NoKanjiExample', Hiragana: 'むすめ', Meaning: 'Con gái' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'ごしゅじん', Meaning: 'Chồng người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'おくさん', Meaning: 'Vợ người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'むすこさん', Meaning: 'Con trai người khác' },
+    { Word: 'NoKanjiExample', Hiragana: 'むすめさん', Meaning: 'Con gái người khác' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'kodomo', Meaning: 'Con nít' },
+    { Word: 'NoKanjiExample', Hiragana: 'okosan', Meaning: 'Con người khác' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+];

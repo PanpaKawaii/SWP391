@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'materialize-css/dist/css/materialize.min.css';
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Outlet } from 'react-router-dom'
 import ScrollToTop from './ScrollToTopComponent/ScrollToTop';
 
 // Guest
@@ -21,6 +21,7 @@ import BookingStoreDetailContent from './UserComponent/Booking/BookingStoreDetai
 import BookingPodContent from './UserComponent/Booking/BookingPodContent'
 import BookingPodDetailContent from './UserComponent/Booking/BookingPodDetailContent'
 import ContactContent from './UserComponent/Contact/ContactContent'
+
 import ListGame from './UserComponent/Game/ListGame'
 import Minesweeper from './UserComponent/Game/Minesweeper'
 import WhatIsThePassword from './UserComponent/Game/WhatIsThePassword'
@@ -31,7 +32,10 @@ import GenerateMaze from './UserComponent/Game/GenerateMaze'
 import TypePi from './UserComponent/Game/TypePi'
 import ToDoList from './UserComponent/Game/ToDoList'
 import TestApp from './UserComponent/Game/TestApp'
-import Japanese from './UserComponent/Japanese/Japanese'
+
+import ListJapanese from './UserComponent/Japanese/ListJapanese.jsx'
+import JapaneseKanji from './UserComponent/Japanese/JapaneseKanji.jsx'
+
 import UserInformation from './UserComponent/UserControlContent/UserInformation'
 import UserBooking from './UserComponent/UserControlContent/UserBooking'
 import UserBookingDetail from './UserComponent/UserControlContent/UserBookingDetail'
@@ -103,7 +107,7 @@ function App() {
               <Route path='/booking/pod/:Id' element={<BookingPodDetailContent />} />
 
               <Route path='/contact' element={<ContactContent />} />
-              
+
               <Route path='/game' element={<ListGame />} />
               <Route path='/game/minesweeper' element={<Minesweeper />} />
               <Route path='/game/whatisthepassword' element={<WhatIsThePassword />} />
@@ -115,13 +119,53 @@ function App() {
               <Route path='/game/todolist' element={<ToDoList />} />
               <Route path='/game/testapp' element={<TestApp />} />
 
-              <Route path='/japanese' element={<Japanese />} />
+              <Route path='/japanese' element={<ListJapanese />} />
+              <Route path='/japanese/kanji' element={<JapaneseKanji />} />
+              <Route path='/japanese/kanji/search' element={<JapaneseKanji />} />
+              {/* <Route path='/japanese/verb' element={<JapaneseKanji />} />
+              <Route path='/japanese/verb/search' element={<JapaneseKanji />} /> */}
 
               <Route path='/signinsignup' element={<SignInSignUp />} />
             </Routes>
-            <Footer />
           </div>
+          <Footer />
         </div>
+
+        {/* <div>
+          <div>
+            <Routes>
+              <Route path='/' element={<GuestHeader />} >
+                <Route index element={<HomeContent />} />
+                <Route path='about' element={<AboutContent />} />
+
+                <Route path='/booking/store' element={<BookingStoreContent />} />
+                <Route path='/booking/store/:Id' element={<BookingStoreDetailContent />} />
+                <Route path='/booking/pod' element={<BookingPodContent />} />
+                <Route path='/booking/pod/:Id' element={<BookingPodDetailContent />} />
+
+                <Route path='contact' element={<ContactContent />} />
+
+                <Route path='game' element={<ListGame />}>
+                  <Route path='minesweeper' element={<Minesweeper />} />
+                  <Route path='whatisthepassword' element={<WhatIsThePassword />} />
+                  <Route path='caro' element={<Caro />} />
+                  <Route path='tetris' element={<Tetris />} />
+                  <Route path='solvethemaze' element={<SolveTheMaze />} />
+                  <Route path='generatemaze' element={<GenerateMaze />} />
+                  <Route path='typepi' element={<TypePi />} />
+                  <Route path='todolist' element={<ToDoList />} />
+                  <Route path='testapp' element={<TestApp />} />
+                </Route>
+
+                <Route path='japanese' element={<Japanese />} />
+                <Route path='japanese/search' element={<Japanese />} />
+
+                <Route path='signinsignup' element={<SignInSignUp />} />
+              </Route>
+            </Routes>
+          </div>
+          <Footer />
+        </div> */}
       </>
     );
   }

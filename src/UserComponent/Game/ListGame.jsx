@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import './ListGame.css';
 
 import CaroSRC from '../../assets/imageGAMEs/Caro.png';
@@ -21,14 +21,6 @@ export default function ListGame() {
         { name: 'Type Pi', src: '', link: '/game/typepi' },
         { name: 'To Do List', src: ToDoListSRC, link: '/game/todolist' },
         { name: 'Test App', src: '', link: '/game/testapp' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
@@ -53,6 +45,7 @@ export default function ListGame() {
                     ))}
                 </Row>
             </div>
+            <Outlet />
         </div>
     )
 }
