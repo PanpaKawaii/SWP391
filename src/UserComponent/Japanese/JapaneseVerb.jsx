@@ -13,7 +13,8 @@ export default function JapaneseVerb() {
     const [searchQueryVerb, setSearchQueryVerb] = useState(query);
 
     let filteredVerb = Verb.filter((verb) =>
-        verb.Verb.toLowerCase().includes(searchQueryVerb.toLowerCase())
+        // verb.Verb.toLowerCase().includes(searchQueryVerb.toLowerCase())
+        Object.values(verb).some(value => value.toLowerCase().includes(searchQueryVerb.toLowerCase()))
     );
     if (Group) {
         filteredVerb = filteredVerb.filter((verb) => verb.Group === Group);
@@ -26,6 +27,7 @@ export default function JapaneseVerb() {
     const clearInput = () => {
         setSearchQueryVerb('');
         setSearchParams({ q: '', Group: '' });
+        document.getElementById('searchverb').focus();
     }
 
     return (
@@ -35,8 +37,6 @@ export default function JapaneseVerb() {
             </div>
 
             <div className='p-5 max-w-md mx-auto'>
-                <h2 className='text-xl font-bold mb-3'>🔍 Search Verb</h2>
-
                 <Form>
                     <Form.Group controlId='searchverb' className='form-group'>
                         <Form.Control
