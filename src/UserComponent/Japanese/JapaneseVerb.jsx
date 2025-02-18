@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Form } from 'react-bootstrap';
+import { Col, Row, Form, Button } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import './JapaneseVerb.css';
 
@@ -8,8 +8,8 @@ import { Verb } from '../../assets/listJapanese';
 export default function JapaneseVerb() {
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const query = searchParams.get("q") || "";
-    const Group = searchParams.get("Group") || "";
+    const query = searchParams.get('q') || '';
+    const Group = searchParams.get('Group') || '';
     const [searchQueryVerb, setSearchQueryVerb] = useState(query);
 
     let filteredVerb = Verb.filter((verb) =>
@@ -23,37 +23,46 @@ export default function JapaneseVerb() {
         setSearchParams({ q: searchQueryVerb, Group });
     }, [searchQueryVerb, Group, setSearchParams]);
 
+    const clearInput = () => {
+        setSearchQueryVerb('');
+        setSearchParams({ q: '', Group: '' });
+    }
+
     return (
         <div className='japanese-verb-container'>
             <div className='japanese-verb-header'>
                 <h2><b>Japanese Verb</b></h2>
             </div>
 
-            <div className="p-5 max-w-md mx-auto">
-                <h2 className="text-xl font-bold mb-3">🔍 Search Verb</h2>
+            <div className='p-5 max-w-md mx-auto'>
+                <h2 className='text-xl font-bold mb-3'>🔍 Search Verb</h2>
 
-                <Form.Group controlId='searchverb' className='form-group'>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter Verb..."
-                        className="w-full p-2 border rounded-md"
-                        value={searchQueryVerb}
-                        onChange={(e) => setSearchQueryVerb(e.target.value)}
-                    />
-                </Form.Group>
+                <Form>
+                    <Form.Group controlId='searchverb' className='form-group'>
+                        <Form.Control
+                            type='text'
+                            placeholder='Enter Verb...'
+                            // className='w-full p-2 border rounded-md'
+                            value={searchQueryVerb}
+                            onChange={(e) => setSearchQueryVerb(e.target.value)}
+                        />
+                    </Form.Group>
 
-                <Form.Group controlId='group' className='form-group'>
-                    <Form.Control
-                        as='select'
-                        value={Group}
-                        onChange={(e) => setSearchParams({ q: searchQueryVerb, Group: e.target.value })}
-                    >
-                        <option value=''>Select Group</option>
-                        <option value='I'>Group I</option>
-                        <option value='II'>Group II</option>
-                        <option value='III'>Group III</option>
-                    </Form.Control>
-                </Form.Group>
+                    <Form.Group controlId='groupverb' className='form-group'>
+                        <Form.Control
+                            as='select'
+                            value={Group}
+                            onChange={(e) => setSearchParams({ q: searchQueryVerb, Group: e.target.value })}
+                        >
+                            <option value=''>Select Group</option>
+                            <option value='I'>Group I</option>
+                            <option value='II'>Group II</option>
+                            <option value='III'>Group III</option>
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Button type='reset' className='btn btn-reset' onClick={clearInput}>CLEAR</Button>
+                </Form>
             </div>
 
             <div className='japanese-content'>
@@ -69,7 +78,7 @@ export default function JapaneseVerb() {
                                         (verb.Group === 'II' ?
                                             '#f99dbc'
                                             :
-                                            '#f5347f'
+                                            '#f86aa1'
                                         )
                                 }}
                             >

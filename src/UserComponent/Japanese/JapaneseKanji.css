@@ -17,6 +17,34 @@ body {
         }
     }
 
+    form {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(249, 157, 188, 0.314);
+            border-color: #f99dbc;
+        }
+
+        .form-group {
+            margin: 0 10px 0 0;
+            width: 40%;
+            min-width: 200px;
+            max-width: 400px;
+        }
+
+        .btn {
+            background-color: #f99dbc;
+            font-weight: bold;
+            border: none;
+        }
+
+        .btn:active {
+            background-color: #fd73a7;
+        }
+    }
+
     .japanese-content {
         width: 100%;
         height: fit-content;
@@ -35,6 +63,7 @@ body {
                 .grid-card {
                     width: 210px;
                     margin: 0 0 20px;
+                    padding: 0 0 5px;
                     background-color: #fdd9e5;
                     border: 2px solid #f99dbc;
                     border-radius: 20px;

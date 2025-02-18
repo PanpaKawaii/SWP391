@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Form } from 'react-bootstrap';
+import { Col, Row, Form, Button } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import './JapaneseKanji.css';
 
@@ -8,7 +8,7 @@ import { Kanji, KanjiExample } from '../../assets/listJapanese';
 export default function JapaneseKanji() {
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const query = searchParams.get("q") || "";
+    const query = searchParams.get('q') || '';
     const [searchQueryKanji, setSearchQueryKanji] = useState(query);
 
     const filteredKanji = Kanji.filter((kanji) =>
@@ -19,24 +19,32 @@ export default function JapaneseKanji() {
         setSearchParams({ q: searchQueryKanji });
     }, [searchQueryKanji, setSearchParams]);
 
+    const clearInput = () => {
+        setSearchQueryKanji('');
+    }
+
     return (
         <div className='japanese-kanji-container'>
             <div className='japanese-kanji-header'>
                 <h2><b>Japanese Kanji</b></h2>
             </div>
 
-            <div className="p-5 max-w-md mx-auto">
-                <h2 className="text-xl font-bold mb-3">🔍 Search Kanji</h2>
+            <div className='p-5 max-w-md mx-auto'>
+                <h2 className='text-xl font-bold mb-3'>🔍 Search Kanji</h2>
 
-                <Form.Group controlId='searchkanji' className='form-group'>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter Kanji..."
-                        className="w-full p-2 border rounded-md"
-                        value={searchQueryKanji}
-                        onChange={(e) => setSearchQueryKanji(e.target.value)}
-                    />
-                </Form.Group>
+                <Form>
+                    <Form.Group controlId='searchkanji' className='form-group'>
+                        <Form.Control
+                            type='text'
+                            placeholder='Enter Kanji...'
+                            // className='w-full p-2 border rounded-md'
+                            value={searchQueryKanji}
+                            onChange={(e) => setSearchQueryKanji(e.target.value)}
+                        />
+                    </Form.Group>
+
+                    <Button type='reset' className='btn btn-reset' onClick={clearInput}>CLEAR</Button>
+                </Form>
             </div>
 
             <div className='japanese-content'>
