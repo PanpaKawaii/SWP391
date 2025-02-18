@@ -2,17 +2,17 @@ body {
     margin: 0;
 }
 
-.japanese-container {
+.japanese-verb-container {
     width: 100%;
     min-height: 80vh;
     margin: 30px 0 100px;
     text-align: center;
     font-family: 'Quicksand', Arial, sans-serif;
 
-    .header {
-        h1 {
+    .japanese-verb-header {
+        h2 {
             margin: 0 0 20px;
-            color: #f50057;
+            color: #fd73a7;
             font-size: 54px;
         }
     }
@@ -35,8 +35,8 @@ body {
                 .grid-card {
                     width: 250px;
                     margin: 0 0 20px;
-                    background-color: #ffecee;
-                    border: 2px solid #f99dbc;
+                    background-color: #ffeeee;
+                    border: 2px solid #c00050;
                     border-radius: 20px;
                     overflow: hidden;
                     align-items: center;

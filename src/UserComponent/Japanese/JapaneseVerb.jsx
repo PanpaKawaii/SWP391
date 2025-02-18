@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row, Form } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
-import './JapaneseKanji.css';
+import './JapaneseVerb.css';
 
 import { Verb } from '../../assets/listJapanese';
 
-export default function JapaneseKanji() {
+export default function JapaneseVerb() {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get("q") || "";
@@ -24,9 +24,9 @@ export default function JapaneseKanji() {
     }, [searchQueryVerb, Group, setSearchParams]);
 
     return (
-        <div className='japanese-container'>
-            <div className='header'>
-                <h1><b>Japanese</b></h1>
+        <div className='japanese-verb-container'>
+            <div className='japanese-verb-header'>
+                <h2><b>Japanese Verb</b></h2>
             </div>
 
             <div className="p-5 max-w-md mx-auto">
@@ -60,7 +60,19 @@ export default function JapaneseKanji() {
                 <Row className='japanese-row'>
                     {filteredVerb.filter(verb => verb.Verb !== 'NoVerb').map((verb, index) => (
                         <Col key={index} sm={6} md={6} lg={4} xl={3} xxl={3} className='japanese-col'>
-                            <div className='grid-card verb-card'>
+                            <div
+                                className='grid-card verb-card'
+                                style={{
+                                    backgroundColor: verb.Group === 'I' ?
+                                        '#fdd9e5'
+                                        :
+                                        (verb.Group === 'II' ?
+                                            '#f99dbc'
+                                            :
+                                            '#f5347f'
+                                        )
+                                }}
+                            >
                                 <div className='card-body'>
                                     <h3><b>{verb.Verb}</b></h3>
                                     <p>Group: {verb.Group}</p>

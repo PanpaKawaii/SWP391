@@ -12,8 +12,8 @@ body {
     .listjapanese-header {
         h1 {
             margin: 0 0 20px;
-            color: #d97720;
-            font-size: 54px;
+            color: #fe036a;
+            font-size: 72px;
         }
     }
 
@@ -53,7 +53,7 @@ body {
                             img {
                                 width: 200px;
                                 height: 200px;
-                                border: 2px solid #fdbc7f;
+                                border: 2px solid #f99dbc;
                                 border-radius: 20px;
                                 object-fit: cover;
                                 object-position: center;

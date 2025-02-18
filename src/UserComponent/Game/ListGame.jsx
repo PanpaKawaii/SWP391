@@ -47,6 +47,7 @@ export default function ListGame() {
                     ))}
                 </Row>
             </div>
+            <hr/>
             <Outlet />
         </div>
     )

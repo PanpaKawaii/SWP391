@@ -20,9 +20,9 @@ export default function JapaneseKanji() {
     }, [searchQueryKanji, setSearchParams]);
 
     return (
-        <div className='japanese-container'>
-            <div className='header'>
-                <h1><b>Japanese</b></h1>
+        <div className='japanese-kanji-container'>
+            <div className='japanese-kanji-header'>
+                <h2><b>Japanese Kanji</b></h2>
             </div>
 
             <div className="p-5 max-w-md mx-auto">

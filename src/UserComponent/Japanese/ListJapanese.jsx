@@ -8,7 +8,6 @@ export default function ListJapanese() {
     const ListJapanese = [
         { name: 'Kanji', src: '', link: '/japanese/kanji' },
         { name: 'Verb', src: '', link: '/japanese/verb' },
-        { name: 'Name Japanese', src: '', link: '/japanese/aaaaaaaaaaaaaaaaaaaa' },
     ];
 
     return (
@@ -32,6 +31,7 @@ export default function ListJapanese() {
                     ))}
                 </Row>
             </div>
+            <hr/>
             <Outlet />
         </div>
     )
