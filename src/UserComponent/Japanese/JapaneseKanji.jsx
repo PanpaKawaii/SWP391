@@ -1,39 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Row, Table } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Col, Row, Form } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import './JapaneseKanji.css';
 
-import { Kanji, KanjiExample, Verb } from '../../assets/listJapanese';
+import { Kanji, KanjiExample } from '../../assets/listJapanese';
 
 export default function JapaneseKanji() {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get("q") || "";
-    const Group = searchParams.get("Group") || "";
     const [searchQueryKanji, setSearchQueryKanji] = useState(query);
-    const [searchQueryVerb, setSearchQueryVerb] = useState(query);
 
     const filteredKanji = Kanji.filter((kanji) =>
         kanji.Id.toLowerCase().includes(searchQueryKanji.toLowerCase())
     );
 
-    let filteredVerb = Verb.filter((verb) =>
-        verb.Verb.toLowerCase().includes(searchQueryVerb.toLowerCase())
-    );
-    if (Group) {
-        filteredVerb = filteredVerb.filter((verb) => verb.Group === Group);
-    }
-
     useEffect(() => {
         setSearchParams({ q: searchQueryKanji });
     }, [searchQueryKanji, setSearchParams]);
-
-    useEffect(() => {
-        setSearchParams({ q: searchQueryVerb, Group });
-    }, [searchQueryVerb, Group, setSearchQueryVerb]);
-
-    console.log('Re-render');
-
 
     return (
         <div className='japanese-container'>
@@ -43,13 +27,16 @@ export default function JapaneseKanji() {
 
             <div className="p-5 max-w-md mx-auto">
                 <h2 className="text-xl font-bold mb-3">🔍 Search Kanji</h2>
-                <input
-                    type="text"
-                    placeholder="Enter Kanji..."
-                    className="w-full p-2 border rounded-md"
-                    value={searchQueryKanji}
-                    onChange={(e) => setSearchQueryKanji(e.target.value)}
-                />
+
+                <Form.Group controlId='searchkanji' className='form-group'>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter Kanji..."
+                        className="w-full p-2 border rounded-md"
+                        value={searchQueryKanji}
+                        onChange={(e) => setSearchQueryKanji(e.target.value)}
+                    />
+                </Form.Group>
             </div>
 
             <div className='japanese-content'>
@@ -62,33 +49,6 @@ export default function JapaneseKanji() {
                                     <p>{kanji.SinoVietnamese}</p>
                                     <p>On: {kanji.On}</p>
                                     <p>Kun: {kanji.Kun}</p>
-                                </div>
-                            </div>
-                        </Col>
-                    ))}
-                </Row>
-            </div>
-
-            <div className="p-5 max-w-md mx-auto">
-                <h2 className="text-xl font-bold mb-3">🔍 Search Verb</h2>
-                <input
-                    type="text"
-                    placeholder="Enter Verb..."
-                    className="w-full p-2 border rounded-md"
-                    value={searchQueryVerb}
-                    onChange={(e) => setSearchQueryVerb(e.target.value)}
-                />
-            </div>
-
-            <div className='japanese-content'>
-                <Row className='japanese-row'>
-                    {filteredVerb.filter(verb => verb.Verb !== 'NoVerb').map((verb, index) => (
-                        <Col key={index} sm={6} md={6} lg={4} xl={3} xxl={3} className='japanese-col'>
-                            <div className='grid-card verb-card'>
-                                <div className='card-body'>
-                                    <h3><b>{verb.Verb}</b></h3>
-                                    <p>Group: {verb.Group}</p>
-                                    <p>Meaning: {verb.Meaning}</p>
                                 </div>
                             </div>
                         </Col>

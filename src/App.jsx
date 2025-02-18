@@ -35,6 +35,7 @@ import TestApp from './UserComponent/Game/TestApp'
 
 import ListJapanese from './UserComponent/Japanese/ListJapanese.jsx'
 import JapaneseKanji from './UserComponent/Japanese/JapaneseKanji.jsx'
+import JapaneseVerb from './UserComponent/Japanese/JapaneseVerb.jsx'
 
 import UserInformation from './UserComponent/UserControlContent/UserInformation'
 import UserBooking from './UserComponent/UserControlContent/UserBooking'
@@ -94,7 +95,7 @@ function App() {
     return (
       <>
         <ScrollToTop />
-        <div>
+        {/* <div>
           <GuestHeader />
           <div>
             <Routes>
@@ -122,16 +123,16 @@ function App() {
               <Route path='/japanese' element={<ListJapanese />} />
               <Route path='/japanese/kanji' element={<JapaneseKanji />} />
               <Route path='/japanese/kanji/search' element={<JapaneseKanji />} />
-              {/* <Route path='/japanese/verb' element={<JapaneseKanji />} />
-              <Route path='/japanese/verb/search' element={<JapaneseKanji />} /> */}
+              <Route path='/japanese/verb' element={<JapaneseVerb />} />
+              <Route path='/japanese/verb/search' element={<JapaneseVerb />} />
 
               <Route path='/signinsignup' element={<SignInSignUp />} />
             </Routes>
           </div>
           <Footer />
-        </div>
+        </div> */}
 
-        {/* <div>
+        <div>
           <div>
             <Routes>
               <Route path='/' element={<GuestHeader />} >
@@ -157,15 +158,24 @@ function App() {
                   <Route path='testapp' element={<TestApp />} />
                 </Route>
 
-                <Route path='japanese' element={<Japanese />} />
-                <Route path='japanese/search' element={<Japanese />} />
+                {/* <Route path='japanese' element={<Japanese />} />
+                <Route path='japanese/search' element={<Japanese />} /> */}
+
+
+
+                <Route path='japanese' element={<ListJapanese />} >
+                  <Route path='kanji' element={<JapaneseKanji />} />
+                  <Route path='kanji/search' element={<JapaneseKanji />} />
+                  <Route path='verb' element={<JapaneseVerb />} />
+                  <Route path='verb/search' element={<JapaneseVerb />} />
+                </Route>
 
                 <Route path='signinsignup' element={<SignInSignUp />} />
               </Route>
             </Routes>
           </div>
           <Footer />
-        </div> */}
+        </div>
       </>
     );
   }

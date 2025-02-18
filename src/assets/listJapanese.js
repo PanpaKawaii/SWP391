@@ -306,7 +306,6 @@ export const Verb = [
     { Verb: 'のみます', Group: 'I', Meaning: 'Uống' },
     { Verb: 'とります', Group: 'I', Meaning: 'Lấy' },
     { Verb: 'かいます', Group: 'I', Meaning: 'Mua' },
-    { Verb: 'あいます', Group: 'I', Meaning: 'Gặp' },
     { Verb: 'もちます', Group: 'I', Meaning: 'Cầm nắm' },
     { Verb: 'まちます', Group: 'I', Meaning: 'Chờ' },
     { Verb: 'とまります', Group: 'I', Meaning: 'Dừng lại' },

@@ -8,12 +8,14 @@ export default function ListJapanese() {
     const ListJapanese = [
         { name: 'Kanji', src: '', link: '/japanese/kanji' },
         { name: 'Verb', src: '', link: '/japanese/verb' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
+        { name: 'Name Japanese', src: '', link: '/japanese/aaaaaaaaaaaaaaaaaaaa' },
     ];
 
     return (
         <div className='listjapanese-container'>
-            <h1><b>List Japanese</b></h1>
+            <div className='listjapanese-header'>
+                <h1><b>List Japanese</b></h1>
+            </div>
             <div className='listjapanese'>
                 <Row className='image-row'>
                     {ListJapanese.map((japanese, index) => (

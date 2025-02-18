@@ -28,7 +28,9 @@ export default function ListGame() {
 
     return (
         <div className='listgame-container'>
-            <h1><b>List Game</b></h1>
+            <div className='listgame-header'>
+                <h1><b>List Game</b></h1>
+            </div>
             <div className='listgame'>
                 <Row className='image-row'>
                     {ListGame.map((game, index) => (
