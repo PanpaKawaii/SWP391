@@ -28,7 +28,7 @@ export default function JapaneseKanji() {
     return (
         <div className='japanese-kanji-container'>
             <div className='japanese-kanji-header'>
-                <h2><b>Japanese Kanji</b></h2>
+                <h2>Japanese Kanji</h2>
             </div>
 
             <div className='p-5 max-w-md mx-auto'>
@@ -61,10 +61,10 @@ export default function JapaneseKanji() {
                                         ) ? 'red' : 'black'
                                     }}
                                 >
-                                    <h1><>{kanji.Id}</></h1>
+                                    <h1 className='japanese-font'><>{kanji.Id}</></h1>
                                     <h3>{kanji.SinoVietnamese}</h3>
-                                    <p><b>On: </b>{kanji.On}</p>
-                                    <p><b>Kun: </b>{kanji.Kun}</p>
+                                    <p className='japanese-font'>On: {kanji.On}</p>
+                                    <p className='japanese-font'>Kun: {kanji.Kun}</p>
                                 </div>
                             </div>
                         </Col>

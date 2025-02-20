@@ -55,9 +55,14 @@ export const Kanji = [
     { Id: '人', SinoVietnamese: 'NHÂN', On: 'ジン、ニン', Kun: 'ひと、り、と' },
     { Id: '何', SinoVietnamese: 'HÀ', On: 'カ', Kun: 'なに、なん' },
 
+    { Id: '好', SinoVietnamese: 'HẢO', On: 'コウ', Kun: 'この、す、よ、い' },
+    { Id: '語', SinoVietnamese: 'NGỮ', On: 'ゴ', Kun: 'かた' },
+    { Id: '外', SinoVietnamese: 'NGOẠI', On: 'ガイ、ゲ', Kun: 'そと、ほか、はず、と' },
+    { Id: '国', SinoVietnamese: 'QUỐC', On: 'コク', Kun: 'くに' },
+
     { Id: '～', SinoVietnamese: 'NoKanji', On: '～', Kun: '～' },
 
-    { Id: '朝', SinoVietnamese: 'SÁNG', On: 'チョウ', Kun: 'あさ' },
+    { Id: '朝', SinoVietnamese: 'TRIỀU', On: 'チョウ', Kun: 'あさ' },
     { Id: '昼', SinoVietnamese: 'TRÚ', On: 'チュウ', Kun: 'ひる' },
     { Id: '夜', SinoVietnamese: 'DẠ', On: 'ヤ', Kun: 'よる' },
     { Id: '晩', SinoVietnamese: 'VÃN', On: 'バン', Kun: 'ばん' },
@@ -76,7 +81,6 @@ export const Kanji = [
     { Id: '間', SinoVietnamese: 'GIAN', On: 'カン', Kun: 'あいだ' },
     { Id: '語', SinoVietnamese: 'NGỮ', On: 'ゴ', Kun: 'かた' },
 
-    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
@@ -281,17 +285,18 @@ export const KanjiExample = [
 
 
 
-    { Word: '東', Hiragana: 'ひがし', Meaning: 'NoKanjiExample' },
-    { Word: '東口', Hiragana: 'ひがしぐち', Meaning: 'NoKanjiExample' },
-    { Word: '中東', Hiragana: 'ちゅうとう', Meaning: 'NoKanjiExample' },
-    { Word: '東京', Hiragana: 'とうきょう', Meaning: 'NoKanjiExample' },
-    { Word: '東洋', Hiragana: 'とうよう', Meaning: 'NoKanjiExample' },
+    { Word: '東', Hiragana: 'ひがし', Meaning: 'Phía Đông' },
+    { Word: '東口', Hiragana: 'ひがしぐち', Meaning: 'Cửa Đông' },
+    { Word: '中東', Hiragana: 'ちゅうとう', Meaning: 'Trung Đông' },
+    { Word: '東京', Hiragana: 'とうきょう', Meaning: 'Tokyo' },
+    { Word: '東洋', Hiragana: 'とうよう', Meaning: 'Đông Dương' },
 
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: '西', Hiragana: 'にし', Meaning: 'Phía Tây' },
+    { Word: '西口', Hiragana: 'にしぐち', Meaning: 'Cửa Tây' },
+    { Word: '北西', Hiragana: 'ほくせい', Meaning: 'Tây Bắc' },
+    { Word: '大西洋', Hiragana: 'たいせいよう', Meaning: 'Đại Tây Dương' },
+    { Word: '東西', Hiragana: 'とうざい', Meaning: 'Đông Tây' },
+    { Word: '関西', Hiragana: 'かんさい', Meaning: 'Vùng Kansai' },
 
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },

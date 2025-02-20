@@ -9,11 +9,16 @@ body {
     text-align: center;
     font-family: 'Quicksand', Arial, sans-serif;
 
+    .japanese-font {
+        font-family: 'Klee One', Arial, sans-serif;
+    }
+
     .japanese-kanji-header {
         h2 {
             margin: 0 0 20px;
             color: #fd73a7;
             font-size: 54px;
+            font-weight: bold;
         }
     }
 
@@ -83,6 +88,7 @@ body {
 
                         h3 {
                             margin: 8px 0;
+                            font-weight: 1000;
                         }
 
                         p {
@@ -94,7 +100,6 @@ body {
                 .verb-card {
                     width: 250px;
                 }
-
 
                 .grid-card:hover {
                     transform: translateY(-10px);

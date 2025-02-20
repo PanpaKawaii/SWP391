@@ -33,7 +33,7 @@ export default function JapaneseVerb() {
     return (
         <div className='japanese-verb-container'>
             <div className='japanese-verb-header'>
-                <h2><b>Japanese Verb</b></h2>
+                <h2>Japanese Verb</h2>
             </div>
 
             <div className='p-5 max-w-md mx-auto'>
@@ -83,7 +83,7 @@ export default function JapaneseVerb() {
                                 }}
                             >
                                 <div className='card-body'>
-                                    <h3><b>{verb.Verb}</b></h3>
+                                    <h3 className='japanese-font'>{verb.Verb}</h3>
                                     <p>Group: {verb.Group}</p>
                                     <p>Meaning: {verb.Meaning}</p>
                                 </div>
