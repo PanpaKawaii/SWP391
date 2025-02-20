@@ -40,9 +40,10 @@ export default function RandomCard() {
 
     const serveCard = async () => {
         const card = document.getElementById('poker-cards');
-        card.style.background = `url(${PokerCard}) center`;
-        card.style.backgroundSize = 'cover';
-        card.style.marginLeft = '-100px';
+        card.style.margin = '0';
+
+        const button = document.getElementById('active-button');
+        button.style.marginLeft = '500px';
 
         await sleep(500);
         setDisplayCard(true);
@@ -53,11 +54,24 @@ export default function RandomCard() {
         setChosenList([...ChosenList, NotInclude[Math.floor(Math.random() * NotInclude.length)]])
 
         const card = document.getElementById(`poker-card-${Count - 1}`);
-        // card.style.background = `url(${PokerCard}) center`;
-        // card.style.backgroundSize = 'cover';
         card.style.marginTop = '400px';
         card.style.marginLeft = `${(Count - 3) * 500}px`;
     };
+
+    // const displayName = async (index) => {
+    //     if (index + 1 === Count) return;
+
+    //     const card = document.getElementById(`poker-card-${index}`);
+    //     card.style.transition = 'all 2s ease';
+    //     card.style.transform = 'rotateY(1980deg)';
+    //     card.style.background = 'none';
+    //     card.style.backgroundColor = '#fff';
+    //     await sleep(1400);
+
+    //     const name = document.getElementById(`chosen-name-${index}`);
+    //     name.style.transform = 'rotateY(180deg)';
+    //     name.style.color = '#000';
+    // }
 
     const displayName = async (index) => {
         if (index + 1 === Count) return;
@@ -65,13 +79,10 @@ export default function RandomCard() {
         const card = document.getElementById(`poker-card-${index}`);
         card.style.transition = 'all 2s ease';
         card.style.transform = 'rotateY(1980deg)';
-        card.style.background = 'none';
-        card.style.backgroundColor = '#fff';
         await sleep(1400);
 
         const name = document.getElementById(`chosen-name-${index}`);
-        name.style.transform = 'rotateY(180deg)';
-        name.style.color = '#000';
+        name.style.display = 'block';
     }
 
     const resetCount = async () => {
@@ -92,47 +103,59 @@ export default function RandomCard() {
                 <div className='poker-card' id='poker-cards'></div>
 
                 {
-                    DisplayCard && [...Array(Count)].map((_, index) => (
-                        <div
-                            key={index}
-                            id={`poker-card-${index}`}
-                            className='poker-card'
-                            style={{ zIndex: `${5 - index}` }}
-                            onClick={() => displayName(index)}
-                        >
-                            {/* Index: {index} - Count: {Count}
-                        <br /> */}
-                            <p
-                                id={`chosen-name-${index}`}
-                            >{ChosenList[index]}</p>
-                        </div>
-                    ))
-                }
-
-                {
                     // DisplayCard && [...Array(Count)].map((_, index) => (
                     //     <div
                     //         key={index}
                     //         id={`poker-card-${index}`}
                     //         className='poker-card'
                     //         style={{ zIndex: `${5 - index}` }}
-                    //         onClick={() => displayName(index)}>
-                    //         <div class="face front">Mặt Trước</div>
+                    //         onClick={() => displayName(index)}
+                    //     >
+                    //         {/* Index: {index} - Count: {Count}
+                    //     <br /> */}
                     //         <p
                     //             id={`chosen-name-${index}`}
                     //         >{ChosenList[index]}</p>
-                    //         <div class="face back">Mặt Sau</div>
                     //     </div>
                     // ))
                 }
 
-                <div className='active-button'>
+                {
+                    DisplayCard && [...Array(Count)].map((_, index) => (
+                        <div
+                            key={index}
+                            id={`poker-card-${index}`}
+                            className='poker-card'
+                            style={{ zIndex: `${5 - index}` }}
+                            onClick={() => displayName(index)}>
+
+                            <div className='face front'>
+                                <div className='text-card'>
+                                    <p
+                                        id={`chosen-name-${index}`}>
+                                        {ChosenList[index]}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className='face back'>
+                            </div>
+
+                        </div>
+                    ))
+                }
+
+                <div id='active-button'>
                     {!DisplayCard ?
-                        <Button onClick={serveCard}>SERVE CARD</Button>
+                        <Button className='btn' onClick={serveCard}>SERVE CARDS</Button>
                         :
                         <>
-                            {Count <= 5 && <Button onClick={() => { setCount(Count => Count + 1), splitCard() }}>SPLIT CARD</Button>}
-                            <Button onClick={resetCount}>RESET COUNT</Button>
+                            {Count <= 5 ?
+                                <Button className='btn' onClick={() => { setCount(Count => Count + 1), splitCard() }}>SPLIT CARD</Button>
+                                :
+                                <Button className='btn btn-deactivate'>SPLIT CARD</Button>
+                            }
+                            <Button className='btn btn-reset' onClick={resetCount}>RESET</Button>
                         </>
                     }
                 </div>
