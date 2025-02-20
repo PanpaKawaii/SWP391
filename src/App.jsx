@@ -30,6 +30,7 @@ import Tetris from './UserComponent/Game/Tetris'
 import SolveTheMaze from './UserComponent/Game/SolveTheMaze'
 import GenerateMaze from './UserComponent/Game/GenerateMaze'
 import TypePi from './UserComponent/Game/TypePi'
+import RandomCard from './UserComponent/Game/RandomCard'
 import ToDoList from './UserComponent/Game/ToDoList'
 import TestApp from './UserComponent/Game/TestApp'
 
@@ -152,6 +153,7 @@ function App() {
                   <Route path='solvethemaze' element={<SolveTheMaze />} />
                   <Route path='generatemaze' element={<GenerateMaze />} />
                   <Route path='typepi' element={<TypePi />} />
+                  <Route path='randomcard' element={<RandomCard />} />
                   <Route path='todolist' element={<ToDoList />} />
                   <Route path='testapp' element={<TestApp />} />
                 </Route>
