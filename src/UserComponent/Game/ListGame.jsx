@@ -6,6 +6,7 @@ import './ListGame.css';
 import CaroSRC from '../../assets/imageGAMEs/Caro.png';
 import GenerateMaze from '../../assets/imageGAMEs/GenerateMaze.png';
 import MinesweeperSRC from '../../assets/imageGAMEs/Minesweeper.png';
+import RandomCard from '../../assets/imageGAMEs/RandomCard.png';
 import SolveTheMazeSRC from '../../assets/imageGAMEs/SolveTheMaze.png';
 import Tetris from '../../assets/imageGAMEs/Tetris.png';
 import ToDoListSRC from '../../assets/imageGAMEs/ToDoList.png';
@@ -22,7 +23,7 @@ export default function ListGame() {
         { name: 'Solve The Maze', src: SolveTheMazeSRC, link: '/game/solvethemaze' },
         { name: 'Generate Maze', src: GenerateMaze, link: '/game/generatemaze' },
         { name: 'Type Pi', src: TypePi, link: '/game/typepi' },
-        { name: 'Random Card', src: TypePi, link: '/game/randomcard' },
+        { name: 'Random Card', src: RandomCard, link: '/game/randomcard' },
         { name: 'To Do List', src: ToDoListSRC, link: '/game/todolist' },
         { name: 'Test App', src: '', link: '/game/testapp' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },

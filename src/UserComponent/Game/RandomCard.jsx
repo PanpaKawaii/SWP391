@@ -131,10 +131,13 @@ export default function RandomCard() {
 
                             <div className='face front'>
                                 <div className='text-card'>
-                                    <p
-                                        id={`chosen-name-${index}`}>
-                                        {ChosenList[index]}
-                                    </p>
+                                    {ChosenList[index] &&
+                                        <p id={`chosen-name-${index}`}>
+                                            {ChosenList[index].split(' ').map((word, wordIndex) => (
+                                                <div key={wordIndex}>{word}</div>
+                                            ))}
+                                        </p>
+                                    }
                                 </div>
                             </div>
 

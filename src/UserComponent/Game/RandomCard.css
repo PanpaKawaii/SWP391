@@ -55,7 +55,8 @@ body {
                 p {
                     display: none;
                     margin: 0 5px;
-                    text-align: start;
+                    font-weight: bold;
+                    font-size: 32px;
                 }
 
             }
