@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import './RandomCard.css';
 
-import PokerCard from '../../assets/imageGAMEs/PokerCard.png';
-
 export default function RandomCard() {
 
     const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -58,23 +56,15 @@ export default function RandomCard() {
         card.style.marginLeft = `${(Count - 3) * 500}px`;
     };
 
-    // const displayName = async (index) => {
-    //     if (index + 1 === Count) return;
-
-    //     const card = document.getElementById(`poker-card-${index}`);
-    //     card.style.transition = 'all 2s ease';
-    //     card.style.transform = 'rotateY(1980deg)';
-    //     card.style.background = 'none';
-    //     card.style.backgroundColor = '#fff';
-    //     await sleep(1400);
-
-    //     const name = document.getElementById(`chosen-name-${index}`);
-    //     name.style.transform = 'rotateY(180deg)';
-    //     name.style.color = '#000';
-    // }
-
     const displayName = async (index) => {
-        if (index + 1 === Count) return;
+        if (index + 1 === Count) {
+            if (Count < 6) {
+                setCount(Count => Count + 1);
+                splitCard();
+                return;
+            }
+            return;
+        }
 
         const card = document.getElementById(`poker-card-${index}`);
         card.style.transition = 'all 2s ease';
@@ -95,7 +85,7 @@ export default function RandomCard() {
     return (
         <div className='randomcard-container'>
             <div className='header'>
-                <h1><b>RANDOM POKER</b></h1>
+                <h1><b>RANDOM CARD</b></h1>
             </div>
 
             <div className='randomcard-content'>
@@ -103,30 +93,12 @@ export default function RandomCard() {
                 <div className='poker-card' id='poker-cards'></div>
 
                 {
-                    // DisplayCard && [...Array(Count)].map((_, index) => (
-                    //     <div
-                    //         key={index}
-                    //         id={`poker-card-${index}`}
-                    //         className='poker-card'
-                    //         style={{ zIndex: `${5 - index}` }}
-                    //         onClick={() => displayName(index)}
-                    //     >
-                    //         {/* Index: {index} - Count: {Count}
-                    //     <br /> */}
-                    //         <p
-                    //             id={`chosen-name-${index}`}
-                    //         >{ChosenList[index]}</p>
-                    //     </div>
-                    // ))
-                }
-
-                {
                     DisplayCard && [...Array(Count)].map((_, index) => (
                         <div
                             key={index}
                             id={`poker-card-${index}`}
                             className='poker-card'
-                            style={{ zIndex: `${5 - index}` }}
+                            style={{ zIndex: `${5 - index}`, cursor: (index < Count - 1 || Count < 6) && 'pointer' }}
                             onClick={() => displayName(index)}>
 
                             <div className='face front'>
@@ -142,6 +114,9 @@ export default function RandomCard() {
                             </div>
 
                             <div className='face back'>
+                                {/* <div>Index: {index}</div> */}
+                                {/* <div>Count: {Count}</div> */}
+                                {/* <div>Name: {ChosenList[index]}</div> */}
                             </div>
 
                         </div>
