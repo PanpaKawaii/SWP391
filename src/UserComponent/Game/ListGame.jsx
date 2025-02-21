@@ -28,7 +28,6 @@ export default function ListGame() {
         { name: 'Test App', src: '', link: '/game/testapp' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
     ];
 
     return (
