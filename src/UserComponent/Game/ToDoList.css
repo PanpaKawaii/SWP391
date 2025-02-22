@@ -59,9 +59,7 @@ body {
             }
 
             .btn:hover {
-                color: #fb8b24;
-                background-color: transparent;
-                border: 2px solid #fb8b24;
+                border: 2px solid #d97720;
             }
 
             .btn:active {
@@ -118,15 +116,29 @@ body {
                         }
                     }
 
-                    .btn {
-                        margin: 0 10px 0;
-                        background-color: #dc3545;
-                        font-weight: bold;
-                        border: none;
-                    }
+                    .active-button {
+                        height: 40px;
+                        display: flex;
+                        align-items: center;
 
-                    .btn:active {
-                        background-color: #c02d3c;
+                        .btn {
+                            width: 100px;
+                            font-weight: bold;
+                            color: #dc3545;
+                            background-color: transparent;
+                            border: 2px solid #dc3545;
+                        }
+
+                        .btn:hover {
+                            color: #ffffff;
+                            background-color: #dc3545;
+                        }
+
+                        .btn:active {
+                            color: #ffffff;
+                            background-color: #c02d3c;
+                            border: 2px solid #c02d3c;
+                        }
                     }
                 }
             }

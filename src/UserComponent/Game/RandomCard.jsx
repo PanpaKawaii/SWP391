@@ -8,7 +8,7 @@ export default function RandomCard() {
     const [Count, setCount] = useState(1);
     const [DisplayCard, setDisplayCard] = useState(false);
 
-    const [List, setList] = useState([
+    const List = [
         'Trần Sơn Triều',
         'Mai Phạm Nồng Hậu',
         'Phạm Tiến Mạnh',
@@ -34,7 +34,7 @@ export default function RandomCard() {
         'Phan Tuấn An',
         'Nguyễn Tấn Phát',
         'Đặng Hoàng Thanh Xuân',
-    ]);
+    ];
     const [ChosenList, setChosenList] = useState([]);
 
     const serveCard = async () => {

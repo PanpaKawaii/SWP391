@@ -137,7 +137,9 @@ export default function ToDoList() {
                                     <td>{item.dateCreate}</td>
                                     <td>{item.lastChange}</td>
                                     <td>
-                                        <Button className='btn' onClick={() => deleteNote(item.id)}>DELETE</Button>
+                                        <div className='active-button'>
+                                            <Button className='btn' onClick={() => deleteNote(item.id)}>DELETE</Button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}

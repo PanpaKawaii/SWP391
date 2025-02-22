@@ -145,18 +145,17 @@ function App() {
 
                 <Route path='contact' element={<ContactContent />} />
 
-                <Route path='game' element={<ListGame />}>
-                  <Route path='minesweeper' element={<Minesweeper />} />
-                  <Route path='whatisthepassword' element={<WhatIsThePassword />} />
-                  <Route path='caro' element={<Caro />} />
-                  <Route path='tetris' element={<Tetris />} />
-                  <Route path='solvethemaze' element={<SolveTheMaze />} />
-                  <Route path='generatemaze' element={<GenerateMaze />} />
-                  <Route path='typepi' element={<TypePi />} />
-                  <Route path='randomcard' element={<RandomCard />} />
-                  <Route path='todolist' element={<ToDoList />} />
-                  <Route path='testapp' element={<TestApp />} />
-                </Route>
+                <Route path='game' element={<ListGame />} />
+                <Route path='game/minesweeper' element={<Minesweeper />} />
+                <Route path='game/whatisthepassword' element={<WhatIsThePassword />} />
+                <Route path='game/caro' element={<Caro />} />
+                <Route path='game/tetris' element={<Tetris />} />
+                <Route path='game/solvethemaze' element={<SolveTheMaze />} />
+                <Route path='game/generatemaze' element={<GenerateMaze />} />
+                <Route path='game/typepi' element={<TypePi />} />
+                <Route path='game/randomcard' element={<RandomCard />} />
+                <Route path='game/todolist' element={<ToDoList />} />
+                <Route path='game/testapp' element={<TestApp />} />
 
                 <Route path='japanese' element={<ListJapanese />} >
                   <Route path='kanji' element={<JapaneseKanji />} />
