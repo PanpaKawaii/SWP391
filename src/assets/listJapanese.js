@@ -45,6 +45,20 @@ export const Kanji = [
     { Id: '南', SinoVietnamese: 'NAM', On: 'ナン、ナ', Kun: 'みなみ' },
     { Id: '北', SinoVietnamese: 'BẮC', On: 'ホク、ホッ、ボク', Kun: 'きた' },
     { Id: '口', SinoVietnamese: 'KHẨU', On: 'コウ、ク', Kun: 'くち、ぐち' },
+    
+    { Id: '買', SinoVietnamese: 'MÃI', On: 'バイ', Kun: 'か' },
+    { Id: '百', SinoVietnamese: 'BÁCH', On: 'ヒャク、ビャク', Kun: 'もも' },
+    { Id: '千', SinoVietnamese: 'THIÊN', On: 'セン', Kun: 'ち' },
+    { Id: '万', SinoVietnamese: 'VẠN', On: 'マン、バン', Kun: 'よろず' },
+    { Id: '円', SinoVietnamese: 'VIÊN', On: 'エン', Kun: 'まる、まど、まろ' },
+    { Id: '物', SinoVietnamese: 'VẬT', On: 'ブツ', Kun: 'もの' },
+
+    { Id: '行', SinoVietnamese: 'HÀNH', On: 'コウ、ギョウ、アン', Kun: 'い、ゆ、おこな' },
+    { Id: '来', SinoVietnamese: 'LAI', On: 'ライ、タイ', Kun: 'く、き、こ、きた' },
+    { Id: '会', SinoVietnamese: 'HỘI', On: 'カイ、エ', Kun: 'あ' },
+    { Id: '休', SinoVietnamese: 'HƯU', On: 'キュウ', Kun: 'やす' },
+    { Id: '本', SinoVietnamese: 'BỔN', On: 'ホン', Kun: 'もと' },
+    { Id: '京', SinoVietnamese: 'KINH', On: 'キョウ、ケイ', Kun: 'きょう、けい' },
 
     { Id: '私', SinoVietnamese: 'TƯ', On: 'シ', Kun: 'わたし、わたくし' },
     { Id: '父', SinoVietnamese: 'PHỤ', On: 'フ', Kun: 'ちち' },
@@ -60,7 +74,26 @@ export const Kanji = [
     { Id: '外', SinoVietnamese: 'NGOẠI', On: 'ガイ、ゲ', Kun: 'そと、ほか、はず、と' },
     { Id: '国', SinoVietnamese: 'QUỐC', On: 'コク', Kun: 'くに' },
 
-    { Id: '～', SinoVietnamese: 'NoKanji', On: '～', Kun: '～' },
+    { Id: '春', SinoVietnamese: 'XUÂN', On: 'シュン', Kun: 'はる' },
+    { Id: '夏', SinoVietnamese: 'HẠ', On: 'カ、ガ、ゲ', Kun: 'なつ' },
+    { Id: '秋', SinoVietnamese: 'THU', On: 'シュウ', Kun: 'あき、とき' },
+    { Id: '冬', SinoVietnamese: 'ĐÔNG', On: 'トウ', Kun: 'ふゆ' },
+    { Id: '今', SinoVietnamese: 'KIM', On: 'コン、キン', Kun: 'いま' },
+    { Id: '花', SinoVietnamese: 'HOA', On: 'カ、ケ', Kun: 'はな' },
+    { Id: '海', SinoVietnamese: 'HẢI', On: 'カイ、ゲ', Kun: 'うみ' },////////////////////////////////////////////////////////////////////
+    { Id: '山', SinoVietnamese: 'SƠN, SAN', On: 'サン、セン', Kun: 'やま' },
+    { Id: '川', SinoVietnamese: 'XUYÊN', On: 'セン', Kun: 'かわ' },
+
+    { Id: '天', SinoVietnamese: 'THIÊN', On: 'テン', Kun: 'あまつ、あめ、あま' },
+    { Id: '気', SinoVietnamese: 'KHÍ', On: 'キ、ケ', Kun: 'き' },
+    { Id: '晴', SinoVietnamese: 'TÌNH', On: 'セイ', Kun: 'は、ば' },
+    { Id: '雨', SinoVietnamese: 'VŨ', On: 'ウ', Kun: 'あめ' },
+    { Id: '雪', SinoVietnamese: 'TUYẾT', On: 'セツ', Kun: 'ゆき' },
+    { Id: '雲', SinoVietnamese: 'VÂN', On: 'ウン', Kun: 'くも、ぐも' },
+    { Id: '風', SinoVietnamese: 'PHONG', On: 'フウ、フ', Kun: 'かぜ、かざ' },
+    { Id: '空', SinoVietnamese: 'KHÔNG', On: 'クウ', Kun: 'そら、あ、から、す、むな' },
+
+    { Id: '～', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
 
     { Id: '朝', SinoVietnamese: 'TRIỀU', On: 'チョウ', Kun: 'あさ' },
     { Id: '昼', SinoVietnamese: 'TRÚ', On: 'チュウ', Kun: 'ひる' },
@@ -68,7 +101,6 @@ export const Kanji = [
     { Id: '晩', SinoVietnamese: 'VÃN', On: 'バン', Kun: 'ばん' },
     { Id: '勉', SinoVietnamese: 'MIỄN', On: 'ベン', Kun: 'べん' },
     { Id: '強', SinoVietnamese: 'CƯỜNG', On: 'キョウ', Kun: 'つよ' },
-    { Id: '花', SinoVietnamese: 'HOA', On: 'カ', Kun: 'はな' },
     { Id: '家', SinoVietnamese: 'GIA', On: 'カ、ケ', Kun: 'いえ' },
     { Id: '犬', SinoVietnamese: 'KHUYỂN', On: 'ケン', Kun: 'いぬ' },
     { Id: '猫', SinoVietnamese: 'MIÊU', On: 'ビョウ', Kun: 'ねこ' },
@@ -79,8 +111,8 @@ export const Kanji = [
     { Id: '帰', SinoVietnamese: 'QUY', On: 'キ', Kun: 'かえ' },
     { Id: '着', SinoVietnamese: 'TRƯỚC', On: 'チャク', Kun: 'き' },
     { Id: '間', SinoVietnamese: 'GIAN', On: 'カン', Kun: 'あいだ' },
-    { Id: '語', SinoVietnamese: 'NGỮ', On: 'ゴ', Kun: 'かた' },
 
+    { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
     { Id: 'NoKanji', SinoVietnamese: 'NoKanji', On: 'NoKanji', Kun: 'NoKanji' },
@@ -99,7 +131,7 @@ export const KanjiExample = [
 
 
 
-    { Word: '魚', Hiragana: 'さかな', Meaning: 'Con cá' },
+    { Word: '魚', Hiragana: 'さかな', Meaning: 'Cá' },
     { Word: '人魚', Hiragana: 'にんぎょ', Meaning: 'Người cá' },
     { Word: '金魚', Hiragana: 'きんぎょ', Meaning: 'Cá vàng' },
 
@@ -107,14 +139,14 @@ export const KanjiExample = [
     { Word: '牛肉', Hiragana: 'ぎゅうにく', Meaning: 'Thịt bò' },
     { Word: '焼き肉', Hiragana: 'やきにく', Meaning: 'Thịt nướng' },
 
-    { Word: '卵', Hiragana: 'たまご', Meaning: 'Quả trứng' },
+    { Word: '卵', Hiragana: 'たまご', Meaning: 'Trứng' },
     { Word: '卵焼き', Hiragana: 'たまごやき', Meaning: 'Trứng rán' },
 
 
 
     { Word: '月', Hiragana: 'つき', Meaning: 'Mặt Trăng' },
     { Word: '月曜日', Hiragana: 'げつようび', Meaning: 'Thứ 2' },
-    { Word: '五月', Hiragana: 'ごげつ', Meaning: 'Tháng 5' },
+    { Word: '五月', Hiragana: 'ごがつ', Meaning: 'Tháng 5' },
     { Word: 'お正月', Hiragana: 'おしょうがつ', Meaning: 'Tết dương lịch' },
 
     { Word: '火', Hiragana: 'ひ', Meaning: 'Lửa' },
@@ -275,8 +307,8 @@ export const KanjiExample = [
 
     { Word: '十', Hiragana: 'じゅう', Meaning: 'Số 10' },
     { Word: '十日', Hiragana: 'とおか', Meaning: 'Mùng 10' },
-    { Word: '十つ', Hiragana: '。。。', Meaning: '10 cái' },
-    { Word: '十人', Hiragana: '。。。', Meaning: '10 người' },
+    { Word: '十つ', Hiragana: 'じゅうつ', Meaning: '10 cái' },////////////////////////////////////////////////////////////////////
+    { Word: '十人', Hiragana: 'じゅうにん', Meaning: '10 người' },////////////////////////////////////////////////////////////////////
     { Word: '十分', Hiragana: 'じゅうぶん', Meaning: 'Đầy đủ' },
 
     { Word: '一年', Hiragana: 'いちねん', Meaning: '1 năm' },
@@ -298,7 +330,58 @@ export const KanjiExample = [
     { Word: '東西', Hiragana: 'とうざい', Meaning: 'Đông Tây' },
     { Word: '関西', Hiragana: 'かんさい', Meaning: 'Vùng Kansai' },
 
+    { Word: '南', Hiragana: 'みなみ', Meaning: 'Phía Nam' },
+    { Word: '南口', Hiragana: 'みなみぐち', Meaning: 'Cửa Nam' },
+    { Word: '東南アジア', Hiragana: 'とうなんアジア', Meaning: 'Đông Nam Á' },
+    { Word: '南西', Hiragana: 'なんせい', Meaning: 'Tây Nam' },
+    { Word: '南極', Hiragana: 'なんきょく', Meaning: 'Nam Cực' },
+
+    { Word: '北', Hiragana: 'きた', Meaning: 'Phía Bắc' },
+    { Word: '北口', Hiragana: 'きたぐち', Meaning: 'Cửa Bắc' },
+    { Word: '北東', Hiragana: 'ほくとう', Meaning: 'Đông Bắc' },
+    { Word: '北海道', Hiragana: 'ほっかいどう', Meaning: 'Hokkaido' },
+    { Word: '南北', Hiragana: 'なんぼく', Meaning: 'Nam Bắc' },
+
+    { Word: '口', Hiragana: 'くち', Meaning: 'Miệng' },
+    { Word: '入り口', Hiragana: 'いりぐち', Meaning: 'Cửa vào' },
+    { Word: '出口', Hiragana: 'でぐち', Meaning: 'Cửa ra' },
+    { Word: '人口', Hiragana: 'じんこう', Meaning: 'Dân số' },
+    { Word: '口調', Hiragana: 'くちょう', Meaning: 'Giọng điệu' },
+
+
+
+    { Word: '買います', Hiragana: 'かいます', Meaning: 'Mua' },
+    { Word: '買い物', Hiragana: 'かいもの', Meaning: 'Sự mua sắm' },
+    { Word: '売買', Hiragana: 'ばいばい', Meaning: 'Sự mua bán' },
+
+    { Word: '百', Hiragana: 'ひゃく', Meaning: 'Một trăm' },
+    { Word: '三百', Hiragana: 'さんびゃく', Meaning: 'Ba trăm' },
+    { Word: '百貨店', Hiragana: 'ひゃっかてん', Meaning: 'Cửa hàng bách hóa' },
+
+    { Word: '千', Hiragana: 'せん', Meaning: 'Một ngàn' },
+    { Word: '千円', Hiragana: 'せんえん', Meaning: 'Một ngàn yên' },
+    { Word: '千人', Hiragana: 'せんにん', Meaning: 'Một ngàn người' },
+
+    { Word: '一万', Hiragana: 'いちまん', Meaning: 'Một vạn' },
+    { Word: '一万円', Hiragana: 'いちまんえん', Meaning: 'Một vạn yên' },
+    { Word: '万事', Hiragana: 'ばんじ', Meaning: 'Vạn sự' },
+
+    { Word: '円', Hiragana: 'えん', Meaning: 'Yên' },
+    { Word: '百円', Hiragana: 'ひゃくえん', Meaning: 'Một trăm yên' },
+    { Word: '一千万円', Hiragana: 'いっせんまんえん', Meaning: 'Một ngàn vạn yên' },
+
+    { Word: '人物', Hiragana: 'じんぶつ', Meaning: 'Nhân vật' },
+    { Word: '見物', Hiragana: 'けんぶつ', Meaning: 'Ngắm cảnh' },
+
+
+
+    { Word: '行き', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: '来', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
@@ -318,23 +401,153 @@ export const KanjiExample = [
 
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
-    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: '東京', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 
 
 
+    { Word: '私', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: '何', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 
 
+
+    { Word: '好き', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: '国', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+
+
+    { Word: '春', Hiragana: 'はる', Meaning: 'Mùa Xuân' },
+    { Word: '春巻き', Hiragana: 'はるまき', Meaning: 'Gỏi cuốn' },
+    { Word: '夏', Hiragana: 'なつ', Meaning: 'Mùa Hạ' },
+    { Word: '夏休み', Hiragana: 'なつやすみ', Meaning: 'Kì nghỉ Hè' },
+    { Word: '秋', Hiragana: 'あき', Meaning: 'Mùa Thu' },
+    { Word: '中秋', Hiragana: 'ちゅうしゅう', Meaning: 'Tết Trung Thu' },
+    { Word: '冬', Hiragana: 'ふゆ', Meaning: 'Mùa Đông' },
+    { Word: '冬祭り', Hiragana: 'ふゆまつり', Meaning: 'Lễ hội Mùa Đông' },
+
+    { Word: '今', Hiragana: 'いま', Meaning: 'Bây giờ' },
+    { Word: '今朝', Hiragana: 'けさ', Meaning: 'Sáng nay' },
+    { Word: '今日', Hiragana: 'きょう', Meaning: 'Hôm nay' },
+    { Word: '今年', Hiragana: 'ことし', Meaning: 'Năm nay' },
+
+    { Word: '花', Hiragana: 'はな', Meaning: 'Hoa' },
+    { Word: '花見', Hiragana: 'はなみ', Meaning: 'Sự ngắm hoa' },
+    { Word: '花火', Hiragana: 'はなび', Meaning: 'Pháo hoa' },
+
+    { Word: '海', Hiragana: 'うみ', Meaning: 'Biển' },
+    { Word: '海産', Hiragana: 'かいさん', Meaning: 'Hải sản' },
+
+    { Word: '山', Hiragana: 'やま', Meaning: 'Núi' },
+    { Word: '富士山', Hiragana: 'ふじさん', Meaning: 'Núi Phú Sĩ' },
+
+    { Word: '川', Hiragana: 'かわ', Meaning: 'Sông' },
+    { Word: '小川', Hiragana: 'おがわ', Meaning: 'Suối' },
+    { Word: '大川', Hiragana: 'おおかわ', Meaning: 'Sông lớn' },
+
+
+
+    { Word: '天', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: '空', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+
+
+
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
+    { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
     { Word: 'NoKanjiExample', Hiragana: 'NoKanjiExample', Meaning: 'NoKanjiExample' },
 ];
 
 export const Verb = [
-    { Verb: 'NoVerb', Group: 'I', Meaning: 'NoVerb' },
+    { Verb: 'NoVerb', Group: 'NoVerb', Meaning: 'NoVerb' },
 
     //「い」ます
     { Verb: 'いきます', Group: 'I', Meaning: 'Đi' },

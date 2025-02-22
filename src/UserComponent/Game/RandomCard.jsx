@@ -33,6 +33,7 @@ export default function RandomCard() {
         'Đoàn Tín Nghĩa',
         'Phan Tuấn An',
         'Nguyễn Tấn Phát',
+        'Đặng Hoàng Thanh Xuân',
     ]);
     const [ChosenList, setChosenList] = useState([]);
 
