@@ -57,7 +57,9 @@ export default function JapaneseKanji() {
                                         color: (
                                             kanji.SinoVietnamese === 'NoKanji' ||
                                             kanji.On === 'NoKanji' ||
-                                            kanji.Kun === 'NoKanji'
+                                            kanji.Kun === 'NoKanji' ||
+                                            kanji.Romaji === 'NoKanji' ||
+                                            !kanji.Romaji
                                         ) ? 'red' : 'black'
                                     }}
                                 >
@@ -65,6 +67,7 @@ export default function JapaneseKanji() {
                                     <h3>{kanji.SinoVietnamese}</h3>
                                     <p className='japanese-font'>On: {kanji.On}</p>
                                     <p className='japanese-font'>Kun: {kanji.Kun}</p>
+                                    <p className='japanese-font'>Romaji: {kanji.Romaji}</p>
                                 </div>
                             </div>
                         </Col>
