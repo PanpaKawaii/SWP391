@@ -45,7 +45,7 @@ export const Kanji = [
     { Id: '南', SinoVietnamese: 'NAM', On: 'ナン、ナ', Kun: 'みなみ' },
     { Id: '北', SinoVietnamese: 'BẮC', On: 'ホク、ホッ、ボク', Kun: 'きた' },
     { Id: '口', SinoVietnamese: 'KHẨU', On: 'コウ、ク', Kun: 'くち、ぐち' },
-    
+
     { Id: '買', SinoVietnamese: 'MÃI', On: 'バイ', Kun: 'か' },
     { Id: '百', SinoVietnamese: 'BÁCH', On: 'ヒャク、ビャク', Kun: 'もも' },
     { Id: '千', SinoVietnamese: 'THIÊN', On: 'セン', Kun: 'ち' },
@@ -567,20 +567,39 @@ export const Verb = [
     { Verb: 'しにます', Group: 'I', Meaning: 'Chết' },
     { Verb: 'かきます', Group: 'I', Meaning: 'Viết' },
     { Verb: 'ききます', Group: 'I', Meaning: 'Nghe' },
+    { Verb: 'ききます', Group: 'I', Meaning: 'Hỏi' },
     { Verb: 'およぎます', Group: 'I', Meaning: 'Bơi' },
     { Verb: 'はなします', Group: 'I', Meaning: 'Nói chuyện' },
     { Verb: 'わたします', Group: 'I', Meaning: 'Trao' },
+    { Verb: 'いいます', Group: 'I', Meaning: 'Nói' },
+    { Verb: 'のります', Group: 'I', Meaning: 'Lên xe' },
+    { Verb: 'のぼります', Group: 'I', Meaning: 'Leo trèo' },
+    { Verb: 'あります', Group: 'I', Meaning: 'Có' },
+    { Verb: 'もらいます', Group: 'I', Meaning: 'Nhận' },
+    { Verb: 'おきます', Group: 'I', Meaning: 'Đặt, để' },
+    { Verb: 'わかります', Group: 'I', Meaning: 'Hiểu' },
+    { Verb: 'やすみます', Group: 'I', Meaning: 'Nghỉ ngơi' },
+    { Verb: 'はたらきます', Group: 'I', Meaning: 'Làm việc' },
+    { Verb: 'かします', Group: 'I', Meaning: 'Cho mượn' },
+    { Verb: 'はいります', Group: 'I', Meaning: 'Bước vào' },
+    { Verb: 'けします', Group: 'I', Meaning: 'Tắt, xóa, dập' },
+    { Verb: 'いそぎます', Group: 'I', Meaning: 'Vội vàng' },
+    { Verb: 'よびます', Group: 'I', Meaning: 'Kêu gọi' },
+    { Verb: 'すわります', Group: 'I', Meaning: 'Ngồi xuống' },
+    { Verb: 'つかいます', Group: 'I', Meaning: 'Sử dụng' },
 
 
     //「え」ます、Một âm tiết
     { Verb: 'たべます', Group: 'II', Meaning: 'Ăn' },
-    { Verb: 'かけます', Group: 'II', Meaning: 'Đeo' },
+    { Verb: 'かけます', Group: 'II', Meaning: 'Đeo (Kính)' },
     { Verb: 'かけます', Group: 'II', Meaning: 'Gọi' },
     { Verb: 'あげます', Group: 'II', Meaning: 'Tặng' },
     { Verb: 'ねます', Group: 'II', Meaning: 'Ngủ' },
     { Verb: 'みます', Group: 'II', Meaning: 'Nhìn' },
     { Verb: 'でます', Group: 'II', Meaning: 'Ra ngoài' },
+    { Verb: 'でかけます', Group: 'II', Meaning: 'Ra ngoài' },
     { Verb: 'きます', Group: 'II', Meaning: 'Mặc' },
+    { Verb: 'います', Group: 'II', Meaning: 'Có' },
 
     { Verb: 'おきます', Group: 'II', Meaning: 'Thức dậy' },
     { Verb: 'おります', Group: 'II', Meaning: 'Xuống' },
@@ -590,13 +609,20 @@ export const Verb = [
     { Verb: 'しんじます', Group: 'II', Meaning: 'Tin tưởng' },
     { Verb: 'かります', Group: 'II', Meaning: 'Mượn' },
     { Verb: 'つぎます', Group: 'II', Meaning: 'Tiếp tục' },
+    { Verb: 'おしえます', Group: 'II', Meaning: 'Dạy, hướng dẫn' },
+    { Verb: 'つけます', Group: 'II', Meaning: 'Bật, gắn vào' },
+    { Verb: 'あけます', Group: 'II', Meaning: 'Mở ra' },
+    { Verb: 'しめます', Group: 'II', Meaning: 'Đóng lại' },
+    { Verb: 'みせます', Group: 'II', Meaning: 'Cho xem' },
 
 
     //N＋します => Danh động từ
     { Verb: 'きます', Group: 'III', Meaning: 'Đến' },
+    { Verb: 'します', Group: 'III', Meaning: 'Làm' },
     { Verb: 'べんきょうします', Group: 'III', Meaning: 'Học' },
     { Verb: 'せんたくします', Group: 'III', Meaning: 'Giặt' },
     { Verb: 'そうじします', Group: 'III', Meaning: 'Làm việc nhà' },
+    { Verb: 'しょくじします', Group: 'III', Meaning: 'Dùng bữa' },
     { Verb: 'コピーします', Group: 'III', Meaning: 'Sao chép' },
 ];
 
