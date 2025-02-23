@@ -48,23 +48,22 @@ export default function JapaneseKanji() {
                 <h2>Japanese Kanji</h2>
             </div>
 
-            <div className='p-5 max-w-md mx-auto'>
-                <Form>
-                    <Form.Group controlId='searchkanji' className='form-group'>
-                        <Form.Control
-                            type='text'
-                            placeholder='日、ニチ、ひ、nichi、NHẬT、...'
-                            // className='w-full p-2 border rounded-md'
-                            value={searchQueryKanji}
-                            onChange={(e) => setSearchQueryKanji(e.target.value)}
-                        />
-                    </Form.Group>
+            <Form>
+                <Form.Group controlId='searchkanji' className='form-group'>
+                    <Form.Control
+                        type='text'
+                        placeholder='日、ニチ、ひ、nichi、NHẬT、...'
+                        value={searchQueryKanji}
+                        onChange={(e) => setSearchQueryKanji(e.target.value)}
+                    />
+                </Form.Group>
 
+                <div className='active-button'>
                     <Button type='reset' className='btn btn-reset' onClick={clearInput}>CLEAR</Button>
                     <Button className='btn' onClick={closeAll}>CLOSE ALL</Button>
                     <Button className='btn' onClick={openAll}>OPEN ALL</Button>
-                </Form>
-            </div>
+                </div>
+            </Form>
 
             <div className='japanese-content'>
                 <Row className='japanese-row'>
@@ -85,7 +84,7 @@ export default function JapaneseKanji() {
                                         ) ? 'red' : 'black'
                                     }}
                                 >
-                                    <div class='face front'>
+                                    <div className='face front'>
                                         <h1 className='japanese-font'><>{kanji.Id}</></h1>
                                         <h3>{kanji.SinoVietnamese}</h3>
                                         <p className='japanese-font'>On: {kanji.On}</p>
@@ -93,7 +92,7 @@ export default function JapaneseKanji() {
                                         {/* <p className='japanese-font'>Romaji: {kanji.Romaji}</p> */}
                                     </div>
 
-                                    <div class='face back'>
+                                    <div className='face back'>
                                         <h3>{kanji.SinoVietnamese}</h3>
                                         {KanjiExample.filter(include => include.Word.includes(kanji.Id)).map((example, index) => (
                                             <div key={index}>
@@ -119,7 +118,7 @@ export default function JapaneseKanji() {
                         </tr>
                     </thead>
                     <tbody>
-                        {KanjiExample.map((example, e) => (
+                        {KanjiExample.filter(kanji => kanji.Word !== 'NoKanjiExample').map((example, e) => (
                             <tr key={e}>
                                 <td>{example.Word}</td>
                                 <td>{example.Hiragana}</td>

@@ -42,7 +42,6 @@ export default function JapaneseVerb() {
                         <Form.Control
                             type='text'
                             placeholder='いきます、III、Đi、...'
-                            // className='w-full p-2 border rounded-md'
                             value={searchQueryVerb}
                             onChange={(e) => setSearchQueryVerb(e.target.value)}
                         />
