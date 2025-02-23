@@ -26,7 +26,7 @@ export default function ListGame() {
         { name: 'Random Card', src: RandomCard, link: '/game/randomcard' },
         { name: 'To Do List', src: ToDoListSRC, link: '/game/todolist' },
         { name: 'Test App', src: '', link: '/game/testapp' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
+        { name: 'Test Card', src: '', link: '/game/testcard' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
     ];
 

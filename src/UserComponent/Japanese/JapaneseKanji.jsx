@@ -25,6 +25,23 @@ export default function JapaneseKanji() {
         document.getElementById('searchkanji').focus();
     }
 
+
+
+    const rotateCard = (index) => {
+        const card = document.getElementById(`poker-card-${index}`);
+        card.classList.toggle('rotate');
+    }
+
+    const closeAll = () => {
+        const cards = document.getElementsByClassName('card-body');
+        Array.from(cards).forEach(card => card.classList.add('rotate'));
+    }
+
+    const openAll = () => {
+        const cards = document.getElementsByClassName('card-body');
+        Array.from(cards).forEach(card => card.classList.remove('rotate'));
+    }
+
     return (
         <div className='japanese-kanji-container'>
             <div className='japanese-kanji-header'>
@@ -36,7 +53,7 @@ export default function JapaneseKanji() {
                     <Form.Group controlId='searchkanji' className='form-group'>
                         <Form.Control
                             type='text'
-                            placeholder='Enter Kanji...'
+                            placeholder='日、ニチ、ひ、nichi、NHẬT、...'
                             // className='w-full p-2 border rounded-md'
                             value={searchQueryKanji}
                             onChange={(e) => setSearchQueryKanji(e.target.value)}
@@ -44,15 +61,20 @@ export default function JapaneseKanji() {
                     </Form.Group>
 
                     <Button type='reset' className='btn btn-reset' onClick={clearInput}>CLEAR</Button>
+                    <Button className='btn' onClick={closeAll}>CLOSE ALL</Button>
+                    <Button className='btn' onClick={openAll}>OPEN ALL</Button>
                 </Form>
             </div>
 
             <div className='japanese-content'>
                 <Row className='japanese-row'>
                     {filteredKanji.filter(kanji => kanji.Id !== 'NoKanji').map((kanji, index) => (
-                        <Col key={index} sm={4} md={4} lg={3} xl={3} xxl={2} className='japanese-col'>
+                        <Col key={index} sm={6} md={4} lg={3} xl={3} xxl={2} className='japanese-col'>
                             <div className='grid-card kanji-card'>
-                                <div className='card-body'
+                                <div
+                                    id={`poker-card-${index}`}
+                                    onClick={() => rotateCard(index)}
+                                    className='card-body'
                                     style={{
                                         color: (
                                             kanji.SinoVietnamese === 'NoKanji' ||
@@ -63,11 +85,22 @@ export default function JapaneseKanji() {
                                         ) ? 'red' : 'black'
                                     }}
                                 >
-                                    <h1 className='japanese-font'><>{kanji.Id}</></h1>
-                                    <h3>{kanji.SinoVietnamese}</h3>
-                                    <p className='japanese-font'>On: {kanji.On}</p>
-                                    <p className='japanese-font'>Kun: {kanji.Kun}</p>
-                                    <p className='japanese-font'>Romaji: {kanji.Romaji}</p>
+                                    <div class='face front'>
+                                        <h1 className='japanese-font'><>{kanji.Id}</></h1>
+                                        <h3>{kanji.SinoVietnamese}</h3>
+                                        <p className='japanese-font'>On: {kanji.On}</p>
+                                        <p className='japanese-font'>Kun: {kanji.Kun}</p>
+                                        {/* <p className='japanese-font'>Romaji: {kanji.Romaji}</p> */}
+                                    </div>
+
+                                    <div class='face back'>
+                                        <h3>{kanji.SinoVietnamese}</h3>
+                                        {KanjiExample.filter(include => include.Word.includes(kanji.Id)).map((example, index) => (
+                                            <div key={index}>
+                                                <span className='japanese-font'>{example.Hiragana}</span> - <span>{example.Meaning}</span>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </Col>
@@ -76,28 +109,6 @@ export default function JapaneseKanji() {
             </div>
 
             <div className='japanese-table-content'>
-                {/* <h2>Kanji</h2>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>Character</th>
-                            <th>Sino-Vietnamese</th>
-                            <th>On</th>
-                            <th>Kun</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {Kanji.map((kanji_array, k) => (
-                            <tr key={k}>
-                                <td style={{ color: kanji_array.Id == 'Unknown' && 'red' }}>{kanji_array.Id}</td>
-                                <td style={{ color: kanji_array.SinoVietnamese == 'Unknown' && 'red' }}>{kanji_array.SinoVietnamese}</td>
-                                <td style={{ color: kanji_array.On == 'Unknown' && 'red' }}>{kanji_array.On}</td>
-                                <td style={{ color: kanji_array.Kun == 'Unknown' && 'red' }}>{kanji_array.Kun}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table> */}
-
                 <h2>Kanji Example</h2>
                 <Table striped bordered hover>
                     <thead>
@@ -117,7 +128,9 @@ export default function JapaneseKanji() {
                                         color: (
                                             example.Word === 'NoKanjiExample' ||
                                             example.Hiragana === 'NoKanjiExample' ||
-                                            example.Meaning === 'NoKanjiExample'
+                                            example.Meaning === 'NoKanjiExample' ||
+                                            example.Romaji === 'NoKanji' ||
+                                            !example.Romaji
                                         ) ? 'red' : 'black'
                                     }}
                                 >{example.Meaning}</td>

@@ -33,6 +33,7 @@ import TypePi from './UserComponent/Game/TypePi'
 import RandomCard from './UserComponent/Game/RandomCard'
 import ToDoList from './UserComponent/Game/ToDoList'
 import TestApp from './UserComponent/Game/TestApp'
+import TestCard from './UserComponent/Game/TestCard'
 
 import ListJapanese from './UserComponent/Japanese/ListJapanese.jsx'
 import JapaneseKanji from './UserComponent/Japanese/JapaneseKanji.jsx'
@@ -156,6 +157,7 @@ function App() {
                 <Route path='game/randomcard' element={<RandomCard />} />
                 <Route path='game/todolist' element={<ToDoList />} />
                 <Route path='game/testapp' element={<TestApp />} />
+                <Route path='game/testcard' element={<TestCard />} />
 
                 <Route path='japanese' element={<ListJapanese />} >
                   <Route path='kanji' element={<JapaneseKanji />} />
