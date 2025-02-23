@@ -22,6 +22,7 @@ export default function JapaneseKanji() {
 
     const clearInput = () => {
         setSearchQueryKanji('');
+        setSearchParams({ search: '' });
         document.getElementById('searchkanji').focus();
     }
 
@@ -69,7 +70,7 @@ export default function JapaneseKanji() {
                 <Row className='japanese-row'>
                     {filteredKanji.filter(kanji => kanji.Id !== 'NoKanji').map((kanji, index) => (
                         <Col key={kanji.Id} xs={6} sm={6} md={4} lg={3} xl={3} xxl={2} className='japanese-col'>
-                            <div className='grid-card kanji-card'>
+                            <div className='grid-card'>
                                 <div
                                     id={`poker-card-${index}`}
                                     onClick={() => rotateCard(index)}

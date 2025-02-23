@@ -24,37 +24,41 @@ body {
 
     form {
         width: 100%;
+        padding: 40px 0;
         display: flex;
         justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
 
         .form-control:focus {
             box-shadow: 0 0 0 0.25rem rgba(249, 157, 188, 0.314);
             border-color: #f99dbc;
         }
 
-        #searchverb {
+        .searchverb {
             width: 100%;
-            min-width: 200px;
-            max-width: 400px;
+            max-width: 300px;
+        }
+
+        .groupverb {
+            width: 120px;
         }
 
         #groupverb {
-            width: 120px;
             text-align: center;
         }
 
-        .form-group {
-            margin: 0 10px 0 0;
-        }
+        .active-button {
+            .btn {
+                background-color: #f99dbc;
+                font-weight: bold;
+                border: none;
+            }
 
-        .btn {
-            background-color: #f99dbc;
-            font-weight: bold;
-            border: none;
-        }
-
-        .btn:active {
-            background-color: #fd73a7;
+            .btn:active {
+                background-color: #fd73a7;
+            }
         }
     }
 
@@ -75,7 +79,7 @@ body {
 
                 .grid-card {
                     width: 250px;
-                    height: 110px;
+                    height: fit-content;
                     margin: 0 0 20px;
                     background-color: #ffeeee;
                     border: 2px solid #fe036a;
@@ -87,12 +91,12 @@ body {
                     box-shadow: 0px 0px 5px #f99dbc50;
 
                     .card-body {
-                        padding: 0;
+                        padding: 8px 0;
                         width: 100%;
-                        height: 100%;
+                        height: fit-content;
 
                         h3 {
-                            margin: 8px 0;
+                            margin: 0 0 8px;
                             font-weight: bold;
                         }
 
@@ -105,6 +109,18 @@ body {
                 .grid-card:hover {
                     transform: translateY(-10px);
                     box-shadow: 0px 5px 10px #f99dbc80;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        .japanese-content {
+            .japanese-row {
+                .japanese-col {
+                    .grid-card {
+                        width: 100%;
+                    }
                 }
             }
         }
