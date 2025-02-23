@@ -69,7 +69,7 @@ export default function JapaneseKanji() {
             <div className='japanese-content'>
                 <Row className='japanese-row'>
                     {filteredKanji.filter(kanji => kanji.Id !== 'NoKanji').map((kanji, index) => (
-                        <Col key={index} sm={6} md={4} lg={3} xl={3} xxl={2} className='japanese-col'>
+                        <Col key={kanji.Id} sm={6} md={4} lg={3} xl={3} xxl={2} className='japanese-col'>
                             <div className='grid-card kanji-card'>
                                 <div
                                     id={`poker-card-${index}`}
