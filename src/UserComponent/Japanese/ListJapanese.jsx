@@ -21,7 +21,7 @@ export default function ListJapanese() {
             <div className='listjapanese'>
                 <Row className='image-row'>
                     {ListJapanese.map((japanese, index) => (
-                        <Col key={index} sm={6} md={4} lg={3} xl={3} xxl={2} className='image-col'>
+                        <Col key={index} xs={6} sm={6} md={4} lg={3} xl={3} xxl={2} className='image-col'>
                             <Link to={`${japanese.link}`}>
                                 <Card className='image-card'>
                                     <Card.Body className='card-body'>

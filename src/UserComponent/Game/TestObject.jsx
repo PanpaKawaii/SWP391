@@ -1,10 +1,10 @@
 import React from 'react';
-import './TestCard.css';
+import './TestObject.css';
 
-export default function TestCard() {
+export default function TestObject() {
     return (
-        <div className='card-cube-container'>
-            <div class='testcard-container'>
+        <div className='object-container'>
+            <div class='card-container'>
                 <div class='card'>
                     <div class='face front'>Mặt Trước</div>
                     <div class='face back'>Mặt Sau</div>

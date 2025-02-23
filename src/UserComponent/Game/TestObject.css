@@ -3,7 +3,7 @@ body {
 }
 
 
-.card-cube-container {
+.object-container {
     width: 100%;
     min-height: 80vh;
     margin: 30px 0 100px;
@@ -15,7 +15,7 @@ body {
     align-items: center;
     gap: 200px;
 
-    .testcard-container {
+    .card-container {
         perspective: 1000px;
 
         .card:hover {

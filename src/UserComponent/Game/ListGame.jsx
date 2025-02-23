@@ -26,7 +26,7 @@ export default function ListGame() {
         { name: 'Random Card', src: RandomCard, link: '/game/randomcard' },
         { name: 'To Do List', src: ToDoListSRC, link: '/game/todolist' },
         { name: 'Test App', src: '', link: '/game/testapp' },
-        { name: 'Test Card', src: '', link: '/game/testcard' },
+        { name: 'Test Object', src: '', link: '/game/object' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
     ];
 
@@ -38,7 +38,7 @@ export default function ListGame() {
             <div className='listgame'>
                 <Row className='image-row'>
                     {ListGame.map((game, index) => (
-                        <Col key={index} sm={6} md={4} lg={3} xl={3} xxl={2} className='image-col'>
+                        <Col key={index} xs={6} sm={6} md={4} lg={3} xl={3} xxl={2} className='image-col'>
                             <Link to={`${game.link}`}>
                                 <Card className='image-card'>
                                     <Card.Body className='card-body'>
