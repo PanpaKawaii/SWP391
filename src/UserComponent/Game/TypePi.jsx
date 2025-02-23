@@ -20,7 +20,7 @@ export default function TypePi() {
 
                 <h2><b><span style={{ color: Pi.substring(0, YourPi.length).includes(YourPi) ? '#28a745' : '#dc3545', wordWrap: 'break-all' }}>
                     {YourPi.split('').map((char, index) => (
-                        <span key={index}>{char}{(index % 30 === 29) ? <br /> : ''}</span>
+                        <span key={index}>{char}{(index % 20 === 19) ? <br /> : ''}</span>
                     ))}
                 </span></b></h2>
             </div>

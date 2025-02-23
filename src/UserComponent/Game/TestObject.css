@@ -2,6 +2,15 @@ body {
     margin: 0;
 }
 
+@keyframes spin {
+    from {
+        transform: rotateX(0deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(360deg) rotateY(360deg);
+    }
+}
 
 .object-container {
     width: 100%;
@@ -15,7 +24,7 @@ body {
     align-items: center;
     gap: 200px;
 
-    .card-container {
+    .scene-card {
         perspective: 1000px;
 
         .card:hover {
@@ -55,44 +64,106 @@ body {
         }
     }
 
-    .cube-container {
-        position: relative;
-        width: 100px;
-        height: 100px;
-        transform-style: preserve-3d;
-        transform: rotateX(30deg) rotateY(30deg);
-        perspective: 500px;
+    .scene-cube {
+        width: 200px;
+        height: 200px;
+        perspective: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-        .face {
-            position: absolute;
+        .cube {
+            position: relative;
             width: 100px;
             height: 100px;
-            background: rgba(255, 0, 0, 0.7);
-            border: 1px solid #000;
-        }
+            transform-style: preserve-3d;
+            animation: spin 10s linear infinite;
 
-        .front {
-            transform: translateZ(50px);
-        }
+            .face {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                background: rgba(255, 0, 0, 0.5);
+                border: 1px solid #000;
+                opacity: 0.9;
 
-        .back {
-            transform: rotateY(180deg) translateZ(50px);
-        }
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-        .left {
-            transform: rotateY(-90deg) translateZ(50px);
-        }
+            .front {
+                transform: translateZ(50px);
+            }
 
-        .right {
-            transform: rotateY(90deg) translateZ(50px);
-        }
+            .back {
+                transform: rotateY(180deg) translateZ(50px);
+            }
 
-        .top {
-            transform: rotateX(90deg) translateZ(50px);
-        }
+            .left {
+                transform: rotateY(-90deg) translateZ(50px);
+            }
 
-        .bottom {
-            transform: rotateX(-90deg) translateZ(50px);
+            .right {
+                transform: rotateY(90deg) translateZ(50px);
+            }
+
+            .top {
+                transform: rotateX(90deg) translateZ(50px);
+            }
+
+            .bottom {
+                transform: rotateX(-90deg) translateZ(50px);
+            }
+        }
+    }
+
+    .scene-pyramid {
+        width: 200px;
+        height: 200px;
+        perspective: 800px;
+
+        .pyramid {
+            position: relative;
+            width: 0;
+            height: 0;
+            transform-style: preserve-3d;
+            transition: all 1s ease;
+            transform: rotateX(-30deg) rotateY(80deg) rotateZ(10deg);
+            animation: spin 5s linear infinite;
+
+            .face {
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                opacity: 0.9;
+                transition: all 1s ease;
+            }
+
+            .front {
+                border-width: 86.6px 50px 0 50px;
+                border-color: rgba(255, 0, 0, 0.5) transparent transparent transparent;
+                transform: rotateY(0deg) translateX(0px) translateY(-20.8248px) translateZ(-28px) rotateX(160.52878deg);
+            }
+
+            .left {
+                border-width: 86.6px 50px 0 50px;
+                border-color: rgba(0, 128, 0, 0.5) transparent transparent transparent;
+                transform: rotateY(-120deg) translateX(-12px) translateY(-20.8248px) translateZ(-7px) rotateX(160.52878deg);
+            }
+
+            .right {
+                border-width: 86.6px 50px 0 50px;
+                border-color: rgba(0, 0, 255, 0.5) transparent transparent transparent;
+                transform: rotateY(120deg) translateX(12px) translateY(-20.8248px) translateZ(-7px) rotateX(160.52878deg);
+            }
+
+            .bottom {
+                border-width: 86.6px 50px 0 50px;
+                border-color: rgba(255, 255, 0, 0.5) transparent transparent transparent;
+                transform: rotateX(90deg) translateZ(-20px);
+            }
         }
     }
 }
