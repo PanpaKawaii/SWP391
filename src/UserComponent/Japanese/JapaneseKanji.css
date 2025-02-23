@@ -145,4 +145,23 @@ body {
             flex-direction: column;
         }
     }
+
+    @media screen and (max-width: 576px) {
+        .japanese-content {
+            .japanese-row {
+                .japanese-col {
+                    .grid-card {
+                        width: 160px;
+                        height: 240px;
+
+                        .card-body {
+                            h1 {
+                                font-size: 110px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
