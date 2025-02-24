@@ -7,7 +7,7 @@ export default function TypePi() {
     var Pi = '3,14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028';
     const [YourPi, setYourPi] = useState('');
 
-    const handleEditingMaze = (e) => {
+    const handleEnterPi = (e) => {
         e.preventDefault();
     }
 
@@ -25,8 +25,7 @@ export default function TypePi() {
                 </span></b></h2>
             </div>
 
-            <Form>
-                {/* <Form.Label><b>Type Pi</b></Form.Label> */}
+            <Form onSubmit={handleEnterPi}>
                 <Form.Group controlId='yourpi' className='form-group'>
                     <Form.Control as='textarea' value={YourPi} placeholder='Write your Pi' onChange={(e) => setYourPi(e.target.value)} />
                 </Form.Group>

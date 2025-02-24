@@ -31,13 +31,17 @@ export default function JapaneseVerb() {
         document.getElementById('searchverb').focus();
     }
 
+    const handleEnterVerb = (e) => {
+        e.preventDefault();
+    }
+
     return (
         <div className='japanese-verb-container'>
             <div className='japanese-verb-header'>
                 <h2>Japanese Verb</h2>
             </div>
 
-            <Form>
+            <Form onSubmit={handleEnterVerb}>
                 <Form.Group controlId='searchverb' className='form-group searchverb'>
                     <Form.Control
                         type='text'

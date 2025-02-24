@@ -587,6 +587,8 @@ export const Verb = [
     { Verb: 'よびます', Group: 'I', Meaning: 'Kêu gọi', Romaji: 'NoKanji' },
     { Verb: 'すわります', Group: 'I', Meaning: 'Ngồi xuống', Romaji: 'NoKanji' },
     { Verb: 'つかいます', Group: 'I', Meaning: 'Sử dụng', Romaji: 'NoKanji' },
+    { Verb: 'ふります', Group: 'I', Meaning: 'Rơi (Mưa, tuyết)', Romaji: 'NoKanji' },
+    { Verb: 'さきます', Group: 'I', Meaning: 'Nở (Hoa)', Romaji: 'NoKanji' },
 
 
     //「え」ます、Một âm tiết

@@ -43,13 +43,17 @@ export default function JapaneseKanji() {
         Array.from(cards).forEach(card => card.classList.remove('rotate'));
     }
 
+    const handleEnterKanji = (e) => {
+        e.preventDefault();
+    }
+
     return (
         <div className='japanese-kanji-container'>
             <div className='japanese-kanji-header'>
                 <h2>Japanese Kanji</h2>
             </div>
 
-            <Form>
+            <Form onSubmit={handleEnterKanji}>
                 <Form.Group controlId='searchkanji' className='form-group'>
                     <Form.Control
                         type='text'
