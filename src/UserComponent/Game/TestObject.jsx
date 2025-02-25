@@ -31,7 +31,7 @@ export default function TestObject() {
                 </div>
             </div> */}
 
-            <div className='scene-octahedron'>
+            {/* <div className='scene-octahedron'>
                 <div className='octahedron'>
                     <div className='face f1'>Face1</div>
                     <div className='face f2'>Face2</div>
@@ -41,8 +41,11 @@ export default function TestObject() {
                     <div className='face f6'>Face6</div>
                     <div className='face f7'>Face7</div>
                     <div className='face f8'>Face8</div>
+                    <div className='floor fl1'>Root1</div>
+                    <div className='floor fl2'>Root2</div>
+                    <div className='floor fl3'>Root3</div>
                 </div>
-            </div>
+            </div> */}
 
             {/* <div className='scene-dodecahedron'>
                 <div className='dodecahedron'>
@@ -60,6 +63,31 @@ export default function TestObject() {
                     <div className='face f12'>Face12</div>
                 </div>
             </div> */}
+
+            <div className='scene-icosahedron'>
+                <div className='icosahedron'>
+                    <div className='face f1'>Face1</div>
+                    <div className='face f2'>Face2</div>
+                    <div className='face f3'>Face3</div>
+                    <div className='face f4'>Face4</div>
+                    <div className='face f5'>Face5</div>
+                    <div className='face f6'>Face6</div>
+                    <div className='face f7'>Face7</div>
+                    <div className='face f8'>Face8</div>
+                    <div className='face f1'>Face9</div>
+                    <div className='face f2'>Face10</div>
+                    <div className='face f3'>Face11</div>
+                    <div className='face f4'>Face12</div>
+                    <div className='face f5'>Face13</div>
+                    <div className='face f6'>Face14</div>
+                    <div className='face f7'>Face15</div>
+                    <div className='face f8'>Face16</div>
+                    <div className='face f1'>Face17</div>
+                    <div className='face f2'>Face18</div>
+                    <div className='face f3'>Face19</div>
+                    <div className='face f4'>Face20</div>
+                </div>
+            </div>
         </div>
     )
 }
