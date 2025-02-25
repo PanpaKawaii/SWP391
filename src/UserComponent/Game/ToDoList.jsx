@@ -42,8 +42,8 @@ export default function ToDoList() {
             id: MaxId + 1,
             isDone: 'NotDone',
             content: content,
-            dateCreate: new Date().toISOString(),
-            lastChange: new Date().toISOString()
+            dateCreate: new Date(new Date().setHours(new Date().getHours() + 7)).toISOString(),
+            lastChange: new Date(new Date().setHours(new Date().getHours() + 7)).toISOString()
         };
         localStorage.setItem(`isDone${MaxId + 1}`, NewNote.isDone);
         localStorage.setItem(`content${MaxId + 1}`, NewNote.content);
@@ -65,7 +65,7 @@ export default function ToDoList() {
     const editCheckBox = (id, checked) => {
         const NewNote = {
             isDone: checked === true ? 'Done' : 'NotDone',
-            lastChange: new Date().toISOString()
+            lastChange: new Date(new Date().setHours(new Date().getHours() + 7)).toISOString()
         };
         localStorage.setItem(`isDone${id}`, NewNote.isDone);
         localStorage.setItem(`lastChange${id}`, NewNote.lastChange);
@@ -75,7 +75,7 @@ export default function ToDoList() {
     const editNote = (id, content) => {
         const NewNote = {
             content: content,
-            lastChange: new Date().toISOString()
+            lastChange: new Date(new Date().setHours(new Date().getHours() + 7)).toISOString()
         };
         localStorage.setItem(`content${id}`, NewNote.content);
         localStorage.setItem(`lastChange${id}`, NewNote.lastChange);
@@ -134,8 +134,14 @@ export default function ToDoList() {
                                             </Form.Group>
                                         </Form>
                                     </td>
-                                    <td>{item.dateCreate}</td>
-                                    <td>{item.lastChange}</td>
+                                    <td>
+                                        <div>{item.dateCreate.substring(0, 10)}</div>
+                                        <div>{item.dateCreate.substring(11, 19)}</div>
+                                    </td>
+                                    <td>
+                                        <div>{item.lastChange.substring(0, 10)}</div>
+                                        <div>{item.lastChange.substring(11, 19)}</div>
+                                    </td>
                                     <td>
                                         <div className='active-button'>
                                             <Button className='btn' onClick={() => deleteNote(item.id)}>DELETE</Button>
