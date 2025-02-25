@@ -7,6 +7,8 @@ export default function TypePi() {
     var Pi = '3,14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028';
     const [YourPi, setYourPi] = useState('');
 
+    const PiLength = YourPi.split('').filter(char => !isNaN(char) && char !== '\n').length;
+
     const handleEnterPi = (e) => {
         e.preventDefault();
     }
@@ -15,8 +17,14 @@ export default function TypePi() {
         <div className='typepi-container'>
             <div className='header'>
                 <h1><b>Type Pi</b></h1>
-                <h2><b>Length: {YourPi.length}</b></h2>
-                {/* <h2><b>Length (Behind comma): {YourPi.length < 2 ? 0 : YourPi.length - 2}</b></h2> */}
+                <h2><b>Length:
+                    {
+                        Pi.substring(0, YourPi.length).includes(YourPi) ?
+                            <span> {PiLength}</span>
+                            :
+                            <span> 0</span>
+                    }
+                </b></h2>
 
                 <h2><b><span style={{ color: Pi.substring(0, YourPi.length).includes(YourPi) ? '#28a745' : '#dc3545', wordWrap: 'break-all' }}>
                     {YourPi.split('').map((char, index) => (

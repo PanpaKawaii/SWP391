@@ -9,7 +9,7 @@ export default function JapaneseVerb() {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get('search') || '';
-    const Group = searchParams.get('Group') || '';
+    const group = searchParams.get('group') || '';
     const [searchQueryVerb, setSearchQueryVerb] = useState(query);
 
     let filteredVerb = Verb.filter((verb) =>
@@ -17,17 +17,17 @@ export default function JapaneseVerb() {
         Object.values(verb).some(value => value.toLowerCase().includes(searchQueryVerb.toLowerCase()))
     );
 
-    if (Group) {
-        filteredVerb = filteredVerb.filter((verb) => verb.Group === Group);
+    if (group) {
+        filteredVerb = filteredVerb.filter((verb) => verb.Group === group);
     }
 
     useEffect(() => {
-        setSearchParams({ search: searchQueryVerb, Group });
-    }, [searchQueryVerb, Group, setSearchParams]);
+        setSearchParams({ search: searchQueryVerb, group });
+    }, [searchQueryVerb, group, setSearchParams]);
 
     const clearInput = () => {
         setSearchQueryVerb('');
-        setSearchParams({ search: '', Group: '' });
+        setSearchParams({ search: '', group: '' });
         document.getElementById('searchverb').focus();
     }
 
@@ -54,8 +54,8 @@ export default function JapaneseVerb() {
                 <Form.Group controlId='groupverb' className='form-group groupverb'>
                     <Form.Control
                         as='select'
-                        value={Group}
-                        onChange={(e) => setSearchParams({ search: searchQueryVerb, Group: e.target.value })}
+                        value={group}
+                        onChange={(e) => setSearchParams({ search: searchQueryVerb, group: e.target.value })}
                     >
                         <option value=''>Select Group</option>
                         <option value='I'>Group I</option>
@@ -72,7 +72,7 @@ export default function JapaneseVerb() {
             <div className='japanese-content'>
                 <Row className='japanese-row'>
                     {filteredVerb.filter(verb => verb.Verb !== 'NoVerb').map((verb, index) => (
-                        <Col key={verb.Verb} xs={6} sm={6} md={6} lg={4} xl={3} xxl={3} className='japanese-col'>
+                        <Col key={index} xs={6} sm={6} md={6} lg={4} xl={3} xxl={3} className='japanese-col'>
                             <div
                                 className='grid-card'
                                 style={{
@@ -91,6 +91,7 @@ export default function JapaneseVerb() {
                                     <h3 className='japanese-font'>{verb.Verb}</h3>
                                     <p>Group: {verb.Group}</p>
                                     <p>Meaning: {verb.Meaning}</p>
+                                    <p className='japanese-font'>Romaji: {verb.Romaji}</p>
                                 </div>
                             </div>
                         </Col>
