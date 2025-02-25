@@ -596,10 +596,15 @@ export const Verb = [
     { Verb: 'かけます', Group: 'II', Meaning: 'Đeo (Kính)', Romaji: 'kakemasu' },
     { Verb: 'かけます', Group: 'II', Meaning: 'Gọi điện', Romaji: 'kakemasu' },
     { Verb: 'あげます', Group: 'II', Meaning: 'Tặng', Romaji: 'agemasu' },
+    { Verb: 'つけます', Group: 'II', Meaning: 'Bật, gắn vào', Romaji: 'tsukemasu' },
+    { Verb: 'あけます', Group: 'II', Meaning: 'Mở ra', Romaji: 'akemasu' },
+    { Verb: 'しめます', Group: 'II', Meaning: 'Đóng lại', Romaji: 'shimemasu' },
+    { Verb: 'みせます', Group: 'II', Meaning: 'Cho xem', Romaji: 'misemasu' },
+    { Verb: 'おしえます', Group: 'II', Meaning: 'Dạy, hướng dẫn', Romaji: 'oshiemasu' },
+    { Verb: 'でかけます', Group: 'II', Meaning: 'Ra ngoài', Romaji: 'dekakemasu' },
+    { Verb: 'でます', Group: 'II', Meaning: 'Ra ngoài', Romaji: 'demasu' },
     { Verb: 'ねます', Group: 'II', Meaning: 'Ngủ', Romaji: 'nemasu' },
     { Verb: 'みます', Group: 'II', Meaning: 'Nhìn', Romaji: 'mimasu' },
-    { Verb: 'でます', Group: 'II', Meaning: 'Ra ngoài', Romaji: 'demasu' },
-    { Verb: 'でかけます', Group: 'II', Meaning: 'Ra ngoài', Romaji: 'dekakemasu' },
     { Verb: 'きます', Group: 'II', Meaning: 'Mặc', Romaji: 'kimasu' },
     { Verb: 'います', Group: 'II', Meaning: 'Có', Romaji: 'imasu' },
 
@@ -608,14 +613,9 @@ export const Verb = [
     { Verb: 'あびます', Group: 'II', Meaning: 'Tắm', Romaji: 'abimasu' },
     { Verb: 'おちます', Group: 'II', Meaning: 'Rơi', Romaji: 'ochimasu' },
     { Verb: 'できます', Group: 'II', Meaning: 'Có thể', Romaji: 'dekimasu' },
-    { Verb: 'しんじます', Group: 'II', Meaning: 'Tin tưởng', Romaji: 'shinjimasu' },
     { Verb: 'かります', Group: 'II', Meaning: 'Mượn', Romaji: 'karimasu' },
     { Verb: 'つぎます', Group: 'II', Meaning: 'Tiếp tục', Romaji: 'tsugimasu' },
-    { Verb: 'おしえます', Group: 'II', Meaning: 'Dạy, hướng dẫn', Romaji: 'oshiemasu' },
-    { Verb: 'つけます', Group: 'II', Meaning: 'Bật, gắn vào', Romaji: 'tsukemasu' },
-    { Verb: 'あけます', Group: 'II', Meaning: 'Mở ra', Romaji: 'akemasu' },
-    { Verb: 'しめます', Group: 'II', Meaning: 'Đóng lại', Romaji: 'shimemasu' },
-    { Verb: 'みせます', Group: 'II', Meaning: 'Cho xem', Romaji: 'misemasu' },
+    { Verb: 'しんじます', Group: 'II', Meaning: 'Tin tưởng', Romaji: 'shinjimasu' },
 
 
     //N＋します => Danh động từ

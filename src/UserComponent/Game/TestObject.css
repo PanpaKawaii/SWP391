@@ -68,6 +68,7 @@ body {
         width: 200px;
         height: 200px;
         perspective: 600px;
+
         display: flex;
         justify-content: center;
         align-items: center;
@@ -77,6 +78,8 @@ body {
             width: 100px;
             height: 100px;
             transform-style: preserve-3d;
+            transition: all 1s ease;
+            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
             animation: spin 10s linear infinite;
 
             .face {
@@ -84,37 +87,41 @@ body {
                 width: 100px;
                 height: 100px;
                 background: #007bff80;
+                opacity: 0.9;
+                transition: all 1s ease;
+
                 border: 1px solid #000;
                 box-shadow: 6px 6px 80px #007bff80;
-                opacity: 0.9;
 
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
 
+            --Distance: 50px;
+
             .front {
-                transform: translateZ(50px);
+                transform: translateZ(var(--Distance));
             }
 
             .back {
-                transform: rotateY(180deg) translateZ(50px);
+                transform: rotateY(180deg) translateZ(var(--Distance));
             }
 
             .left {
-                transform: rotateY(-90deg) translateZ(50px);
+                transform: rotateY(-90deg) translateZ(var(--Distance));
             }
 
             .right {
-                transform: rotateY(90deg) translateZ(50px);
+                transform: rotateY(90deg) translateZ(var(--Distance));
             }
 
             .top {
-                transform: rotateX(90deg) translateZ(50px);
+                transform: rotateX(90deg) translateZ(var(--Distance));
             }
 
             .bottom {
-                transform: rotateX(-90deg) translateZ(50px);
+                transform: rotateX(-90deg) translateZ(var(--Distance));
             }
         }
     }
@@ -124,46 +131,55 @@ body {
         height: 200px;
         perspective: 800px;
 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
         .pyramid {
             position: relative;
-            width: 0;
-            height: 0;
+            width: 100px;
+            height: 100px;
             transform-style: preserve-3d;
             transition: all 1s ease;
             transform: rotateX(-30deg) rotateY(80deg) rotateZ(10deg);
-            animation: spin 5s linear infinite;
+            animation: spin 10s linear infinite;
 
             .face {
                 position: absolute;
-                width: 0;
-                height: 0;
-                border-style: solid;
+                width: 100px;
+                height: 86.603px;
+                background: #007bff80;
                 opacity: 0.9;
                 transition: all 1s ease;
+
+                clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
+            --Distance: 15px;
+            --Angle: 19.471deg;
+
             .front {
-                border-width: 86.6px 50px 0 50px;
-                border-color: rgba(255, 0, 0, 0.5) transparent transparent transparent;
-                transform: rotateY(0deg) translateX(0px) translateY(-20.8248px) translateZ(-28px) rotateX(160.52878deg);
+                background-color: #ff000080;
+                transform: rotateY(180deg) rotateX(var(--Angle)) translateZ(var(--Distance));
             }
 
             .left {
-                border-width: 86.6px 50px 0 50px;
-                border-color: rgba(0, 128, 0, 0.5) transparent transparent transparent;
-                transform: rotateY(-120deg) translateX(-12px) translateY(-20.8248px) translateZ(-7px) rotateX(160.52878deg);
+                background-color: #00800080;
+                transform: rotateY(60deg) rotateX(var(--Angle)) translateZ(var(--Distance));
             }
 
             .right {
-                border-width: 86.6px 50px 0 50px;
-                border-color: rgba(0, 0, 255, 0.5) transparent transparent transparent;
-                transform: rotateY(120deg) translateX(12px) translateY(-20.8248px) translateZ(-7px) rotateX(160.52878deg);
+                background-color: #0000ff80;
+                transform: rotateY(-60deg) rotateX(var(--Angle)) translateZ(var(--Distance));
             }
 
             .bottom {
-                border-width: 86.6px 50px 0 50px;
-                border-color: rgba(255, 255, 0, 0.5) transparent transparent transparent;
-                transform: rotateX(90deg) translateZ(-20px);
+                background-color: #ffff0080;
+                transform: rotateX(-90deg) translateY(-14.434px) translateZ(var(--Distance));
             }
         }
     }
@@ -172,6 +188,7 @@ body {
         width: 300px;
         height: 300px;
         perspective: 800px;
+
         display: flex;
         justify-content: center;
         align-items: center;
@@ -182,16 +199,17 @@ body {
             height: 100px;
             transform-style: preserve-3d;
             transition: all 1s ease;
-            transform: rotateX(-10deg) rotateY(70deg) rotateZ(0deg);
-            animation: spin 50s linear infinite;
+            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            animation: spin 10s linear infinite;
 
             .face {
                 position: absolute;
                 width: 120px;
                 height: 114.127px;
-                background: rgba(255, 0, 0, 0.7);
-                transition: all 1s ease;
+                background: #ff000080;
                 opacity: 0.9;
+                transition: all 1s ease;
+
                 clip-path: polygon(50% 0%, 100% 38.197%, 80.902% 100%, 19.098% 100%, 0% 38.197%);
 
                 display: flex;

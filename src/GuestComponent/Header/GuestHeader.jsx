@@ -27,6 +27,7 @@ export default function GuestHeader() {
         { text: 'Cửa hàng', path: '/booking/store' },
         { text: 'Đặt chỗ', path: '/booking/pod' },
         { text: 'Liên hệ', path: '/contact' },
+        { text: 'Test App', path: '/testapp' },
         { text: 'Game', path: '/game' },
         { text: 'Japanese', path: '/japanese' },
         { text: 'Đăng nhập', path: '/signinsignup' },
@@ -45,6 +46,7 @@ export default function GuestHeader() {
                     <Link to='/booking/store' className='desktop-menu-item'><i className='fa-solid fa-house-flag icon'></i> Cửa hàng</Link>
                     <Link to='/booking/pod' className='desktop-menu-item'><i className='fa-solid fa-list icon'></i> Đặt chỗ</Link>
                     <Link to='/contact' className='desktop-menu-item'><i className='fa-regular fa-address-card icon'></i> Liên hệ</Link>
+                    <Link to='/testapp' className='desktop-menu-item'><i className='fa-solid fa-laptop icon'></i> App</Link>
                     <Link to='/game' className='desktop-menu-item'><i className='fa-solid fa-gamepad icon'></i> Game</Link>
                     <Link to='/japanese' className='desktop-menu-item'><i className='fa-solid fa-torii-gate icon'></i> Japanese</Link>
                     <Link to='/signinsignup' className='desktop-menu-item'><i className='fas fa-sign-in-alt icon'></i> Đăng nhập</Link>

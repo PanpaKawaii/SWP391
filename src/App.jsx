@@ -22,6 +22,8 @@ import BookingPodContent from './UserComponent/Booking/BookingPodContent'
 import BookingPodDetailContent from './UserComponent/Booking/BookingPodDetailContent'
 import ContactContent from './UserComponent/Contact/ContactContent'
 
+import TestApp from './UserComponent/TestReact/TestApp'
+
 import ListGame from './UserComponent/Game/ListGame'
 import Minesweeper from './UserComponent/Game/Minesweeper'
 import WhatIsThePassword from './UserComponent/Game/WhatIsThePassword'
@@ -32,7 +34,6 @@ import GenerateMaze from './UserComponent/Game/GenerateMaze'
 import TypePi from './UserComponent/Game/TypePi'
 import RandomCard from './UserComponent/Game/RandomCard'
 import ToDoList from './UserComponent/Game/ToDoList'
-import TestApp from './UserComponent/Game/TestApp'
 import TestObject from './UserComponent/Game/TestObject'
 
 import ListJapanese from './UserComponent/Japanese/ListJapanese.jsx'
@@ -146,6 +147,8 @@ function App() {
 
                 <Route path='contact' element={<ContactContent />} />
 
+                <Route path='testapp' element={<TestApp />} />
+
                 <Route path='game' element={<ListGame />} />
                 <Route path='game/minesweeper' element={<Minesweeper />} />
                 <Route path='game/whatisthepassword' element={<WhatIsThePassword />} />
@@ -156,7 +159,6 @@ function App() {
                 <Route path='game/typepi' element={<TypePi />} />
                 <Route path='game/randomcard' element={<RandomCard />} />
                 <Route path='game/todolist' element={<ToDoList />} />
-                <Route path='game/testapp' element={<TestApp />} />
                 <Route path='game/object' element={<TestObject />} />
 
                 <Route path='japanese' element={<ListJapanese />} >

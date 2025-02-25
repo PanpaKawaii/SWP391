@@ -25,7 +25,6 @@ export default function ListGame() {
         { name: 'Type Pi', src: TypePi, link: '/game/typepi' },
         { name: 'Random Card (VW > 1227px)', src: RandomCard, link: '/game/randomcard' },
         { name: 'To Do List', src: ToDoListSRC, link: '/game/todolist' },
-        { name: 'Test App', src: '', link: '/game/testapp' },
         { name: 'Test Object', src: '', link: '/game/object' },
         { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
     ];

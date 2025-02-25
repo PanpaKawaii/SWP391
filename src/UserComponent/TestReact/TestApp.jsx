@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import User from './TestUser';
-import './TypePi.css';
+import BadComp from './Case4/BadComp';
+import GoodComp from './Case4/GoodComp';
 
 export default function TestApp() {
 
@@ -33,12 +34,15 @@ export default function TestApp() {
     }), []);
 
     return (
-        <div>
-            App
-            <Button onClick={() => setCount(prev => prev + 1)}>{count}</Button>
-            {/* <User /> */}
-            {/* <User count={count} /> */}
-            <User BNT={BNT} Array={Array} Function={Function} Object={Object} />
+        <div style={{ height: '80vh' }}>
+            <h1>App</h1>
+
+            {/* <Button onClick={() => setCount(prev => prev + 1)}>{count}</Button>
+            <User BNT={BNT} Array={Array} Function={Function} Object={Object} /> */}
+
+            {/* <BadComp /> */}
+            <GoodComp />
+
         </div>
     )
 }
