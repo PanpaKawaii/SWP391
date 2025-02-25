@@ -4,53 +4,62 @@ import './TestObject.css';
 export default function TestObject() {
     return (
         <div className='object-container'>
-            <div class='scene-card'>
-                <div class='card'>
-                    <div class='face front'>Mặt Trước</div>
-                    <div class='face back'>Mặt Sau</div>
+            {/* <div className='scene-card'>
+                <div className='card'>
+                    <div className='face front'>Mặt Trước</div>
+                    <div className='face back'>Mặt Sau</div>
+                </div>
+            </div> */}
+
+            {/* <div className='scene-cube'>
+                <div className='cube'>
+                    <div className='face front'>Front</div>
+                    <div className='face back'>Back</div>
+                    <div className='face left'>Left</div>
+                    <div className='face right'>Right</div>
+                    <div className='face top'>Top</div>
+                    <div className='face bottom'>Bottom</div>
+                </div>
+            </div> */}
+
+            {/* <div className='scene-pyramid'>
+                <div className='pyramid'>
+                    <div className='face bottom'>Yellow</div>
+                    <div className='face front'>Red</div>
+                    <div className='face left'>Green</div>
+                    <div className='face right'>Blue</div>
+                </div>
+            </div> */}
+
+            <div className='scene-octahedron'>
+                <div className='octahedron'>
+                    <div className='face f1'>Face1</div>
+                    <div className='face f2'>Face2</div>
+                    <div className='face f3'>Face3</div>
+                    <div className='face f4'>Face4</div>
+                    <div className='face f5'>Face5</div>
+                    <div className='face f6'>Face6</div>
+                    <div className='face f7'>Face7</div>
+                    <div className='face f8'>Face8</div>
                 </div>
             </div>
 
-            <div class='scene-cube'>
-                <div class='cube'>
-                    <div class='face front'>Front</div>
-                    <div class='face back'>Back</div>
-                    <div class='face left'>Left</div>
-                    <div class='face right'>Right</div>
-                    <div class='face top'>Top</div>
-                    <div class='face bottom'>Bottom</div>
+            {/* <div className='scene-dodecahedron'>
+                <div className='dodecahedron'>
+                    <div className='face f1'>Face1</div>
+                    <div className='face f2'>Face2</div>
+                    <div className='face f3'>Face3</div>
+                    <div className='face f4'>Face4</div>
+                    <div className='face f5'>Face5</div>
+                    <div className='face f6'>Face6</div>
+                    <div className='face f7'>Face7</div>
+                    <div className='face f8'>Face8</div>
+                    <div className='face f9'>Face9</div>
+                    <div className='face f10'>Face10</div>
+                    <div className='face f11'>Face11</div>
+                    <div className='face f12'>Face12</div>
                 </div>
-            </div>
-
-            <div class='scene-pyramid'>
-                <div class='pyramid'>
-                    <div class='face front'>Red</div>
-                    <div class='face left'>Green</div>
-                    <div class='face right'>Blue</div>
-                    <div class='face bottom'>Yellow</div>
-                </div>
-            </div>
-
-            <div class='scene-dodecahedron'>
-                <div class='dodecahedron'>
-                    <div class='face f1'>
-                        {/* <button style={{ backgroundColor: 'red', width: '120px' }}> */}
-                            Face1
-                        {/* </button> */}
-                    </div>
-                    <div class='face f2'>Face2</div>
-                    <div class='face f3'>Face3</div>
-                    <div class='face f4'>Face4</div>
-                    <div class='face f5'>Face5</div>
-                    <div class='face f6'>Face6</div>
-                    <div class='face f7'>Face7</div>
-                    <div class='face f8'>Face8</div>
-                    <div class='face f9'>Face9</div>
-                    <div class='face f10'>Face10</div>
-                    <div class='face f11'>Face11</div>
-                    <div class='face f12'>Face12</div>
-                </div>
-            </div>
+            </div> */}
         </div>
     )
 }
