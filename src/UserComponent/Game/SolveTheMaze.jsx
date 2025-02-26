@@ -182,7 +182,7 @@ export default function SolveTheMaze() {
                 <h1><b>Solve The Maze</b></h1>
             </div>
 
-            <div className='solvethemaze-content'>
+            <div className='content'>
 
                 <h2><b>Animation Calculation</b></h2>
                 <Table
@@ -226,7 +226,7 @@ export default function SolveTheMaze() {
                             className='no-wrap align-middle table'
                         // style={{ '--table-width': 10, }}
                         >
-                            <tbody className='tablebody'>
+                            <tbody>
                                 {Maze.map((row, index_row) => (
                                     <tr key={index_row}>
                                         {row.map((cell, index_col) => (

@@ -232,7 +232,7 @@ export default function Minesweeper() {
                 <h1><b>Minesweeper</b></h1>
             </div>
 
-            <div className='game-content'>
+            <div className='content'>
                 <Table
                     className='no-wrap align-middle table'
                     style={{
@@ -325,7 +325,7 @@ export default function Minesweeper() {
                     </tbody>
                 </Table>
 
-                <div className='game-detail'>
+                <div className='detail'>
                     <div>
                         <div className='support'>
                             <h3><i className='fa-solid fa-flag' style={{ color: 'red' }}></i> <b>{Flag}</b></h3>
@@ -357,11 +357,13 @@ export default function Minesweeper() {
                                 <option className='gamemode-option test-mode' value='Test'>Test</option>
                             </Form.Control>
                         </Form.Group>
-                        <div className='run-time'>
+
+                        <div className='runtime'>
                             {Time !== -1 && <h3>Time: <b>{Time}</b></h3>}
                         </div>
                     </div>
-                    <div className='result-detail'
+
+                    <div className='result'
                         style={{
                             border:
                                 HasWon === 1 ?

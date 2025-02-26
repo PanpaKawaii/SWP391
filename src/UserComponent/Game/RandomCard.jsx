@@ -89,7 +89,7 @@ export default function RandomCard() {
                 <h1><b>RANDOM CARD</b></h1>
             </div>
 
-            <div className='randomcard-content'>
+            <div className='content'>
 
                 <div className='poker-card' id='poker-cards'></div>
 
