@@ -11,7 +11,7 @@ export default function TestObject() {
                 </div>
             </div> */}
 
-            {/* <div className='scene-cube'>
+            <div className='scene-cube'>
                 <div className='cube'>
                     <div className='face front'>Front</div>
                     <div className='face back'>Back</div>
@@ -20,18 +20,18 @@ export default function TestObject() {
                     <div className='face top'>Top</div>
                     <div className='face bottom'>Bottom</div>
                 </div>
-            </div> */}
+            </div>
 
-            {/* <div className='scene-pyramid'>
+            <div className='scene-pyramid'>
                 <div className='pyramid'>
                     <div className='face bottom'>Yellow</div>
                     <div className='face front'>Red</div>
                     <div className='face left'>Green</div>
                     <div className='face right'>Blue</div>
                 </div>
-            </div> */}
+            </div>
 
-            {/* <div className='scene-octahedron'>
+            <div className='scene-octahedron'>
                 <div className='octahedron'>
                     <div className='face f1'>Face1</div>
                     <div className='face f2'>Face2</div>
@@ -45,9 +45,9 @@ export default function TestObject() {
                     <div className='floor fl2'>Root2</div>
                     <div className='floor fl3'>Root3</div>
                 </div>
-            </div> */}
+            </div>
 
-            {/* <div className='scene-dodecahedron'>
+            <div className='scene-dodecahedron'>
                 <div className='dodecahedron'>
                     <div className='face f1'>Face1</div>
                     <div className='face f2'>Face2</div>
@@ -62,7 +62,7 @@ export default function TestObject() {
                     <div className='face f11'>Face11</div>
                     <div className='face f12'>Face12</div>
                 </div>
-            </div> */}
+            </div>
 
             <div className='scene-icosahedron'>
                 <div className='icosahedron'>

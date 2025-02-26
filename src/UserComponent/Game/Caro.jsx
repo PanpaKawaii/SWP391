@@ -282,58 +282,56 @@ export default function Caro() {
 
     return (
         <div className='caro-container'>
-
             <div className='header'>
                 <h1><b>CARO</b></h1>
             </div>
 
-            <div className='game-content'>
-
-                <div className='game-detail'>
-                    <div>
-                        <div className='support'>
-                            <Button className='btn' style={{ backgroundColor: Player === 1 ? '#fd4755' : (Player === 2 ? '#01d0fd' : '') }} onClick={() => remarkCell()}><i className='fa-solid fa-reply'></i></Button>
-                            <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESTART</Button>
-                        </div>
-                        <Form.Group controlId='gamemode' className='form-group'>
-                            <Form.Control
-                                as='select'
-                                value={SelectedGameMode}
-                                onChange={(e) => { changeGameMode(e.target.value), setSelectedGameMode(e.target.value) }}
-                                className={
-                                    SelectedGameMode === 'LargeMap' ?
-                                        'gamemode-option largemap-mode'
-                                        :
-                                        (SelectedGameMode === 'TicTacToe' ?
-                                            'gamemode-option tictactoe-mode'
-                                            :
-                                            'gamemode-option test-mode'
-                                        )
-                                }
-                            >
-                                <option className='gamemode-option' value='LargeMap'>Large Map</option>
-                                <option className='gamemode-option' value='TicTacToe'>Tic Tac Toe</option>
-                            </Form.Control>
-                        </Form.Group>
+            <div className='caro-detail'>
+                <div>
+                    <div className='support'>
+                        <Button className='btn' style={{ backgroundColor: Player === 1 ? '#fd4755' : (Player === 2 ? '#01d0fd' : '') }} onClick={() => remarkCell()}><i className='fa-solid fa-reply'></i></Button>
+                        <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESTART</Button>
                     </div>
-                    <div className='result-detail'
-                        style={{
-                            border:
-                                HasWon === 1 ?
-                                    '4px solid #fd4755'
+                    <Form.Group controlId='gamemode' className='form-group'>
+                        <Form.Control
+                            as='select'
+                            value={SelectedGameMode}
+                            onChange={(e) => { changeGameMode(e.target.value), setSelectedGameMode(e.target.value) }}
+                            className={
+                                SelectedGameMode === 'LargeMap' ?
+                                    'gamemode-option largemap-mode'
                                     :
-                                    (HasWon === 2 ?
-                                        '4px solid #01d0fd'
+                                    (SelectedGameMode === 'TicTacToe' ?
+                                        'gamemode-option tictactoe-mode'
                                         :
-                                        'none'
+                                        'gamemode-option test-mode'
                                     )
-                        }}
-                    >
-                        {HasWon === 1 && <h2 style={{ color: '#fd4755' }}><b><i className='fa-solid fa-xmark'></i> WON!</b></h2>}
-                        {HasWon === 2 && <h2 style={{ color: '#01d0fd' }}><b><i className='fa-regular fa-circle'></i> WON!</b></h2>}
-                    </div>
+                            }
+                        >
+                            <option className='gamemode-option' value='LargeMap'>Large Map</option>
+                            <option className='gamemode-option' value='TicTacToe'>Tic Tac Toe</option>
+                        </Form.Control>
+                    </Form.Group>
                 </div>
+                <div className='result'
+                    style={{
+                        border:
+                            HasWon === 1 ?
+                                '4px solid #fd4755'
+                                :
+                                (HasWon === 2 ?
+                                    '4px solid #01d0fd'
+                                    :
+                                    'none'
+                                )
+                    }}
+                >
+                    {HasWon === 1 && <h2 style={{ color: '#fd4755' }}><b><i className='fa-solid fa-xmark'></i> WON!</b></h2>}
+                    {HasWon === 2 && <h2 style={{ color: '#01d0fd' }}><b><i className='fa-regular fa-circle'></i> WON!</b></h2>}
+                </div>
+            </div>
 
+            <div className='caro-content'>
                 <Table bordered
                     className='no-wrap align-middle table'
                     style={{
@@ -409,9 +407,7 @@ export default function Caro() {
                         ))}
                     </tbody>
                 </Table>
-
             </div>
-
         </div>
     )
 }

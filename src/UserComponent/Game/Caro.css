@@ -17,57 +17,57 @@ body {
         }
     }
 
-    .game-content {
+    .caro-detail {
+        padding: 0 10px;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+
+        .support {
+            display: flex;
+            justify-content: center;
+
+            .btn {
+                margin: 0 5px;
+                background-color: #fb8b24;
+                font-weight: bold;
+                border: none;
+            }
+        }
+
+        .form-group {
+            margin: 10px 0;
+
+            .form-control:focus {
+                box-shadow: 0 0 0 0.25rem rgba(251, 139, 36, 0.25);
+                box-shadow: none;
+                border-color: #cccccc;
+            }
+
+            .form-control {
+                border-color: #cccccc;
+            }
+
+            .gamemode-option {
+                font-weight: bold;
+            }
+        }
+
+        .result {
+            margin: 0 0 0 10px;
+            padding: 5px 4px;
+            border-radius: 8px;
+
+            h2 {
+                margin: 0;
+            }
+        }
+    }
+
+    .caro-content {
         display: flex;
         flex-direction: column;
         align-items: center;
-
-        .game-detail {
-            padding: 0 10px;
-            display: flex;
-            justify-content: center;
-            align-items: start;
-
-            .support {
-                display: flex;
-                justify-content: center;
-
-                .btn {
-                    margin: 0 5px;
-                    background-color: #fb8b24;
-                    font-weight: bold;
-                    border: none;
-                }
-            }
-
-            .form-group {
-                margin: 10px 0;
-
-                .form-control:focus {
-                    box-shadow: 0 0 0 0.25rem rgba(251, 139, 36, 0.25);
-                    box-shadow: none;
-                    border-color: #cccccc;
-                }
-
-                .form-control {
-                    border-color: #cccccc;
-                }
-
-                .gamemode-option {
-                    font-weight: bold;
-                }
-            }
-
-            .result-detail {
-                margin: 0 0 0 10px;
-                padding: 5px 4px;
-                border-radius: 8px;
-
-                h2 {
-                    margin: 0;
-                }
-            }
-        }
 
         table {
             display: block;
