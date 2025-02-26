@@ -590,6 +590,7 @@ export const Verb = [
     { Verb: 'ふります', Group: 'I', Meaning: 'Rơi (Mưa, tuyết)', Romaji: 'furimasu' },
     { Verb: 'さきます', Group: 'I', Meaning: 'Nở (Hoa)', Romaji: 'sakimasu' },
     { Verb: 'あるきます', Group: 'I', Meaning: 'Đi bộ', Romaji: 'arukimasu' },
+    { Verb: 'わたります', Group: 'I', Meaning: 'Băng qua', Romaji: 'watarimasu' },
     { Verb: 'すみます', Group: 'I', Meaning: 'Sống, cư trú', Romaji: 'sumimasu' },
     { Verb: 'くもります', Group: 'I', Meaning: 'Trời nhiều mây', Romaji: 'kumorimasu' },
     { Verb: 'つもります', Group: 'I', Meaning: 'Chất đống', Romaji: 'tsumorimasu' },

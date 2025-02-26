@@ -98,7 +98,7 @@ export default function ToDoList() {
                 <h1><b>To Do List</b></h1>
             </div>
 
-            <div className='todolist-content'>
+            <div className='content'>
                 <Form className='add-form' onSubmit={handleAddingNote}>
                     <Form.Group controlId='addingnote' className='form-group'>
                         <Form.Control type='text' placeholder='Add note' />
@@ -129,18 +129,18 @@ export default function ToDoList() {
                                                 <Form.Check type='checkbox' checked={item.isDone === 'Done'} onChange={(e) => editCheckBox(item.id, e.target.checked)} />
                                             </Form.Group>
                                             <Form.Group controlId='edittingnote' className='form-group forminput'>
-                                                <Form.Control type='text' placeholder='...' value={item.content} onChange={(e) => editNote(item.id, e.target.value)}
+                                                <Form.Control type='text' placeholder='...' value={item.content ? item.content : ''} onChange={(e) => editNote(item.id, e.target.value)}
                                                     style={{ color: item.isDone === 'Done' && '#cccccc' }} />
                                             </Form.Group>
                                         </Form>
                                     </td>
                                     <td>
-                                        <div>{item.dateCreate.substring(0, 10)}</div>
-                                        <div>{item.dateCreate.substring(11, 19)}</div>
+                                        <div>{item.dateCreate?.substring(0, 10)}</div>
+                                        <div>{item.dateCreate?.substring(11, 19)}</div>
                                     </td>
                                     <td>
-                                        <div>{item.lastChange.substring(0, 10)}</div>
-                                        <div>{item.lastChange.substring(11, 19)}</div>
+                                        <div>{item.lastChange?.substring(0, 10)}</div>
+                                        <div>{item.lastChange?.substring(11, 19)}</div>
                                     </td>
                                     <td>
                                         <div className='active-button'>
