@@ -15,10 +15,10 @@ export default function ListJapanese() {
 
     return (
         <div className='listjapanese-container'>
-            <div className='listjapanese-header'>
+            <div className='header'>
                 <h1><b>List Japanese</b></h1>
             </div>
-            <div className='listjapanese'>
+            <div className='content'>
                 <Row className='image-row'>
                     {ListJapanese.map((japanese, index) => (
                         <Col key={index} xs={6} sm={6} md={4} lg={3} xl={3} xxl={2} className='image-col'>

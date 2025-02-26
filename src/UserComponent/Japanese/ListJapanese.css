@@ -9,7 +9,7 @@ body {
     text-align: center;
     font-family: 'Quicksand', Arial, sans-serif;
 
-    .listjapanese-header {
+    .header {
         margin: 0 0 60px;
 
         h1 {
@@ -19,7 +19,7 @@ body {
         }
     }
 
-    .listjapanese {
+    .content {
         width: 100%;
         height: fit-content;
         display: flex;
@@ -77,7 +77,7 @@ body {
     }
 
     @media screen and (max-width: 992px) {
-        .listjapanese-header {
+        .header {
             h1 {
                 font-size: 54px;
             }
@@ -85,7 +85,7 @@ body {
     }
 
     @media screen and (max-width: 576px) {
-        .listjapanese {
+        .content {
             .image-row {
                 .image-col {
                     a {

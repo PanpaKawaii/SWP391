@@ -175,8 +175,7 @@ export default function GenerateMaze() {
                 <h1><b>Generate Maze</b></h1>
             </div>
 
-            <div className='generatemaze-content'>
-
+            <div className='content'>
                 <Table bordered
                     className='no-wrap align-middle table'
                 // style={{ '--table-width': 10, }}
