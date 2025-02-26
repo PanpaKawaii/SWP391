@@ -589,6 +589,12 @@ export const Verb = [
     { Verb: 'つかいます', Group: 'I', Meaning: 'Sử dụng', Romaji: 'tsukaimasu' },
     { Verb: 'ふります', Group: 'I', Meaning: 'Rơi (Mưa, tuyết)', Romaji: 'furimasu' },
     { Verb: 'さきます', Group: 'I', Meaning: 'Nở (Hoa)', Romaji: 'sakimasu' },
+    { Verb: 'あるきます', Group: 'I', Meaning: 'Đi bộ', Romaji: 'arukimasu' },
+    { Verb: 'すみます', Group: 'I', Meaning: 'Sống, cư trú', Romaji: 'sumimasu' },
+    { Verb: 'くもります', Group: 'I', Meaning: 'Trời nhiều mây', Romaji: 'kumorimasu' },
+    { Verb: 'つもります', Group: 'I', Meaning: 'Chất đống', Romaji: 'tsumorimasu' },
+    { Verb: 'ふきます', Group: 'I', Meaning: 'Thổi (Gió)', Romaji: 'fukimasu' },
+    { Verb: 'やみます', Group: 'I', Meaning: 'Ngừng, tạnh', Romaji: 'yamimasu' },
 
 
     //「え」ます、Một âm tiết
@@ -600,6 +606,7 @@ export const Verb = [
     { Verb: 'あけます', Group: 'II', Meaning: 'Mở ra', Romaji: 'akemasu' },
     { Verb: 'しめます', Group: 'II', Meaning: 'Đóng lại', Romaji: 'shimemasu' },
     { Verb: 'みせます', Group: 'II', Meaning: 'Cho xem', Romaji: 'misemasu' },
+    { Verb: 'はれます', Group: 'II', Meaning: 'Trời quang đãng', Romaji: 'haremasu' },
     { Verb: 'おしえます', Group: 'II', Meaning: 'Dạy, hướng dẫn', Romaji: 'oshiemasu' },
     { Verb: 'でかけます', Group: 'II', Meaning: 'Ra ngoài', Romaji: 'dekakemasu' },
     { Verb: 'でます', Group: 'II', Meaning: 'Ra ngoài', Romaji: 'demasu' },

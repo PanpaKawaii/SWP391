@@ -49,8 +49,8 @@ export default function JapaneseKanji() {
 
     return (
         <div className='japanese-kanji-container'>
-            <div className='japanese-kanji-header'>
-                <h2>Japanese Kanji</h2>
+            <div className='header'>
+                <h2><b>Japanese Kanji</b></h2>
             </div>
 
             <Form onSubmit={handleEnterKanji}>

@@ -37,8 +37,8 @@ export default function JapaneseVerb() {
 
     return (
         <div className='japanese-verb-container'>
-            <div className='japanese-verb-header'>
-                <h2>Japanese Verb</h2>
+            <div className='header'>
+                <h2><b>Japanese Verb</b></h2>
             </div>
 
             <Form onSubmit={handleEnterVerb}>

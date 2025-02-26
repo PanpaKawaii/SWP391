@@ -13,12 +13,11 @@ body {
         font-family: 'Klee One', Arial, sans-serif;
     }
 
-    .japanese-verb-header {
+    .header {
         h2 {
             margin: 0 0 20px;
             color: #fd73a7;
             font-size: 54px;
-            font-weight: bold;
         }
     }
 
