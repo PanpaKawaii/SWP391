@@ -286,7 +286,7 @@ export default function Caro() {
                 <h1><b>CARO</b></h1>
             </div>
 
-            <div className='caro-detail'>
+            <div className='detail'>
                 <div>
                     <div className='support'>
                         <Button className='btn' style={{ backgroundColor: Player === 1 ? '#fd4755' : (Player === 2 ? '#01d0fd' : '') }} onClick={() => remarkCell()}><i className='fa-solid fa-reply'></i></Button>
@@ -313,6 +313,7 @@ export default function Caro() {
                         </Form.Control>
                     </Form.Group>
                 </div>
+
                 <div className='result'
                     style={{
                         border:
@@ -331,7 +332,7 @@ export default function Caro() {
                 </div>
             </div>
 
-            <div className='caro-content'>
+            <div className='content'>
                 <Table bordered
                     className='no-wrap align-middle table'
                     style={{

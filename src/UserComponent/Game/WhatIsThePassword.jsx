@@ -188,14 +188,14 @@ export default function WhatIsThePassword() {
 
     return (
         <div className='whatisthepassword-container'>
-            <div className='whatisthepassword-box'>
-                <div className='header'>
-                    <h2><b>WHAT IS THE</b></h2>
-                    <h1><b>PASSWORD?</b></h1>
-                    {/* <h1><b>Password: {Password}</b></h1> */}
-                </div>
+            <div className='header'>
+                <h2><b>WHAT IS THE</b></h2>
+                <h1><b>PASSWORD?</b></h1>
+                {/* <h1><b>Password: {Password}</b></h1> */}
+            </div>
 
-                <div className='result-detail'>
+            <div className='whatisthepassword-box'>
+                <div className='result'>
                     {
                         ((HasWon === true) || (HasWon === false && GuessedCount >= 10)) &&
                         <div className='answer'>
@@ -214,7 +214,7 @@ export default function WhatIsThePassword() {
                         </div>
                     }
 
-                    <div className='run-time'>
+                    <div className='runtime'>
                         {GuessedTime !== -1 && <h3>Time: <b>{GuessedTime}</b></h3>}
                     </div>
                 </div>
@@ -231,7 +231,7 @@ export default function WhatIsThePassword() {
 
                 <div className='error-message'>{Error && Error}</div>
 
-                <div className='game-content'>
+                <div className='content'>
                     <Table className='no-wrap align-middle table'>
                         <thead className='list-header'>
                             <tr>
@@ -270,7 +270,8 @@ export default function WhatIsThePassword() {
                         </tbody>
                     </Table>
                 </div>
-                <div className='game-detail'>
+
+                <div className='detail'>
                     <Form>
                         <Form.Label><b><u>Note:</u></b></Form.Label>
                         <Form.Group controlId='notedpassword' className='form-group'>
