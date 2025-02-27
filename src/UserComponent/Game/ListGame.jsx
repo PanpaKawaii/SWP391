@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './ListGame.css';
 
 import CaroSRC from '../../assets/imageGAMEs/Caro.png';
@@ -19,6 +19,7 @@ export default function ListGame() {
         { name: 'Minesweeper', src: MinesweeperSRC, link: '/game/minesweeper' },
         { name: 'What Is The Password?', src: WhatIsThePasswordSRC, link: '/game/whatisthepassword' },
         { name: 'Caro', src: CaroSRC, link: '/game/caro' },
+        { name: 'Chess', src: '', link: '/game/chess' },
         { name: 'Tetris', src: Tetris, link: '/game/tetris' },
         { name: 'Solve The Maze', src: SolveTheMazeSRC, link: '/game/solvethemaze' },
         { name: 'Generate Maze', src: GenerateMaze, link: '/game/generatemaze' },
@@ -26,7 +27,6 @@ export default function ListGame() {
         { name: 'Random Card (VW > 1227px)', src: RandomCard, link: '/game/randomcard' },
         { name: 'To Do List', src: ToDoListSRC, link: '/game/todolist' },
         { name: 'Test Object', src: '', link: '/game/object' },
-        { name: 'Name Game', src: '', link: '/game/aaaaaaaaaaaaaaaaaaaa' },
     ];
 
     return (
@@ -50,8 +50,6 @@ export default function ListGame() {
                     ))}
                 </Row>
             </div>
-            <hr/>
-            <Outlet />
         </div>
     )
 }

@@ -3,7 +3,7 @@ import { Col, Row, Form, Button } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import './JapaneseVerb.css';
 
-import { Verb } from '../../assets/listJapanese';
+import { Verb } from './listJapanese';
 
 export default function JapaneseVerb() {
 

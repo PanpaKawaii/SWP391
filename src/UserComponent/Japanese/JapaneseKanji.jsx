@@ -3,7 +3,7 @@ import { Col, Row, Table, Form, Button } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import './JapaneseKanji.css';
 
-import { Kanji, KanjiExample } from '../../assets/listJapanese';
+import { Kanji, KanjiExample } from './listJapanese';
 
 export default function JapaneseKanji() {
 
