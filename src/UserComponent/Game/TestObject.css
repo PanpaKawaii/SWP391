@@ -353,12 +353,12 @@ body {
             }
 
             .f5 {
-                transform: rotateZ(-144deg) rotateX(var(--Angle)) translateY(var(--SubDistance)) translateZ(var(--Distance));
+                transform: rotateZ(216deg) rotateX(var(--Angle)) translateY(var(--SubDistance)) translateZ(var(--Distance));
                 background-color: rgba(0, 0, 255, 0.5);
             }
 
             .f6 {
-                transform: rotateZ(-72deg) rotateX(var(--Angle)) translateY(var(--SubDistance)) translateZ(var(--Distance));
+                transform: rotateZ(288deg) rotateX(var(--Angle)) translateY(var(--SubDistance)) translateZ(var(--Distance));
                 background-color: rgba(128, 0, 128, 0.5);
             }
 
@@ -383,12 +383,12 @@ body {
             }
 
             .f11 {
-                transform: rotateZ(-144deg) rotateX(calc(180deg + var(--Angle))) translateY(var(--SubDistance)) translateZ(var(--Distance));
+                transform: rotateZ(216deg) rotateX(calc(180deg + var(--Angle))) translateY(var(--SubDistance)) translateZ(var(--Distance));
                 background-color: rgba(192, 192, 192, 0.5);
             }
 
             .f12 {
-                transform: rotateZ(-72deg) rotateX(calc(180deg + var(--Angle))) translateY(var(--SubDistance)) translateZ(var(--Distance));
+                transform: rotateZ(288deg) rotateX(calc(180deg + var(--Angle))) translateY(var(--SubDistance)) translateZ(var(--Distance));
                 background-color: rgba(0, 0, 0, 0.5);
             }
         }
@@ -410,7 +410,7 @@ body {
             height: 100px;
             transform-style: preserve-3d;
             transition: all 1s ease;
-            transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg);
+            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
             animation: spin 10s linear infinite;
 
             .face {
@@ -457,77 +457,77 @@ body {
             }
 
             .f6 {
-                transform: rotateZ(0deg) rotateX(calc(138.19deg + var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(36deg) rotateX(calc(41.81deg - var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(128, 0, 128, 0.5);
             }
 
             .f7 {
-                transform: rotateZ(72deg) rotateX(calc(138.19deg + var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(108deg) rotateX(calc(41.81deg - var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(255, 0, 255, 0.5);
             }
 
             .f8 {
-                transform: rotateZ(144deg) rotateX(calc(138.19deg + var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(180deg) rotateX(calc(41.81deg - var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(0, 255, 255, 0.5);
             }
 
             .f9 {
-                transform: rotateZ(216deg) rotateX(calc(138.19deg + var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(252deg) rotateX(calc(41.81deg - var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(231, 170, 170, 0.5);
             }
 
             .f10 {
-                transform: rotateZ(288deg) rotateX(calc(138.19deg + var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(324deg) rotateX(calc(41.81deg - var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(31, 117, 173, 0.5);
             }
 
             .f11 {
-                transform: rotateZ(0deg) rotateX(calc(318.19deg + var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(36deg) rotateX(calc(-138.19deg - var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(192, 192, 192, 0.5);
             }
 
             .f12 {
-                transform: rotateZ(72deg) rotateX(calc(318.19deg + var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(108deg) rotateX(calc(-138.19deg - var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(0, 0, 0, 0.5);
             }
 
             .f13 {
-                transform: rotateZ(144deg) rotateX(calc(318.19deg + var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(180deg) rotateX(calc(-138.19deg - var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(255, 105, 180, 0.5);
             }
 
             .f14 {
-                transform: rotateZ(216deg) rotateX(calc(318.19deg + var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(252deg) rotateX(calc(-138.19deg - var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(255, 215, 0, 0.5);
             }
 
             .f15 {
-                transform: rotateZ(288deg) rotateX(calc(318.19deg + var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(324deg) rotateX(calc(-138.19deg - var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(0, 100, 0, 0.5);
             }
 
             .f16 {
-                transform: rotateZ(36deg) rotateX(calc(0deg - var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(0deg) rotateX(calc(180deg + var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(0, 255, 0, 0.5);
             }
 
             .f17 {
-                transform: rotateZ(108deg) rotateX(calc(0deg - var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(72deg) rotateX(calc(180deg + var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(0, 255, 255, 0.5);
             }
 
             .f18 {
-                transform: rotateZ(180deg) rotateX(calc(0deg - var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(144deg) rotateX(calc(180deg + var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(128, 128, 128, 0.5);
             }
 
             .f19 {
-                transform: rotateZ(252deg) rotateX(calc(0deg - var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(216deg) rotateX(calc(180deg + var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(218, 218, 218, 0.5);
             }
 
             .f20 {
-                transform: rotateZ(324deg) rotateX(calc(0deg - var(--Angle))) translateZ(calc(0px - var(--Distance)));
+                transform: rotateZ(288deg) rotateX(calc(180deg + var(--Angle))) translateZ(var(--Distance));
                 background-color: rgba(0, 0, 128, 0.5);
             }
         }
