@@ -46,15 +46,25 @@ export default function Chess() {
         col: null
     });
 
-    const [PlayTable, setPlayTable] = useState(Array(GameMode.RowCount).fill(0).map(() =>
-        Array(GameMode.ColCount).fill(0).map(() => ({ value: 0 }))
-    ));
+    // const [PlayTable, setPlayTable] = useState(Array(GameMode.RowCount).fill(0).map(() =>
+    //     Array(GameMode.ColCount).fill(0).map(() => ({ value: 0 }))
+    // ));
+
+    const [PlayTable, setPlayTable] = useState([]);
+
+    const InitialPlayTable = [
+        [-5, -4, -3, -2, -1, -3, -4, -5],
+        [-6, -6, -6, -6, -6, -6, -6, -6],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [6, 6, 6, 6, 6, 6, 6, 6],
+        [5, 4, 3, 2, 1, 3, 4, 5]
+    ]
 
     useEffect(() => {
-        const NewPlayTable = Array(GameMode.RowCount).fill(0).map(() =>
-            Array(GameMode.ColCount).fill(0).map(() => ({ value: 0 }))
-        );
-        setPlayTable(NewPlayTable);
+        setPlayTable(InitialPlayTable);
 
         setPlayer(1);
         setPath([]);
@@ -283,7 +293,7 @@ export default function Chess() {
                                 )
                     }}
                 >
-                    {HasWon === 1 && <h2 style={{ color: '#fd4755' }}><b><i className='fa-solid fa-xmark'></i> WON!</b></h2>}
+                    {HasWon === 1 && <h2 ><b><i className='fa-solid fa-xmark'></i> WON!</b></h2>}
                     {HasWon === 2 && <h2 style={{ color: '#01d0fd' }}><b><i className='fa-regular fa-circle'></i> WON!</b></h2>}
                 </div>
             </div>
@@ -293,71 +303,35 @@ export default function Chess() {
                     className='no-wrap align-middle table'
                     style={{
                         '--table-width': GameMode.ColCount,
-                        '--table-height': GameMode.RowCount,
-                        border:
-                            HasWon === 1 ?
-                                '2px solid #fd4755'
-                                :
-                                (HasWon === 2 ?
-                                    '2px solid #01d0fd'
-                                    :
-                                    '2px solid #cccccc'
-                                ),
-                        backgroundColor:
-                            HasWon === 1 ?
-                                '#fd4755'
-                                :
-                                (HasWon === 2 ?
-                                    '#01d0fd'
-                                    :
-                                    '#cccccc'
-                                ),
+                        '--table-height': GameMode.RowCount
                     }}
                 >
                     <tbody>
-                        {[...Array(GameMode.RowCount)].map((_, index_row) => (
+                        {PlayTable.map((row, index_row) => (
                             <tr key={index_row}>
-                                {[...Array(GameMode.ColCount)].map((_, index_col) => (
+                                {row.map((cell, index_col) => (
                                     <td
                                         key={index_col}
-                                        style={{
-                                            backgroundColor:
-                                                ConstantCell.some(cell => cell[0] === index_row && cell[1] === index_col) ?
-                                                    (PlayTable[index_row][index_col].value === 1 ?
-                                                        '#ffa2aa'
-                                                        :
-                                                        (PlayTable[index_row][index_col].value === 2 ?
-                                                            '#80e8ff'
-                                                            :
-                                                            'none'
-                                                        )
-                                                    )
-                                                    :
-                                                    ((index_row === LastStep.row && index_col === LastStep.col) && '#eeeeee')
-                                        }}
                                         className={
-                                            (PlayTable[index_row][index_col].value === 0 && Player === 1) ?
-                                                'PutX'
-                                                :
-                                                (PlayTable[index_row][index_col].value === 0 && Player === 2) ?
-                                                    'PutO'
-                                                    :
-                                                    ''
+                                            cell === 0 && Player === 1 ? 'PutX' :
+                                                cell === 0 && Player === 2 ? 'PutO' : ''
                                         }
+                                        style={{ backgroundColor: (index_row + index_col) % 2 === 0 ? '#ddd' : '#999' }}
                                         onClick={() => { MarkCell(index_row, index_col) }}
                                     >
-                                        <p>
-                                            {PlayTable[index_row][index_col].value === 1 ?
-                                                <i className='fa-solid fa-xmark' style={{ color: '#fd4755' }}></i>
-                                                :
-                                                (
-                                                    PlayTable[index_row][index_col].value === 2 ?
-                                                        <i className='fa-regular fa-circle' style={{ color: '#01d0fd' }}></i>
-                                                        :
-                                                        ''
-                                                )
-                                            }
-                                        </p>
+                                        {cell === -1 && <i className='fa-regular fa-chess-king black-side'></i>}
+                                        {cell === -2 && <i className='fa-regular fa-chess-queen black-side'></i>}
+                                        {cell === -3 && <i className='fa-regular fa-chess-bishop black-side'></i>}
+                                        {cell === -4 && <i className='fa-regular fa-chess-knight black-side'></i>}
+                                        {cell === -5 && <i className='fa-regular fa-chess-rook black-side'></i>}
+                                        {cell === -6 && <i className='fa-regular fa-chess-pawn black-side'></i>}
+
+                                        {cell === 1 && <i className='fa-regular fa-chess-king white-side'></i>}
+                                        {cell === 2 && <i className='fa-regular fa-chess-queen white-side'></i>}
+                                        {cell === 3 && <i className='fa-regular fa-chess-bishop white-side'></i>}
+                                        {cell === 4 && <i className='fa-regular fa-chess-knight white-side'></i>}
+                                        {cell === 5 && <i className='fa-regular fa-chess-rook white-side'></i>}
+                                        {cell === 6 && <i className='fa-regular fa-chess-pawn white-side'></i>}
                                     </td>
                                 ))}
                             </tr>
