@@ -90,6 +90,18 @@ body {
                     background-color: #80e8ff;
                 }
 
+                .lightcell {
+                    background-color: #ccc;
+                }
+
+                .darkcell {
+                    background-color: #999;
+                }
+
+                .moveablecell {
+                    background-color: #ff0000;
+                }
+
                 td {
                     margin: 0;
                     padding: 0;

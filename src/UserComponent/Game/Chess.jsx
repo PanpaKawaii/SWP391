@@ -7,20 +7,20 @@ export default function Chess() {
     const [PlayTable, setPlayTable] = useState([]);
 
     const InitialPlayTable = [
-        [-5, -4, -3, -2, -1, -3, -4, -5],
+        [-5, -4, -3, -2, -1, 6, -4, -5],
         [-6, -6, -6, -6, -6, -6, -6, -6],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, -6, -6, 3, 0, 0, 0, 0],
+        [0, 0, 2, 0, 0, -3, 0, 0],
+        [0, 1, 0, 3, 0, 0, 0, 0],
+        [-2, 6, -1, 0, 1, -3, 5, 0],
         [6, 6, 6, 6, 6, 6, 6, 6],
         [5, 4, 3, 2, 1, 3, 4, 5]
     ]
 
     const [Refresh, setRefresh] = useState(0);
     const [Player, setPlayer] = useState(1);
-    const [Pick, setPick] = useState([]);
-    const [Move, setMove] = useState(0);
+    const [Pick, setPick] = useState([0, 0, 0]);
+    const [Move, setMove] = useState(false);
 
     useEffect(() => {
         setPlayTable(InitialPlayTable);
@@ -32,7 +32,424 @@ export default function Chess() {
         // setConstantCell([]);
     }, [Refresh]);
 
+    const handlePickAndShowPath = (cell, row, col) => {
+        console.log('handleShowPath');
+        setPick(p => [cell, row, col]);
+        setMove(p => !p);
+        if (cell === 1 || cell === -1) {//////////////////////////////////////////////////////////////////////////////////////////////////// King
+            console.log('1: King');
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    const newRow = row + i;
+                    const newCol = col + j;
+                    if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+                        if (PlayTable[newRow][newCol] * cell <= 0) {
+                            let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
+                            redcell.classList.add('moveablecell');
+                        }
+                    }
+                }
+            };
+        } else if (cell === 2 || cell === -2) {//////////////////////////////////////////////////////////////////////////////////////////////////// Queen
+            console.log('2: Queen');
+            for (let i = 1; i < 8; i++) {
+                if (row - i >= 0 && col + i < 8) {// Up-right diagonal
+                    if (PlayTable[row - i][col + i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row - i][col + i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (row - i >= 0 && col - i >= 0) {// Up-left diagonal
+                    if (PlayTable[row - i][col - i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row - i][col - i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (row + i < 8 && col + i < 8) {// Down-right diagonal
+                    if (PlayTable[row + i][col + i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row + i][col + i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (row + i < 8 && col - i >= 0) {// Down-left diagonal
+                    if (PlayTable[row + i][col - i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row + i][col - i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (row - i >= 0) {// Up line
+                    if (PlayTable[row - i][col] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row - i][col] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (row + i < 8) {// Down line
+                    if (PlayTable[row + i][col] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row + i][col] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (col - i >= 0) {// Left line
+                    if (PlayTable[row][col - i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row][col - i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (col + i < 8) {// Right line
+                    if (PlayTable[row][col + i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row][col + i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+        } else if (cell === 3 || cell === -3) {//////////////////////////////////////////////////////////////////////////////////////////////////// Bishop
+            console.log('3: Bishop');
+            for (let i = 1; i < 8; i++) {
+                if (row - i >= 0 && col + i < 8) {// Up-right diagonal
+                    if (PlayTable[row - i][col + i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row - i][col + i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (row - i >= 0 && col - i >= 0) {// Up-left diagonal
+                    if (PlayTable[row - i][col - i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row - i][col - i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (row + i < 8 && col + i < 8) {// Down-right diagonal
+                    if (PlayTable[row + i][col + i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row + i][col + i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (row + i < 8 && col - i >= 0) {// Down-left diagonal
+                    if (PlayTable[row + i][col - i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row + i][col - i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+        } else if (cell === 4 || cell === -4) {//////////////////////////////////////////////////////////////////////////////////////////////////// Knight
+            console.log('4: Knight');
+            const KnightPath = [[1, 2], [1, -2], [-1, 2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]]
+            KnightPath.forEach(path => {
+                const newRow = row + path[0];
+                const newCol = col + path[1];
+                if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+                    if (PlayTable[newRow][newCol] * cell <= 0) {
+                        let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
+                        redcell.classList.add('moveablecell');
+                    }
+                }
+            });
+        } else if (cell === 5 || cell === -5) {//////////////////////////////////////////////////////////////////////////////////////////////////// Rook
+            console.log('5: Rook');
+            for (let i = 1; i < 8; i++) {
+                if (row - i >= 0) {// Up line
+                    if (PlayTable[row - i][col] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row - i][col] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row - i}-${col}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (row + i < 8) {// Down line
+                    if (PlayTable[row + i][col] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row + i][col] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row + i}-${col}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (col - i >= 0) {// Left line
+                    if (PlayTable[row][col - i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row][col - i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row}-${col - i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                if (col + i < 8) {// Right line
+                    if (PlayTable[row][col + i] * cell === 0) {
+                        let redcell = document.getElementById(`cell-${row}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                    } else if (PlayTable[row][col + i] * cell < 0) {
+                        let redcell = document.getElementById(`cell-${row}-${col + i}`);
+                        redcell.classList.add('moveablecell');
+                        break;
+                    } else break;
+                }
+            }
+        } else if (cell === 6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn
+            console.log('6: Pawn');
+            if (PlayTable[row - 1][col] * cell === 0) {
+                let redcellup1 = document.getElementById(`cell-${row - 1}-${col}`);
+                redcellup1.classList.add('moveablecell');
+
+                if (row === 6 && PlayTable[row - 2][col] * cell === 0) {
+                    let redcellup2 = document.getElementById(`cell-${row - 2}-${col}`);
+                    redcellup2.classList.add('moveablecell');
+                }
+            }
+            if (col > 0 && PlayTable[row - 1][col - 1] * cell < 0) {
+                let redcellleft = document.getElementById(`cell-${row - 1}-${col - 1}`);
+                redcellleft.classList.add('moveablecell');
+            }
+            if (col < 7 && PlayTable[row - 1][col + 1] * cell < 0) {
+                let redcellright = document.getElementById(`cell-${row - 1}-${col + 1}`);
+                redcellright.classList.add('moveablecell');
+            }
+        } else if (cell === -6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn
+            console.log('6: Pawn');
+            if (PlayTable[row + 1][col] * cell === 0) {
+                let redcelldown1 = document.getElementById(`cell-${row + 1}-${col}`);
+                redcelldown1.classList.add('moveablecell');
+
+                if (row === 1 && PlayTable[row + 2][col] * cell === 0) {
+                    let redcelldown2 = document.getElementById(`cell-${row + 2}-${col}`);
+                    redcelldown2.classList.add('moveablecell');
+                }
+            }
+            if (col > 0 && PlayTable[row + 1][col - 1] * cell < 0) {
+                let redcellleft = document.getElementById(`cell-${row + 1}-${col - 1}`);
+                redcellleft.classList.add('moveablecell');
+            }
+            if (col < 7 && PlayTable[row + 1][col + 1] * cell < 0) {
+                let redcellright = document.getElementById(`cell-${row + 1}-${col + 1}`);
+                redcellright.classList.add('moveablecell');
+            }
+        }
+    }
+
+
+
+
+
+
+
+
     const handleMove = (row, col) => {
+        console.log('handleMove');
+
+
+
+
+        if (Pick[0] === 1 || Pick[0] === -1) {//////////////////////////////////////////////////////////////////////////////////////////////////// King
+            console.log('1: King');
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    const newRow = row + i;
+                    const newCol = col + j;
+                    if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+                        let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
+                        redcell.classList.remove('moveablecell');
+                    }
+                }
+            };
+        } else if (Pick[0] === 2 || Pick[0] === -2) {//////////////////////////////////////////////////////////////////////////////////////////////////// Queen
+            console.log('2: Queen');
+            for (let i = 1; i < 8; i++) {
+                if (row - i >= 0 && col + i < 8) {// Up-right diagonal
+                    let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (row - i >= 0 && col - i >= 0) {// Up-left diagonal
+                    let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (row + i < 8 && col + i < 8) {// Down-right diagonal
+                    let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (row + i < 8 && col - i >= 0) {// Down-left diagonal
+                    let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (row - i >= 0) {// Up line
+                    let redcell = document.getElementById(`cell-${row - i}-${col}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (row + i < 8) {// Down line
+                    let redcell = document.getElementById(`cell-${row + i}-${col}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (col - i >= 0) {// Left line
+                    let redcell = document.getElementById(`cell-${row}-${col - i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (col + i < 8) {// Right line
+                    let redcell = document.getElementById(`cell-${row}-${col + i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+            }
+        } else if (Pick[0] === 3 || Pick[0] === -3) {//////////////////////////////////////////////////////////////////////////////////////////////////// Bishop
+            console.log('3: Bishop');
+            for (let i = 1; i < 8; i++) {
+                if (row - i >= 0 && col + i < 8) {// Up-right diagonal
+                    let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (row - i >= 0 && col - i >= 0) {// Up-left diagonal
+                    let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (row + i < 8 && col + i < 8) {// Down-right diagonal
+                    let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (row + i < 8 && col - i >= 0) {// Down-left diagonal
+                    let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+            }
+        } else if (Pick[0] === 4 || Pick[0] === -4) {//////////////////////////////////////////////////////////////////////////////////////////////////// Knight
+            console.log('4: Knight');
+            const KnightPath = [[1, 2], [1, -2], [-1, 2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]]
+            KnightPath.forEach(path => {
+                const newRow = row + path[0];
+                const newCol = col + path[1];
+                if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+                    let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
+                    redcell.classList.remove('moveablecell');
+                }
+            });
+        } else if (Pick[0] === 5 || Pick[0] === -5) {//////////////////////////////////////////////////////////////////////////////////////////////////// Rook
+            console.log('5: Rook');
+            for (let i = 1; i < 8; i++) {
+                if (row - i >= 0) {// Up line
+                    let redcell = document.getElementById(`cell-${row - i}-${col}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (row + i < 8) {// Down line
+                    let redcell = document.getElementById(`cell-${row + i}-${col}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (col - i >= 0) {// Left line
+                    let redcell = document.getElementById(`cell-${row}-${col - i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+                if (col + i < 8) {// Right line
+                    let redcell = document.getElementById(`cell-${row}-${col + i}`);
+                    redcell.classList.remove('moveablecell');
+                }
+            }
+        } else if (Pick[0] === 6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn
+            console.log('6: Pawn');
+            let redcellup1 = document.getElementById(`cell-${row - 1}-${col}`);
+            redcellup1.classList.remove('moveablecell');
+            if (row === 6) {
+                let redcellup2 = document.getElementById(`cell-${row - 2}-${col}`);
+                redcellup2.classList.remove('moveablecell');
+            }
+            if (col > 0) {
+                let redcellleft = document.getElementById(`cell-${row - 1}-${col - 1}`);
+                redcellleft.classList.remove('moveablecell');
+            }
+            if (col < 7) {
+                let redcellright = document.getElementById(`cell-${row - 1}-${col + 1}`);
+                redcellright.classList.remove('moveablecell');
+            }
+        } else if (Pick[0] === -6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn
+            console.log('6: Pawn');
+            let redcelldown1 = document.getElementById(`cell-${row + 1}-${col}`);
+            redcelldown1.classList.remove('moveablecell');
+            if (row === 1) {
+                let redcelldown2 = document.getElementById(`cell-${row + 2}-${col}`);
+                redcelldown2.classList.remove('moveablecell');
+            }
+            if (col > 0) {
+                let redcellleft = document.getElementById(`cell-${row + 1}-${col - 1}`);
+                redcellleft.classList.remove('moveablecell');
+            }
+            if (col < 7) {
+                let redcellright = document.getElementById(`cell-${row + 1}-${col + 1}`);
+                redcellright.classList.remove('moveablecell');
+            }
+        }
+
+        setPick(p => [0, 0, 0]);
+        setMove(p => !p);
 
     }
 
@@ -296,7 +713,7 @@ export default function Chess() {
                         </Form.Control>
                     </Form.Group>
                     <p>Pick: {Pick[0]} - PickRow: {Pick[1]} - PickCell: {Pick[2]}</p>
-                    <p>Move: {Move}</p>
+                    <p>Move: {Move ? 'True' : 'False'}</p>
                 </div>
 
                 <div className='result'
@@ -331,15 +748,12 @@ export default function Chess() {
                                 {row.map((cell, index_col) => (
                                     <td
                                         key={index_col}
-                                        className={
-                                            cell === 0 && Player === 1 ? 'PutX' :
-                                                cell === 0 && Player === 2 ? 'PutO' : ''
-                                        }
+                                        id={`cell-${index_row}-${index_col}`}
+                                        className={`${(index_row + index_col) % 2 === 0 ? 'darkcell' : 'lightcell'}`}
                                         style={{
                                             cursor: cell * Player > 0 && 'pointer',
-                                            backgroundColor: (index_row + index_col) % 2 === 0 ? '#ccc' : '#999'
                                         }}
-                                        onClick={() => { Pick[0] === 0 ? handleMove(index_row, index_col) : setPick([cell, index_row, index_col]) }}
+                                        onClick={() => { Move === false ? handlePickAndShowPath(cell, index_row, index_col) : handleMove(index_row, index_col) }}
                                     >
                                         {cell === -1 && <i className='fa-regular fa-chess-king black-side'></i>}
                                         {cell === -2 && <i className='fa-regular fa-chess-queen black-side'></i>}
