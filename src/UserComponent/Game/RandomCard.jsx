@@ -73,7 +73,7 @@ export default function RandomCard() {
         await sleep(1400);
 
         const name = document.getElementById(`chosen-name-${index}`);
-        name.style.display = 'block';
+        name.style.display = 'flex';
     }
 
     const resetCount = async () => {
@@ -104,13 +104,44 @@ export default function RandomCard() {
 
                             <div className='face front'>
                                 <div className='text-card'>
-                                    {ChosenList[index] &&
+                                    {/* {ChosenList[index] &&
                                         <p id={`chosen-name-${index}`}>
                                             {ChosenList[index].split(' ').map((word, wordIndex) => (
                                                 <div key={wordIndex}>{word}</div>
                                             ))}
                                         </p>
-                                    }
+                                    } */}
+                                    <div
+                                        id={`chosen-name-${index}`}
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            padding: '10px',
+                                            display: 'none',
+                                            flexDirection: 'column',
+                                            justifyContent: 'space-between',
+                                            color: 'red'
+                                        }}
+                                    >
+                                        <div style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignSelf: 'start'
+                                        }}>
+                                            <i className='fa-solid fa-infinity' style={{ fontSize: '30px' }}></i>
+                                            <i className='fa-regular fa-heart' style={{ fontSize: '30px', }}></i>
+                                        </div>
+                                        <i className='fa-solid fa-heart' style={{ fontSize: '126px' }}></i>
+                                        <div style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignSelf: 'end',
+                                            transform: 'rotateX(180deg)'
+                                        }}>
+                                            <i className='fa-solid fa-infinity' style={{ fontSize: '30px' }}></i>
+                                            <i className='fa-regular fa-heart' style={{ fontSize: '30px' }}></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
