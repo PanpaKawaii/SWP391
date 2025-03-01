@@ -73,12 +73,14 @@ body {
             display: block;
             justify-self: center;
             width: calc(var(--table-width) * 70)px;
+            border: 8px solid #777;
+            border-radius: 10px;
 
             tr {
                 margin: 0;
                 padding: 0;
                 height: 70px;
-                border: 1px solid #cccccc;
+                border: none;
 
                 .PutX:hover {
                     background-color: #ffa2aa;
@@ -92,7 +94,7 @@ body {
                     margin: 0;
                     padding: 0;
                     width: 70px;
-                    border: 1px solid #cccccc;
+                    border: none;
 
                     i {
                         font-size: 32px;

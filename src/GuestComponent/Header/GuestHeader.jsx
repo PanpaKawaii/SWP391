@@ -19,7 +19,7 @@ export default function GuestHeader() {
         setMenuOpen(!menuOpen);
     };
 
-    console.log('GuestHeader re-render');
+    // console.log('GuestHeader re-render');
     
     const menuItems = [
         { text: 'Trang chủ', path: '/' },

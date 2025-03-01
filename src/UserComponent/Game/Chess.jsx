@@ -4,6 +4,47 @@ import './Chess.css';
 
 export default function Chess() {
 
+    const [PlayTable, setPlayTable] = useState([]);
+
+    const InitialPlayTable = [
+        [-5, -4, -3, -2, -1, -3, -4, -5],
+        [-6, -6, -6, -6, -6, -6, -6, -6],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [6, 6, 6, 6, 6, 6, 6, 6],
+        [5, 4, 3, 2, 1, 3, 4, 5]
+    ]
+
+    const [Refresh, setRefresh] = useState(0);
+    const [Player, setPlayer] = useState(1);
+    const [Pick, setPick] = useState([]);
+    const [Move, setMove] = useState(0);
+
+    useEffect(() => {
+        setPlayTable(InitialPlayTable);
+
+        setPlayer(1);
+        // setPath([]);
+        // setLastStep({ row: null, col: null });
+        // setHasWon(0);
+        // setConstantCell([]);
+    }, [Refresh]);
+
+    const handleMove = (row, col) => {
+
+    }
+
+
+
+
+
+
+
+
+
+
     const [GameMode, setGameMode] = useState({
         RowCount: 8,
         ColCount: 8,
@@ -36,10 +77,8 @@ export default function Chess() {
 
 
 
-    const [Player, setPlayer] = useState(1);
     const [HasWon, setHasWon] = useState(0);
     const [ConstantCell, setConstantCell] = useState([]);
-    const [Refresh, setRefresh] = useState(0);
     const [Path, setPath] = useState([]);
     const [LastStep, setLastStep] = useState({
         row: null,
@@ -49,29 +88,6 @@ export default function Chess() {
     // const [PlayTable, setPlayTable] = useState(Array(GameMode.RowCount).fill(0).map(() =>
     //     Array(GameMode.ColCount).fill(0).map(() => ({ value: 0 }))
     // ));
-
-    const [PlayTable, setPlayTable] = useState([]);
-
-    const InitialPlayTable = [
-        [-5, -4, -3, -2, -1, -3, -4, -5],
-        [-6, -6, -6, -6, -6, -6, -6, -6],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [6, 6, 6, 6, 6, 6, 6, 6],
-        [5, 4, 3, 2, 1, 3, 4, 5]
-    ]
-
-    useEffect(() => {
-        setPlayTable(InitialPlayTable);
-
-        setPlayer(1);
-        setPath([]);
-        setLastStep({ row: null, col: null });
-        setHasWon(0);
-        setConstantCell([]);
-    }, [GameMode, Refresh]);
 
     const MarkCell = (row, col) => {
         if (PlayTable[row][col].value !== 0 || HasWon !== 0) return;
@@ -257,6 +273,7 @@ export default function Chess() {
                     <div className='support'>
                         <Button className='btn' style={{ backgroundColor: Player === 1 ? '#fd4755' : (Player === 2 ? '#01d0fd' : '') }} onClick={() => remarkCell()}><i className='fa-solid fa-reply'></i></Button>
                         <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESTART</Button>
+                        <Button className='btn' onClick={() => setPlayer(PLAYER => -PLAYER)}>SET PLAYER {Player}</Button>
                     </div>
                     <Form.Group controlId='gamemode' className='form-group'>
                         <Form.Control
@@ -278,6 +295,8 @@ export default function Chess() {
                             <option className='gamemode-option' value='TicTacToe'>Tic Tac Toe</option>
                         </Form.Control>
                     </Form.Group>
+                    <p>Pick: {Pick[0]} - PickRow: {Pick[1]} - PickCell: {Pick[2]}</p>
+                    <p>Move: {Move}</p>
                 </div>
 
                 <div className='result'
@@ -299,11 +318,11 @@ export default function Chess() {
             </div>
 
             <div className='content'>
-                <Table bordered
-                    className='no-wrap align-middle table'
+                <Table
+                    className='no-wrap align-middle'
                     style={{
-                        '--table-width': GameMode.ColCount,
-                        '--table-height': GameMode.RowCount
+                        // '--table-width': 8,
+                        // '--table-height': 8
                     }}
                 >
                     <tbody>
@@ -316,8 +335,11 @@ export default function Chess() {
                                             cell === 0 && Player === 1 ? 'PutX' :
                                                 cell === 0 && Player === 2 ? 'PutO' : ''
                                         }
-                                        style={{ backgroundColor: (index_row + index_col) % 2 === 0 ? '#ddd' : '#999' }}
-                                        onClick={() => { MarkCell(index_row, index_col) }}
+                                        style={{
+                                            cursor: cell * Player > 0 && 'pointer',
+                                            backgroundColor: (index_row + index_col) % 2 === 0 ? '#ccc' : '#999'
+                                        }}
+                                        onClick={() => { Pick[0] === 0 ? handleMove(index_row, index_col) : setPick([cell, index_row, index_col]) }}
                                     >
                                         {cell === -1 && <i className='fa-regular fa-chess-king black-side'></i>}
                                         {cell === -2 && <i className='fa-regular fa-chess-queen black-side'></i>}
