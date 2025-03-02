@@ -56,6 +56,7 @@ export default function Chess() {
         setPick([0, 0, 0]);
         setAvailablePath([]);
         setMove(false);
+        setCastling([true, true]);
 
         for (let row = 0; row < 8; row++) {
             for (let col = 0; col < 8; col++) {
