@@ -25,16 +25,28 @@ export default function Chess() {
         [-6, -6, -6, -6, -6, -6, -6, -6],
         [0, -6, -6, 3, 0, 0, 0, 0],
         [0, 0, 2, 0, 0, -3, 0, 0],
-        [0, 1, 0, 3, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0],
         [-2, 6, -1, 0, 1, -3, 5, 0],
         [6, 6, 6, 6, 6, 6, 6, 6],
         [5, 4, 3, 2, 1, 3, 4, 5]
+    ]
+
+    const NothingBoard = [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 6, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
     ]
 
     const [Player, setPlayer] = useState(1);
     const [Pick, setPick] = useState([0, 0, 0]);
     const [AvailablePath, setAvailablePath] = useState([]);
     const [Move, setMove] = useState(false);
+    const [Castling, setCastling] = useState([true, true]);
     const [Refresh, setRefresh] = useState(0);
 
     useEffect(() => {
@@ -61,7 +73,7 @@ export default function Chess() {
     }, [Refresh]);
 
     const handlePickAndShowPath = (cell, row, col) => {
-        if (cell * Player <= 0) {
+        if (cell * Player <= 0) {//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////OPEN IT
             if (Player === 1) console.log(`It is White's turn`);
             else if (Player === -1) console.log(`It is Black's turn`);
             return;
@@ -86,6 +98,18 @@ export default function Chess() {
                     }
                 }
             };
+            if ((cell === -1 && Castling[0] === true) || (cell === 1 && Castling[1] === true)) {
+                if (PlayTable[row][col + 1] === 0 && PlayTable[row][col + 2] === 0) {
+                    let redcell = document.getElementById(`cell-${row}-${col + 2}`);
+                    redcell.classList.add('moveablecell');
+                    newAvailablePath = [...newAvailablePath, [row, col + 2]];
+                }
+                if (PlayTable[row][col - 1] === 0 && PlayTable[row][col - 2] === 0) {
+                    let redcell = document.getElementById(`cell-${row}-${col - 2}`);
+                    redcell.classList.add('moveablecell');
+                    newAvailablePath = [...newAvailablePath, [row, col - 2]];
+                }
+            }
             setAvailablePath(p => newAvailablePath);
         } else if (cell === 2 || cell === -2) {//////////////////////////////////////////////////////////////////////////////////////////////////// Queen
             console.log('2: Queen');
@@ -546,8 +570,25 @@ export default function Chess() {
             let newPlayTable = [...PlayTable];
             newPlayTable[row][col] = Pick[0];
             newPlayTable[Pick[1]][Pick[2]] = 0;
+            if (
+                (// Nếu King đen hoặc trắng còn cơ hội nhập thành
+                    (Pick[0] === -1 && Castling[0] === true) ||
+                    (Pick[0] === 1 && Castling[1] === true)
+                ) &&// Và thực hiện nước đi nhập thành
+                (Pick[2] + 2 === col || Pick[2] - 2 === col)
+            ) {
+                newPlayTable[row][(col + Pick[2]) / 2] = Pick[0] * 5;// Xuất hiện Rook ở giữa 2 ô của King
+                newPlayTable[row][col > Pick[2] ? 7 : 0] = 0;// Nếu nhập thành bên phải thì Rook phải đi qua, nhập thành bên trái thì Rook trái đi qua
+            }
+
+            // Bất cứ khi nào King di chuyển đều sẽ mất cơ hội nhập thành
+            let newCastling = [...Castling];
+            newCastling[Pick[0] === -1 && 0] = false;
+            newCastling[Pick[0] === 1 && 1] = false;
+            setCastling(newCastling);
+
             setPlayTable(p => newPlayTable);
-            setPlayer(p => -p);
+            setPlayer(p => -p);//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////OPEN IT
         }
 
         setPick(p => [0, 0, 0]);
@@ -786,6 +827,7 @@ export default function Chess() {
         <div className='chess-container'>
             <div className='header'>
                 <h1><b>CHESS</b></h1>
+                {/* <h2 style={{ color: 'red', border: '5px solid red' }}><b>Nhớ đổi lượt chơi trước khi up github</b></h2> */}
             </div>
 
             <div className='detail'>
@@ -818,6 +860,7 @@ export default function Chess() {
                     <p>Pick: {Pick[0]} - PickRow: {Pick[1]} - PickCell: {Pick[2]}</p>
                     <p>Move: {Move ? 'True' : 'False'}</p>
                     <p>AvailablePath: {JSON.stringify(AvailablePath)}</p>
+                    <p>CastlingBlack: {Castling[0] ? 'True' : 'False'} - CastlingWhite: {Castling[1] ? 'True' : 'False'}</p>
                 </div>
 
                 <div className='result'
@@ -838,6 +881,7 @@ export default function Chess() {
                 </div>
             </div>
 
+            {/* Main Content =================================================================================================================================================================== */}
             <div className='content'>
                 <Table
                     className='no-wrap align-middle'
