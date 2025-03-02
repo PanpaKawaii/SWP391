@@ -47,6 +47,8 @@ export default function Chess() {
     const [AvailablePath, setAvailablePath] = useState([]);
     const [Move, setMove] = useState(false);
     const [Castling, setCastling] = useState([true, true]);
+    const [EnPassant, setEnPassant] = useState([0, 0, 0]);
+
     const [Refresh, setRefresh] = useState(0);
 
     useEffect(() => {
@@ -57,6 +59,7 @@ export default function Chess() {
         setAvailablePath([]);
         setMove(false);
         setCastling([true, true]);
+        setEnPassant([0, 0, 0]);
 
         for (let row = 0; row < 8; row++) {
             for (let col = 0; col < 8; col++) {

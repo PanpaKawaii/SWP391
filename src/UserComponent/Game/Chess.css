@@ -12,7 +12,7 @@ body {
     .header {
         h1 {
             margin: 0 0 20px;
-            color: #d97720;
+            color: #777777;
             font-size: 54px;
         }
     }
@@ -22,6 +22,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: start;
+        gap: 10px;
 
         .support {
             display: flex;
@@ -66,30 +67,22 @@ body {
 
     .content {
         display: flex;
-        /* flex-direction: column; */
+        flex-direction: column;
         justify-content: center;
         align-items: center;
 
         table {
             display: block;
             justify-self: center;
-            width: calc(var(--table-width) * 70)px;
+            width: calc(var(--table-width) * 75)px;
             border: 8px solid #777;
             border-radius: 10px;
 
             tr {
                 margin: 0;
                 padding: 0;
-                height: 70px;
+                height: 75px;
                 border: none;
-
-                .PutX:hover {
-                    background-color: #ffa2aa;
-                }
-
-                .PutO:hover {
-                    background-color: #80e8ff;
-                }
 
                 .lightcell {
                     background-color: #ccc;
@@ -110,11 +103,11 @@ body {
                 td {
                     margin: 0;
                     padding: 0;
-                    width: 70px;
+                    width: 75px;
                     border: none;
 
                     i {
-                        font-size: 32px;
+                        font-size: 40px;
                     }
 
                     .black-side {
@@ -132,22 +125,18 @@ body {
     }
 
     @media screen and (max-width: 768px) {
-        .game-content {
-            .game-detail {
-                padding: 0;
-            }
-
+        .content {
             table {
-                width: calc(var(--table-width) * 25)px;
+                width: calc(var(--table-width) * 60)px;
 
                 tr {
-                    height: 25px;
+                    height: 60px;
 
                     td {
-                        width: 25px;
+                        width: 60px;
 
-                        p {
-                            font-size: 11px;
+                        i {
+                            font-size: 32px;
                         }
                     }
                 }
@@ -156,18 +145,18 @@ body {
     }
 
     @media screen and (max-width: 576px) {
-        .game-content {
+        .content {
             table {
-                width: calc(var(--table-width) * 20)px;
+                width: calc(var(--table-width) * 45)px;
 
                 tr {
-                    height: 20px;
+                    height: 45px;
 
                     td {
-                        width: 20px;
+                        width: 45px;
 
-                        p {
-                            font-size: 9px;
+                        i {
+                            font-size: 24px;
                         }
                     }
                 }
@@ -176,18 +165,18 @@ body {
     }
 
     @media screen and (max-width: 440px) {
-        .game-content {
+        .content {
             table {
-                width: calc(var(--table-width) * 15)px;
+                width: calc(var(--table-width) * 35)px;
 
                 tr {
-                    height: 15px;
+                    height: 35px;
 
                     td {
-                        width: 15px;
+                        width: 35px;
 
-                        p {
-                            font-size: 7px;
+                        i {
+                            font-size: 20px;
                         }
                     }
                 }
