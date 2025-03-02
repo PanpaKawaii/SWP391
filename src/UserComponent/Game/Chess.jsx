@@ -4,9 +4,23 @@ import './Chess.css';
 
 export default function Chess() {
 
+    console.log('Chess rerender');
+
+
     const [PlayTable, setPlayTable] = useState([]);
 
     const InitialPlayTable = [
+        [-5, -4, -3, -2, -1, -3, -4, -5],
+        [-6, -6, -6, -6, -6, -6, -6, -6],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [6, 6, 6, 6, 6, 6, 6, 6],
+        [5, 4, 3, 2, 1, 3, 4, 5]
+    ]
+
+    const RandomPlayTable = [
         [-5, -4, -3, -2, -1, 6, -4, -5],
         [-6, -6, -6, -6, -6, -6, -6, -6],
         [0, -6, -6, 3, 0, 0, 0, 0],
@@ -17,16 +31,29 @@ export default function Chess() {
         [5, 4, 3, 2, 1, 3, 4, 5]
     ]
 
-    const [Refresh, setRefresh] = useState(0);
     const [Player, setPlayer] = useState(1);
     const [Pick, setPick] = useState([0, 0, 0]);
     const [AvailablePath, setAvailablePath] = useState([]);
     const [Move, setMove] = useState(false);
+    const [Refresh, setRefresh] = useState(0);
 
     useEffect(() => {
         setPlayTable(InitialPlayTable);
 
         setPlayer(1);
+        setPick([0, 0, 0]);
+        setAvailablePath([]);
+        setMove(false);
+
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                let redcell = document.getElementById(`cell-${row}-${col}`);
+                redcell?.classList.remove('moveablecell');
+                let pickcell = document.getElementById(`cell-${row}-${col}`);
+                pickcell?.classList.remove('pickedcell');
+            }
+        }
+
         // setPath([]);
         // setLastStep({ row: null, col: null });
         // setHasWon(0);
@@ -34,8 +61,12 @@ export default function Chess() {
     }, [Refresh]);
 
     const handlePickAndShowPath = (cell, row, col) => {
+        if (cell * Player <= 0) {
+            if (Player === 1) console.log(`It is White's turn`);
+            else if (Player === -1) console.log(`It is Black's turn`);
+            return;
+        }
         console.log('handleShowPath');
-        if (cell * Player <= 0) return;
 
         setPick(p => [cell, row, col]);
         setMove(p => !p);
@@ -353,6 +384,9 @@ export default function Chess() {
             }
             setAvailablePath(p => newAvailablePath);
         }
+
+        let pickcell = document.getElementById(`cell-${row}-${col}`);
+        pickcell.classList.add('pickedcell');
     }
 
 
@@ -503,6 +537,8 @@ export default function Chess() {
             for (let col = 0; col < 8; col++) {
                 let redcell = document.getElementById(`cell-${row}-${col}`);
                 redcell.classList.remove('moveablecell');
+                let pickcell = document.getElementById(`cell-${row}-${col}`);
+                pickcell.classList.remove('pickedcell');
             }
         }
 
@@ -817,7 +853,7 @@ export default function Chess() {
                                     <td
                                         key={index_col}
                                         id={`cell-${index_row}-${index_col}`}
-                                        className={`${(index_row + index_col) % 2 === 0 ? 'darkcell' : 'lightcell'}`}
+                                        className={`${(index_row + index_col) % 2 === 0 ? 'lightcell' : 'darkcell'}`}
                                         style={{
                                             cursor: cell * Player > 0 && 'pointer',
                                         }}
@@ -856,8 +892,7 @@ export default function Chess() {
                                 {row.map((cell, index_col) => (
                                     <td
                                         key={index_col}
-                                        // id={`cell-${index_row}-${index_col}`}
-                                        className={`${(index_row + index_col) % 2 === 0 ? 'darkcell' : 'lightcell'}`}
+                                        className={`${(index_row + index_col) % 2 === 0 ? 'lightcell' : 'darkcell'}`}
                                         style={{ backgroundColor: AvailablePath.some(path => path[0] === index_row && path[1] === index_col) ? 'red' : '' }}
                                     >
                                     </td>

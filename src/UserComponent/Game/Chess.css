@@ -103,6 +103,10 @@ body {
                     background-color: #ff0000;
                 }
 
+                .pickedcell {
+                    background-color: #ff8000;
+                }
+
                 td {
                     margin: 0;
                     padding: 0;
