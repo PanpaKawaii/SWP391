@@ -20,6 +20,7 @@ export default function Chess() {
     const [Refresh, setRefresh] = useState(0);
     const [Player, setPlayer] = useState(1);
     const [Pick, setPick] = useState([0, 0, 0]);
+    const [AvailablePath, setAvailablePath] = useState([]);
     const [Move, setMove] = useState(false);
 
     useEffect(() => {
@@ -34,8 +35,11 @@ export default function Chess() {
 
     const handlePickAndShowPath = (cell, row, col) => {
         console.log('handleShowPath');
+        if (cell * Player <= 0) return;
+
         setPick(p => [cell, row, col]);
         setMove(p => !p);
+        let newAvailablePath = [];
         if (cell === 1 || cell === -1) {//////////////////////////////////////////////////////////////////////////////////////////////////// King
             console.log('1: King');
             for (let i = -1; i <= 1; i++) {
@@ -46,10 +50,12 @@ export default function Chess() {
                         if (PlayTable[newRow][newCol] * cell <= 0) {
                             let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
                             redcell.classList.add('moveablecell');
+                            newAvailablePath = [...newAvailablePath, [newRow, newCol]];
                         }
                     }
                 }
             };
+            setAvailablePath(p => newAvailablePath);
         } else if (cell === 2 || cell === -2) {//////////////////////////////////////////////////////////////////////////////////////////////////// Queen
             console.log('2: Queen');
             for (let i = 1; i < 8; i++) {
@@ -57,9 +63,11 @@ export default function Chess() {
                     if (PlayTable[row - i][col + i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col + i]];
                     } else if (PlayTable[row - i][col + i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col + i]];
                         break;
                     } else break;
                 }
@@ -69,9 +77,11 @@ export default function Chess() {
                     if (PlayTable[row - i][col - i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col - i]];
                     } else if (PlayTable[row - i][col - i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col - i]];
                         break;
                     } else break;
                 }
@@ -81,9 +91,11 @@ export default function Chess() {
                     if (PlayTable[row + i][col + i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col + i]];
                     } else if (PlayTable[row + i][col + i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col + i]];
                         break;
                     } else break;
                 }
@@ -93,9 +105,11 @@ export default function Chess() {
                     if (PlayTable[row + i][col - i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col - i]];
                     } else if (PlayTable[row + i][col - i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col - i]];
                         break;
                     } else break;
                 }
@@ -105,9 +119,11 @@ export default function Chess() {
                     if (PlayTable[row - i][col] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col]];
                     } else if (PlayTable[row - i][col] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col]];
                         break;
                     } else break;
                 }
@@ -117,9 +133,11 @@ export default function Chess() {
                     if (PlayTable[row + i][col] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col]];
                     } else if (PlayTable[row + i][col] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col]];
                         break;
                     } else break;
                 }
@@ -129,9 +147,11 @@ export default function Chess() {
                     if (PlayTable[row][col - i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row, col - i]];
                     } else if (PlayTable[row][col - i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row, col - i]];
                         break;
                     } else break;
                 }
@@ -141,13 +161,16 @@ export default function Chess() {
                     if (PlayTable[row][col + i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row, col + i]];
                     } else if (PlayTable[row][col + i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row, col + i]];
                         break;
                     } else break;
                 }
             }
+            setAvailablePath(p => newAvailablePath);
         } else if (cell === 3 || cell === -3) {//////////////////////////////////////////////////////////////////////////////////////////////////// Bishop
             console.log('3: Bishop');
             for (let i = 1; i < 8; i++) {
@@ -155,9 +178,11 @@ export default function Chess() {
                     if (PlayTable[row - i][col + i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col + i]];
                     } else if (PlayTable[row - i][col + i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col + i]];
                         break;
                     } else break;
                 }
@@ -167,9 +192,11 @@ export default function Chess() {
                     if (PlayTable[row - i][col - i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col - i]];
                     } else if (PlayTable[row - i][col - i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col - i]];
                         break;
                     } else break;
                 }
@@ -179,9 +206,11 @@ export default function Chess() {
                     if (PlayTable[row + i][col + i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col + i]];
                     } else if (PlayTable[row + i][col + i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col + i]];
                         break;
                     } else break;
                 }
@@ -191,13 +220,16 @@ export default function Chess() {
                     if (PlayTable[row + i][col - i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col - i]];
                     } else if (PlayTable[row + i][col - i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col - i]];
                         break;
                     } else break;
                 }
             }
+            setAvailablePath(p => newAvailablePath);
         } else if (cell === 4 || cell === -4) {//////////////////////////////////////////////////////////////////////////////////////////////////// Knight
             console.log('4: Knight');
             const KnightPath = [[1, 2], [1, -2], [-1, 2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]]
@@ -208,9 +240,11 @@ export default function Chess() {
                     if (PlayTable[newRow][newCol] * cell <= 0) {
                         let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [newRow, newCol]];
                     }
                 }
             });
+            setAvailablePath(p => newAvailablePath);
         } else if (cell === 5 || cell === -5) {//////////////////////////////////////////////////////////////////////////////////////////////////// Rook
             console.log('5: Rook');
             for (let i = 1; i < 8; i++) {
@@ -218,9 +252,11 @@ export default function Chess() {
                     if (PlayTable[row - i][col] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col]];
                     } else if (PlayTable[row - i][col] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row - i}-${col}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row - i, col]];
                         break;
                     } else break;
                 }
@@ -230,9 +266,11 @@ export default function Chess() {
                     if (PlayTable[row + i][col] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col]];
                     } else if (PlayTable[row + i][col] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row + i}-${col}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row + i, col]];
                         break;
                     } else break;
                 }
@@ -242,9 +280,11 @@ export default function Chess() {
                     if (PlayTable[row][col - i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row, col - i]];
                     } else if (PlayTable[row][col - i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row}-${col - i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row, col - i]];
                         break;
                     } else break;
                 }
@@ -254,51 +294,64 @@ export default function Chess() {
                     if (PlayTable[row][col + i] * cell === 0) {
                         let redcell = document.getElementById(`cell-${row}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row, col + i]];
                     } else if (PlayTable[row][col + i] * cell < 0) {
                         let redcell = document.getElementById(`cell-${row}-${col + i}`);
                         redcell.classList.add('moveablecell');
+                        newAvailablePath = [...newAvailablePath, [row, col + i]];
                         break;
                     } else break;
                 }
             }
-        } else if (cell === 6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn
+            setAvailablePath(p => newAvailablePath);
+        } else if (cell === 6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn White
             console.log('6: Pawn');
             if (PlayTable[row - 1][col] * cell === 0) {
                 let redcellup1 = document.getElementById(`cell-${row - 1}-${col}`);
                 redcellup1.classList.add('moveablecell');
+                newAvailablePath = [...newAvailablePath, [row - 1, col]];
 
                 if (row === 6 && PlayTable[row - 2][col] * cell === 0) {
                     let redcellup2 = document.getElementById(`cell-${row - 2}-${col}`);
                     redcellup2.classList.add('moveablecell');
+                    newAvailablePath = [...newAvailablePath, [row - 2, col]];
                 }
             }
             if (col > 0 && PlayTable[row - 1][col - 1] * cell < 0) {
                 let redcellleft = document.getElementById(`cell-${row - 1}-${col - 1}`);
                 redcellleft.classList.add('moveablecell');
+                newAvailablePath = [...newAvailablePath, [row - 1, col - 1]];
             }
             if (col < 7 && PlayTable[row - 1][col + 1] * cell < 0) {
                 let redcellright = document.getElementById(`cell-${row - 1}-${col + 1}`);
                 redcellright.classList.add('moveablecell');
+                newAvailablePath = [...newAvailablePath, [row - 1, col + 1]];
             }
-        } else if (cell === -6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn
+            setAvailablePath(p => newAvailablePath);
+        } else if (cell === -6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn Black
             console.log('6: Pawn');
             if (PlayTable[row + 1][col] * cell === 0) {
                 let redcelldown1 = document.getElementById(`cell-${row + 1}-${col}`);
                 redcelldown1.classList.add('moveablecell');
+                newAvailablePath = [...newAvailablePath, [row + 1, col]];
 
                 if (row === 1 && PlayTable[row + 2][col] * cell === 0) {
                     let redcelldown2 = document.getElementById(`cell-${row + 2}-${col}`);
                     redcelldown2.classList.add('moveablecell');
+                    newAvailablePath = [...newAvailablePath, [row + 2, col]];
                 }
             }
             if (col > 0 && PlayTable[row + 1][col - 1] * cell < 0) {
                 let redcellleft = document.getElementById(`cell-${row + 1}-${col - 1}`);
                 redcellleft.classList.add('moveablecell');
+                newAvailablePath = [...newAvailablePath, [row + 1, col - 1]];
             }
             if (col < 7 && PlayTable[row + 1][col + 1] * cell < 0) {
                 let redcellright = document.getElementById(`cell-${row + 1}-${col + 1}`);
                 redcellright.classList.add('moveablecell');
+                newAvailablePath = [...newAvailablePath, [row + 1, col + 1]];
             }
+            setAvailablePath(p => newAvailablePath);
         }
     }
 
@@ -313,142 +366,156 @@ export default function Chess() {
         console.log('handleMove');
 
 
+        // if (Pick[0] === 1 || Pick[0] === -1) {//////////////////////////////////////////////////////////////////////////////////////////////////// King
+        //     console.log('1: King');
+        //     for (let i = -1; i <= 1; i++) {
+        //         for (let j = -1; j <= 1; j++) {
+        //             const newRow = row + i;
+        //             const newCol = col + j;
+        //             if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+        //                 let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
+        //                 redcell.classList.remove('moveablecell');
+        //             }
+        //         }
+        //     };
+        // } else if (Pick[0] === 2 || Pick[0] === -2) {//////////////////////////////////////////////////////////////////////////////////////////////////// Queen
+        //     console.log('2: Queen');
+        //     for (let i = 1; i < 8; i++) {
+        //         if (row - i >= 0 && col + i < 8) {// Up-right diagonal
+        //             let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (row - i >= 0 && col - i >= 0) {// Up-left diagonal
+        //             let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (row + i < 8 && col + i < 8) {// Down-right diagonal
+        //             let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (row + i < 8 && col - i >= 0) {// Down-left diagonal
+        //             let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (row - i >= 0) {// Up line
+        //             let redcell = document.getElementById(`cell-${row - i}-${col}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (row + i < 8) {// Down line
+        //             let redcell = document.getElementById(`cell-${row + i}-${col}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (col - i >= 0) {// Left line
+        //             let redcell = document.getElementById(`cell-${row}-${col - i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (col + i < 8) {// Right line
+        //             let redcell = document.getElementById(`cell-${row}-${col + i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //     }
+        // } else if (Pick[0] === 3 || Pick[0] === -3) {//////////////////////////////////////////////////////////////////////////////////////////////////// Bishop
+        //     console.log('3: Bishop');
+        //     for (let i = 1; i < 8; i++) {
+        //         if (row - i >= 0 && col + i < 8) {// Up-right diagonal
+        //             let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (row - i >= 0 && col - i >= 0) {// Up-left diagonal
+        //             let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (row + i < 8 && col + i < 8) {// Down-right diagonal
+        //             let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (row + i < 8 && col - i >= 0) {// Down-left diagonal
+        //             let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //     }
+        // } else if (Pick[0] === 4 || Pick[0] === -4) {//////////////////////////////////////////////////////////////////////////////////////////////////// Knight
+        //     console.log('4: Knight');
+        //     const KnightPath = [[1, 2], [1, -2], [-1, 2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]]
+        //     KnightPath.forEach(path => {
+        //         const newRow = row + path[0];
+        //         const newCol = col + path[1];
+        //         if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+        //             let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //     });
+        // } else if (Pick[0] === 5 || Pick[0] === -5) {//////////////////////////////////////////////////////////////////////////////////////////////////// Rook
+        //     console.log('5: Rook');
+        //     for (let i = 1; i < 8; i++) {
+        //         if (row - i >= 0) {// Up line
+        //             let redcell = document.getElementById(`cell-${row - i}-${col}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (row + i < 8) {// Down line
+        //             let redcell = document.getElementById(`cell-${row + i}-${col}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (col - i >= 0) {// Left line
+        //             let redcell = document.getElementById(`cell-${row}-${col - i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //         if (col + i < 8) {// Right line
+        //             let redcell = document.getElementById(`cell-${row}-${col + i}`);
+        //             redcell.classList.remove('moveablecell');
+        //         }
+        //     }
+        // } else if (Pick[0] === 6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn White
+        //     console.log('6: Pawn');
+        //     let redcellup1 = document.getElementById(`cell-${row - 1}-${col}`);
+        //     redcellup1.classList.remove('moveablecell');
+        //     if (row === 6) {
+        //         let redcellup2 = document.getElementById(`cell-${row - 2}-${col}`);
+        //         redcellup2.classList.remove('moveablecell');
+        //     }
+        //     if (col > 0) {
+        //         let redcellleft = document.getElementById(`cell-${row - 1}-${col - 1}`);
+        //         redcellleft.classList.remove('moveablecell');
+        //     }
+        //     if (col < 7) {
+        //         let redcellright = document.getElementById(`cell-${row - 1}-${col + 1}`);
+        //         redcellright.classList.remove('moveablecell');
+        //     }
+        // } else if (Pick[0] === -6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn Black
+        //     console.log('6: Pawn');
+        //     let redcelldown1 = document.getElementById(`cell-${row + 1}-${col}`);
+        //     redcelldown1.classList.remove('moveablecell');
+        //     if (row === 1) {
+        //         let redcelldown2 = document.getElementById(`cell-${row + 2}-${col}`);
+        //         redcelldown2.classList.remove('moveablecell');
+        //     }
+        //     if (col > 0) {
+        //         let redcellleft = document.getElementById(`cell-${row + 1}-${col - 1}`);
+        //         redcellleft.classList.remove('moveablecell');
+        //     }
+        //     if (col < 7) {
+        //         let redcellright = document.getElementById(`cell-${row + 1}-${col + 1}`);
+        //         redcellright.classList.remove('moveablecell');
+        //     }
+        // }
 
-
-        if (Pick[0] === 1 || Pick[0] === -1) {//////////////////////////////////////////////////////////////////////////////////////////////////// King
-            console.log('1: King');
-            for (let i = -1; i <= 1; i++) {
-                for (let j = -1; j <= 1; j++) {
-                    const newRow = row + i;
-                    const newCol = col + j;
-                    if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
-                        let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
-                        redcell.classList.remove('moveablecell');
-                    }
-                }
-            };
-        } else if (Pick[0] === 2 || Pick[0] === -2) {//////////////////////////////////////////////////////////////////////////////////////////////////// Queen
-            console.log('2: Queen');
-            for (let i = 1; i < 8; i++) {
-                if (row - i >= 0 && col + i < 8) {// Up-right diagonal
-                    let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (row - i >= 0 && col - i >= 0) {// Up-left diagonal
-                    let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (row + i < 8 && col + i < 8) {// Down-right diagonal
-                    let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (row + i < 8 && col - i >= 0) {// Down-left diagonal
-                    let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (row - i >= 0) {// Up line
-                    let redcell = document.getElementById(`cell-${row - i}-${col}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (row + i < 8) {// Down line
-                    let redcell = document.getElementById(`cell-${row + i}-${col}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (col - i >= 0) {// Left line
-                    let redcell = document.getElementById(`cell-${row}-${col - i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (col + i < 8) {// Right line
-                    let redcell = document.getElementById(`cell-${row}-${col + i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-            }
-        } else if (Pick[0] === 3 || Pick[0] === -3) {//////////////////////////////////////////////////////////////////////////////////////////////////// Bishop
-            console.log('3: Bishop');
-            for (let i = 1; i < 8; i++) {
-                if (row - i >= 0 && col + i < 8) {// Up-right diagonal
-                    let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (row - i >= 0 && col - i >= 0) {// Up-left diagonal
-                    let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (row + i < 8 && col + i < 8) {// Down-right diagonal
-                    let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (row + i < 8 && col - i >= 0) {// Down-left diagonal
-                    let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-            }
-        } else if (Pick[0] === 4 || Pick[0] === -4) {//////////////////////////////////////////////////////////////////////////////////////////////////// Knight
-            console.log('4: Knight');
-            const KnightPath = [[1, 2], [1, -2], [-1, 2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]]
-            KnightPath.forEach(path => {
-                const newRow = row + path[0];
-                const newCol = col + path[1];
-                if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
-                    let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
-                    redcell.classList.remove('moveablecell');
-                }
-            });
-        } else if (Pick[0] === 5 || Pick[0] === -5) {//////////////////////////////////////////////////////////////////////////////////////////////////// Rook
-            console.log('5: Rook');
-            for (let i = 1; i < 8; i++) {
-                if (row - i >= 0) {// Up line
-                    let redcell = document.getElementById(`cell-${row - i}-${col}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (row + i < 8) {// Down line
-                    let redcell = document.getElementById(`cell-${row + i}-${col}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (col - i >= 0) {// Left line
-                    let redcell = document.getElementById(`cell-${row}-${col - i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-                if (col + i < 8) {// Right line
-                    let redcell = document.getElementById(`cell-${row}-${col + i}`);
-                    redcell.classList.remove('moveablecell');
-                }
-            }
-        } else if (Pick[0] === 6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn
-            console.log('6: Pawn');
-            let redcellup1 = document.getElementById(`cell-${row - 1}-${col}`);
-            redcellup1.classList.remove('moveablecell');
-            if (row === 6) {
-                let redcellup2 = document.getElementById(`cell-${row - 2}-${col}`);
-                redcellup2.classList.remove('moveablecell');
-            }
-            if (col > 0) {
-                let redcellleft = document.getElementById(`cell-${row - 1}-${col - 1}`);
-                redcellleft.classList.remove('moveablecell');
-            }
-            if (col < 7) {
-                let redcellright = document.getElementById(`cell-${row - 1}-${col + 1}`);
-                redcellright.classList.remove('moveablecell');
-            }
-        } else if (Pick[0] === -6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn
-            console.log('6: Pawn');
-            let redcelldown1 = document.getElementById(`cell-${row + 1}-${col}`);
-            redcelldown1.classList.remove('moveablecell');
-            if (row === 1) {
-                let redcelldown2 = document.getElementById(`cell-${row + 2}-${col}`);
-                redcelldown2.classList.remove('moveablecell');
-            }
-            if (col > 0) {
-                let redcellleft = document.getElementById(`cell-${row + 1}-${col - 1}`);
-                redcellleft.classList.remove('moveablecell');
-            }
-            if (col < 7) {
-                let redcellright = document.getElementById(`cell-${row + 1}-${col + 1}`);
-                redcellright.classList.remove('moveablecell');
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                let redcell = document.getElementById(`cell-${row}-${col}`);
+                redcell.classList.remove('moveablecell');
             }
         }
 
+        if (AvailablePath.some(path => path[0] === row && path[1] === col)) {
+            let newPlayTable = [...PlayTable];
+            newPlayTable[row][col] = Pick[0];
+            newPlayTable[Pick[1]][Pick[2]] = 0;
+            setPlayTable(p => newPlayTable);
+            setPlayer(p => -p);
+        }
+
         setPick(p => [0, 0, 0]);
+        setAvailablePath([]);
         setMove(p => !p);
 
     }
@@ -714,6 +781,7 @@ export default function Chess() {
                     </Form.Group>
                     <p>Pick: {Pick[0]} - PickRow: {Pick[1]} - PickCell: {Pick[2]}</p>
                     <p>Move: {Move ? 'True' : 'False'}</p>
+                    <p>AvailablePath: {JSON.stringify(AvailablePath)}</p>
                 </div>
 
                 <div className='result'
@@ -768,6 +836,30 @@ export default function Chess() {
                                         {cell === 4 && <i className='fa-regular fa-chess-knight white-side'></i>}
                                         {cell === 5 && <i className='fa-regular fa-chess-rook white-side'></i>}
                                         {cell === 6 && <i className='fa-regular fa-chess-pawn white-side'></i>}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+
+                <Table
+                    className='no-wrap align-middle'
+                    style={{
+                        // '--table-width': 8,
+                        // '--table-height': 8
+                    }}
+                >
+                    <tbody>
+                        {PlayTable.map((row, index_row) => (
+                            <tr key={index_row}>
+                                {row.map((cell, index_col) => (
+                                    <td
+                                        key={index_col}
+                                        // id={`cell-${index_row}-${index_col}`}
+                                        className={`${(index_row + index_col) % 2 === 0 ? 'darkcell' : 'lightcell'}`}
+                                        style={{ backgroundColor: AvailablePath.some(path => path[0] === index_row && path[1] === index_col) ? 'red' : '' }}
+                                    >
                                     </td>
                                 ))}
                             </tr>
