@@ -971,24 +971,30 @@ export default function Chess() {
                     </tbody>
 
                     {Promotion[3] &&
-                        <div className='promotion'>
-                            {Promotion[0] === -6 &&
-                                <div className='group-icon black'>
-                                    <i className='fa-regular fa-chess-queen black-side' onClick={() => handlePromote(-2)}></i>
-                                    <i className='fa-regular fa-chess-bishop black-side' onClick={() => handlePromote(-3)}></i>
-                                    <i className='fa-regular fa-chess-knight black-side' onClick={() => handlePromote(-4)}></i>
-                                    <i className='fa-regular fa-chess-rook black-side' onClick={() => handlePromote(-5)}></i>
-                                </div>
-                            }
-                            {Promotion[0] === 6 &&
-                                <div className='group-icon white'>
-                                    <i className='fa-regular fa-chess-queen white-side' onClick={() => handlePromote(2)}></i>
-                                    <i className='fa-regular fa-chess-bishop white-side' onClick={() => handlePromote(3)}></i>
-                                    <i className='fa-regular fa-chess-knight white-side' onClick={() => handlePromote(4)}></i>
-                                    <i className='fa-regular fa-chess-rook white-side' onClick={() => handlePromote(5)}></i>
-                                </div>
-                            }
-                        </div>
+                        <tbody className='need-to-be-hidden'>
+                            <tr>
+                                <td>
+                                    <div className='promotion'>
+                                        {Promotion[0] === -6 &&
+                                            <div className='group-icon black'>
+                                                <i className='fa-regular fa-chess-queen black-side' onClick={() => handlePromote(-2)}></i>
+                                                <i className='fa-regular fa-chess-bishop black-side' onClick={() => handlePromote(-3)}></i>
+                                                <i className='fa-regular fa-chess-knight black-side' onClick={() => handlePromote(-4)}></i>
+                                                <i className='fa-regular fa-chess-rook black-side' onClick={() => handlePromote(-5)}></i>
+                                            </div>
+                                        }
+                                        {Promotion[0] === 6 &&
+                                            <div className='group-icon white'>
+                                                <i className='fa-regular fa-chess-queen white-side' onClick={() => handlePromote(2)}></i>
+                                                <i className='fa-regular fa-chess-bishop white-side' onClick={() => handlePromote(3)}></i>
+                                                <i className='fa-regular fa-chess-knight white-side' onClick={() => handlePromote(4)}></i>
+                                                <i className='fa-regular fa-chess-rook white-side' onClick={() => handlePromote(5)}></i>
+                                            </div>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
                     }
                 </Table>
 

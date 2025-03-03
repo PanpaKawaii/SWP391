@@ -123,6 +123,12 @@ body {
                 }
             }
 
+            .need-to-be-hidden {
+                tr {
+                    height: 0;
+                }
+            }
+
             .promotion {
                 position: absolute;
                 top: 0;
