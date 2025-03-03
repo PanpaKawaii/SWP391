@@ -606,7 +606,7 @@ export default function Chess() {
             // Pawn thực hiện nước đi
             if (Pick[0] === 6 || Pick[0] === -6) {// Nếu đó là Pawn trắng hoặc đen
                 // Nếu thực hiện nước đi En Passant
-                if ((row === EnPassant[1] - 1 || row === EnPassant[1] + 1) && col === EnPassant[2]) {
+                if (((row === EnPassant[1] - 1 && Pick[0] === 6) || (row === EnPassant[1] + 1 && Pick[0] === -6)) && col === EnPassant[2]) {
                     newPlayTable[EnPassant[1]][EnPassant[2]] = 0;
                 }
                 // Nếu thực hiện nước đi Promotion
