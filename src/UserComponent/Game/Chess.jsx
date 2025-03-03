@@ -48,6 +48,7 @@ export default function Chess() {
     const [Move, setMove] = useState(false);
     const [Castling, setCastling] = useState([true, true]);
     const [EnPassant, setEnPassant] = useState([0, 0, 0]);
+    const [Promotion, setPromotion] = useState([0, 0, 0, false]);
 
     const [Refresh, setRefresh] = useState(0);
 
@@ -60,6 +61,7 @@ export default function Chess() {
         setMove(false);
         setCastling([true, true]);
         setEnPassant([0, 0, 0]);
+        setPromotion([0, 0, 0, false]);//==================================================================================================Change to false
 
         for (let row = 0; row < 8; row++) {
             for (let col = 0; col < 8; col++) {
@@ -386,6 +388,11 @@ export default function Chess() {
                 redcellright.classList.add('moveablecell');
                 newAvailablePath = [...newAvailablePath, [row - 1, col + 1]];
             }
+            if (EnPassant[0] === -6 && row === EnPassant[1] && (col === EnPassant[2] - 1 || col === EnPassant[2] + 1)) {
+                let redcellenpassant = document.getElementById(`cell-${EnPassant[1] - 1}-${EnPassant[2]}`);
+                redcellenpassant.classList.add('moveablecell');
+                newAvailablePath = [...newAvailablePath, [EnPassant[1] - 1, EnPassant[2]]];
+            }
             setAvailablePath(p => newAvailablePath);
         } else if (cell === -6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn Black
             console.log('6: Pawn');
@@ -409,6 +416,11 @@ export default function Chess() {
                 let redcellright = document.getElementById(`cell-${row + 1}-${col + 1}`);
                 redcellright.classList.add('moveablecell');
                 newAvailablePath = [...newAvailablePath, [row + 1, col + 1]];
+            }
+            if (EnPassant[0] === 6 && row === EnPassant[1] && (col === EnPassant[2] - 1 || col === EnPassant[2] + 1)) {
+                let redcellenpassant = document.getElementById(`cell-${EnPassant[1] + 1}-${EnPassant[2]}`);
+                redcellenpassant.classList.add('moveablecell');
+                newAvailablePath = [...newAvailablePath, [EnPassant[1] + 1, EnPassant[2]]];
             }
             setAvailablePath(p => newAvailablePath);
         }
@@ -574,6 +586,7 @@ export default function Chess() {
             let newPlayTable = [...PlayTable];
             newPlayTable[row][col] = Pick[0];
             newPlayTable[Pick[1]][Pick[2]] = 0;
+            // Nếu vừa thực hiện nước đi của King
             if (
                 (// Nếu King đen hoặc trắng còn cơ hội nhập thành
                     (Pick[0] === -1 && Castling[0] === true) ||
@@ -584,12 +597,34 @@ export default function Chess() {
                 newPlayTable[row][(col + Pick[2]) / 2] = Pick[0] * 5;// Xuất hiện Rook ở giữa 2 ô của King
                 newPlayTable[row][col > Pick[2] ? 7 : 0] = 0;// Nếu nhập thành bên phải thì Rook phải đi qua, nhập thành bên trái thì Rook trái đi qua
             }
-
             // Bất cứ khi nào King di chuyển đều sẽ mất cơ hội nhập thành
             let newCastling = [...Castling];
             newCastling[Pick[0] === -1 && 0] = false;
             newCastling[Pick[0] === 1 && 1] = false;
             setCastling(newCastling);
+
+            // Pawn thực hiện nước đi
+            if (Pick[0] === 6 || Pick[0] === -6) {// Nếu đó là Pawn trắng hoặc đen
+                // Nếu thực hiện nước đi En Passant
+                if ((row === EnPassant[1] - 1 || row === EnPassant[1] + 1) && col === EnPassant[2]) {
+                    newPlayTable[EnPassant[1]][EnPassant[2]] = 0;
+                }
+                // Nếu thực hiện nước đi Promotion
+                if ((Pick[0] === 6 && row === 0) || (Pick[0] === -6 && row === 7)) {
+                    setPromotion([Pick[0], row, col, true]);
+                }
+            }
+
+            // Bất kỳ nước đi nào được thực hiện đều sẽ xóa khả năng En Passant
+            if (EnPassant[0] !== 0) setEnPassant([0, 0, 0]);
+
+            // Pawn thực hiện nước đi 2 bước
+            if (Pick[0] === 6 || Pick[0] === -6) {// Nếu đó là Pawn trắng hoặc đen
+                // Nếu thực hiện nước đi 2 bước
+                if (Pick[1] + 2 === row || Pick[1] - 2 === row) {
+                    setEnPassant(p => [Pick[0], row, col]);
+                }
+            }
 
             setPlayTable(p => newPlayTable);
             setPlayer(p => -p);//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////OPEN IT
@@ -599,6 +634,13 @@ export default function Chess() {
         setAvailablePath([]);
         setMove(p => !p);
 
+    }
+
+    const handlePromote = (value) => {
+        let newPlayTable = [...PlayTable];
+        newPlayTable[Promotion[1]][Promotion[2]] = value;
+        setPlayTable(p => newPlayTable);
+        setPromotion(p => [0, 0, 0, !p[3]])
     }
 
 
@@ -865,6 +907,8 @@ export default function Chess() {
                     <p>Move: {Move ? 'True' : 'False'}</p>
                     <p>AvailablePath: {JSON.stringify(AvailablePath)}</p>
                     <p>CastlingBlack: {Castling[0] ? 'True' : 'False'} - CastlingWhite: {Castling[1] ? 'True' : 'False'}</p>
+                    <p>EnPassant: {EnPassant[0]} - EnPassantRow: {EnPassant[1]} - EnPassantCell: {EnPassant[2]}</p>
+                    <p>Promotion: {Promotion[3] ? 'True' : 'False'} - PromotionPick: {Promotion[0]}</p>
                 </div>
 
                 <div className='result'
@@ -881,7 +925,7 @@ export default function Chess() {
                     }}
                 >
                     {HasWon === 1 && <h2 ><b><i className='fa-solid fa-xmark'></i> WON!</b></h2>}
-                    {HasWon === 2 && <h2 style={{ color: '#01d0fd' }}><b><i className='fa-regular fa-circle'></i> WON!</b></h2>}
+                    {HasWon === 2 && <h2 style={{ color: '#01d0fd' }}><b><i className='fa-solid fa-circle'></i> WON!</b></h2>}
                 </div>
             </div>
 
@@ -925,6 +969,27 @@ export default function Chess() {
                             </tr>
                         ))}
                     </tbody>
+
+                    {Promotion[3] &&
+                        <div className='promotion'>
+                            {Promotion[0] === -6 &&
+                                <div className='group-icon black'>
+                                    <i className='fa-regular fa-chess-queen black-side' onClick={() => handlePromote(-2)}></i>
+                                    <i className='fa-regular fa-chess-bishop black-side' onClick={() => handlePromote(-3)}></i>
+                                    <i className='fa-regular fa-chess-knight black-side' onClick={() => handlePromote(-4)}></i>
+                                    <i className='fa-regular fa-chess-rook black-side' onClick={() => handlePromote(-5)}></i>
+                                </div>
+                            }
+                            {Promotion[0] === 6 &&
+                                <div className='group-icon white'>
+                                    <i className='fa-regular fa-chess-queen white-side' onClick={() => handlePromote(2)}></i>
+                                    <i className='fa-regular fa-chess-bishop white-side' onClick={() => handlePromote(3)}></i>
+                                    <i className='fa-regular fa-chess-knight white-side' onClick={() => handlePromote(4)}></i>
+                                    <i className='fa-regular fa-chess-rook white-side' onClick={() => handlePromote(5)}></i>
+                                </div>
+                            }
+                        </div>
+                    }
                 </Table>
 
                 <Table
