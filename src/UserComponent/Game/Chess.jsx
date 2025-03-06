@@ -429,7 +429,10 @@ export default function Chess() {
         pickcell.classList.add('pickedcell');
     }
 
-
+    {/*
+        Vua không được đi vào ô bị chiếu
+        Quân mình sau khi đi thì Vua mình không được bị chiếu
+    */ }
 
 
 
@@ -438,140 +441,6 @@ export default function Chess() {
 
     const handleMove = (row, col) => {
         console.log('handleMove');
-
-
-        // if (Pick[0] === 1 || Pick[0] === -1) {//////////////////////////////////////////////////////////////////////////////////////////////////// King
-        //     console.log('1: King');
-        //     for (let i = -1; i <= 1; i++) {
-        //         for (let j = -1; j <= 1; j++) {
-        //             const newRow = row + i;
-        //             const newCol = col + j;
-        //             if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
-        //                 let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
-        //                 redcell.classList.remove('moveablecell');
-        //             }
-        //         }
-        //     };
-        // } else if (Pick[0] === 2 || Pick[0] === -2) {//////////////////////////////////////////////////////////////////////////////////////////////////// Queen
-        //     console.log('2: Queen');
-        //     for (let i = 1; i < 8; i++) {
-        //         if (row - i >= 0 && col + i < 8) {// Up-right diagonal
-        //             let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (row - i >= 0 && col - i >= 0) {// Up-left diagonal
-        //             let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (row + i < 8 && col + i < 8) {// Down-right diagonal
-        //             let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (row + i < 8 && col - i >= 0) {// Down-left diagonal
-        //             let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (row - i >= 0) {// Up line
-        //             let redcell = document.getElementById(`cell-${row - i}-${col}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (row + i < 8) {// Down line
-        //             let redcell = document.getElementById(`cell-${row + i}-${col}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (col - i >= 0) {// Left line
-        //             let redcell = document.getElementById(`cell-${row}-${col - i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (col + i < 8) {// Right line
-        //             let redcell = document.getElementById(`cell-${row}-${col + i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //     }
-        // } else if (Pick[0] === 3 || Pick[0] === -3) {//////////////////////////////////////////////////////////////////////////////////////////////////// Bishop
-        //     console.log('3: Bishop');
-        //     for (let i = 1; i < 8; i++) {
-        //         if (row - i >= 0 && col + i < 8) {// Up-right diagonal
-        //             let redcell = document.getElementById(`cell-${row - i}-${col + i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (row - i >= 0 && col - i >= 0) {// Up-left diagonal
-        //             let redcell = document.getElementById(`cell-${row - i}-${col - i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (row + i < 8 && col + i < 8) {// Down-right diagonal
-        //             let redcell = document.getElementById(`cell-${row + i}-${col + i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (row + i < 8 && col - i >= 0) {// Down-left diagonal
-        //             let redcell = document.getElementById(`cell-${row + i}-${col - i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //     }
-        // } else if (Pick[0] === 4 || Pick[0] === -4) {//////////////////////////////////////////////////////////////////////////////////////////////////// Knight
-        //     console.log('4: Knight');
-        //     const KnightPath = [[1, 2], [1, -2], [-1, 2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]]
-        //     KnightPath.forEach(path => {
-        //         const newRow = row + path[0];
-        //         const newCol = col + path[1];
-        //         if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
-        //             let redcell = document.getElementById(`cell-${newRow}-${newCol}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //     });
-        // } else if (Pick[0] === 5 || Pick[0] === -5) {//////////////////////////////////////////////////////////////////////////////////////////////////// Rook
-        //     console.log('5: Rook');
-        //     for (let i = 1; i < 8; i++) {
-        //         if (row - i >= 0) {// Up line
-        //             let redcell = document.getElementById(`cell-${row - i}-${col}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (row + i < 8) {// Down line
-        //             let redcell = document.getElementById(`cell-${row + i}-${col}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (col - i >= 0) {// Left line
-        //             let redcell = document.getElementById(`cell-${row}-${col - i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //         if (col + i < 8) {// Right line
-        //             let redcell = document.getElementById(`cell-${row}-${col + i}`);
-        //             redcell.classList.remove('moveablecell');
-        //         }
-        //     }
-        // } else if (Pick[0] === 6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn White
-        //     console.log('6: Pawn');
-        //     let redcellup1 = document.getElementById(`cell-${row - 1}-${col}`);
-        //     redcellup1.classList.remove('moveablecell');
-        //     if (row === 6) {
-        //         let redcellup2 = document.getElementById(`cell-${row - 2}-${col}`);
-        //         redcellup2.classList.remove('moveablecell');
-        //     }
-        //     if (col > 0) {
-        //         let redcellleft = document.getElementById(`cell-${row - 1}-${col - 1}`);
-        //         redcellleft.classList.remove('moveablecell');
-        //     }
-        //     if (col < 7) {
-        //         let redcellright = document.getElementById(`cell-${row - 1}-${col + 1}`);
-        //         redcellright.classList.remove('moveablecell');
-        //     }
-        // } else if (Pick[0] === -6) {//////////////////////////////////////////////////////////////////////////////////////////////////// Pawn Black
-        //     console.log('6: Pawn');
-        //     let redcelldown1 = document.getElementById(`cell-${row + 1}-${col}`);
-        //     redcelldown1.classList.remove('moveablecell');
-        //     if (row === 1) {
-        //         let redcelldown2 = document.getElementById(`cell-${row + 2}-${col}`);
-        //         redcelldown2.classList.remove('moveablecell');
-        //     }
-        //     if (col > 0) {
-        //         let redcellleft = document.getElementById(`cell-${row + 1}-${col - 1}`);
-        //         redcellleft.classList.remove('moveablecell');
-        //     }
-        //     if (col < 7) {
-        //         let redcellright = document.getElementById(`cell-${row + 1}-${col + 1}`);
-        //         redcellright.classList.remove('moveablecell');
-        //     }
-        // }
 
         for (let row = 0; row < 8; row++) {
             for (let col = 0; col < 8; col++) {
@@ -692,159 +561,6 @@ export default function Chess() {
         col: null
     });
 
-    // const [PlayTable, setPlayTable] = useState(Array(GameMode.RowCount).fill(0).map(() =>
-    //     Array(GameMode.ColCount).fill(0).map(() => ({ value: 0 }))
-    // ));
-
-    const MarkCell = (row, col) => {
-        if (PlayTable[row][col].value !== 0 || HasWon !== 0) return;
-
-        setPlayer(Player === 1 ? 2 : 1);
-        const NewPlayTable = [...PlayTable];
-        NewPlayTable[row][col].value = Player;
-        setPlayTable(NewPlayTable);
-
-        const NewPath = [...Path, [row, col]];
-        setPath(NewPath);
-        setLastStep({ row, col });
-        console.log('Path:', NewPath);
-
-        checkRow(row, col);
-        checkCol(row, col);
-        checkDiagonalDown(row, col);
-        checkDiagonalUp(row, col);
-        console.log('ConstantCell', ConstantCell);
-        console.log('End Check!');
-    }
-
-    const checkRow = (row, col) => {
-        let NewConstantCell = [...ConstantCell];
-
-        let CountLeft = 0;
-        for (let i = 0; i <= col; i++) {
-            if (PlayTable[row][col - i].value === Player) {
-                CountLeft++;
-                NewConstantCell = [...NewConstantCell, [row, col - i]];
-                console.log('CountLeft: ', CountLeft);
-            } else {
-                break;
-            }
-        }
-
-        let CountRight = 0;
-        for (let i = 0; col + i < GameMode.ColCount; i++) {
-            if (PlayTable[row][col + i].value === Player) {
-                CountRight++;
-                NewConstantCell = [...NewConstantCell, [row, col + i]];
-                console.log('CountRight: ', CountRight);
-            } else {
-                break;
-            }
-        }
-
-        if (CountLeft + CountRight - 1 >= GameMode.ConstantToWin) {
-            setConstantCell(NewConstantCell);
-            console.log('NewConstantCell', NewConstantCell);
-            setHasWon(Player);
-        }
-    }
-
-    const checkCol = (row, col) => {
-        let NewConstantCell = [...ConstantCell];
-
-        let CountUp = 0;
-        for (let i = 0; i <= row; i++) {
-            if (PlayTable[row - i][col].value === Player) {
-                CountUp++;
-                NewConstantCell = [...NewConstantCell, [row - i, col]];
-                console.log('CountUp: ', CountUp);
-            } else {
-                break;
-            }
-        }
-
-        let CountDown = 0;
-        for (let i = 0; row + i < GameMode.RowCount; i++) {
-            if (PlayTable[row + i][col].value === Player) {
-                CountDown++;
-                NewConstantCell = [...NewConstantCell, [row + i, col]];
-                console.log('CountDown: ', CountDown);
-            } else {
-                break;
-            }
-        }
-
-        if (CountUp + CountDown - 1 >= GameMode.ConstantToWin) {
-            setConstantCell(NewConstantCell);
-            console.log('NewConstantCell', NewConstantCell);
-            setHasWon(Player);
-        }
-    }
-
-    const checkDiagonalDown = (row, col) => {
-        let NewConstantCell = [...ConstantCell];
-
-        let CountUp = 0;
-        for (let i = 0; i <= row && i <= col; i++) {
-            if (PlayTable[row - i][col - i].value === Player) {
-                CountUp++;
-                NewConstantCell = [...NewConstantCell, [row - i, col - i]];
-                console.log('CountUp: ', CountUp);
-            } else {
-                break;
-            }
-        }
-
-        let CountDown = 0;
-        for (let i = 0; row + i < GameMode.RowCount && col + i < GameMode.ColCount; i++) {
-            if (PlayTable[row + i][col + i].value === Player) {
-                CountDown++;
-                NewConstantCell = [...NewConstantCell, [row + i, col + i]];
-                console.log('CountDown: ', CountDown);
-            } else {
-                break;
-            }
-        }
-
-        if (CountUp + CountDown - 1 >= GameMode.ConstantToWin) {
-            setConstantCell(NewConstantCell);
-            console.log('NewConstantCell', NewConstantCell);
-            setHasWon(Player);
-        }
-    }
-
-    const checkDiagonalUp = (row, col) => {
-        let NewConstantCell = [...ConstantCell];
-
-        let CountUp = 0;
-        for (let i = 0; i <= row && col + i < GameMode.ColCount; i++) {
-            if (PlayTable[row - i][col + i].value === Player) {
-                CountUp++;
-                NewConstantCell = [...NewConstantCell, [row - i, col + i]];
-                console.log('CountUp: ', CountUp);
-            } else {
-                break;
-            }
-        }
-
-        let CountDown = 0;
-        for (let i = 0; row + i < GameMode.RowCount && i <= col; i++) {
-            if (PlayTable[row + i][col - i].value === Player) {
-                CountDown++;
-                NewConstantCell = [...NewConstantCell, [row + i, col - i]];
-                console.log('CountDown: ', CountDown);
-            } else {
-                break;
-            }
-        }
-
-        if (CountUp + CountDown - 1 >= GameMode.ConstantToWin) {
-            setConstantCell(NewConstantCell);
-            console.log('NewConstantCell', NewConstantCell);
-            setHasWon(Player);
-        }
-    }
-
     const remarkCell = () => {
         if (Path.length <= 0) {
             console.log('Path.length <= 0');
@@ -879,7 +595,9 @@ export default function Chess() {
             <div className='detail'>
                 <div>
                     <div className='support'>
-                        <Button className='btn' style={{ backgroundColor: Player === 1 ? '#fd4755' : (Player === 2 ? '#01d0fd' : '') }} onClick={() => remarkCell()}><i className='fa-solid fa-reply'></i></Button>
+                        <Button className='btn' style={{ backgroundColor: Player === 1 ? '#fd4755' : (Player === 2 ? '#01d0fd' : '') }} onClick={() => remarkCell()}>
+                            <i className='fa-solid fa-reply'></i>
+                        </Button>
                         <Button className='btn' onClick={() => setRefresh(Refresh + 1)}>RESTART</Button>
                         <Button className='btn' onClick={() => setPlayer(PLAYER => -PLAYER)}>SET PLAYER {Player}</Button>
                     </div>
@@ -905,7 +623,7 @@ export default function Chess() {
                     </Form.Group>
                     <p>Pick: {Pick[0]} - PickRow: {Pick[1]} - PickCell: {Pick[2]}</p>
                     <p>Move: {Move ? 'True' : 'False'}</p>
-                    <p>AvailablePath: {JSON.stringify(AvailablePath)}</p>
+                    {/* <p>AvailablePath: {JSON.stringify(AvailablePath)}</p> */}
                     <p>CastlingBlack: {Castling[0] ? 'True' : 'False'} - CastlingWhite: {Castling[1] ? 'True' : 'False'}</p>
                     <p>EnPassant: {EnPassant[0]} - EnPassantRow: {EnPassant[1]} - EnPassantCell: {EnPassant[2]}</p>
                     <p>Promotion: {Promotion[3] ? 'True' : 'False'} - PromotionPick: {Promotion[0]}</p>
